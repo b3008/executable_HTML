@@ -1,42 +1,13 @@
-import AAHolder from '../aa-session/aa-session.js';
+import BaseElement from './../aa-baseElement/baseElement.js'
+import AAHolder from '../aa-holder/aa-holder.js';
 
 
-export default class AASession extends HTMLElement {
+export default class AASession extends BaseElement {
 
 
     static get observedAttributes() {
         return ['name', 'should-run'];
     }
-
-
-
-
-    
-
-    // properties:
-    // {
-    //     name: { type: String, reflectToAttribute: true },
-    //     _id: { type: String },
-    //     type: { type: String },
-
-    //     emaItemType: {
-    //         type: Array,
-    //         value: ["Assignable"],
-    //         reflectToAttribute: false
-    //     },
-
-    //     emaReferencedItems: { type: Array, value: [] },
-
-
-
-
-    //     shouldRun: {
-    //         type: Boolean,
-    //         value: false,
-    //         reflectToAttribute: false,
-    //         reflectToConfig: false
-    //     }
-    // },
 
 
     constructor() {
@@ -365,14 +336,14 @@ export default class AASession extends HTMLElement {
 
     isEmaElement(element) {
 
-        if (AssignableNodeNames.indexOf(element.nodeName) != -1) {
+        if (AANodeNames.indexOf(element.nodeName) != -1) {
             return true;
         }
         return false;
     }
 
     isHolder(element) {
-        if (element.is == "ema-holder") {
+        if (element.tagName.toLowerCase() == "aa-holder") {
             return true;
         }
         return false;
@@ -387,8 +358,8 @@ export default class AASession extends HTMLElement {
 
 if (!customElements.get('aa-session')) {
 
-    if (typeof window.AssignableNodeNames == "undefined") { window.AssignableNodeNames = [];}
-    window.AssignableNodeNames.push("AA-SESSION");
+    if (typeof window.AANodeNames == "undefined") { window.AANodeNames = [];}
+    window.AANodeNames.push("AA-SESSION");
 
     customElements.define('aa-session', AASession);
 

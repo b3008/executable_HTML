@@ -3,6 +3,16 @@ import BaseElement from './../aa-baseElement/baseElement.js'
 export default class AAScreen extends BaseElement {
 
 
+
+    static get observedAttributes(){
+        
+        return [
+            'submit-button-text', 
+            'submit-button-hidden', 
+            'name'
+        ];
+    }
+
     constructor(){
         super();
         
@@ -10,22 +20,16 @@ export default class AAScreen extends BaseElement {
         
     }
 
-    static get observedAttributes(){
-        
-        return ['submit-button-text', 'submit-button-hidden', 'name'];
-    }
 
     attributeChangedCallback(name, oldValue, newValue) {
      console.log("attributeChangedCallback:", name, oldValue, newValue);
     }
 
     get name(){
-        debugger;
-        return "fuck";
         return this.getAttribute('name');
     }
     set name(value){
-        debugger;
+        
         return this.setAttribute('name', value);
     }
 
@@ -34,15 +38,8 @@ export default class AAScreen extends BaseElement {
         
         super.connectedCallback();
        
-        this.submitButtonText = "submit"
-        console.log("AAScreen connectedCallback");
+        this.submitButtonText = this._submitButtonText || "submit";
         
-        
-
-
-        // this.submitButtonText = this._submitButtonText || "submit";
-        
-
         this.root.innerHTML = this.css + this.html;
 
         this._attachedTimestamp = new Date().getTime();
@@ -101,10 +98,6 @@ export default class AAScreen extends BaseElement {
 
   
     
-    
-    
-
-
 
     attributeChangedCallback(){
 
@@ -234,10 +227,10 @@ export default class AAScreen extends BaseElement {
 if (!customElements.get('aa-screen')) {
 
 
-    if (typeof window.AssignableNodeNames == "undefined") { 
-        window.AssignableNodeNames = []; 
+    if (typeof window.AANodeNames == "undefined") { 
+        window.AANodeNames = []; 
     }
-    window.AssignableNodeNames.push("AA-SCREEN");
+    window.AANodeNames.push("AA-SCREEN");
 
     customElements.define('aa-screen', AAScreen);
 

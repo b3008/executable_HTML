@@ -10,13 +10,7 @@ export default class BaseElement extends HTMLElement {
         this._props = this.makePropertiesFromAttributes();
     }
 
-    // get(target, name){
-    //     debugger;
-    // }
-
-    // set(target, name){
-    //     debugger;
-    // }
+  
 
 
     connectedCallback() {
@@ -29,6 +23,7 @@ export default class BaseElement extends HTMLElement {
         let ElementClass = customElements.get(this.tagName.toLowerCase());
 
         let attr = ElementClass.observedAttributes;
+        if(!attr) return null;
         let props = {};
         for (let i = 0; i < attr.length; i++) {
             let prop = this.toCamelCase(attr[i]);
@@ -39,16 +34,14 @@ export default class BaseElement extends HTMLElement {
                 console.log(prop, this[prop]);
                 continue;
             } else {
-                debugger;
+               
                 Object.defineProperty(this, prop, {
                     get: () => {
                         let a = attr[i];
-                        debugger;
                         return this.getAttribute(attr[i])
                     },
                     set: (value) => {
                         let a = attr[i];
-                        debugger;
                         this.setAttribute(attr[i], value)
                     }
                 });
@@ -77,3 +70,10 @@ export default class BaseElement extends HTMLElement {
 
 }
 
+if (!customElements.get('aa-base-element')) {
+
+    if (typeof window.AANodeNames == "undefined") { window.AANodeNames = []; }
+    window.AANodeNames.push("AA-BASE-ELEMENT");
+
+    customElements.define('aa-base-element', BaseElement);
+}
