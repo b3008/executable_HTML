@@ -85,16 +85,12 @@ export default class AASession extends BaseElement {
         else {
             this.shouldRun = true;
         }
-
-
         if (this.shouldRun) {
             this.run();
         }
 
 
     }
-
-
 
     getElementContent(element) {
         if (element.nodeName == "SCRIPT") {

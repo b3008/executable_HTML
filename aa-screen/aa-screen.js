@@ -15,9 +15,7 @@ export default class AAScreen extends BaseElement {
 
     constructor(){
         super();
-        
         this.root = this.attachShadow({ mode: 'open' });
-        
     }
 
 
