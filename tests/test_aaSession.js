@@ -1,6 +1,5 @@
 var expect = chai.expect;
 var assert = chai.assert;
-
 var container;
 
 describe('aa-session', () => {
