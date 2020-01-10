@@ -6,12 +6,13 @@ export default class AASession extends BaseElement {
 
 
     static get observedAttributes() {
-        return ['name', 'should-run'];
+        return ['name', 'should-run', 'debug'];
     }
 
 
     constructor() {
         super();
+        console.log("creating session");
         this.sessionID = this.myIdGenerator();
         this.sessionTime = new Date().getTime();
 
@@ -60,14 +61,18 @@ export default class AASession extends BaseElement {
 
     connectedCallback() {
 
+        console.log("attaching session");
 
+        this.innerHTML = `<template>${this.innerHTML}</template>`
         // if (typeof this.mem == "undefined") {
         //     this.mem = document.createElement("ema-memory");
         //     this.mem.name = this.name;
         //     this.appendChild(this.mem);
         // }
 
-
+        if(this.debug=="true") this._debug=true;
+        else this._debug = false;    
+        
         //there should be two ways this functions, one in editor mode
         //and another in client mode
         //  RESEARCHER_ENVIRONMENT = true;
@@ -171,7 +176,7 @@ export default class AASession extends BaseElement {
     run() {
 
         this.started = true;
-        console.log("created session");
+    
         this.templateHolders = [];
 
 
@@ -179,14 +184,12 @@ export default class AASession extends BaseElement {
         this.holderList = [];
         this.nodesToAppendAfterChild = [];
 
-        console.log("attaching session")
+    
         // return;
-        var myself = this;
-        console.log(this.name);
+        
 
 
-
-        this.emaReferencedItems = this.getReferencedItems(this);
+        this.referencedItems = this.getReferencedItems(this);
         this.initialChildNodesList = [];
         for (var i = 0; i < this.childNodes.length; i++) {
             this.initialChildNodesList.push(this.childNodes[i]);
@@ -199,11 +202,14 @@ export default class AASession extends BaseElement {
                 console.log(child.nodeName);
                 if (child.nodeName == "TEMPLATE") {
 
-                    this.analyzeChildNodesForElement(child.content);
+                    if(this._debug){
+                        this.dispatchEvent(new CustomEvent("debug", {detail: "found template"}));
+                    }
+                    this._analyzeChildNodesForElement(child.content);
                     // var imported = document.importNode(child.content,true);
                     this.appendChild(child.content);
 
-                    this.restoreHeldNodes(this);
+                    this._restoreHeldNodes(this);
 
                 }
             }
@@ -218,92 +224,15 @@ export default class AASession extends BaseElement {
 
     getReferencedItems(element) {
 
-        var emaReferencedItems = [];
-        if (this.isEmaElement(element)) emaReferencedItems.push(element);
+        var referencedItems = [];
+        if (this._isAAElement(element)) referencedItems.push(element);
         for (var i = 0; i < element.childNodes.length; i++) {
             var child = element.childNodes[i];
-            if (this.isEmaElement(child)) {
-                emaReferencedItems = emaReferencedItems.concat(this.getReferencedItems(child))
+            if (this._isAAElement(child)) {
+                referencedItems = referencedItems.concat(this.getReferencedItems(child))
             }
         }
-        return emaReferencedItems;
-    }
-
-    createFragmentForElement(element) {
-
-        var fragment = document.createDocumentFragment();
-        //  first get references to the children,
-        //  because the element.children array will be modified as they are appended elsewhere
-        var childNodes = [];
-        for (var i = 0; i < Polymer.dom(element).childNodes.length; i++) {
-            childNodes.push(Polymer.dom(element).childNodes[i]);
-        }
-        // the append each child to the fragment
-        for (var i = 0; i < childNodes.length; i++) {
-            fragment.appendChild(childNodes[i])
-        }
-        return fragment;
-    }
-
-    replaceElementWithHolder(element) {
-
-
-        var holder = document.createElement("ema-holder");
-        holder.id = element.getAttribute("name") + "-holder";
-        holder.heldElementOuterHTML = element.outerHTML;
-
-        // holder.innerHTML = "holder for " + element.nodeName + " with name " + element.getAttribute("name")
-        console.log("replacing", element, "with", holder);
-
-        holder.heldElement = element.cloneNode(false);
-        //holder.heldElement.innerFragment = document.createRange().createContextualFragment(element.innerHTML);
-        holder.heldElement.innerFragment = this.createFragmentForElement(element);
-
-        element.replaceWith(holder);
-        return holder;
-    }
-
-    replaceHolderWithElement(holder) {
-
-        holder.replaceWith(holder.heldElement);
-        return holder.heldElement;
-    }
-
-
-    analyzeChildNodesForElement(element) {
-
-
-        if (this.isEmaElement(element)) {
-            this.replaceElementWithHolder(element);
-        }
-        else {
-            for (var i = 0; i < element.childNodes.length; i++) {
-                if (this.isEmaElement(element.childNodes[i])) {
-                    this.replaceElementWithHolder(element.childNodes[i])
-                }
-                else {
-                    this.analyzeChildNodesForElement(element.childNodes[i]);
-                }
-            }
-        }
-    }
-
-    restoreHeldNodes(element) {
-
-
-        var childNodes = element.childNodes;
-        for (var i = 0; i < childNodes.length; i++) {
-            var child = childNodes[i];
-            if (this.isHolder(child)) {
-
-                //before restoring, strip element of ema- content
-                // this.analyzeChildNodesForElement(child.heldElement);
-                this.replaceHolderWithElement(child);
-            }
-            else if (child.childNodes.length > 0) {
-                this.restoreHeldNodes(child);
-            }
-        }
+        return referencedItems;
     }
 
 
@@ -312,38 +241,18 @@ export default class AASession extends BaseElement {
 
 
 
-    isWidget(node) {
-        if (typeof node.emaItemType != "undefined") {
-            if (node.emaItemType.indexOf("Widget") != -1) {
-                return true;
-            }
-        }
-        return false;
-    }
 
-    isAssignable(node) {
-        if (typeof node.emaItemType != "undefined") {
-            if (node.emaItemType.indexOf("Assignable") != -1) {
-                return true;
-            }
-        }
-        return false;
-    }
 
-    isEmaElement(element) {
 
-        if (AANodeNames.indexOf(element.nodeName) != -1) {
-            return true;
-        }
-        return false;
-    }
 
-    isHolder(element) {
-        if (element.tagName.toLowerCase() == "aa-holder") {
-            return true;
-        }
-        return false;
-    }
+
+
+
+
+
+
+
+  
 
 
 

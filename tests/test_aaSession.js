@@ -11,7 +11,7 @@ describe('aa-session', () => {
 
     });
 
-    afterEach(function() {
+    beforeEach(function() {
         // runs after each test in this block
         // document.body.innerHTML = '';
         container.innerHTML = "";
@@ -22,26 +22,24 @@ describe('aa-session', () => {
 
         it('should find session', function (done) {
 
-            container.innerHTML = `
-                <aa-screen id="screen1" name="first">
-                    <div>test</div>
-                </aa-screen>`
-            let screen1 = document.querySelector('#screen1');
-            if(screen1.tagName=="AA-SCREEN")
-            {
-                done();
-            }
+            container.innerHTML = html`
+            <aa-session debug="true" name="test" id="session"> 
+                
+                    <aa-screen id="screen1" name="first">
+                        <div>test</div>
+                    </aa-screen>
+                
+            <aa-session>`
+
+            let session = document.querySelector('#session');
+            assert(session.tagName, "AA-SESSION")
+            assert(session.name, "test")
+            assert(session.debug, "true")
+            done();            
 
         });
 
-        it('screen1 should have a name set', function(done){
-            
-            let screen1 = document.querySelector('#screen1');
-            if(screen1.name=="first")
-            {
-                done();
-            }
-        })
+        
     })
 })
 
