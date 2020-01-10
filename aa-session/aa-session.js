@@ -71,9 +71,9 @@ export default class AASession extends BaseElement {
         this.sessionTime = new Date().getTime();
 
   
-        if (this.shouldRun === null) this.shouldRun = true;
+        // if (this.shouldRun === null) this.shouldRun = true;
         console.log("shouldRun = ", this.shouldRun);
-        if (this.shouldRun) {
+        if ((this.shouldRun===null)||(this.shouldRun===true)) {
             this.run();
         }
 
@@ -179,7 +179,7 @@ export default class AASession extends BaseElement {
         this._analyzeChildNodesForElement(this.myTemplate.content);
         this.appendChild(this.myTemplate.content);
 
-        if (this.shouldRun) {
+        if ((this.shouldRun===null)||(this.shouldRun===true)) {
             this._restoreHeldNodes(this);
         }
 
@@ -202,7 +202,7 @@ export default class AASession extends BaseElement {
                     this._analyzeChildNodesForElement(child.content);
                     this.appendChild(child.content);
 
-                    if(this.shouldRun) {
+                    if ((this.shouldRun===null)||(this.shouldRun===true)) {
                         this._restoreHeldNodes(this);
                     }
 
