@@ -13,8 +13,13 @@ export default class AASession extends BaseElement {
     constructor() {
         super();
         console.log("creating session");
-        this.sessionID = this.myIdGenerator();
-        this.sessionTime = new Date().getTime();
+
+        this.myTemplate = document.createElement("template");
+        this.myTemplate.innerHTML = this.innerHTML;
+        this.innerHTML = "";
+      
+        // this.root = this.attachShadow({ mode: 'closed' });
+        // this.root.innerHTML = '<template><slot></slot></template>'
 
         this.addEventListener("valueSubmit", function (e) {
 
@@ -62,34 +67,12 @@ export default class AASession extends BaseElement {
     connectedCallback() {
 
         console.log("attaching session");
+        this.sessionID = this.myIdGenerator();
+        this.sessionTime = new Date().getTime();
 
-        this.innerHTML = `<template>${this.innerHTML}</template>`
-        // if (typeof this.mem == "undefined") {
-        //     this.mem = document.createElement("ema-memory");
-        //     this.mem.name = this.name;
-        //     this.appendChild(this.mem);
-        // }
-
-        if(this.debug=="true") this._debug=true;
-        else this._debug = false;    
-        
-        //there should be two ways this functions, one in editor mode
-        //and another in client mode
-        //  RESEARCHER_ENVIRONMENT = true;
-        var myself = this;
-        if (typeof RESEARCHER_ENVIRONMENT != "undefined") {
-            if (RESEARCHER_ENVIRONMENT) {
-                if (this.shouldRun) this.run();
-                else {
-                    this.display();
-                    this.$.editor.hidden = false;
-                }
-                return;
-            }
-        }
-        else {
-            this.shouldRun = true;
-        }
+  
+        if (this.shouldRun === null) this.shouldRun = true;
+        console.log("shouldRun = ", this.shouldRun);
         if (this.shouldRun) {
             this.run();
         }
@@ -176,20 +159,31 @@ export default class AASession extends BaseElement {
     run() {
 
         this.started = true;
-    
+
         this.templateHolders = [];
 
 
-        this.emaElementsList = [];
+
         this.holderList = [];
         this.nodesToAppendAfterChild = [];
 
-    
+
         // return;
-        
+
 
 
         this.referencedItems = this.getReferencedItems(this);
+
+
+
+        this._analyzeChildNodesForElement(this.myTemplate.content);
+        this.appendChild(this.myTemplate.content);
+
+        if (this.shouldRun) {
+            this._restoreHeldNodes(this);
+        }
+
+
         this.initialChildNodesList = [];
         for (var i = 0; i < this.childNodes.length; i++) {
             this.initialChildNodesList.push(this.childNodes[i]);
@@ -206,34 +200,35 @@ export default class AASession extends BaseElement {
                         this.dispatchEvent(new CustomEvent("debug", {detail: "found template"}));
                     }
                     this._analyzeChildNodesForElement(child.content);
-                    // var imported = document.importNode(child.content,true);
                     this.appendChild(child.content);
 
-                    this._restoreHeldNodes(this);
+                    if(this.shouldRun) {
+                        this._restoreHeldNodes(this);
+                    }
 
                 }
             }
-
-        }
-
-
+            
     }
 
 
+}
 
 
-    getReferencedItems(element) {
 
-        var referencedItems = [];
-        if (this._isAAElement(element)) referencedItems.push(element);
-        for (var i = 0; i < element.childNodes.length; i++) {
-            var child = element.childNodes[i];
-            if (this._isAAElement(child)) {
-                referencedItems = referencedItems.concat(this.getReferencedItems(child))
-            }
+
+getReferencedItems(element) {
+
+    var referencedItems = [];
+    if (this._isAAElement(element)) referencedItems.push(element);
+    for (var i = 0; i < element.childNodes.length; i++) {
+        var child = element.childNodes[i];
+        if (this._isAAElement(child)) {
+            referencedItems = referencedItems.concat(this.getReferencedItems(child))
         }
-        return referencedItems;
     }
+    return referencedItems;
+}
 
 
 
@@ -263,12 +258,12 @@ export default class AASession extends BaseElement {
 
 if (!customElements.get('aa-session')) {
 
-    if (typeof window.AANodeNames == "undefined") { window.AANodeNames = [];}
+    if (typeof window.AANodeNames == "undefined") { window.AANodeNames = []; }
     window.AANodeNames.push("AA-SESSION");
 
     customElements.define('aa-session', AASession);
 
-   
+
 }
 
 

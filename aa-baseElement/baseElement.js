@@ -39,8 +39,10 @@ export default class BaseElement extends HTMLElement {
                     get: () => {
                         let a = attr[i];
 
-
-                        return this.getAttribute(attr[i])
+                        let result = this.getAttribute(attr[i]);
+                        if(result==="true") return true;
+                        else if(result==="false") return false;
+                        else return result;
                     },
                     set: (value) => {
                         let a = attr[i];
