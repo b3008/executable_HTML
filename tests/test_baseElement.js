@@ -3,39 +3,68 @@
 var expect = chai.expect;
 var assert = chai.assert;
 
-var baseElement;
+var container;
 
+import BaseElement from "../aa-baseElement/baseElement.js";
 describe('baseElement', () => {
 
-    // before(()=>{
-        
-    // })
+   
+    before(function(){
+        container = document.createElement('div');
+        document.body.appendChild(container);
+
+    });
+    
+    afterEach(function() {
+        // runs after each test in this block
+        // document.body.innerHTML = '';
+        container.innerHTML = "";
+      });
+
     describe('member functions', function () {
 
         it('convert hyphenated attribute toCamelCase property ', function (done) {
 
-            
+
             //instantiate a baseElement without attributes
-            let div = document.createElement('div');
-            document.body.appendChild(div);
-            div.innerHTML='<aa-base-element id="e1">';
-            baseElement = document.querySelector('#e1');
-            let hyphenated="this-is-a-hyphenated-sentence";
+            container.innerHTML = '<aa-base-element id="e1">';
+            let baseElement = document.querySelector('#e1');
+            let hyphenated = "this-is-a-hyphenated-sentence";
 
             assert.equal(baseElement.toCamelCase(hyphenated), "thisIsAHyphenatedSentence");
             done();
         });
 
-        it('instantiate baseElement with some attributes and test API', function(done){
-            
-            let div = document.createElement('div');
-            document.body.appendChild(div);
-            div.innerHTML='<aa-base-element id="e1" name="elem1" session="mySession">';
-            baseElement = document.querySelector('#e1');
-            
-            
+        it('inherit from baseElement, have some attributes and test API', function (done) {
 
-            done()       
+
+            class TestElement extends BaseElement {
+                static get observedAttributes() {
+                    return ["name", "my-session"]
+                }
+                constructor() {
+                    super();
+                    this.root = this.attachShadow({ mode: 'open' });
+                }
+                connectedCallback(){
+                    this.root.innerHTML = "<div>test element</div>"
+                }
+
+                get name(){
+                    return "element-specific getter was called for name";
+                }
+            }
+
+            customElements.define("test-element", TestElement);
+            container.innerHTML = '<test-element id="e2" name="elem1" my-session="mySession">';
+
+
+            let testElement = document.querySelector('#e2');
+            // debugger;
+            assert.equal(testElement.mySession, testElement.getAttribute("my-session"));
+            assert.equal(testElement.name, "element-specific getter was called for name");
+
+            done()
         })
     })
 })

@@ -15,9 +15,8 @@ export default class AAScreen extends BaseElement {
 
     constructor(){
         super();
-        
+        console.log("creating screen");
         this.root = this.attachShadow({ mode: 'open' });
-        
     }
 
 
@@ -35,7 +34,7 @@ export default class AAScreen extends BaseElement {
 
     connectedCallback() {
 
-        
+        console.log("attaching screen");
         super.connectedCallback();
        
         this.submitButtonText = this._submitButtonText || "submit";
@@ -53,9 +52,9 @@ export default class AAScreen extends BaseElement {
 
 
         if (typeof this.innerFragment != "undefined") {
-            this.analyzeChildNodesForElement(this.innerFragment);
+            this._analyzeChildNodesForElement(this.innerFragment);
             this.appendChild(this.innerFragment);
-            this.restoreHeldNodes(this);
+            this._restoreHeldNodes(this);
         }
 
         this.root.querySelector('.submitButton').addEventListener("click", this.submitButtonClick.bind(this));
@@ -64,6 +63,7 @@ export default class AAScreen extends BaseElement {
 
 
    get  css() {
+ 
         return html`
             <style>
                 :host {
@@ -83,6 +83,7 @@ export default class AAScreen extends BaseElement {
     }
 
     get html() {
+    
         return html`
             <slot></slot>
             hey

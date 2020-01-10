@@ -26,26 +26,21 @@
     </script>
 
     
-    <script src="./test_baseElement.js"></script>
-    <script src="./test_aaScreen.js"></script>
-    <script src="./test_aaSession.js"></script>
+    <!-- <script type="module" src="./test_baseElement.js"></script> -->
+    
+    <!-- <script type="module" src="./test_aaScreen.js"></script> -->
+    <script type="module" src="./test_aaSession.js"></script>
     <!-- <script src="test.object.js"></script> -->
     <!-- <script src="test.xhr.js"></script> -->
     
 
-    <script class="mocha-exec">
+    <script type="module" class="mocha-exec">
        
       mocha.run();
     </script>
 
 
-    <aa-session>
-    
-        <aa-screen id="screen1" name="first">
-            <div>Hey Hey hey</div>
-        </aa-screen>
 
-    </aa-session>   
 
   </body>
 </html>
