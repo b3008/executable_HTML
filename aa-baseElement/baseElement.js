@@ -47,16 +47,13 @@ export default class BaseElement extends HTMLElement {
                 console.log("defining property for ", prop);
                 Object.defineProperty(this, prop, {
                     get: () => {
-                        let a = attr[i];
-
+                        
                         let result = this.getAttribute(attr[i]);
                         if(result==="true") return true;
                         else if(result==="false") return false;
                         else return result;
                     },
                     set: (value) => {
-                        let a = attr[i];
-
                         this.setAttribute(attr[i], value)
                     }
                 });
@@ -83,6 +80,19 @@ export default class BaseElement extends HTMLElement {
         return result;
     }
 
+    toHyphenated(str){
+        let result ="";
+        for(let i=0; i<str.length; i++){
+            let letter = str[i];
+            if(letter.toLowerCase()!==letter){
+                // letter is uppercase
+                result+=`-${letter.toLowerCase()}`
+            }else{
+                result += letter;
+            }
+        }
+        return result;
+    }
 
     _analyzeChildNodesForElement(element) {
         console.log(element, "isAAElement=", this._isAAElement(element))
@@ -175,12 +185,17 @@ export default class BaseElement extends HTMLElement {
         return fragment;
     }
 
+    _dispatchDebugEvent(detail){
+        if(this._debug){
+            this.dispatchEvent(new CustomEvent("debug", {detail: detail}));
+        }
+    }
 
 }
 
 if (!customElements.get('aa-base-element')) {
 
-    if (typeof window.AANodeNames == "undefined") { window.AANodeNames = []; }
+    if (typeof window.AANodeNames ==="undefined") { window.AANodeNames = []; }
     window.AANodeNames.push("AA-BASE-ELEMENT");
 
     customElements.define('aa-base-element', BaseElement);

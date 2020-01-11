@@ -108,7 +108,7 @@ export default class AASequence extends BaseElement {
         if (this.started) return;
         //  an  .innerFragment member should have been supplied by an ema-session element containing this ema-sequence
         //  somewhere in its subtree. pick each child of the fragment separately
-        if (typeof this.innerFragment == "undefined") {
+        if (typeof this.innerFragment ==="undefined") {
             console.warn(".innerFragment is undefined");
             this.restoreHeldNodes(this)
             return;
@@ -148,7 +148,10 @@ export default class AASequence extends BaseElement {
     }
 
     next() {
-        if (!this.started) this.start();
+        if (!this.started) { 
+            this.start(); 
+        }
+        
         if (this.myFragmentChildren.length == 0) return;
         console.log(this.fragmentChildrenCounter);
         if (this.fragmentChildrenCounter >= this.myFragmentChildren.length) return null;
@@ -193,7 +196,7 @@ export default class AASequence extends BaseElement {
 
 
         this.appendChild(finalFragmentChild);
-        this._restoreHeldNodes(finalFragmentChild)
+        this._restoreHeldNodes(finalFragmentChild);
 
 
 
@@ -219,7 +222,7 @@ export default class AASequence extends BaseElement {
 
 if (!customElements.get('aa-sequence')) {
 
-    if (typeof window.AANodeNames == "undefined") { window.AANodeNames = []; }
+    if (typeof window.AANodeNames ==="undefined") { window.AANodeNames = []; }
     window.AANodeNames.push("AA-SEQUENCE");
 
     customElements.define('aa-sequence', AASequence);

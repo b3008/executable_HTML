@@ -1,5 +1,6 @@
 import BaseElement from './../aa-baseElement/baseElement.js'
 
+
 export default class AAScreen extends BaseElement {
 
 
@@ -17,6 +18,7 @@ export default class AAScreen extends BaseElement {
         super();
         console.log("creating screen");
         this.root = this.attachShadow({ mode: 'open' });
+        
     }
 
 
@@ -24,13 +26,7 @@ export default class AAScreen extends BaseElement {
      console.log("attributeChangedCallback:", name, oldValue, newValue);
     }
 
-    get name(){
-        return this.getAttribute('name');
-    }
-    set name(value){
-        
-        return this.setAttribute('name', value);
-    }
+
 
     connectedCallback() {
 
@@ -47,7 +43,7 @@ export default class AAScreen extends BaseElement {
         this._started = true;
 
         if(this.submitButtonHidden) {
-            this.root.querySelector(".submitButtonContainer").style.display="none"
+            this.root.querySelector(".submitButtonContainer").style.display="none";
         }
 
 
@@ -167,7 +163,7 @@ export default class AAScreen extends BaseElement {
 
 
     getChildrenValuesOrder(element) {
-        if (typeof element == "undefined") element = this;
+        if (typeof element ==="undefined") element = this;
         var emaChildren = this.getEmaChildren(element);
         var result = [];
         for (var i = 0; i < emaChildren.length; i++) {
@@ -228,7 +224,7 @@ export default class AAScreen extends BaseElement {
 if (!customElements.get('aa-screen')) {
 
 
-    if (typeof window.AANodeNames == "undefined") { 
+    if (typeof window.AANodeNames ==="undefined") { 
         window.AANodeNames = []; 
     }
     window.AANodeNames.push("AA-SCREEN");

@@ -2,6 +2,7 @@ var expect = chai.expect;
 var assert = chai.assert;
 var container;
 
+import AASequence from '../aa-sequence/aa-sequence.js'
 describe('aa-sequence', () => {
 
 
@@ -27,6 +28,7 @@ describe('aa-sequence', () => {
                   
                 <template>
                     <aa-sequence id="sequence">
+                    
                         <aa-screen id="screen1" name="second">
                                 <div>screen1</div>
                         </aa-screen>

@@ -1,6 +1,6 @@
 import BaseElement from './../aa-baseElement/baseElement.js'
 import AAHolder from '../aa-holder/aa-holder.js';
-
+import AAMemory from './../aa-memory/aa-memory.js'
 
 export default class AASession extends BaseElement {
 
@@ -14,10 +14,12 @@ export default class AASession extends BaseElement {
         super();
         console.log("creating session");
 
+        this.mem = document.createElement('aa-memory');
+        
         this.myTemplate = document.createElement("template");
         this.myTemplate.innerHTML = this.innerHTML;
         this.innerHTML = "";
-      
+        
         // this.root = this.attachShadow({ mode: 'closed' });
         // this.root.innerHTML = '<template><slot></slot></template>'
 
@@ -104,7 +106,6 @@ export default class AASession extends BaseElement {
         }
         else {
             return element.outerHTML;
-
         }
 
     }
@@ -171,7 +172,7 @@ export default class AASession extends BaseElement {
         // return;
 
 
-
+        
         this.referencedItems = this.getReferencedItems(this);
 
 
@@ -185,6 +186,8 @@ export default class AASession extends BaseElement {
 
 
         this.initialChildNodesList = [];
+
+
         for (var i = 0; i < this.childNodes.length; i++) {
             this.initialChildNodesList.push(this.childNodes[i]);
         }
@@ -194,11 +197,9 @@ export default class AASession extends BaseElement {
 
             if (typeof child.nodeName != "undefined") {
                 console.log(child.nodeName);
-                if (child.nodeName == "TEMPLATE") {
+                if (child.nodeName === "TEMPLATE") {
 
-                    if(this._debug){
-                        this.dispatchEvent(new CustomEvent("debug", {detail: "found template"}));
-                    }
+                   
                     this._analyzeChildNodesForElement(child.content);
                     this.appendChild(child.content);
 
@@ -258,7 +259,7 @@ getReferencedItems(element) {
 
 if (!customElements.get('aa-session')) {
 
-    if (typeof window.AANodeNames == "undefined") { window.AANodeNames = []; }
+    if (typeof window.AANodeNames ==="undefined") { window.AANodeNames = []; }
     window.AANodeNames.push("AA-SESSION");
 
     customElements.define('aa-session', AASession);
