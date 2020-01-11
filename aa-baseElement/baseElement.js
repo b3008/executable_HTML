@@ -1,4 +1,14 @@
 
+window.html = function(txt,...val){
+
+    let result = txt[0];
+    for(let i=0; i<val.length; i++){
+        result += val[i];
+        result += txt[i+1];
+    }
+    return result;
+}
+
 export default class BaseElement extends HTMLElement {
 
 

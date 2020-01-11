@@ -54,10 +54,11 @@ export default class AASequence extends BaseElement {
     }
 
     get html() {
-        return html`
+        f =  html`
             <slot></slot>
             <button id="nextButton" hidden></button>
         `
+        return f
     }
 
 
