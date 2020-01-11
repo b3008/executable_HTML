@@ -31,7 +31,19 @@ describe('baseElement', () => {
             let baseElement = document.querySelector('#e1');
             let hyphenated = "this-is-a-hyphenated-sentence";
 
-            assert.equal(baseElement.toCamelCase(hyphenated), "thisIsAHyphenatedSentence");
+            assert(baseElement.toCamelCase(hyphenated) == "thisIsAHyphenatedSentence", `conversion to camelcase is not coorect: ${baseElement.toCamelCase(hyphenated)}`);
+            done();
+        });
+
+        it('convert camelCase string to hyphenated string ', function (done) {
+
+
+            //instantiate a baseElement without attributes
+            container.innerHTML = '<aa-base-element id="e1">';
+            let baseElement = document.querySelector('#e1');
+            let hyphenated = "this-is-a-hyphenated-sentence";
+            let camelString = "thisIsAHyphenatedSentence";
+            assert(baseElement.toHyphenated(camelString) == hyphenated, `conversion to hyphenated is not coorect: ${baseElement.toHyphenated(camelString)}`);
             done();
         });
 
