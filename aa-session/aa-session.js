@@ -23,7 +23,7 @@ export default class AASession extends BaseElement {
         // this.root = this.attachShadow({ mode: 'closed' });
         // this.root.innerHTML = '<template><slot></slot></template>'
 
-        this.addEventListener('valueSubmit',  (e)=> {
+        this.addEventListener('valueSubmit', (e) => {
 
 
             // e.stopPropagation();
@@ -33,7 +33,7 @@ export default class AASession extends BaseElement {
                 sessionTimestamp: this.sessionTime,
                 sessionName: this.name,
                 variables: Object.keys(e.detail.value),
-            }
+            };
             this.mem.saveReplyValue(e.detail.value, false);
 
 
@@ -47,9 +47,9 @@ export default class AASession extends BaseElement {
 
         })
 
-        this.addEventListener('assignableEnd', function (e) {
+        this.addEventListener('assignableEnd', (e) => {
 
-            var assignableEndEvent = new CustomEvent('sessionEnd', { bubbles: true, detail: {} });
+            let assignableEndEvent = new CustomEvent('sessionEnd', { bubbles: true, detail: {} });
             this.dispatchEvent(assignableEndEvent);
         })
 
@@ -86,27 +86,27 @@ export default class AASession extends BaseElement {
         if (element.nodeName === 'SCRIPT') {
 
         } else
-        if (element.nodeName === '#text') {
-            return element.textContent;
-        } else
-        if (element.nodeName === '#comment') {
+            if (element.nodeName === '#text') {
+                return element.textContent;
+            } else
+                if (element.nodeName === '#comment') {
 
-            return '<!--' + element.textContent + '!-->';
-        } else
-        if (element.nodeName === 'TEMPLATE') {
-            return this.getElementContent(element.content);
-        } else
-        if (element.nodeName === '#document-fragment') {
-            var result = '';
-            for (var i = 0; i < element.childNodes.length; i++) {
-                result += this.getElementContent(element.childNodes[i]);
-            }
-            console.log('result is ', result)
-            return result;
-        }
-        else {
-            return element.outerHTML;
-        }
+                    return '<!--' + element.textContent + '!-->';
+                } else
+                    if (element.nodeName === 'TEMPLATE') {
+                        return this.getElementContent(element.content);
+                    } else
+                        if (element.nodeName === '#document-fragment') {
+                            let result = '';
+                            for (let i = 0; i < element.childNodes.length; i++) {
+                                result += this.getElementContent(element.childNodes[i]);
+                            }
+                            console.log('result is ', result)
+                            return result;
+                        }
+                        else {
+                            return element.outerHTML;
+                        }
 
     }
 
@@ -118,22 +118,22 @@ export default class AASession extends BaseElement {
         for (let i = 0; i < this.childNodes.length; i++) {
             this.initialNodesList.push(this.childNodes[i]);
         }
-        this.sourceText = ''
+        this.sourceText = '';
         for (let i = 0; i < this.initialNodesList.length; i++) {
-            var child = this.initialNodesList[i];
+            let child = this.initialNodesList[i];
             this.sourceText += this.getElementContent(child);
         }
         this.display.innerHTML = hljs.highlightAuto(this.sourceText).value;
 
         // this.$.display.innerHTML = Prism.highlight(sourceText, Prism.languages.javascript)
 
-        this.display.addEventListener('input', (e) =>{
+        this.display.addEventListener('input', (e) => {
             // this.sourceText = hljs.highlightAuto(this.target.innerText).value;
             // this.display.innerHTML = this.sourceText
             // console.log('change')
         })
 
-        this.$.updateButton.addEventListener('click',  ()=> {
+        this.$.updateButton.addEventListener('click', () => {
             this.updateFromEditor();
         });
 
@@ -141,9 +141,9 @@ export default class AASession extends BaseElement {
 
     updateFromEditor() {
 
-        var t = document.createElement('template');
+        let t = document.createElement('template');
         t.innerHTML = this.sourceText;
-        var session = document.createElement('aa-session');
+        let session = document.createElement('aa-session');
         session.shouldRun = true;
         session.appendChild(t);
         this.appendChild(session)
@@ -181,11 +181,11 @@ export default class AASession extends BaseElement {
         this.initialChildNodesList = [];
 
 
-        for (var i = 0; i < this.childNodes.length; i++) {
+        for (let i = 0; i < this.childNodes.length; i++) {
             this.initialChildNodesList.push(this.childNodes[i]);
         }
-        for (var i = 0; i < this.initialChildNodesList.length; i++) {
-            var child = this.initialChildNodesList[i];
+        for (let i = 0; i < this.initialChildNodesList.length; i++) {
+            let child = this.initialChildNodesList[i];
 
 
             if (typeof child.nodeName != 'undefined') {
@@ -213,10 +213,10 @@ export default class AASession extends BaseElement {
 
     getReferencedItems(element) {
 
-        var referencedItems = [];
+        let referencedItems = [];
         if (this._isAAElement(element)) referencedItems.push(element);
-        for (var i = 0; i < element.childNodes.length; i++) {
-            var child = element.childNodes[i];
+        for (let i = 0; i < element.childNodes.length; i++) {
+            let child = element.childNodes[i];
             if (this._isAAElement(child)) {
                 referencedItems = referencedItems.concat(this.getReferencedItems(child))
             }
