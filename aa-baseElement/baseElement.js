@@ -1,10 +1,10 @@
 
-window.html = function(txt,...val){
+window.html = function (txt, ...val) {
 
     let result = txt[0];
-    for(let i=0; i<val.length; i++){
+    for (let i = 0; i < val.length; i++) {
         result += val[i];
-        result += txt[i+1];
+        result += txt[i + 1];
     }
     return result;
 }
@@ -47,14 +47,14 @@ export default class BaseElement extends HTMLElement {
                 console.log("defining property for ", prop);
                 Object.defineProperty(this, prop, {
                     get: () => {
-                        
+
                         let result = this.getAttribute(attr[i]);
-                        if(result==="true") return true;
-                        else if(result==="false") return false;
-                        else return result;
+                        if (result === "true") { return true; }
+                        else if (result === "false") { return false; }
+                        else { return result; }
                     },
                     set: (value) => {
-                        this.setAttribute(attr[i], value)
+                        this.setAttribute(attr[i], value);
                     }
                 });
             }
@@ -80,14 +80,14 @@ export default class BaseElement extends HTMLElement {
         return result;
     }
 
-    toHyphenated(str){
-        let result ="";
-        for(let i=0; i<str.length; i++){
+    toHyphenated(str) {
+        let result = "";
+        for (let i = 0; i < str.length; i++) {
             let letter = str[i];
-            if(letter.toLowerCase()!==letter){
+            if (letter.toLowerCase() !== letter) {
                 // letter is uppercase
-                result+=`-${letter.toLowerCase()}`
-            }else{
+                result += `-${letter.toLowerCase()}`
+            } else {
                 result += letter;
             }
         }
@@ -99,15 +99,14 @@ export default class BaseElement extends HTMLElement {
         if (this._isAAElement(element)) {
             this._replaceElementWithHolder(element);
         }
-        else {
-            for (var i = 0; i < element.childNodes.length; i++) {
-                if (this._isAAElement(element.childNodes[i])) {
-                    this._replaceElementWithHolder(element.childNodes[i])
-                }  else {
-                    this._analyzeChildNodesForElement(element.childNodes[i]);
-                }
+        else for (let i = 0; i < element.childNodes.length; i++) {
+            if (this._isAAElement(element.childNodes[i])) {
+                this._replaceElementWithHolder(element.childNodes[i])
+            } else {
+                this._analyzeChildNodesForElement(element.childNodes[i]);
             }
         }
+
     }
 
 
@@ -149,7 +148,7 @@ export default class BaseElement extends HTMLElement {
     _replaceElementWithHolder(element) {
 
 
-        var holder = document.createElement("aa-holder");
+        let holder = document.createElement("aa-holder");
         holder.id = element.getAttribute("name") + "-holder";
         holder.heldElementOuterHTML = element.outerHTML;
 
@@ -171,23 +170,23 @@ export default class BaseElement extends HTMLElement {
 
     _createFragmentForElement(element) {
 
-        var fragment = document.createDocumentFragment();
+        let fragment = document.createDocumentFragment();
         //  first get references to the children,
         //  because the element.children array will be modified as they are appended elsewhere
-        var childNodes = [];
-        for (var i = 0; i < element.childNodes.length; i++) {
+        let childNodes = [];
+        for (let i = 0; i < element.childNodes.length; i++) {
             childNodes.push(element.childNodes[i]);
         }
         // the append each child to the fragment
-        for (var i = 0; i < childNodes.length; i++) {
+        for (let i = 0; i < childNodes.length; i++) {
             fragment.appendChild(childNodes[i])
         }
         return fragment;
     }
 
-    _dispatchDebugEvent(detail){
-        if(this._debug){
-            this.dispatchEvent(new CustomEvent("debug", {detail: detail}));
+    _dispatchDebugEvent(detail) {
+        if (this._debug) {
+            this.dispatchEvent(new CustomEvent("debug", { detail: detail }));
         }
     }
 
@@ -195,7 +194,7 @@ export default class BaseElement extends HTMLElement {
 
 if (!customElements.get('aa-base-element')) {
 
-    if (typeof window.AANodeNames ==="undefined") { window.AANodeNames = []; }
+    if (typeof window.AANodeNames === "undefined") { window.AANodeNames = []; }
     window.AANodeNames.push("AA-BASE-ELEMENT");
 
     customElements.define('aa-base-element', BaseElement);

@@ -38,7 +38,7 @@ describe('aa-session', () => {
                         </aa-screen>
                     </template>
 
-            </aa-session>`
+            </aa-session>`;
 
             let session = document.querySelector('#session');
             let screen = document.querySelector("#screen1");
@@ -60,7 +60,7 @@ describe('aa-session', () => {
                         <div>test</div>
                     </aa-screen>
                 </template>
-            <aa-session>`
+            <aa-session>`;
 
             let session = document.querySelector('#session');
             let screen = document.querySelector("#screen1");

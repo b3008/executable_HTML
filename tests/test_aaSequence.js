@@ -42,7 +42,7 @@ describe('aa-sequence', () => {
                   
                 </template>
 
-            </aa-session>`
+            </aa-session>`;
 
             let session = document.querySelector('#session');
             let sequence = document.querySelector("#sequence");
