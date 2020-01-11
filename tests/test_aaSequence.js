@@ -24,7 +24,7 @@ describe('aa-sequence', () => {
             container.innerHTML = html`
             first session:
             <aa-session debug="true" name="test" id="session"> 
-                    
+                   ${1} 
                 <template>
                     <aa-sequence id="sequence">
                         <aa-screen id="screen1" name="second">
@@ -37,7 +37,7 @@ describe('aa-sequence', () => {
 
                     </aa-sequence>
 
-                    
+                    ${2}
                 </template>
 
             </aa-session>`
