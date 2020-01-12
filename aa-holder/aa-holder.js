@@ -49,9 +49,7 @@ export default class AAHolder extends BaseElement {
 
 
 if (!customElements.get('aa-holder')) {
-
-    if (typeof window.AANodeNames ==="undefined") { window.AANodeNames = []; }
+    window.AANodeNames = window.AANodeNames|| []; 
     window.AANodeNames.push("AA-HOLDER");
-
     customElements.define('aa-holder', AAHolder);
 }

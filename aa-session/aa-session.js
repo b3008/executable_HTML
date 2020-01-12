@@ -1,6 +1,6 @@
 import BaseElement from './../aa-baseElement/baseElement.js'
-import AAHolder from '../aa-holder/aa-holder.js';
-import AAMemory from './../aa-memory/aa-memory.js'
+import  '../aa-holder/aa-holder.js';
+import  './../aa-memory/aa-memory.js'
 
 export default class AASession extends BaseElement {
 
@@ -12,33 +12,33 @@ export default class AASession extends BaseElement {
 
     constructor() {
         super();
-        console.log("creating session");
+        console.log('creating session');
 
         this.mem = document.createElement('aa-memory');
-        
-        this.myTemplate = document.createElement("template");
+
+        this.myTemplate = document.createElement('template');
         this.myTemplate.innerHTML = this.innerHTML;
-        this.innerHTML = "";
-        
+        this.innerHTML = '';
+
         // this.root = this.attachShadow({ mode: 'closed' });
         // this.root.innerHTML = '<template><slot></slot></template>'
 
-        this.addEventListener("valueSubmit", function (e) {
+        this.addEventListener('valueSubmit', (e) => {
 
 
             // e.stopPropagation();
-            var input = {}
-            input.data = e.detail.value;
-            input.sessionID = myself.sessionID;
-            input.sessionTimestamp = myself.sessionTime;
-            input.sessionName = myself.name;
-            input.variables = Object.keys(e.detail.value);
+            let input = {
+                data: e.detail.value,
+                sessionID: this.sessionID,
+                sessionTimestamp: this.sessionTime,
+                sessionName: this.name,
+                variables: Object.keys(e.detail.value),
+            };
+            this.mem.saveReplyValue(e.detail.value, false);
 
-            myself.mem.saveReplyValue(e.detail.value, false);
 
-
-            var inputSubmitEvent = new CustomEvent("inputSubmit", { bubbles: true, detail: { input: input } });
-            myself.dispatchEvent(inputSubmitEvent);
+            let inputSubmitEvent = new CustomEvent('inputSubmit', { bubbles: true, detail: { input } });
+            this.dispatchEvent(inputSubmitEvent);
             //  ema-participant-client needs to catch this and either send it to the server,
             //  or store it locally if we are offline
             //  A reason that ema-participant-client needs to do this, is because it cares
@@ -47,10 +47,10 @@ export default class AASession extends BaseElement {
 
         })
 
-        this.addEventListener("assignableEnd", function (e) {
+        this.addEventListener('assignableEnd', (e) => {
 
-            var assignableEndEvent = new CustomEvent("sessionEnd", { bubbles: true, detail: {} });
-            myself.dispatchEvent(assignableEndEvent);
+            let assignableEndEvent = new CustomEvent('sessionEnd', { bubbles: true, detail: {} });
+            this.dispatchEvent(assignableEndEvent);
         })
 
 
@@ -68,14 +68,14 @@ export default class AASession extends BaseElement {
 
     connectedCallback() {
 
-        console.log("attaching session");
+        console.log('attaching session');
         this.sessionID = this.myIdGenerator();
         this.sessionTime = new Date().getTime();
 
-  
+
         // if (this.shouldRun === null) this.shouldRun = true;
-        console.log("shouldRun = ", this.shouldRun);
-        if ((this.shouldRun===null)||(this.shouldRun===true)) {
+        console.log('shouldRun = ', this.shouldRun);
+        if ((this.shouldRun === null) || (this.shouldRun === true)) {
             this.run();
         }
 
@@ -83,71 +83,69 @@ export default class AASession extends BaseElement {
     }
 
     getElementContent(element) {
-        if (element.nodeName == "SCRIPT") {
+        if (element.nodeName === 'SCRIPT') {
 
-        }
-        if (element.nodeName == "#text") {
-            return element.textContent;
-        }
-        if (element.nodeName == "#comment") {
+        } else
+            if (element.nodeName === '#text') {
+                return element.textContent;
+            } else
+                if (element.nodeName === '#comment') {
 
-            return "<!--" + element.textContent + "!-->";
-        }
-        if (element.nodeName == "TEMPLATE") {
-            return this.getElementContent(element.content);
-        }
-        if (element.nodeName == "#document-fragment") {
-            var result = "";
-            for (var i = 0; i < element.childNodes.length; i++) {
-                result += this.getElementContent(element.childNodes[i]);
-            }
-            console.log("result is ", result)
-            return result;
-        }
-        else {
-            return element.outerHTML;
-        }
+                    return '<!--' + element.textContent + '!-->';
+                } else
+                    if (element.nodeName === 'TEMPLATE') {
+                        return this.getElementContent(element.content);
+                    } else
+                        if (element.nodeName === '#document-fragment') {
+                            let result = '';
+                            for (let i = 0; i < element.childNodes.length; i++) {
+                                result += this.getElementContent(element.childNodes[i]);
+                            }
+                            console.log('result is ', result)
+                            return result;
+                        }
+                        else {
+                            return element.outerHTML;
+                        }
 
     }
 
 
     display() {
 
-        var myself = this;
-
-
+        this.display = this.querySelector('#display');
         this.initialNodesList = [];
-        for (var i = 0; i < this.childNodes.length; i++) {
+        for (let i = 0; i < this.childNodes.length; i++) {
             this.initialNodesList.push(this.childNodes[i]);
         }
-        this.sourceText = ""
-        for (var i = 0; i < this.initialNodesList.length; i++) {
-            var child = this.initialNodesList[i];
+        this.sourceText = '';
+        for (let i = 0; i < this.initialNodesList.length; i++) {
+            let child = this.initialNodesList[i];
             this.sourceText += this.getElementContent(child);
         }
-        this.$.display.innerHTML = hljs.highlightAuto(this.sourceText).value;
+        this.display.innerHTML = hljs.highlightAuto(this.sourceText).value;
 
         // this.$.display.innerHTML = Prism.highlight(sourceText, Prism.languages.javascript)
 
-        this.$.display.addEventListener("input", function (e) {
-            this.sourceText = hljs.highlightAuto(this.target.innerText).value;
-            myself.$.display.innerHTML = this.sourceText
-            // console.log("change")
+        this.display.addEventListener('input', (e) => {
+            // this.sourceText = hljs.highlightAuto(this.target.innerText).value;
+            // this.display.innerHTML = this.sourceText
+            // console.log('change')
         })
 
-        this.$.updateButton.addEventListener("click", function () {
-            myself.updateFromEditor();
+        this.$.updateButton.addEventListener('click', () => {
+            this.updateFromEditor();
         });
 
     }
 
     updateFromEditor() {
 
-        var t = document.createElement("template");
+        let t = document.createElement('template');
         t.innerHTML = this.sourceText;
-        var session = document.createElement("aa-session");
+        let session = document.createElement('aa-session');
         session.shouldRun = true;
-        Polymer.dom(session).appendChild(t);
+        session.appendChild(t);
         this.appendChild(session)
     }
 
@@ -162,17 +160,12 @@ export default class AASession extends BaseElement {
         this.started = true;
 
         this.templateHolders = [];
-
-
-
         this.holderList = [];
         this.nodesToAppendAfterChild = [];
 
 
-        // return;
 
 
-        
         this.referencedItems = this.getReferencedItems(this);
 
 
@@ -180,7 +173,7 @@ export default class AASession extends BaseElement {
         this._analyzeChildNodesForElement(this.myTemplate.content);
         this.appendChild(this.myTemplate.content);
 
-        if ((this.shouldRun===null)||(this.shouldRun===true)) {
+        if ((this.shouldRun === null) || (this.shouldRun === true)) {
             this._restoreHeldNodes(this);
         }
 
@@ -188,48 +181,48 @@ export default class AASession extends BaseElement {
         this.initialChildNodesList = [];
 
 
-        for (var i = 0; i < this.childNodes.length; i++) {
+        for (let i = 0; i < this.childNodes.length; i++) {
             this.initialChildNodesList.push(this.childNodes[i]);
         }
-        for (var i = 0; i < this.initialChildNodesList.length; i++) {
-            var child = this.initialChildNodesList[i];
+        for (let i = 0; i < this.initialChildNodesList.length; i++) {
+            let child = this.initialChildNodesList[i];
 
 
-            if (typeof child.nodeName != "undefined") {
+            if (typeof child.nodeName != 'undefined') {
                 console.log(child.nodeName);
-                if (child.nodeName === "TEMPLATE") {
+                if (child.nodeName === 'TEMPLATE') {
 
-                   
+
                     this._analyzeChildNodesForElement(child.content);
                     this.appendChild(child.content);
 
-                    if ((this.shouldRun===null)||(this.shouldRun===true)) {
+                    if ((this.shouldRun === null) || (this.shouldRun === true)) {
                         this._restoreHeldNodes(this);
                     }
 
                 }
             }
-            
-    }
 
-
-}
-
-
-
-
-getReferencedItems(element) {
-
-    var referencedItems = [];
-    if (this._isAAElement(element)) referencedItems.push(element);
-    for (var i = 0; i < element.childNodes.length; i++) {
-        var child = element.childNodes[i];
-        if (this._isAAElement(child)) {
-            referencedItems = referencedItems.concat(this.getReferencedItems(child))
         }
+
+
     }
-    return referencedItems;
-}
+
+
+
+
+    getReferencedItems(element) {
+
+        let referencedItems = [];
+        if (this._isAAElement(element)) referencedItems.push(element);
+        for (let i = 0; i < element.childNodes.length; i++) {
+            let child = element.childNodes[i];
+            if (this._isAAElement(child)) {
+                referencedItems = referencedItems.concat(this.getReferencedItems(child))
+            }
+        }
+        return referencedItems;
+    }
 
 
 
@@ -248,7 +241,7 @@ getReferencedItems(element) {
 
 
 
-  
+
 
 
 
@@ -258,13 +251,9 @@ getReferencedItems(element) {
 
 
 if (!customElements.get('aa-session')) {
-
-    if (typeof window.AANodeNames ==="undefined") { window.AANodeNames = []; }
-    window.AANodeNames.push("AA-SESSION");
-
+    window.AANodeNames = window.AANodeNames|| []; 
+    window.AANodeNames.push('AA-SESSION');
     customElements.define('aa-session', AASession);
-
-
 }
 
 

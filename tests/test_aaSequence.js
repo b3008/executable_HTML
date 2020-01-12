@@ -2,7 +2,7 @@ var expect = chai.expect;
 var assert = chai.assert;
 var container;
 
-import AASequence from '../aa-sequence/aa-sequence.js'
+import '../aa-sequence/aa-sequence.js'
 describe('aa-sequence', () => {
 
 
@@ -42,7 +42,7 @@ describe('aa-sequence', () => {
                   
                 </template>
 
-            </aa-session>`
+            </aa-session>`;
 
             let session = document.querySelector('#session');
             let sequence = document.querySelector("#sequence");

@@ -2,8 +2,8 @@ var expect = chai.expect;
 var assert = chai.assert;
 var container;
 
-import AASession from '../aa-session/aa-session.js'
-import AAChoose from '../aa-choose/aa-choose.js'
+import '../aa-session/aa-session.js'
+import '../aa-choose/aa-choose.js'
 
 describe('aa-choose', () => {
 

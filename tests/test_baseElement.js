@@ -1,11 +1,12 @@
 
 
-var expect = chai.expect;
+// var expect = chai.expect;
 var assert = chai.assert;
 
 var container;
 
 import BaseElement from "../aa-baseElement/baseElement.js";
+
 describe('baseElement', () => {
 
    
