@@ -1,6 +1,6 @@
 import BaseElement from './../aa-baseElement/baseElement.js'
-import AAHolder from '../aa-holder/aa-holder.js';
-import AAMemory from './../aa-memory/aa-memory.js'
+import  '../aa-holder/aa-holder.js';
+import  './../aa-memory/aa-memory.js'
 
 export default class AASession extends BaseElement {
 
@@ -251,13 +251,9 @@ export default class AASession extends BaseElement {
 
 
 if (!customElements.get('aa-session')) {
-
-    if (typeof window.AANodeNames === 'undefined') { window.AANodeNames = []; }
+    window.AANodeNames = window.AANodeNames|| []; 
     window.AANodeNames.push('AA-SESSION');
-
     customElements.define('aa-session', AASession);
-
-
 }
 
 

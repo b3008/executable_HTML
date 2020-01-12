@@ -2,7 +2,7 @@ var expect = chai.expect;
 var assert = chai.assert;
 var container;
 
-import AASequence from '../aa-sequence/aa-sequence.js'
+import '../aa-sequence/aa-sequence.js'
 describe('aa-sequence', () => {
 
 

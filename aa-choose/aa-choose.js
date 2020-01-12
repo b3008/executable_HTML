@@ -1,5 +1,5 @@
-import BaseElement from './../aa-baseElement/baseElement.js'
-import AAWhen from './aa-when/aa-when.js';
+import BaseElement from './../aa-baseElement/baseElement.js';
+import  './aa-when/aa-when.js';
 
 export default class AAChoose extends BaseElement {
 
@@ -11,13 +11,13 @@ export default class AAChoose extends BaseElement {
 
     constructor(){
         super();
-        console.log("creating aa-choose");
+        console.log('creating aa-choose');
         this.root = this.attachShadow({ mode: 'open' });
     }
 
     connectedCallback(){
 
-        console.log("aa-choose attached");
+        console.log('aa-choose attached');
         this._shouldRun = (this.shouldRun===null) || (this.shouldRun===true);
         if(this._shouldRun){
             this.run();
@@ -26,7 +26,7 @@ export default class AAChoose extends BaseElement {
 
     run(){
         this._sessionElement = this;
-        while ((this._sessionElement != null) && (this._sessionElement.nodeName != "AA-SESSION")) {
+        while ((this._sessionElement != null) && (this._sessionElement.nodeName != 'AA-SESSION')) {
             this._sessionElement = this._sessionElement.parentNode;
         }
         if (this.sessionElement) if (this.sessionElement.mem) this.mem = this.sessionElement.mem;
@@ -37,14 +37,7 @@ export default class AAChoose extends BaseElement {
 
 
 if (!customElements.get('aa-choose')) {
-
-
-    if (typeof window.AANodeNames ==="undefined") { 
-        window.AANodeNames = []; 
-    }
-    window.AANodeNames.push("AA-CHOOSE");
-
+    window.AANodeNames = window.AANodeNames|| []; 
+    window.AANodeNames.push('AA-CHOOSE');
     customElements.define('aa-choose', AAChoose);
-
-
 }

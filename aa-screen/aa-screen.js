@@ -16,24 +16,24 @@ export default class AAScreen extends BaseElement {
 
     constructor(){
         super();
-        console.log("creating screen");
+        console.log('creating screen');
         this.root = this.attachShadow({ mode: 'open' });
         
     }
 
 
     attributeChangedCallback(name, oldValue, newValue) {
-     console.log("attributeChangedCallback:", name, oldValue, newValue);
+     console.log('attributeChangedCallback:', name, oldValue, newValue);
     }
 
 
 
     connectedCallback() {
 
-        console.log("attaching screen");
+        console.log('attaching screen');
         super.connectedCallback();
        
-        this.submitButtonText = this._submitButtonText || "submit";
+        this.submitButtonText = this._submitButtonText || 'submit';
         
         this.root.innerHTML = this.css + this.html;
 
@@ -43,17 +43,17 @@ export default class AAScreen extends BaseElement {
         this._started = true;
 
         if(this.submitButtonHidden) {
-            this.root.querySelector(".submitButtonContainer").style.display="none";
+            this.root.querySelector('.submitButtonContainer').style.display='none';
         }
 
 
-        if (typeof this.innerFragment != "undefined") {
+        if (typeof this.innerFragment != 'undefined') {
             this._analyzeChildNodesForElement(this.innerFragment);
             this.appendChild(this.innerFragment);
             this._restoreHeldNodes(this);
         }
 
-        this.root.querySelector('.submitButton').addEventListener("click", this.submitButtonClick.bind(this));
+        this.root.querySelector('.submitButton').addEventListener('click', this.submitButtonClick.bind(this));
 
     }
 
@@ -71,7 +71,7 @@ export default class AAScreen extends BaseElement {
                 .submitButtonContainer{
                     display:flex; 
                     justify-content: space-between; 
-                    align-items:center"   
+                    align-items:center;
                 }
             
             </style>
@@ -83,11 +83,11 @@ export default class AAScreen extends BaseElement {
         return html`
             <slot></slot>
             hey
-            <div class="submitButtonContainer">
+            <div class='submitButtonContainer'>
                 <div>
-                    <button class="submitButton"> button: ${this.submitButtonText}</button>
+                    <button class='submitButton'> button: ${this.submitButtonText}</button>
                 </div>
-                <div id="userMessage"></div>
+                <div id='userMessage'></div>
             </div>
         
         `
@@ -105,13 +105,13 @@ export default class AAScreen extends BaseElement {
 
     hasChildrenThatDemandResponse() {
 
-        var emaChildren = this.getEmaChildren(this);
-        var result = false;
-        for (var i = 0; i < emaChildren.length; i++) {
-            var child = emaChildren[i];
+        let emaChildren = this.getEmaChildren(this);
+        let result = false;
+        for let i = 0; i < emaChildren.length; i++) {
+            let child = emaChildren[i];
             if (child.demandsResponse) {
                 if (child.getValue()==null) {
-                    console.log(child, "demands response");
+                    console.log(child, 'demands response');
 
                     if (child.displayAttention) {
                         child.displayAttention();
@@ -122,11 +122,11 @@ export default class AAScreen extends BaseElement {
             }
         }
         if (result) {
-            this.$.userMessage.innerHTML = `<div style="display:flex; align-items:center"> <div>please fill out the required fields</div> <div id="attention" style="color: red; font-size: 20px;  border: solid thin; border-radius: 50%; width: 20px;
+            this.userMessage.innerHTML = `<div style="display:flex; align-items:center"> <div>please fill out the required fields</div> <div id="attention" style="color: red; font-size: 20px;  border: solid thin; border-radius: 50%; width: 20px;
                                             margin-left:20px; height: 20px; 
                                             text-align: center;
                                             padding: 5px;">!</div></div>`
-            this.$.userMessage.style.color = "red";
+            this.userMessage.style.color = 'red';
         }
         return result;
     }
@@ -135,41 +135,41 @@ export default class AAScreen extends BaseElement {
     submitButtonClick(e) {
 
 
-        var myself = this;
+        
 
-        this.$.userMessage.innerHTML = "";
+        this.$.userMessage.innerHTML = '';
 
         if (this.hasChildrenThatDemandResponse()) {
             return;
         }
 
         //dispatch assignableEnd event
-        var valueSubmitEvent = new CustomEvent("valueSubmit", { bubbles: true, detail: { value: myself.getValue() } });
-        myself.dispatchEvent(valueSubmitEvent);
+        let valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: this.getValue() } });
+        this.dispatchEvent(valueSubmitEvent);
 
-        var assignableEndEvent = new CustomEvent("assignableEnd", { bubbles: true, detail: { value: myself.getValue() } });
-        myself.dispatchEvent(assignableEndEvent);
+        let assignableEndEvent = new CustomEvent('assignableEnd', { bubbles: true, detail: { value: this.getValue() } });
+        this.dispatchEvent(assignableEndEvent);
 
-        if (typeof e.detail.callback != "undefined") {
+        if (typeof e.detail.callback != 'undefined') {
             e.detail.callback(e);
         }
 
 
         //hide the screen
 
-        if (myself.dontHide == false) myself.hide();
+        if (this.dontHide == false) this.hide();
 
     }
 
 
     getChildrenValuesOrder(element) {
-        if (typeof element ==="undefined") element = this;
+        if (typeof element ==='undefined') element = this;
         var emaChildren = this.getEmaChildren(element);
         var result = [];
         for (var i = 0; i < emaChildren.length; i++) {
             var child = emaChildren[i]
-            if (typeof this.name != "undefined") {
-                result.push(this.name + "$" + child.getName());
+            if (typeof this.name != 'undefined') {
+                result.push(this.name + '$' + child.getName());
             }
             else {
                 result.push(child.getName());
@@ -198,7 +198,7 @@ export default class AAScreen extends BaseElement {
     automate() {
         for (var i = 0; i < this.children.length; i++) {
             if (this.isEmaElement(this.children[i])) {
-                if (typeof this.children[i].automate != "undefined") {
+                if (typeof this.children[i].automate != 'undefined') {
                     this.children[i].automate();
                 }
             }
@@ -208,13 +208,13 @@ export default class AAScreen extends BaseElement {
 
 
     hide() {
-        this.style.display = "none"
+        this.style.display = 'none'
 
     }
 
     show() {
-        this.style.display = "block"
-        //this.removeAttribute("hidden");
+        this.style.display = 'block'
+        //this.removeAttribute('hidden');
     }
 
 
@@ -222,14 +222,7 @@ export default class AAScreen extends BaseElement {
 
 
 if (!customElements.get('aa-screen')) {
-
-
-    if (typeof window.AANodeNames ==="undefined") { 
-        window.AANodeNames = []; 
-    }
-    window.AANodeNames.push("AA-SCREEN");
-
+    window.AANodeNames = window.AANodeNames|| []; 
+    window.AANodeNames.push('AA-SCREEN');
     customElements.define('aa-screen', AAScreen);
-
-
 }

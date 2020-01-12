@@ -15,7 +15,7 @@ export default class BaseElement extends HTMLElement {
     constructor() {
 
         super();
-        console.log("baseElement constructor");
+        console.log('baseElement constructor');
 
         this._props = this.makePropertiesFromAttributes();
     }
@@ -24,7 +24,7 @@ export default class BaseElement extends HTMLElement {
 
 
     connectedCallback() {
-        console.log("baseElement connectedCallback");
+        console.log('baseElement connectedCallback');
     }
 
 
@@ -40,17 +40,17 @@ export default class BaseElement extends HTMLElement {
             props[prop] = attr[i];
 
 
-            if (typeof this[prop] != "undefined") {
+            if (typeof this[prop] != 'undefined') {
                 console.log(prop, this[prop]);
                 continue;
             } else {
-                console.log("defining property for ", prop);
+                console.log('defining property for ', prop);
                 Object.defineProperty(this, prop, {
                     get: () => {
 
                         let result = this.getAttribute(attr[i]);
-                        if (result === "true") { return true; }
-                        else if (result === "false") { return false; }
+                        if (result === 'true') { return true; }
+                        else if (result === 'false') { return false; }
                         else { return result; }
                     },
                     set: (value) => {
@@ -81,12 +81,12 @@ export default class BaseElement extends HTMLElement {
     }
 
     toHyphenated(str) {
-        let result = "";
+        let result = '';
         for (let i = 0; i < str.length; i++) {
             let letter = str[i];
             if (letter.toLowerCase() !== letter) {
                 // letter is uppercase
-                result += `-${letter.toLowerCase()}`
+                result += `-${letter.toLowerCase()}`;
             } else {
                 result += letter;
             }
@@ -95,7 +95,7 @@ export default class BaseElement extends HTMLElement {
     }
 
     _analyzeChildNodesForElement(element) {
-        console.log(element, "isAAElement=", this._isAAElement(element))
+        console.log(element, 'isAAElement=', this._isAAElement(element))
         if (this._isAAElement(element)) {
             this._replaceElementWithHolder(element);
         }
@@ -119,7 +119,7 @@ export default class BaseElement extends HTMLElement {
     }
 
     _isHolder(element) {
-        if (element.tagName == "AA-HOLDER") {
+        if (element.tagName == 'AA-HOLDER') {
             return true;
         }
         return false;
@@ -186,7 +186,7 @@ export default class BaseElement extends HTMLElement {
 
     _dispatchDebugEvent(detail) {
         if (this._debug) {
-            this.dispatchEvent(new CustomEvent("debug", { detail: detail }));
+            this.dispatchEvent(new CustomEvent('debug', { detail }));
         }
     }
 
@@ -194,8 +194,8 @@ export default class BaseElement extends HTMLElement {
 
 if (!customElements.get('aa-base-element')) {
 
-    if (typeof window.AANodeNames === "undefined") { window.AANodeNames = []; }
-    window.AANodeNames.push("AA-BASE-ELEMENT");
+    if (typeof window.AANodeNames === 'undefined') { window.AANodeNames = []; }
+    window.AANodeNames.push('AA-BASE-ELEMENT');
 
     customElements.define('aa-base-element', BaseElement);
 }
