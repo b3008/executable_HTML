@@ -15,7 +15,7 @@ export default class BaseElement extends HTMLElement {
     constructor() {
 
         super();
-        console.log('baseElement constructor');
+        // console.log('baseElement constructor');
 
         this._props = this.makePropertiesFromAttributes();
     }
@@ -24,7 +24,8 @@ export default class BaseElement extends HTMLElement {
 
 
     connectedCallback() {
-        console.log('baseElement connectedCallback');
+        // console.log('baseElement connectedCallback');
+        this._attachedTimestamp = new Date().getTime();
     }
 
 
@@ -41,10 +42,10 @@ export default class BaseElement extends HTMLElement {
 
 
             if (typeof this[prop] != 'undefined') {
-                console.log(prop, this[prop]);
+                // console.log(prop, this[prop]);
                 continue;
             } else {
-                console.log('defining property for ', prop);
+                // console.log('defining property for ', prop);
                 Object.defineProperty(this, prop, {
                     get: () => {
 
@@ -95,7 +96,7 @@ export default class BaseElement extends HTMLElement {
     }
 
     _analyzeChildNodesForElement(element) {
-        console.log(element, 'isAAElement=', this._isAAElement(element))
+        // console.log(element, 'isAAElement=', this._isAAElement(element))
         if (this._isAAElement(element)) {
             this._replaceElementWithHolder(element);
         }
@@ -153,7 +154,7 @@ export default class BaseElement extends HTMLElement {
         holder.heldElementOuterHTML = element.outerHTML;
 
         // holder.innerHTML = "holder for " + element.nodeName + " with name " + element.getAttribute("name")
-        console.log("replacing", element, "with", holder);
+        // console.log("replacing", element, "with", holder);
 
         holder.heldElement = element.cloneNode(false);
         //holder.heldElement.innerFragment = document.createRange().createContextualFragment(element.innerHTML);
@@ -186,8 +187,13 @@ export default class BaseElement extends HTMLElement {
 
     _dispatchDebugEvent(detail) {
         if (this._debug) {
-            this.dispatchEvent(new CustomEvent('debug', { detail }));
+            this.dispatchEvent(new CustomEvent('debug', { detail, bubbles:true }));
         }
+    }
+
+    _dispatchAssignableEnd() {
+        let assignableEndEvent = new CustomEvent('assignableEnd', { bubbles: true });
+        this.dispatchEvent(assignableEndEvent);
     }
 
 }

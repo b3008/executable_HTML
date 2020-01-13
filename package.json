@@ -7,7 +7,8 @@
     "lib": "lib"
   },
   "dependencies": {
-    "common-tags": "^1.8.0"
+    "common-tags": "^1.8.0",
+    "jsep": "^0.3.4"
   },
   "devDependencies": {
     "gulp": "^4.0.2"

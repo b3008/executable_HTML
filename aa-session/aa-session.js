@@ -12,7 +12,7 @@ export default class AASession extends BaseElement {
 
     constructor() {
         super();
-        console.log('creating session');
+        // console.log('creating session');
 
         this.mem = document.createElement('aa-memory');
 
@@ -68,13 +68,12 @@ export default class AASession extends BaseElement {
 
     connectedCallback() {
 
-        console.log('attaching session');
+        // console.log('attaching session');
         this.sessionID = this.myIdGenerator();
         this.sessionTime = new Date().getTime();
 
 
-        // if (this.shouldRun === null) this.shouldRun = true;
-        console.log('shouldRun = ', this.shouldRun);
+        // console.log('shouldRun = ', this.shouldRun);
         if ((this.shouldRun === null) || (this.shouldRun === true)) {
             this.run();
         }
@@ -101,7 +100,7 @@ export default class AASession extends BaseElement {
                             for (let i = 0; i < element.childNodes.length; i++) {
                                 result += this.getElementContent(element.childNodes[i]);
                             }
-                            console.log('result is ', result)
+                            // console.log('result is ', result)
                             return result;
                         }
                         else {
@@ -189,7 +188,7 @@ export default class AASession extends BaseElement {
 
 
             if (typeof child.nodeName != 'undefined') {
-                console.log(child.nodeName);
+                // console.log(child.nodeName);
                 if (child.nodeName === 'TEMPLATE') {
 
 

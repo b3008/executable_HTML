@@ -37,10 +37,10 @@ export default class AAHolder extends BaseElement {
     }
 
     display() {
-        console.log("display on", this);
+        // console.log("display on", this);
         this.$.display.hidden = false;
 
-        console.log("outerhtml is", this.heldElement.outerHTML);
+        // console.log("outerhtml is", this.heldElement.outerHTML);
         this.$.display.innerText = this.heldElementOuterHTML;
         debugger;
     }
@@ -50,6 +50,6 @@ export default class AAHolder extends BaseElement {
 
 if (!customElements.get('aa-holder')) {
     window.AANodeNames = window.AANodeNames|| []; 
-    window.AANodeNames.push("AA-HOLDER");
+    window.AANodeNames.push('AA-HOLDER');
     customElements.define('aa-holder', AAHolder);
 }
