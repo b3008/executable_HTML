@@ -2,6 +2,25 @@ import BaseElement from './../../aa-baseElement/baseElement.js'
 
 export default class AAWhen extends BaseElement {
 
+    static get observedAttributes() {
+        return ['name', 'should-run', 'debug'];
+    }
+
+    constructor(){
+        this.root = this.attachShadow({ mode: 'open' });
+        this.root.innerHTML = '<template><slot></slot></template>'
+    }
+    
+    connectedCallback(){
+        if(this.started) return;
+        this.started = true;
+        if(typeof this.innerFragment!="undefined")
+        {
+            this.analyzeChildNodesForElement(this.innerFragment);
+            this.appendChild(this.innerFragment);
+            this.restoreHeldNodes(this);
+        }
+    }
 }
 
 

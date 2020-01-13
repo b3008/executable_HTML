@@ -13,21 +13,21 @@ export default class AASequence extends BaseElement {
         this.root.innerHTML = '<slot></slot>';
     }
     connectedCallback() {
-        //super();
+        
 
         
-        if (this.id == "") console.warn(this, "has no id");
+        if (this.id === '') console.warn(this, 'has no id');
        
-        console.log("ready sequence", this.name);
+        // console.log('ready sequence', this.name);
         this.started = false;
 
 
-        console.log("attached sequence");
+        // console.log('attached sequence');
         if (this.displayAll) {
 
-            //if(typeof this.innerFragment=="undefined")
+            //if(typeof this.innerFragment=='undefined')
             {
-                console.warn(".innerFragment is undefined");
+                // console.warn('.innerFragment is undefined');
                 this.restoreHeldNodes(this)
             }
             return;
@@ -56,7 +56,7 @@ export default class AASequence extends BaseElement {
     get html() {
         return html`
             <slot></slot>
-            <button id="nextButton" hidden></button>
+            <button id='nextButton' hidden></button>
         `
     
     }
@@ -108,8 +108,8 @@ export default class AASequence extends BaseElement {
         if (this.started) return;
         //  an  .innerFragment member should have been supplied by an ema-session element containing this ema-sequence
         //  somewhere in its subtree. pick each child of the fragment separately
-        if (typeof this.innerFragment ==="undefined") {
-            console.warn(".innerFragment is undefined");
+        if (typeof this.innerFragment ==='undefined') {
+            console.warn('.innerFragment is undefined');
             this.restoreHeldNodes(this)
             return;
         }
@@ -131,17 +131,17 @@ export default class AASequence extends BaseElement {
 
             this.myFragmentChildren.push(this.innerFragment.children[i])
             this.innerFragment.children[i].assignableEndListener = this.assignableEndListener.bind(this);
-            // console.log("adding AssignableEnd to ", this.innerFragment.children[i])
-            // if(this.innerFragment.children[i].nodeName!="EMA-HOLDER")
+            // console.log('adding AssignableEnd to ', this.innerFragment.children[i])
+            // if(this.innerFragment.children[i].nodeName!='EMA-HOLDER')
             // {
-            // this.innerFragment.children[i].addEventListener("assignableEnd", this.innerFragment.children[i].assignableEndListener);
+            // this.innerFragment.children[i].addEventListener('assignableEnd', this.innerFragment.children[i].assignableEndListener);
             // }
         }
 
         this.next();
 
         if (this.nextKeyCode) {
-            this.addEventListener("keyup", function (e) {
+            this.addEventListener('keyup', function (e) {
 
             })
         }
@@ -152,11 +152,11 @@ export default class AASequence extends BaseElement {
             this.start(); 
         }
         
-        if (this.myFragmentChildren.length == 0) return;
-        console.log(this.fragmentChildrenCounter);
+        if (this.myFragmentChildren.length === 0) return;
+        // console.log(this.fragmentChildrenCounter);
         if (this.fragmentChildrenCounter >= this.myFragmentChildren.length) return null;
 
-        if (typeof this.currentNode != "undefined") this.formerNodes.push(this.currentNode);
+        if (typeof this.currentNode != 'undefined') this.formerNodes.push(this.currentNode);
         let fragmentChild = this.myFragmentChildren[this.fragmentChildrenCounter];
 
         let finalFragmentChild;
@@ -171,9 +171,9 @@ export default class AASequence extends BaseElement {
 
 
 
-        if (typeof this.currentNode != "undefined") {
+        if (typeof this.currentNode != 'undefined') {
 
-            this.currentNode.removeEventListener("assignableEnd", this.currentNode.assignableEndListener);
+            this.currentNode.removeEventListener('assignableEnd', this.currentNode.assignableEndListener);
         }
 
         //  update the current node
@@ -186,13 +186,13 @@ export default class AASequence extends BaseElement {
         //  it's important that the listener is added and the fragmentChildrenCounter increase
         //  before appending the child, otherwise, because appending nodes triggers their attached callback,
         //  certain nodes (like ema-choose that fails to be true in any condition)
-        //  will immediately dispatch an "assignableEnd"Event which in this case will call next()
+        //  will immediately dispatch an 'assignableEnd'Event which in this case will call next()
         //  again, before the current next() returns.
         //  If the listener has not been added, no one will catch the event
         //  and if fragmentChildrenCounter has not increased,
         //  next() will grab the same object again from this.myFragmentChildren
 
-        this.currentNode.addEventListener("assignableEnd", this.currentNode.assignableEndListener);
+        this.currentNode.addEventListener('assignableEnd', this.currentNode.assignableEndListener);
 
 
         this.appendChild(finalFragmentChild);
@@ -209,9 +209,9 @@ export default class AASequence extends BaseElement {
 
         e.stopPropagation();
         let next = this.next();
-        if (next == null) {
+        if (next === null) {
             debugger;
-            let assignableEndEvent = new CustomEvent("assignableEnd", { bubbles: true });
+            let assignableEndEvent = new CustomEvent('assignableEnd', { bubbles: true });
             this.dispatchEvent(assignableEndEvent);
         }
     }
@@ -222,8 +222,8 @@ export default class AASequence extends BaseElement {
 
 if (!customElements.get('aa-sequence')) {
 
-    if (typeof window.AANodeNames ==="undefined") { window.AANodeNames = []; }
-    window.AANodeNames.push("AA-SEQUENCE");
+    if (typeof window.AANodeNames ==='undefined') { window.AANodeNames = []; }
+    window.AANodeNames.push('AA-SEQUENCE');
 
     customElements.define('aa-sequence', AASequence);
 

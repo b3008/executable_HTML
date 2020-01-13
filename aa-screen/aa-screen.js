@@ -16,29 +16,25 @@ export default class AAScreen extends BaseElement {
 
     constructor(){
         super();
-        console.log('creating screen');
+        // console.log('creating screen');
         this.root = this.attachShadow({ mode: 'open' });
         
     }
 
 
     attributeChangedCallback(name, oldValue, newValue) {
-     console.log('attributeChangedCallback:', name, oldValue, newValue);
+    //  console.log('attributeChangedCallback:', name, oldValue, newValue);
     }
 
 
 
     connectedCallback() {
 
-        console.log('attaching screen');
+        // console.log('attaching screen');
         super.connectedCallback();
-       
         this.submitButtonText = this._submitButtonText || 'submit';
-        
         this.root.innerHTML = this.css + this.html;
-
-        this._attachedTimestamp = new Date().getTime();
-
+        
         if(this._started) { return; }
         this._started = true;
 
@@ -111,7 +107,7 @@ export default class AAScreen extends BaseElement {
             let child = emaChildren[i];
             if (child.demandsResponse) {
                 if (child.getValue()==null) {
-                    console.log(child, 'demands response');
+                    // console.log(child, 'demands response');
 
                     if (child.displayAttention) {
                         child.displayAttention();
