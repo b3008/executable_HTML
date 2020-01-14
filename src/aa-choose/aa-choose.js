@@ -25,16 +25,16 @@ export default class AAChoose extends BaseElement {
         this.sessionElement = this._getParentSession();
         if (this.sessionElement) if (this.sessionElement.mem) this.mem = this.sessionElement.mem;
 
-        if (this.started) { return }
+        if (this.started) { return; }
         if (this._shouldRun) {
-            if (typeof this.innerFragment != 'undefined') {
+            if (typeof this.innerFragment !== 'undefined') {
                 this._analyzeChildNodesForElement(this.innerFragment);
                 let nodes = this._getNodeToInstantiate();
                 if (nodes.length == 0) {
                     this._dispatchAssignableEnd();
                 } else {
                     for (let i = 0; i < nodes.length; i++) {
-                        if (typeof nodes[i] == "undefined") {
+                        if (typeof nodes[i] === 'undefined') {
                             this._dispatchAssignableEnd();
                         }
                         else {
@@ -70,7 +70,7 @@ export default class AAChoose extends BaseElement {
         let isChildTrue = false;
         for (let i = 0; i < this.innerFragment.children.length; i++) {
 
-            let child = this.innerFragment.children[i]
+            let child = this.innerFragment.children[i];
 
             this.myFragmentChildren.push(child)
             if (this._isHolder(child)) {
