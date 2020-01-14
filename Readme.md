@@ -14,6 +14,9 @@ Please refer to [this paper](https://link.springer.com/article/10.3758/s13428-01
 The ultimate aim is to produce a single representation of a data collection protocol that is both human-readable and computer executable.ss
 
 
+
+## Running
+
 ### Tests
 
 #### Testing in the browser
