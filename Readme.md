@@ -13,9 +13,12 @@ Please refer to [this paper](https://link.springer.com/article/10.3758/s13428-01
 
 The ultimate aim is to produce a single representation of a data collection protocol that is both human-readable and computer executable.ss
 
-## Running
 
-At this point I am transcribing an older codebase written with Polymer v2 to the new standard custom elements API. In the end it should all compile into single ES6 module.
-
-For now only the tests can be run. Raise a server at localhost, e.g using
+### Tests
+Raise a server at localhost, e.g using
 [live-server](https://www.npmjs.com/package/live-server) and load `/tests/test.html`
+
+
+
+### Distributable
+Make sure you have `webpack` and `webpack-cli` installed. Run webpack at the root directory to compile all modules under `./src` into a production-mode single source, stored under `./dist/aaCustomElements.js`
