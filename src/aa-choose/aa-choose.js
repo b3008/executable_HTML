@@ -48,11 +48,6 @@ export default class AAChoose extends BaseElement {
         }
     }
 
-
-    displayAttention() {
-        this.querySelector('#attention').style.display = 'block';
-    }
-
     _getNodeToInstantiate() {
 
         this.started = true;
