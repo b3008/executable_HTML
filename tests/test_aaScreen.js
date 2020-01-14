@@ -1,3 +1,5 @@
+import '../aa-screen/aa-screen.js';
+
 var expect = chai.expect;
 var assert = chai.assert;
 
@@ -30,9 +32,8 @@ describe('aa-screen', () => {
                     <div>test</div>
                 </aa-screen>`
             let screen1 = document.querySelector('#screen1');
-            if (screen1.name == "first") {
-                done();
-            }
+            assert(screen1.name==="first", "screen1 shold have a name attribute");
+            done();
 
         });
 
