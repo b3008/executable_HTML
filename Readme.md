@@ -15,10 +15,15 @@ The ultimate aim is to produce a single representation of a data collection prot
 
 
 ### Tests
+
+#### Testing in the browser
 Raise a server at localhost, e.g using
 [live-server](https://www.npmjs.com/package/live-server) and load `/tests/test.html`
 
-
+#### Headless testing
+Run `npm test`
 
 ### Distributable
 Make sure you have `webpack` and `webpack-cli` installed. Run webpack at the root directory to compile all modules under `./src` into a production-mode single source, stored under `./dist/aaCustomElements.js`
+
+Alternatively, run `npm build`
