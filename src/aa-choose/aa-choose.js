@@ -3,7 +3,7 @@ import './aa-when/aa-when.js';
 import './aa-otherwise/aa-otherwise.js';
 
 
-import jsep from  './../lib/jsep/jsep.js';
+import jsep from './../lib/jsep/jsep.js';
 export default class AAChoose extends BaseElement {
 
     static get observedAttributes() {
@@ -17,19 +17,16 @@ export default class AAChoose extends BaseElement {
         // console.log('creating aa-choose');
         this.root = this.attachShadow({ mode: 'open' });
         this.root.innerHTML = "<slot></slot>"
-        
+
     }
 
     connectedCallback() {
 
         // console.log('aa-choose attached');
         this._shouldRun = (this.shouldRun === null) || (this.shouldRun === true);
-      
-    
-        this._sessionElement = this;
-        while ((this._sessionElement != null) && (this._sessionElement.nodeName != 'AA-SESSION')) {
-            this._sessionElement = this._sessionElement.parentNode;
-        }
+
+
+        this.sessionElement = this._getParentSession();
         if (this.sessionElement) if (this.sessionElement.mem) this.mem = this.sessionElement.mem;
 
         if (this.started) { return };
@@ -61,9 +58,9 @@ export default class AAChoose extends BaseElement {
     }
 
 
-    displayAttention(){
-                
-        this.querySelector('#attention').style.display='block';
+    displayAttention() {
+
+        this.querySelector('#attention').style.display = 'block';
     }
 
 
@@ -122,7 +119,7 @@ export default class AAChoose extends BaseElement {
         // console.log(this.fragmentChildrenCounter);
         if (this.fragmentChildrenCounter >= this.myFragmentChildren.length) return;
 
-        if (!this.currentNode){ this.formerNodes.push(this.currentNode);}
+        if (!this.currentNode) { this.formerNodes.push(this.currentNode); }
         var fragmentChild = this.myFragmentChildren[this.fragmentChildrenCounter];
 
         if (this.isHolder(fragmentChild)) {
@@ -172,25 +169,25 @@ export default class AAChoose extends BaseElement {
                     return eval(testCopy);
                 }
             }
-           
+
         } catch (e) {
             console.log("parse error:", e);
         }
-        
+
     }
 
 
     getIdentifiersInParseTree(tree) {
 
-        
+
         if (typeof tree.type != 'undefined') {
             if (tree.type == 'BinaryExpression') {
-        
+
 
                 var leftList = this.getIdentifiersInParseTree(tree.left);
                 var rightList = this.getIdentifiersInParseTree(tree.right);
 
-        
+
 
                 let idList = [];
 

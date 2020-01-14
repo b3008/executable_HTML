@@ -1,30 +1,26 @@
-import '../src/aa-session/aa-session.js'
-import '../src/aa-choose/aa-choose.js'
-
+import '../src/aa-session/aa-session.js';
+import '../src/aa-choose/aa-choose.js';
 // var expect = chai.expect;
 var assert = chai.assert;
 var container;
 
-
-
 describe('aa-choose', () => {
 
-
-    before(function () {
-        container = document.createElement('div');
-        document.body.appendChild(container);
-
+    before(function(){
+        container = document.querySelector('#container');
+        if(!container){
+            container = document.createElement('div');
+            container.id = "container";
+            document.body.appendChild(container);
+        }
     });
 
     beforeEach(function () {
-
         container.innerHTML = "";
     });
 
     describe('instance', function () {
-
-
-        it('test instantiation of true and false cases', function (done) {
+        it('tests instantiation of true and false cases', function (done) {
 
             container.innerHTML = html`
             

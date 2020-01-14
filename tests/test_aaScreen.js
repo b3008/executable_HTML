@@ -1,5 +1,4 @@
 import '../src/aa-screen/aa-screen.js';
-
 // var expect = chai.expect;
 var assert = chai.assert;
 
@@ -7,20 +6,18 @@ var container;
 
 describe('aa-screen', () => {
 
-
     before(function(){
-        container = document.createElement('div');
-        document.body.appendChild(container);
-
+        container = document.querySelector('#container');
+        if(!container){
+            container = document.createElement('div');
+            container.id = "container";
+            document.body.appendChild(container);
+        }
     });
-    
-    afterEach(function() {
-        // runs after each test in this block
-        // document.body.innerHTML = '';
+
+    beforeEach(function() {
         container.innerHTML = "";
-      });
-
-
+    });
 
     describe('instance', function () {
         it('should find screen1 with name "first"', function (done) {

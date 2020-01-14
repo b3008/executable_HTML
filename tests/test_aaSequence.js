@@ -1,27 +1,24 @@
-import '../../src/aa-sequence/aa-sequence.js'
-
+import '../../src/aa-sequence/aa-sequence.js';
 // var expect = chai.expect;
 var assert = chai.assert;
 var container;
 
-
 describe('aa-sequence', () => {
 
-
-    before(function () {
-        container = document.createElement('div');
-        document.body.appendChild(container);
-
+      before(function(){
+        container = document.querySelector('#container');
+        if(!container){
+            container = document.createElement('div');
+            container.id = "container";
+            document.body.appendChild(container);
+        }
     });
 
     beforeEach(function () {
-
         container.innerHTML = "";
     });
 
     describe('instance', function () {
-
-
         it('should find sequence and run it', function (done) {
 
             container.innerHTML = html`
