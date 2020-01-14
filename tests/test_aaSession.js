@@ -1,8 +1,10 @@
+import '../src/aa-session/aa-session.js'
+
 // var expect = chai.expect;
 var assert = chai.assert;
 var container;
 
-import '../aa-session/aa-session.js'
+
 
 
 describe('aa-session', () => {
