@@ -1,30 +1,24 @@
-import '../src/aa-session/aa-session.js'
-
+import '../src/aa-session/aa-session.js';
 // var expect = chai.expect;
 var assert = chai.assert;
 var container;
 
-
-
-
 describe('aa-session', () => {
-
-
     before(function(){
-        container = document.createElement('div');
-        document.body.appendChild(container);
-
+        container = document.querySelector('#container');
+        if(!container){
+            container = document.createElement('div');
+            container.id = "container";
+            document.body.appendChild(container);
+        }
     });
 
     beforeEach(function() {
-        // runs after each test in this block
-        // document.body.innerHTML = '';
+        container = document.querySelector('#container');
         container.innerHTML = "";
-      });
+    });
 
     describe('instance', function () {
-
-
         it('should find session', function (done) {
 
             container.innerHTML = html`
@@ -48,27 +42,28 @@ describe('aa-session', () => {
             let session = document.querySelector('#session');
             let screen = document.querySelector("#screen1");
             assert(session.tagName=="AA-SESSION", "AA-SESSION")
-            assert(session.name=="test", "test")
+            assert(session.name=="test", "name should equal test");
             assert(session.debug===true, "true")
             assert(screen!==null, "screen should be an object")
             done();            
 
         });
 
-        it('session should not render contents', function (done) {
+        it('session should not render contents when should-run is false', function (done) {
 
+            
             container.innerHTML = html`
             second session:
             <aa-session debug=true name="test" id="session" should-run=false> 
                 <template>
-                    <aa-screen id="screen1" name="first">
+                    <aa-screen id="screen3" name="first">
                         <div>test</div>
                     </aa-screen>
                 </template>
             <aa-session>`;
 
             let session = document.querySelector('#session');
-            let screen = document.querySelector("#screen1");
+            let screen = document.querySelector("#screen3");
             assert(session.shouldRun==false, "shouldRun is false")
             assert(session.name=="test", "session.name should be test")
             assert(session.debug, "session.debug should be true");

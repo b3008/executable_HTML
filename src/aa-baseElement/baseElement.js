@@ -13,18 +13,11 @@ export default class BaseElement extends HTMLElement {
 
 
     constructor() {
-
         super();
-        // console.log('baseElement constructor');
-        
         this._props = this.makePropertiesFromAttributes();
     }
 
-
-
-
     connectedCallback() {
-        // console.log('baseElement connectedCallback');
         this._attachedTimestamp = new Date().getTime();
     }
 
@@ -194,6 +187,14 @@ export default class BaseElement extends HTMLElement {
     _dispatchAssignableEnd() {
         let assignableEndEvent = new CustomEvent('assignableEnd', { bubbles: true });
         this.dispatchEvent(assignableEndEvent);
+    }
+
+    _getParentSession(){
+        let _sessionElement = this;
+        while ((_sessionElement != null) && (_sessionElement.nodeName != 'AA-SESSION')) {
+            _sessionElement = _sessionElement.parentNode;
+        }
+        return _sessionElement;
     }
 
 }

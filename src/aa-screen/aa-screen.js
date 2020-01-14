@@ -5,8 +5,7 @@ export default class AAScreen extends BaseElement {
 
 
 
-    static get observedAttributes() {
-        
+    static get observedAttributes() { 
         return [
             'submit-button-text',
             'submit-button-hidden',
@@ -14,24 +13,12 @@ export default class AAScreen extends BaseElement {
         ];
     }
 
-    constructor() {
-        
+    constructor() {        
         super();
-        // console.log('creating screen');
         this.root = this.attachShadow({ mode: 'open' });
-
     }
 
-
-    // attributeChangedCallback(name, oldValue, newValue) {
-    //     //  console.log('attributeChangedCallback:', name, oldValue, newValue);
-    // }
-
-
-
     connectedCallback() {
-
-        // console.log('attaching screen');
         super.connectedCallback();
         this.submitButtonText = this._submitButtonText || 'submit';
         this.root.innerHTML = this.css + this.html;
