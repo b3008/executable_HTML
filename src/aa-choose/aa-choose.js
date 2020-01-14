@@ -21,35 +21,28 @@ export default class AAChoose extends BaseElement {
     }
 
     connectedCallback() {
-
-        // console.log('aa-choose attached');
         this._shouldRun = (this.shouldRun === null) || (this.shouldRun === true);
-
-
         this.sessionElement = this._getParentSession();
         if (this.sessionElement) if (this.sessionElement.mem) this.mem = this.sessionElement.mem;
 
-        if (this.started) { return };
+        if (this.started) { return }
         if (this._shouldRun) {
             if (typeof this.innerFragment != 'undefined') {
                 this._analyzeChildNodesForElement(this.innerFragment);
-                var nodes = this._getNodeToInstantiate();
+                let nodes = this._getNodeToInstantiate();
                 if (nodes.length == 0) {
                     this._dispatchAssignableEnd();
                 } else {
-                    for (var i = 0; i < nodes.length; i++) {
-                        var node = nodes[i];
-                        // console.log('selected node is', node);
-                        if (typeof node == "undefined") {
+                    for (let i = 0; i < nodes.length; i++) {
+                        if (typeof nodes[i] == "undefined") {
                             this._dispatchAssignableEnd();
                         }
                         else {
-                            this.appendChild(node);
+                            this.appendChild(nodes[i]);
                             this._restoreHeldNodes(this);
                         }
                     }
                 }
-
             }
             else {
                 this._restoreHeldNodes(this);
@@ -74,10 +67,10 @@ export default class AAChoose extends BaseElement {
         let nodeOtherwise = [];
 
         this.myFragmentChildren = [];
-        var isChildTrue = false;
-        for (var i = 0; i < this.innerFragment.children.length; i++) {
+        let isChildTrue = false;
+        for (let i = 0; i < this.innerFragment.children.length; i++) {
 
-            var child = this.innerFragment.children[i]
+            let child = this.innerFragment.children[i]
 
             this.myFragmentChildren.push(child)
             if (this._isHolder(child)) {
@@ -93,10 +86,8 @@ export default class AAChoose extends BaseElement {
                     //we reached otherwise, should we stop and attach it?
                     // /return child;
                     nodeOtherwise.push(child)
-
                 }
             }
-
         }
 
         if (nodesToReturn.length == 0) {
@@ -108,41 +99,24 @@ export default class AAChoose extends BaseElement {
 
     }
 
-
-
-
-
-
     run() {
         this.started = true;
         if (this.myFragmentChildren.length === 0) return;
-        // console.log(this.fragmentChildrenCounter);
         if (this.fragmentChildrenCounter >= this.myFragmentChildren.length) return;
-
         if (!this.currentNode) { this.formerNodes.push(this.currentNode); }
-        var fragmentChild = this.myFragmentChildren[this.fragmentChildrenCounter];
-
+        
+        let finalFragmentChild;
+        let fragmentChild = this.myFragmentChildren[this.fragmentChildrenCounter];
         if (this.isHolder(fragmentChild)) {
             finalFragmentChild = this.replaceHolderWithElement(fragmentChild);
         }
         else {
-
             finalFragmentChild = fragmentChild;
-
         }
-        //debugger;
         this.appendChild(finalFragmentChild);
-        this._restoreHeldNodes(finalFragmentChild)
+        this._restoreHeldNodes(finalFragmentChild);
         this.fragmentChildrenCounter += 1;
     }
-
-
-
-
-
-
-
-
 
     evaluate(element) {
 
