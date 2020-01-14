@@ -16,7 +16,7 @@ export default class BaseElement extends HTMLElement {
 
         super();
         // console.log('baseElement constructor');
-
+        
         this._props = this.makePropertiesFromAttributes();
     }
 
@@ -30,7 +30,7 @@ export default class BaseElement extends HTMLElement {
 
 
     makePropertiesFromAttributes() {
-
+        
         let ElementClass = customElements.get(this.tagName.toLowerCase());
 
         let attr = ElementClass.observedAttributes;
@@ -48,7 +48,7 @@ export default class BaseElement extends HTMLElement {
                 // console.log('defining property for ', prop);
                 Object.defineProperty(this, prop, {
                     get: () => {
-
+                     
                         let result = this.getAttribute(attr[i]);
                         if (result === 'true') { return true; }
                         else if (result === 'false') { return false; }
