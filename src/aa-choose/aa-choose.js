@@ -7,14 +7,11 @@ import jsep from './../lib/jsep/jsep.js';
 export default class AAChoose extends BaseElement {
 
     static get observedAttributes() {
-
         return ['name', 'should-run', 'debug'];
-
     }
 
     constructor() {
         super();
-        // console.log('creating aa-choose');
         this.root = this.attachShadow({ mode: 'open' });
         this.root.innerHTML = "<slot></slot>"
 
@@ -34,11 +31,12 @@ export default class AAChoose extends BaseElement {
                     this._dispatchAssignableEnd();
                 } else {
                     for (let i = 0; i < nodes.length; i++) {
-                        if (typeof nodes[i] === 'undefined') {
+                        let node=nodes[parseInt(i)];
+                        if (typeof node === 'undefined') {
                             this._dispatchAssignableEnd();
                         }
                         else {
-                            this.appendChild(nodes[i]);
+                            this.appendChild(node);
                             this._restoreHeldNodes(this);
                         }
                     }
@@ -52,13 +50,8 @@ export default class AAChoose extends BaseElement {
 
 
     displayAttention() {
-
         this.querySelector('#attention').style.display = 'block';
     }
-
-
-
-
 
     _getNodeToInstantiate() {
 
