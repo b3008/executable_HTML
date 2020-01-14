@@ -1,8 +1,10 @@
-var expect = chai.expect;
+import '../../src/aa-sequence/aa-sequence.js'
+
+// var expect = chai.expect;
 var assert = chai.assert;
 var container;
 
-import '../aa-sequence/aa-sequence.js'
+
 describe('aa-sequence', () => {
 
 

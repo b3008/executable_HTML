@@ -1,6 +1,6 @@
-import '../aa-screen/aa-screen.js';
+import '../src/aa-screen/aa-screen.js';
 
-var expect = chai.expect;
+// var expect = chai.expect;
 var assert = chai.assert;
 
 var container;
@@ -23,8 +23,6 @@ describe('aa-screen', () => {
 
 
     describe('instance', function () {
-
-
         it('should find screen1 with name "first"', function (done) {
 
             container.innerHTML = `

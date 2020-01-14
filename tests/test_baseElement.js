@@ -1,11 +1,10 @@
-
+import BaseElement from "../src/aa-baseElement/baseElement.js";
 
 // var expect = chai.expect;
 var assert = chai.assert;
-
 var container;
 
-import BaseElement from "../aa-baseElement/baseElement.js";
+
 
 describe('baseElement', () => {
 

@@ -7,11 +7,11 @@
     "lib": "lib"
   },
   "dependencies": {
-    "common-tags": "^1.8.0",
     "jsep": "^0.3.4"
   },
   "devDependencies": {
-    "gulp": "^4.0.2"
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
