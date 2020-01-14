@@ -682,7 +682,6 @@ export default (function (root) {
 
 		if(!root){
 			return  jsep;
-			return;
 		}
 		var old_jsep = root.jsep;
 		// The star of the show! It's a function!

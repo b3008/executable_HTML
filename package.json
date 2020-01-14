@@ -23,7 +23,7 @@
   },
   "scripts": {
     "test": "karma start --single-run --browsers ChromeHeadless,FirefoxHeadless karma.config.js",
-    "build": "node node_modules/webpack/bin/webpack.js";
+    "build": "node node_modules/webpack/bin/webpack.js"
   },
   "author": "",
   "license": "ISC"
