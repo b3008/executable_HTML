@@ -1,4 +1,4 @@
-import '../../src/aa-sequence/aa-sequence.js';
+import '../src/aa-sequence/aa-sequence.js';
 // var expect = chai.expect;
 var assert = chai.assert;
 var container;
