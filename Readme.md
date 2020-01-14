@@ -21,9 +21,9 @@ Raise a server at localhost, e.g using
 [live-server](https://www.npmjs.com/package/live-server) and load `/tests/test.html`
 
 #### Headless testing
-Run `npm test`
+Run `npm run test`. It will run the browser tests and also produce a coverate report for headless Chrome and Firefox under `./coverage`.
 
 ### Distributable
 Make sure you have `webpack` and `webpack-cli` installed. Run webpack at the root directory to compile all modules under `./src` into a production-mode single source, stored under `./dist/aaCustomElements.js`
 
-Alternatively, run `npm build`
+Alternatively, run `npm run build`
