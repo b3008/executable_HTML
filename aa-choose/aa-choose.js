@@ -16,6 +16,7 @@ export default class AAChoose extends BaseElement {
         super();
         // console.log('creating aa-choose');
         this.root = this.attachShadow({ mode: 'open' });
+        this.root.innerHTML = "<slot></slot>"
         
     }
 
@@ -82,7 +83,7 @@ export default class AAChoose extends BaseElement {
             var child = this.innerFragment.children[i]
 
             this.myFragmentChildren.push(child)
-            if (this.isHolder(child)) {
+            if (this._isHolder(child)) {
                 if (child.heldElement.nodeName == 'AA-WHEN') {
                     isChildTrue = this.evaluate(child.heldElement);
                     if (isChildTrue) {

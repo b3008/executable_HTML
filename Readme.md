@@ -1,7 +1,7 @@
 # executable HTML
 
 ## TL;DR
-This is a set of custom elements to provide piecemeal insertion of HTML into the DOM tree, either in sequential or conditional fashion, effectively rendering said HTML executable.
+This is a set of custom elements to provide piecemeal insertion of HTML into the DOM tree, in either sequential or conditional fashion, effectively rendering said HTML executable.
 
 ## Why this was built
 
