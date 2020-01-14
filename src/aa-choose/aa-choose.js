@@ -31,7 +31,7 @@ export default class AAChoose extends BaseElement {
                     this._dispatchAssignableEnd();
                 } else {
                     for (let i = 0; i < nodes.length; i++) {
-                        let node=nodes[parseInt(i)];
+                        let node=nodes[i];
                         if (typeof node === 'undefined') {
                             this._dispatchAssignableEnd();
                         }
