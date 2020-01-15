@@ -160,18 +160,7 @@ export default class AASession extends BaseElement {
     run() {
 
         this.started = true;
-
-        this.templateHolders = [];
-        this.holderList = [];
-        this.nodesToAppendAfterChild = [];
-
-
-
-
-        this.referencedItems = this.getReferencedItems(this);
-
-
-
+       
         this._replaceChildNodesWithHolderElements(this.myTemplate.content);
         this.appendChild(this.myTemplate.content);
 
@@ -179,35 +168,23 @@ export default class AASession extends BaseElement {
             this._restoreHeldNodes(this);
         }
 
-
         this.initialChildNodesList = [];
-
-
         for (let i = 0; i < this.childNodes.length; i++) {
             this.initialChildNodesList.push(this.childNodes[i]);
         }
         for (let i = 0; i < this.initialChildNodesList.length; i++) {
             let child = this.initialChildNodesList[i];
-
-
             if (typeof child.nodeName != 'undefined') {
-                // console.log(child.nodeName);
                 if (child.nodeName === 'TEMPLATE') {
-
-
                     this._replaceChildNodesWithHolderElements(child.content);
                     this.appendChild(child.content);
 
                     if ((this.shouldRun === null) || (this.shouldRun === true)) {
                         this._restoreHeldNodes(this);
                     }
-
                 }
             }
-
         }
-
-
     }
 
 

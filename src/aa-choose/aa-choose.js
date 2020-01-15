@@ -20,8 +20,7 @@ export default class AAChoose extends BaseElement {
     connectedCallback() {
         this._shouldRun = (this.shouldRun === null) || (this.shouldRun === true);
         this.sessionElement = this._getParentSession();
-        if (this.sessionElement) if (this.sessionElement.mem) this.mem = this.sessionElement.mem;
-
+        
         if (this.started) { return; }
         if (this._shouldRun) {
             if (typeof this.innerFragment !== 'undefined') {
