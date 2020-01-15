@@ -32,7 +32,7 @@ export default class AAScreen extends BaseElement {
 
 
         if (typeof this.innerFragment != 'undefined') {
-            this._analyzeChildNodesForElement(this.innerFragment);
+            this._replaceChildNodesWithHolderElements(this.innerFragment);
             this.appendChild(this.innerFragment);
             this._restoreHeldNodes(this);
         }
@@ -127,12 +127,12 @@ export default class AAScreen extends BaseElement {
             return;
         }
 
-        //dispatch assignableEnd event
+        //dispatch endEvent 
         let valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: this.getValue() } });
         this.dispatchEvent(valueSubmitEvent);
 
-        let assignableEndEvent = new CustomEvent('assignableEnd', { bubbles: true, detail: { value: this.getValue() } });
-        this.dispatchEvent(assignableEndEvent);
+        this._dispatchEndEvent(this.getValue());
+        
 
         if (typeof e.detail.callback != 'undefined') {
             e.detail.callback(e);

@@ -1,6 +1,6 @@
 {
   "name": "majimecustomelements",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -27,7 +27,6 @@
   "scripts": {
     "test": "karma start --single-run --browsers ChromeHeadless,FirefoxHeadless karma.config.js --verbose",
     "build": "node node_modules/webpack/bin/webpack.js"
-    
   },
   "author": "",
   "license": "ISC"

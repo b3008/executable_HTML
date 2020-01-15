@@ -35,7 +35,7 @@ describe('aa-variable', () => {
             let var1 = document.querySelector('#v');
             assert(var1.name==='var1', 'name should be var1');
             assert(var1.value==='val1', 'value should be val1');
-            assert(session.mem.dataset[var1.name]===var1.value, 'variable name and value is reflected in session memory\'s dataset');
+            assert(session._mem.dataset[var1.name]===var1.value, 'variable name and value is reflected in session memory\'s dataset');
             
             done();            
 

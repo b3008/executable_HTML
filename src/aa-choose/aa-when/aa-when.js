@@ -17,7 +17,7 @@ export default class AAWhen extends BaseElement {
         this.started = true;
         if(typeof this.innerFragment!="undefined")
         {
-            this._analyzeChildNodesForElement(this.innerFragment);
+            this._replaceChildNodesWithHolderElements(this.innerFragment);
             this.appendChild(this.innerFragment);
             this._restoreHeldNodes(this);
         }

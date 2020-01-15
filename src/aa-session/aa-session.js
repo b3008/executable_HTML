@@ -14,7 +14,7 @@ export default class AASession extends BaseElement {
         super();
         // console.log('creating session');
 
-        this.mem = document.createElement('aa-memory');
+        this._mem = document.createElement('aa-memory');
 
         this.myTemplate = document.createElement('template');
         this.myTemplate.innerHTML = this.innerHTML;
@@ -34,7 +34,7 @@ export default class AASession extends BaseElement {
                 sessionName: this.name,
                 variables: Object.keys(e.detail.value),
             };
-            this.mem.saveReplyValue(e.detail.value, false);
+            this._mem.saveReplyValue(e.detail.value, false);
 
 
             let inputSubmitEvent = new CustomEvent('inputSubmit', { bubbles: true, detail: { input } });
@@ -47,10 +47,10 @@ export default class AASession extends BaseElement {
 
         })
 
-        this.addEventListener('assignableEnd', (e) => {
-
-            let assignableEndEvent = new CustomEvent('sessionEnd', { bubbles: true, detail: {} });
-            this.dispatchEvent(assignableEndEvent);
+        this.addEventListener('endEvent', (e) => {
+            if(!this.debug) e.stopPropagation();
+            let sessionEndEvent = new CustomEvent('sessionEndEvent', { bubbles: true, detail: 'sessionEnd' });
+            this.dispatchEvent(sessionEndEvent);
         })
 
 
@@ -72,7 +72,10 @@ export default class AASession extends BaseElement {
         this.sessionID = this.myIdGenerator();
         this.sessionTime = new Date().getTime();
 
-
+        let sessionDatum = Object.keys(this.dataset);
+        for(let i in sessionDatum){
+            this.setData(sessionDatum[i], this.dataset[sessionDatum[i]]);
+        }
         // console.log('shouldRun = ', this.shouldRun);
         if ((this.shouldRun === null) || (this.shouldRun === true)) {
             this.run();
@@ -157,54 +160,31 @@ export default class AASession extends BaseElement {
     run() {
 
         this.started = true;
-
-        this.templateHolders = [];
-        this.holderList = [];
-        this.nodesToAppendAfterChild = [];
-
-
-
-
-        this.referencedItems = this.getReferencedItems(this);
-
-
-
-        this._analyzeChildNodesForElement(this.myTemplate.content);
+       
+        this._replaceChildNodesWithHolderElements(this.myTemplate.content);
         this.appendChild(this.myTemplate.content);
 
         if ((this.shouldRun === null) || (this.shouldRun === true)) {
             this._restoreHeldNodes(this);
         }
 
-
         this.initialChildNodesList = [];
-
-
         for (let i = 0; i < this.childNodes.length; i++) {
             this.initialChildNodesList.push(this.childNodes[i]);
         }
         for (let i = 0; i < this.initialChildNodesList.length; i++) {
             let child = this.initialChildNodesList[i];
-
-
             if (typeof child.nodeName != 'undefined') {
-                // console.log(child.nodeName);
                 if (child.nodeName === 'TEMPLATE') {
-
-
-                    this._analyzeChildNodesForElement(child.content);
+                    this._replaceChildNodesWithHolderElements(child.content);
                     this.appendChild(child.content);
 
                     if ((this.shouldRun === null) || (this.shouldRun === true)) {
                         this._restoreHeldNodes(this);
                     }
-
                 }
             }
-
         }
-
-
     }
 
 
@@ -223,7 +203,16 @@ export default class AASession extends BaseElement {
         return referencedItems;
     }
 
+    getData(name){
+        return this._mem.getData(name);
+    }
+    setData(name, value){
+        return this._mem.setData(name, value);
+    }
 
+    getDataDump(){
+        return this._mem.dataset;
+    }
 
 
 

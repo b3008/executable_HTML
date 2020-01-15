@@ -20,20 +20,19 @@ export default class AAChoose extends BaseElement {
     connectedCallback() {
         this._shouldRun = (this.shouldRun === null) || (this.shouldRun === true);
         this.sessionElement = this._getParentSession();
-        if (this.sessionElement) if (this.sessionElement.mem) this.mem = this.sessionElement.mem;
-
+        
         if (this.started) { return; }
         if (this._shouldRun) {
             if (typeof this.innerFragment !== 'undefined') {
-                this._analyzeChildNodesForElement(this.innerFragment);
+                this._replaceChildNodesWithHolderElements(this.innerFragment);
                 let nodes = this._getNodeToInstantiate();
                 if (nodes.length == 0) {
-                    this._dispatchAssignableEnd();
+                    this._dispatchEndEvent();
                 } else {
                     for (let i = 0; i < nodes.length; i++) {
-                        let node=nodes[i];
+                        let node = nodes[i];
                         if (typeof node === 'undefined') {
-                            this._dispatchAssignableEnd();
+                            this._dispatchEndEvent();
                         }
                         else {
                             this.appendChild(node);
@@ -44,6 +43,9 @@ export default class AAChoose extends BaseElement {
             }
             else {
                 this._restoreHeldNodes(this);
+                if (this.childNodes.length == 0) {
+                    this._dispatchEndEvent();
+                }
             }
         }
     }
@@ -92,7 +94,7 @@ export default class AAChoose extends BaseElement {
         if (this.myFragmentChildren.length === 0) return;
         if (this.fragmentChildrenCounter >= this.myFragmentChildren.length) return;
         if (!this.currentNode) { this.formerNodes.push(this.currentNode); }
-        
+
         let finalFragmentChild;
         let fragmentChild = this.myFragmentChildren[this.fragmentChildrenCounter];
         if (this.isHolder(fragmentChild)) {
@@ -108,123 +110,54 @@ export default class AAChoose extends BaseElement {
 
     evaluate(element) {
 
-        var test = element.getAttribute('test');
-        var testCopy = test;
+        let test = element.getAttribute('test');
         if ((test == null) || (test == '')) return null;
-        try {
+        return this.evaluateTestExpression(test);
+        
+    }
 
+    evaluateTestExpression(test) {
+
+        let expr = this.replaceExpressionIdentifiersWithValues(test);
+        // after replacing known variable names with their values in the string, test to see if the expression can be parsed
+        try {
             var parseTree = jsep(test);
             if ((parseTree.left.type == "Literal") && (parseTree.right.type == "Literal")) {
                 return eval(test);
-            }
+            } 
             else {
-                var identifiers = this.getIdentifiersInParseTree(parseTree);
-                for (var i = 0; i < identifiers.length; i++) {
-                    var value = this.mem.load(identifiers[i]);
-                    if (typeof value == "string") value = `'${value}'`;
-                    var regex = new RegExp(identifiers[i], "g");
-                    testCopy = testCopy.replace(regex, value);
-                }
-                // console.log("will evaluate", testCopy);
-                var replacedTree = jsep(testCopy);
-                if ((replacedTree.left.type == "Literal") && (replacedTree.right.type == "Literal")) {
-                    return eval(testCopy);
-                }
+              // there are still strings in the expression, which are unknown, an exception should be raised
+              throw "unknown identifiers in expression : " + expr;
             }
 
         } catch (e) {
-            console.log("parse error:", e);
+            console.error("parse error:", e);
         }
 
     }
 
 
-    getIdentifiersInParseTree(tree) {
-
-
-        if (typeof tree.type != 'undefined') {
-            if (tree.type == 'BinaryExpression') {
-
-
-                var leftList = this.getIdentifiersInParseTree(tree.left);
-                var rightList = this.getIdentifiersInParseTree(tree.right);
-
-
-
-                let idList = [];
-
-                // console.log("leftList is", typeof leftList)
-
-                if (typeof leftList == "object") {
-                    console.log(leftList)
-                    idList.push.apply(idList, leftList);
-                }
-
-                // console.log("rightList is", typeof rightList)
-
-                if (typeof rightList == "object") {
-                    idList.push.apply(idList, rightList);
-                }
-
-                return idList;
-
-
+    replaceExpressionIdentifiersWithValues(expression){
+        let session = this._getParentSession();
+         let result = expression.toUpperCase();
+        
+        let originalIdentifiers = Object.keys(session.getDataDump());
+        let upperCaseIdentifiers = originalIdentifiers.map(s=>s.toUpperCase());
+        for(let i in upperCaseIdentifiers)
+        {
+            let value = session.getData(originalIdentifiers[i]);
+            let finalValue = parseInt(value);
+            if(finalValue!=value) {
+                if(value==="null") { finalValue = `null`; }
+                else if(value==="true") {finalValue = "true";}
+                else if(value==="false") { finalValue = "false"}
+                else finalValue = `"${value}"`
             }
-
-            if (tree.type == "Identifier") {
-
-
-                return [tree.name]
-            }
-
+            let r = new RegExp(upperCaseIdentifiers[i], "g");
+            result = result.replace( r, finalValue );
         }
+       return result;
     }
-
-
-
-
-    evalParseTree(e) {
-        if (typeof e.type != "undefined") {
-            // console.log("type = ", e.type)
-            if (e.type == "BinaryExpression") {
-
-                var left = this.evalParseTree(e.left)
-
-                var right = this.evalParseTree(e.right)
-
-
-                // console.log("eval(", left, e.operator, right, ")")
-                var result = eval(left + e.operator + right)
-
-                return result
-            }
-
-            if (e.type == "Literal") {
-                // console.log(e)
-                return e.raw
-            }
-
-            if (e.type == "Identifier") {
-                // console.log(e)
-                //ask the questionAnswersObject for the value of Identifier
-                return this.askForWidgetVariableValue(e.name)
-
-            }
-        }
-    }
-
-
-    parseExpression(expression) {
-        var parseTree = jsep(expression);
-        // console.log(parseTree)
-        return this.evalParseTree(parseTree)
-
-    }
-
-
-
-
-
 }
 
 

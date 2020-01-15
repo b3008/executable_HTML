@@ -14,8 +14,8 @@ export default class AAVariable extends BaseElement {
     }
 
     connectedCallback(){
-        this.mem = this._getParentSession().mem;
-        this.mem.setData(this.name, this.value);
+        let session = this._getParentSession();
+        session.setData(this.name, this.value);
     };
 
 
