@@ -66,7 +66,7 @@ export default class AAScreen extends BaseElement {
 
         return html`
             <slot></slot>
-            hey
+            
             <div class='submitButtonContainer'>
                 <div>
                     <button class='submitButton'> button: ${this.submitButtonText}</button>

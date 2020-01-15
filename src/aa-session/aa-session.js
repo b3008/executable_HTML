@@ -54,7 +54,6 @@ export default class AASession extends BaseElement {
         })
 
 
-
     }
 
     myIdGenerator() {
