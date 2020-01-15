@@ -1,6 +1,7 @@
 console.log("loading baseElement");
-console.log(VERSION);
-window.html = function (txt, ...val) {
+
+
+var html = function (txt, ...val) {
 
     let result = txt[0];
     for (let i = 0; i < val.length; i++) {
@@ -9,6 +10,8 @@ window.html = function (txt, ...val) {
     }
     return result;
 }
+
+if(window) window.html = html;
 
 export default class BaseElement extends HTMLElement {
 
@@ -201,6 +204,7 @@ export default class BaseElement extends HTMLElement {
     }
 
 }
+
 
 if (!customElements.get('aa-base-element')) {
     window.AANodeNames = window.AANodeNames || [];
