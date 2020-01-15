@@ -117,7 +117,7 @@ export default class AASequence extends BaseElement {
 
         }
         //  first  replace any nested <ema-*> elements
-        this._analyzeChildNodesForElement(this.innerFragment);
+        this._replaceChildNodesWithHolderElements(this.innerFragment);
         //this.replaceEmaChildNodesWithHolders(this.innerFragment);
 
 
@@ -130,12 +130,7 @@ export default class AASequence extends BaseElement {
         for (let i = 0; i < this.innerFragment.children.length; i++) {
 
             this.myFragmentChildren.push(this.innerFragment.children[i])
-            this.innerFragment.children[i].assignableEndListener = this.assignableEndListener.bind(this);
-            // console.log('adding AssignableEnd to ', this.innerFragment.children[i])
-            // if(this.innerFragment.children[i].nodeName!='EMA-HOLDER')
-            // {
-            // this.innerFragment.children[i].addEventListener('assignableEnd', this.innerFragment.children[i].assignableEndListener);
-            // }
+            this.innerFragment.children[i].endEventListener = this.endEventListener.bind(this);
         }
 
         this.next();
@@ -173,7 +168,7 @@ export default class AASequence extends BaseElement {
 
         if (typeof this.currentNode != 'undefined') {
 
-            this.currentNode.removeEventListener('assignableEnd', this.currentNode.assignableEndListener);
+            this.currentNode.removeEventListener('endEvent', this.currentNode.endEventListener);
         }
 
         //  update the current node
@@ -181,18 +176,18 @@ export default class AASequence extends BaseElement {
 
 
         this.currentNode = finalFragmentChild;
-        this.currentNode.assignableEndListener = this.assignableEndListener.bind(this);
+        this.currentNode.endEventListener = this.endEventListener.bind(this);
         this.fragmentChildrenCounter += 1;
         //  it's important that the listener is added and the fragmentChildrenCounter increase
         //  before appending the child, otherwise, because appending nodes triggers their attached callback,
         //  certain nodes (like ema-choose that fails to be true in any condition)
-        //  will immediately dispatch an 'assignableEnd'Event which in this case will call next()
+        //  will immediately dispatch an 'endEvent'Event which in this case will call next()
         //  again, before the current next() returns.
         //  If the listener has not been added, no one will catch the event
         //  and if fragmentChildrenCounter has not increased,
         //  next() will grab the same object again from this.myFragmentChildren
 
-        this.currentNode.addEventListener('assignableEnd', this.currentNode.assignableEndListener);
+        this.currentNode.addEventListener('endEvent', this.currentNode.endEventListener);
 
 
         this.appendChild(finalFragmentChild);
@@ -205,14 +200,12 @@ export default class AASequence extends BaseElement {
     }
 
 
-    assignableEndListener(e) {
+    endEventListener(e) {
 
         e.stopPropagation();
         let next = this.next();
         if (next === null) {
-            debugger;
-            let assignableEndEvent = new CustomEvent('assignableEnd', { bubbles: true });
-            this.dispatchEvent(assignableEndEvent);
+            this._dispatchEndEvent();
         }
     }
 

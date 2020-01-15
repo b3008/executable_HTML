@@ -20,6 +20,30 @@ describe('aa-choose', () => {
     });
 
     describe('instance', function () {
+
+        it('empty aa-choose dispatches endEvent instantly, both in and out of a session',  (done)=> {
+        
+            let outsideSessionTest = false;
+            let div = document.createElement('div');
+            div.addEventListener('endEvent', (e)=>{
+                outsideSessionTest = true;
+         
+            });
+            div.innerHTML = '<aa-choose></aa-choose>';
+            container.appendChild(div)
+
+            let div2 = document.createElement('div');
+            div2.addEventListener('sessionEndEvent', (e)=>{
+                assert(outsideSessionTest == true, "previous event should have been received");
+                assert(e.detail=='sessionEnd', "endEvent should ultimately come from the session")
+                done();
+            });
+            div2.innerHTML = '<aa-session><aa-choose></aa-choose></aa-session>';
+            container.appendChild(div2)
+
+            
+        })
+
         it('tests instantiation of true and false cases', function (done) {
 
             container.innerHTML = html`
@@ -59,7 +83,27 @@ describe('aa-choose', () => {
 
         });
 
-      
+        it('parses nested expressions', (done)=>{
+            
+
+            let div = document.createElement('div');
+            div.addEventListener('endEvent', (e)=>{
+            });
+            div.innerHTML = html`
+            <aa-session id="session" data-myVar="1" data-yourVar="2" debug=="true">
+                    session with choose element;
+                    <aa-choose id="choose">                       
+                    </aa-choose>
+                
+            </aa-session>
+            `
+            container.appendChild(div);
+            
+            let choose = document.querySelector("#choose");
+            let exp = choose.replaceExpressionIdentifiersWithValues('(myVar==1)||(yourVar==2)');
+            assert( exp=='(1==1)||(2==2)', "variable names should be replaced by their values: " + exp);
+            done();
+        })
 
 
 

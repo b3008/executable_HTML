@@ -18,8 +18,8 @@ describe('aa-session', () => {
         container.innerHTML = "";
     });
 
-    describe('instance', function () {
-        it('should find session', function (done) {
+    describe('instance',  () => {
+        it('should find session', (done) => {
 
             container.innerHTML = html`
             first session:
@@ -71,6 +71,8 @@ describe('aa-session', () => {
             done();            
 
         });
+
+        
 
 
         

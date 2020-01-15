@@ -1,4 +1,5 @@
-
+console.log("loading baseElement");
+console.log(VERSION);
 window.html = function (txt, ...val) {
 
     let result = txt[0];
@@ -19,6 +20,7 @@ export default class BaseElement extends HTMLElement {
 
     connectedCallback() {
         this._attachedTimestamp = new Date().getTime();
+        this._debug = (this.debug===true)||(this.debug===null);
     }
 
 
@@ -88,17 +90,17 @@ export default class BaseElement extends HTMLElement {
         return result;
     }
 
-    _analyzeChildNodesForElement(element) {
+    _replaceChildNodesWithHolderElements(element) {
         // console.log(element, 'isAAElement=', this._isAAElement(element))
         if (this._isAAElement(element)) {
             this._replaceElementWithHolder(element);
         }
         else for (let i = 0; i < element.childNodes.length; i++) {
-            if (this._isAAElement(element.childNodes[i])) {
-                this._replaceElementWithHolder(element.childNodes[i])
-            } else {
-                this._analyzeChildNodesForElement(element.childNodes[i]);
-            }
+            // if (this._isAAElement(element.childNodes[i])) {
+            //     this._replaceElementWithHolder(element.childNodes[i])
+            // } else {
+                this._replaceChildNodesWithHolderElements(element.childNodes[i]);
+            // }
         }
 
     }
@@ -179,14 +181,15 @@ export default class BaseElement extends HTMLElement {
     }
 
     _dispatchDebugEvent(detail) {
-        if (this._debug) {
-            this.dispatchEvent(new CustomEvent('debug', { detail, bubbles:true }));
+        if (this.debug) {
+            this.dispatchEvent(new CustomEvent('debugEvent', { detail, bubbles:true }));
         }
     }
 
-    _dispatchAssignableEnd() {
-        let assignableEndEvent = new CustomEvent('assignableEnd', { bubbles: true });
-        this.dispatchEvent(assignableEndEvent);
+    
+
+    _dispatchEndEvent(detail) {
+        this.dispatchEvent(new CustomEvent('endEvent', { bubbles: true, detail }));
     }
 
     _getParentSession(){
@@ -200,9 +203,7 @@ export default class BaseElement extends HTMLElement {
 }
 
 if (!customElements.get('aa-base-element')) {
-
-    if (typeof window.AANodeNames === 'undefined') { window.AANodeNames = []; }
+    window.AANodeNames = window.AANodeNames || [];
     window.AANodeNames.push('AA-BASE-ELEMENT');
-
     customElements.define('aa-base-element', BaseElement);
 }

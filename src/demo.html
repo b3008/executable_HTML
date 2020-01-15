@@ -1,0 +1,350 @@
+<aa-session name="">
+    <template>
+
+        <aa-sequence name="ECR">
+
+
+
+
+
+
+
+            <aa-screen name="context" submit-button-text="next">
+
+
+
+
+                <div>
+                    Brief description of your last social interaction:
+                    <aa-textfield name="BriefDescription">
+                    </aa-textfield>
+
+
+
+                </div>
+
+                <div>
+                    What time did the interaction start?
+                    <aa-textfield name="realtime" type="time"></aa-textfield>
+                </div>
+
+
+                <div>
+                    How long did the interaction last (in minutes)?
+                    <aa-textfield name="length" type="number"></aa-textfield>
+                </div>
+
+
+
+                <div>
+                    Where did the interaction occur?
+
+                    <aa-multiple-choice name="location" single-value layout="vertical">
+                        <aa-choice-item value="1">Home</aa-choice-item>
+                        <aa-choice-item value="2">School</aa-choice-item>
+                        <aa-choice-item value="3">Recreation(cafe, cinema, etc)</aa-choice-item>
+                        <aa-choice-item value="4">Work</aa-choice-item>
+                        <aa-choice-item value="5">Other</aa-choice-item>
+                    </aa-multiple-choice>
+                </div>
+
+                <div>
+                    How?
+                    <aa-multiple-choice name="how" single-value layout="vertical">
+                        <aa-choice-item value="1">In person (face-to-face)</aa-choice-item>
+                        <aa-choice-item value="2">Via telephone</aa-choice-item>
+                        <aa-choice-item value="3">Via video (e.g. Skype)</aa-choice-item>
+                    </aa-multiple-choice>
+
+
+                </div>
+
+                <div>
+                    Who was present?
+                    <aa-multiple-choice name="present" single-value layout="vertical">
+                        <aa-choice-item value="1">One other</aa-choice-item>
+                        <aa-choice-item value="2">Multiple people, primary other</aa-choice-item>
+                        <aa-choice-item value="3">Multiple people, no primary other</aa-choice-item>
+                    </aa-multiple-choice>
+                </div>
+
+
+            </aa-screen>
+
+
+
+            <aa-choose>
+                <aa-when test="present!=1">
+                    <aa-screen name="partner">
+                        <div>
+                            Who was the (primary) other in the interaction?
+
+                            <div>
+                                <aa-multiple-choice name="partsex" single-value layout="horizontal">
+                                    <aa-choice-item value="1">male</aa-choice-item>
+                                    <aa-choice-item value="2">female</aa-choice-item>
+                                </aa-multiple-choice>
+                            </div>
+
+                            <div>
+
+
+                                <aa-multiple-choice name="relation1" layout="vertical">
+                                    <aa-choice-item value="1">(Romantic) partner (incl. boy/girlfriend)</aa-choice-item>
+                                    <aa-choice-item value="2">Friend</aa-choice-item>
+                                    <aa-choice-item value="3">Acquaintance</aa-choice-item>
+                                    <aa-choice-item value="4">Father/mother</aa-choice-item>
+                                    <aa-choice-item value="5">Sister/brother</aa-choice-item>
+                                    <aa-choice-item value="6">Son/daughter</aa-choice-item>
+                                    <aa-choice-item value="7">Son/daughter</aa-choice-item>
+                                    <aa-choice-item value="8">Colleague</aa-choice-item>
+                                    <aa-choice-item value="9">Other</aa-choice-item>
+                                </aa-multiple-choice>
+                            </div>
+                        </div>
+                    </aa-screen>
+                </aa-when>
+
+            </aa-choose>
+
+
+            <aa-function-random min=1 max=4 name="rndBehaviour"> </aa-function-random>
+            <aa-choose>
+                <aa-when test="rndBehaviour==1">
+                    <aa-screen>
+                        <aa-multiple-choice name="behaviours1" layout="vertical">
+                            <aa-choice-item value="1">I listened attentively to the other(s)</aa-choice-item>
+                            <aa-choice-item value="2">I tried to get the other(s) to do something else</aa-choice-item>
+                            <aa-choice-item value="3">I let other(s) make plans or decisions</aa-choice-item>
+                            <aa-choice-item value="4">I expressed the 'real me' instead of my public persona or 'image'
+                            </aa-choice-item>
+                            <aa-choice-item value="5">I confronted the other(s) about something I did not like
+                            </aa-choice-item>
+                            <aa-choice-item value="6">I expressed affection with words or gestures</aa-choice-item>
+                            <aa-choice-item value="7">I spoke in a clear firm voice</aa-choice-item>
+                            <aa-choice-item value="8">I withheld useful information</aa-choice-item>
+                            <aa-choice-item value="9">I did not say how I felt</aa-choice-item>
+                            <aa-choice-item value="10">I compromised about a decision</aa-choice-item>
+                            <aa-choice-item value="11">I took the lead in planning/organizing a project or activity
+                            </aa-choice-item>
+                            <aa-choice-item value="12">I avoided taking the lead or being responsible</aa-choice-item>
+                            <aa-choice-item value="13">I ignored the other(s) comments</aa-choice-item>
+                        </aa-multiple-choice>
+                    </aa-screen>
+
+                </aa-when>
+
+                <aa-when test="rndBehaviour==2">
+                    <aa-screen>
+                        <aa-multiple-choice>
+                            <aa-choice-item value="1">I criticized the other(s)</aa-choice-item>
+                            <aa-choice-item value="2">I smiled and laughed with the other(s)</aa-choice-item>
+                            <aa-choice-item value="3">I spoke softly</aa-choice-item>
+                            <aa-choice-item value="4">I made a sarcastic comment</aa-choice-item>
+                            <aa-choice-item value="5">I expressed an opinion</aa-choice-item>
+                            <aa-choice-item value="6">I complimented or praised the other person(s)</aa-choice-item>
+                            <aa-choice-item value="7">I did not express disagreement when I thought it</aa-choice-item>
+                            <aa-choice-item value="8">I gave incorrect information</aa-choice-item>
+                            <aa-choice-item value="9">I got immediately to the point</aa-choice-item>
+                            <aa-choice-item value="10">I made a concession to avoid unpleaseantness</aa-choice-item>
+                            <aa-choice-item value="11">I did not state my own views</aa-choice-item>
+                            <aa-choice-item value="12">I expressed the 'real me' instead of my public persona or 'image'
+                            </aa-choice-item>
+
+                        </aa-multiple-choice>
+                    </aa-screen>
+
+                </aa-when>
+
+
+                <aa-when test="rndBehaviour==3">
+                    <aa-screen>
+
+                        <aa-multiple-choice>
+                            <aa-choice-item value="1">I waited for the other person(s) to talk or act first
+                            </aa-choice-item>
+                            <aa-choice-item value="2">I stated strongly that I did not like or that I would not do
+                                something</aa-choice-item>
+                            <aa-choice-item value="3">I assigned someone to a task</aa-choice-item>
+                            <aa-choice-item value="4">I exchanged pleasantries</aa-choice-item>
+                            <aa-choice-item value="5">I did not say what was on my mind</aa-choice-item>
+                            <aa-choice-item value="6">I did not respond to the other(s) questions or comments
+                            </aa-choice-item>
+                            <aa-choice-item value="7">I made a suggestion</aa-choice-item>
+                            <aa-choice-item value="8">I expressed the 'real me' instead of my public persona or 'image'
+                            </aa-choice-item>
+                            <aa-choice-item value="9">I showed sympathy</aa-choice-item>
+                            <aa-choice-item value="10">I did not say what I wanted directly</aa-choice-item>
+                            <aa-choice-item value="11">I discredited what someone said</aa-choice-item>
+                            <aa-choice-item value="12">I asked the other(s) to do something</aa-choice-item>
+                            <aa-choice-item value="13">I spoke favorably of someone who was not present</aa-choice-item>
+
+                        </aa-multiple-choice>
+                    </aa-screen>
+
+                </aa-when>
+
+
+                <aa-when test="rndBehaviour==4">
+                    <aa-screen>
+                        <aa-multiple-choice>
+                            <aa-choice-item value="1">I expressed the 'real me' instead of my public persona or 'image'
+                            </aa-choice-item>
+                            <aa-choice-item value="2">I showed impatience</aa-choice-item>
+                            <aa-choice-item value="3">I asked for a volunteer</aa-choice-item>
+                            <aa-choice-item value="4">I went along with the other(s)</aa-choice-item>
+                            <aa-choice-item value="5">I raised my voice</aa-choice-item>
+                            <aa-choice-item value="6">I gave information</aa-choice-item>
+                            <aa-choice-item value="7">I expressed reassurance</aa-choice-item>
+                            <aa-choice-item value="8">I gave in</aa-choice-item>
+                            <aa-choice-item value="9">I demanded that the other(s) do what I wanted</aa-choice-item>
+                            <aa-choice-item value="10">I set goals for the other(s) or for us</aa-choice-item>
+                            <aa-choice-item value="11">I pointed out to the other(s) where there was agreement
+                            </aa-choice-item>
+                            <aa-choice-item value="12">I spoke only when I was spoken to</aa-choice-item>
+                        </aa-multiple-choice>
+
+                    </aa-screen>
+
+                </aa-when>
+
+
+            </aa-choose>
+
+
+            <aa-screen name="feelings" style="border:solid thin">
+
+                <div>How did you feel?<br>
+                    (0 = not at all, 6 = extremely)
+                </div>
+                <div style="display:flex; align-items:center;">
+                    <div id="1" style="width:150px">surprised:</div>
+                    <div id="2" style="flex-grow:2">
+                        <aa-likert demands-response name="surprised"></aa-likert>
+                    </div>
+                </div>
+
+                <div style="display:flex; align-items:center;">
+                    <div id="3" style="width:150px">worried/anxious:</div>
+                    <div id="4" style="flex-grow:2">
+                        <aa-likert demands-response name="worried"></aa-likert>
+                    </div>
+                </div>
+
+                <div style="display:flex; align-items:center;">
+                    <div style="width:150px">happy:</div>
+                    <div style="flex-grow:2">
+                        <aa-likert demands-response name="happy"></aa-likert>
+                    </div>
+                </div>
+
+                <div style="display:flex; align-items:center;">
+                    <div style="width:150px">frustrated:</div>
+                    <div style="flex-grow:2">
+                        <aa-likert demands-response name="frustrated"></aa-likert>
+                    </div>
+                </div>
+
+                <div style="display:flex; align-items:center;">
+                    <div style="width:150px">angry/hostlie:</div>
+                    <div style="flex-grow:2">
+                        <aa-likert demands-response name="angry"></aa-likert>
+                    </div>
+                </div>
+
+                <div style="display:flex; align-items:center;">
+                    <div style="width:150px">homesick:</div>
+                    <div style="flex-grow:2">
+                        <aa-likert demands-response name="homesick"></aa-likert>
+                    </div>
+                </div>
+
+                <div style="display:flex; align-items:center;">
+                    <div style="width:150px">enjoyment/fun:</div>
+                    <div style="flex-grow:2">
+                        <aa-likert demands-response name="enjoyment"></aa-likert>
+                    </div>
+                </div>
+
+
+                <div style="display:flex; align-items:center;">
+                    <div style="width:150px">unhappy:</div>
+                    <div style="flex-grow:2">
+                        <aa-likert demands-response name="unhappy"></aa-likert>
+                    </div>
+                </div>
+
+
+                <div style="display:flex; align-items:center;">
+                    <div style="width:150px">joyful:</div>
+                    <div style="flex-grow:2">
+                        <aa-likert demands-response name="joyful"></aa-likert>
+                    </div>
+                </div>
+
+                <div style="display:flex; align-items:center;">
+                    <div style="width:150px">depressed/blue:</div>
+                    <div style="flex-grow:2">
+                        <aa-likert demands-response name="depressed"></aa-likert>
+                    </div>
+                </div>
+
+                <div style="display:flex; align-items:center;">
+                    <div style="width:150px">energized:</div>
+                    <div style="flex-grow:2">
+                        <aa-likert demands-response name="energized"></aa-likert>
+                    </div>
+                </div>
+
+                <div style="display:flex; align-items:center;">
+                    <div style="width:150px">ashamed:</div>
+                    <div style="flex-grow:2">
+                        <aa-likert demands-response name="ashamed"></aa-likert>
+                    </div>
+                </div>
+
+                <div style="display:flex; align-items:center;">
+                    <div style="width:150px">safe:</div>
+                    <div style="flex-grow:2">
+                        <aa-likert demands-response name="safe"></aa-likert>
+                    </div>
+                </div>
+
+
+                <div style="display:flex; align-items:center;">
+                    <div style="width:150px">lonely:</div>
+                    <div style="flex-grow:2">
+                        <aa-likert demands-response name="lonely"></aa-likert>
+                    </div>
+                </div>
+
+                <div style="display:flex; align-items:center;">
+                    <div style="width:150px">disgusted by the other(s):</div>
+                    <div style="flex-grow:2">
+                        <aa-likert demands-response name="disgusted"></aa-likert>
+                    </div>
+                </div>
+            </aa-screen>
+
+
+            <aa-choose>
+                <aa-when test="present!=3">
+                    <aa-screen>
+                        <div>
+                            indicate how the (primary) other behaved towards you in this interaction
+                        </div>
+                        <div style="display:flex; justify-content:center">
+                            <aa-boxgrid name="grid" top-label="assured/dominant" left-label="cold/quarrelsome"
+                                bottom-label="unassured/submissive" right-label="warm/agreeable">
+
+                            </aa-boxgrid>
+                        </div>
+                    </aa-screen>
+                </aa-when>
+            </aa-choose>
+
+
+
+        </aa-sequence>
+    </template>
+</aa-session>
