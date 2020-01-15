@@ -1,7 +1,9 @@
 import BaseElement from './../aa-baseElement/baseElement.js'
 export default class AAHolder extends BaseElement {
 
-
+    static get observedAttributes(){
+        return ["name"];
+    }
     constructor() {
         super();
         this._templateHolders = [];
@@ -36,14 +38,7 @@ export default class AAHolder extends BaseElement {
     connectedCallback() {
     }
 
-    display() {
-        // console.log("display on", this);
-        this.$.display.hidden = false;
-
-        // console.log("outerhtml is", this.heldElement.outerHTML);
-        this.$.display.innerText = this.heldElementOuterHTML;
-        debugger;
-    }
+    
 
 }
 

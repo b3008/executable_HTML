@@ -118,6 +118,7 @@ export default class BaseElement extends HTMLElement {
     }
 
     _isHolder(element) {
+        if(!element) return false;
         if (element.tagName == 'AA-HOLDER') {
             return true;
         }
@@ -127,48 +128,49 @@ export default class BaseElement extends HTMLElement {
 
 
     _restoreHeldNodes(element) {
-
+    
         let childNodes = element.childNodes;
         for (let i = 0; i < childNodes.length; i++) {
             let child = childNodes[i];
             if (this._isHolder(child)) {
-
-                //before restoring, strip element of ema- content
-                // this.analyzeChildNodesForElement(child.heldElement);
                 this._replaceHolderWithElement(child);
             }
             else if (child.childNodes.length > 0) {
                 this._restoreHeldNodes(child);
-            }
+            } 
         }
     }
 
-
-    _replaceElementWithHolder(element) {
-
-
+    _createHolderWithHeldElement(element){
         let holder = document.createElement("aa-holder");
         holder.id = element.getAttribute("name") + "-holder";
         holder.heldElementOuterHTML = element.outerHTML;
-
+        console.log(element.innerHTML);
         // holder.innerHTML = "holder for " + element.nodeName + " with name " + element.getAttribute("name")
         // console.log("replacing", element, "with", holder);
+     
+        holder.heldElement = element.cloneNode(true);
+        console.log(holder.heldElement.innerHTML);
+        holder.setAttribute("name",element.getAttribute("name"));
+        holder.id = element.id;
 
-        holder.heldElement = element.cloneNode(false);
         //holder.heldElement.innerFragment = document.createRange().createContextualFragment(element.innerHTML);
-        holder.heldElement.innerFragment = this._createFragmentForElement(element);
+        holder.heldElement.innerFragment = this._createFragmentForElement(holder.heldElement);
+        return holder
 
+    }
+    _replaceElementWithHolder(element) {
+
+        let holder = this._createHolderWithHeldElement(element);        
         element.replaceWith(holder);
         return holder;
     }
     _replaceHolderWithElement(holder) {
-
         holder.replaceWith(holder.heldElement);
         return holder.heldElement;
     }
 
     _createFragmentForElement(element) {
-
         let fragment = document.createDocumentFragment();
         //  first get references to the children,
         //  because the element.children array will be modified as they are appended elsewhere

@@ -1,4 +1,5 @@
 import BaseElement from './../aa-baseElement/baseElement.js'
+import AAJump from "./aa-jump/aa-jump.js";
 
 export default class AASequence extends BaseElement {
 
@@ -104,7 +105,7 @@ export default class AASequence extends BaseElement {
 
 
     start() {
-       
+        debugger;
         if (this.started) return;
         //  an  .innerFragment member should have been supplied by an ema-session element containing this ema-sequence
         //  somewhere in its subtree. pick each child of the fragment separately
@@ -142,40 +143,41 @@ export default class AASequence extends BaseElement {
         }
     }
 
-    next() {
+    next(name) {
+      
         if (!this.started) { 
             this.start(); 
         }
         
-        if (this.myFragmentChildren.length === 0) return;
-        // console.log(this.fragmentChildrenCounter);
-        if (this.fragmentChildrenCounter >= this.myFragmentChildren.length) return null;
+        if (this.myFragmentChildren.length === 0) return;       
+        this._makeCurrentNodeAFormerNode();
 
+        let fragmentChild;
+        if(name){
+            for(let i=0; i<this.myFragmentChildren.length; i++){
+                console.log(this.myFragmentChildren[i].name);
+                let child =  this.myFragmentChildren[i].heldElement || this.myFragmentChildren[i];
+                if(child.name==name){
+                    if( this.formerNodes.indexOf(child)!=-1){
+                        fragmentChild = this._createHolderWithHeldElement(child, false, "debug");
+                    }else{
+                        fragmentChild = this.myFragmentChildren[i];
+                    }
+                    this.fragmentChildrenCounter = i;
+                    break;
+                }
+            } 
+           
+           
+        }else{
+        
+            if (this.fragmentChildrenCounter >= this.myFragmentChildren.length) return null;
+            fragmentChild = this.myFragmentChildren[this.fragmentChildrenCounter];
+           
+        }
         if (typeof this.currentNode != 'undefined') this.formerNodes.push(this.currentNode);
-        let fragmentChild = this.myFragmentChildren[this.fragmentChildrenCounter];
-
-        let finalFragmentChild;
-        if (this._isHolder(fragmentChild)) {
-            finalFragmentChild = this._replaceHolderWithElement(fragmentChild);
-        }
-        else {
-
-            finalFragmentChild = fragmentChild;
-
-        }
-
-
-
-        if (typeof this.currentNode != 'undefined') {
-
-            this.currentNode.removeEventListener('endEvent', this.currentNode.endEventListener);
-        }
-
         //  update the current node
-
-
-
-        this.currentNode = finalFragmentChild;
+        this.currentNode = this._replaceWithElementIfChildIsHolder(fragmentChild);;
         this.currentNode.endEventListener = this.endEventListener.bind(this);
         this.fragmentChildrenCounter += 1;
         //  it's important that the listener is added and the fragmentChildrenCounter increase
@@ -188,22 +190,33 @@ export default class AASequence extends BaseElement {
         //  next() will grab the same object again from this.myFragmentChildren
 
         this.currentNode.addEventListener('endEvent', this.currentNode.endEventListener);
-
-
-        this.appendChild(finalFragmentChild);
-        this._restoreHeldNodes(finalFragmentChild);
-
-
-
-        return finalFragmentChild;
-
+       
+        this.appendChild(this.currentNode);
+       
+        this._restoreHeldNodes(this.currentNode);
+        return this.currentNode;
     }
 
+    _replaceWithElementIfChildIsHolder(fragmentChild){
+        if (this._isHolder(fragmentChild)) {
+            return this._replaceHolderWithElement(fragmentChild);
+        }
+        return fragmentChild;
+    }
 
+    _makeCurrentNodeAFormerNode(){
+        if (typeof this.currentNode != 'undefined') {
+            this.currentNode.removeEventListener('endEvent', this.currentNode.endEventListener);
+            this.formerNodes.push(this.currentNode);
+        }
+    }
+
+    
+    
     endEventListener(e) {
 
         e.stopPropagation();
-        let next = this.next();
+        let next = this.next(e.detail.goto);
         if (next === null) {
             this._dispatchEndEvent();
         }
