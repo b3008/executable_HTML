@@ -3,7 +3,7 @@ var webpack = require("webpack");
 
 
 var childProcess = require('child_process')
-var buildBranch = childProcess.execSync('git rev-parse --abbrev-ref HEAD').toString();
+var buildBranch = childProcess.execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
 
 let build = require("./dist/build.json");
 build.build++;
@@ -27,5 +27,6 @@ module.exports = {
 
 const fs = require('fs');
 build.date = new Date().toString();
+build.branch = buildBranch;
 let data = JSON.stringify(build, null, 2);
 fs.writeFileSync('./dist/build.json', data);
