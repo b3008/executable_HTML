@@ -61,7 +61,51 @@ describe('aa-sequence', () => {
         });
 
 
-       it('jumps', (done) => {
+       it('jumps backwards', (done) => {
+            container.innerHTML = '';
+            
+            container.innerHTML = html`
+             session:
+            <aa-session debug="true" name="test" id="session"> 
+                  
+                <template>
+
+                    <aa-sequence id="sequence">
+                    
+                        <aa-screen id="screen1" name="first">
+                                <div>screen1</div>
+                        </aa-screen>
+
+                        <aa-screen id="screen2" name="second">
+                                <div>screen2</div>
+                        </aa-screen>
+
+                        <aa-jump goto="first" name="jump"></aa-jump>
+                    </aa-sequence>
+
+                  
+                </template>
+
+            </aa-session>`;
+
+            let session = document.querySelector('#session');
+            let sequence = document.querySelector("#sequence");
+            let screen1 = document.querySelector("#screen1");
+            let screen2 = document.querySelector("#screen2");
+        
+            assert(sequence.currentNode.name=="first", "currentNode should be named first");
+            sequence.next();
+            assert(sequence.currentNode.name=="second", "currentNode should be named second");
+            sequence.next();
+            assert(sequence.currentNode.name=="first", "currentNode should be named first");
+            sequence.next();
+            assert(sequence.currentNode.name=="second", "currentNode should be named second");
+            sequence.next();
+            
+            done();
+        })
+
+        it('jumps forwards', (done) => {
             container.innerHTML = '';
             
             container.innerHTML = html`
@@ -104,7 +148,6 @@ describe('aa-sequence', () => {
             
             done();
         })
-
 
 
 
