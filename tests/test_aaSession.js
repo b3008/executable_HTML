@@ -1,4 +1,5 @@
 import '../src/aa-session/aa-session.js';
+import '../src/aa-screen/aa-screen.js';
 // var expect = chai.expect;
 var assert = chai.assert;
 var container;
@@ -26,7 +27,7 @@ describe('aa-session', () => {
             <aa-session debug="true" name="test" id="session"> 
                     some text;
 
-                    <div>my div</div>
+                    <div id="myDiv">my div</div>
                     <aa-screen id="screen1" name="first">
                         <div>test</div>
                     </aa-screen>
@@ -35,21 +36,33 @@ describe('aa-session', () => {
                         <aa-screen id="screen2" name="second">
                             <div>test 2</div>
                         </aa-screen>
+
+                        <div>
+                            <p>
+                                <aa-sequence>
+                                    <aa-screen>screen1</aa-screen>
+                                    <aa-screen>screen2</aa-screen>
+                                </aa-sequence>
+                            <p>
+                        </div>
                     </template>
 
             </aa-session>`;
 
             let session = document.querySelector('#session');
             let screen = document.querySelector("#screen1");
+            debugger;
             assert(session.tagName=="AA-SESSION", "AA-SESSION")
             assert(session.name=="test", "name should equal test");
             assert(session.debug===true, "true")
             assert(screen!==null, "screen should be an object")
+
+            debugger;
             done();            
 
         });
 
-        it('session should not render contents when should-run is false', function (done) {
+        xit('session should not render contents when should-run is false', function (done) {
 
             
             container.innerHTML = html`

@@ -17,7 +17,7 @@ export default class AASequence extends BaseElement {
         
 
         
-        if (this.id === '') console.warn(this, 'has no id');
+        // if (this.id === '') console.warn(this, 'has no id');
        
         // console.log('ready sequence', this.name);
         this.started = false;
@@ -105,7 +105,8 @@ export default class AASequence extends BaseElement {
 
 
     start() {
-        debugger;
+        
+        
         if (this.started) return;
         //  an  .innerFragment member should have been supplied by an ema-session element containing this ema-sequence
         //  somewhere in its subtree. pick each child of the fragment separately
@@ -134,7 +135,7 @@ export default class AASequence extends BaseElement {
             this.innerFragment.children[i].endEventListener = this.endEventListener.bind(this);
         }
 
-        this.next();
+        // this.next()
 
         if (this.nextKeyCode) {
             this.addEventListener('keyup', function (e) {
@@ -144,7 +145,14 @@ export default class AASequence extends BaseElement {
     }
 
     next(name) {
-      
+        if(!this.counter){
+            this.counter = 1;
+        }else{
+            this.counter++;
+            if(this.counter>500){
+                return null;
+            }
+        }
         if (!this.started) { 
             this.start(); 
         }
@@ -154,15 +162,17 @@ export default class AASequence extends BaseElement {
 
         let fragmentChild;
         if(name){
+          
             for(let i=0; i<this.myFragmentChildren.length; i++){
-                console.log(this.myFragmentChildren[i].name);
                 let child =  this.myFragmentChildren[i].heldElement || this.myFragmentChildren[i];
                 if(child.name==name){
-                    if( this.formerNodes.indexOf(child)!=-1){
-                        fragmentChild = this._createHolderWithHeldElement(child, false, "debug");
-                    }else{
+                    // if( this.formerNodes.indexOf(child)!=-1){
+                    
+                    //     debugger;
+                    //     fragmentChild = this._createHolderWithHeldElement(child, false, "debug");
+                    // }else{
                         fragmentChild = this.myFragmentChildren[i];
-                    }
+                    // }
                     this.fragmentChildrenCounter = i;
                     break;
                 }
@@ -170,12 +180,13 @@ export default class AASequence extends BaseElement {
            
            
         }else{
-        
             if (this.fragmentChildrenCounter >= this.myFragmentChildren.length) return null;
             fragmentChild = this.myFragmentChildren[this.fragmentChildrenCounter];
-           
         }
-        if (typeof this.currentNode != 'undefined') this.formerNodes.push(this.currentNode);
+        if(fragmentChild.tagName!="AA-HOLDER"){
+            fragmentChild = this._createHolderWithHeldElement(fragmentChild, false, "debug");
+        }
+        debugger;
         //  update the current node
         this.currentNode = this._replaceWithElementIfChildIsHolder(fragmentChild);;
         this.currentNode.endEventListener = this.endEventListener.bind(this);
@@ -190,10 +201,20 @@ export default class AASequence extends BaseElement {
         //  next() will grab the same object again from this.myFragmentChildren
 
         this.currentNode.addEventListener('endEvent', this.currentNode.endEventListener);
+        console.log(this.currentNode);
+        setTimeout(()=>{
+            // this way appendChild will happen after next() returns, 
+            // and subsequent calls to next() that will result from it will not be recursive
+            this.appendChild(this.currentNode);
+            this._restoreHeldNodes(this.currentNode);
+        }, 0);
+        
        
-        this.appendChild(this.currentNode);
-       
-        this._restoreHeldNodes(this.currentNode);
+        
+        if(!this.currentNode._dispatchEndEvent){
+            debugger;
+            this.next();
+        }
         return this.currentNode;
     }
 
@@ -201,6 +222,7 @@ export default class AASequence extends BaseElement {
         if (this._isHolder(fragmentChild)) {
             return this._replaceHolderWithElement(fragmentChild);
         }
+        
         return fragmentChild;
     }
 
@@ -216,7 +238,9 @@ export default class AASequence extends BaseElement {
     endEventListener(e) {
 
         e.stopPropagation();
-        let next = this.next(e.detail.goto);
+        let goto = null
+        if(e.detail) if(e.detail.goto) goto=e.detail.goto;
+        let next = this.next(goto);
         if (next === null) {
             this._dispatchEndEvent();
         }

@@ -1,5 +1,5 @@
 import BaseElement from './../aa-baseElement/baseElement.js'
-import  '../aa-holder/aa-holder.js';
+import AAHolder from  '../aa-holder/aa-holder.js';
 import  './../aa-memory/aa-memory.js'
 
 export default class AASession extends BaseElement {
@@ -8,6 +8,7 @@ export default class AASession extends BaseElement {
     static get observedAttributes() {
         return ['name', 'should-run', 'debug'];
     }
+
 
 
     constructor() {
@@ -153,36 +154,74 @@ export default class AASession extends BaseElement {
 
 
 
+    findAAChildrenAndReplaceThemWithHolders(node){
+        for(let i=0; i<this.node.childNodes)
+    }
 
+
+    createMirrorForNode(node, isSessionTemplate){
+        if(node.childNodes.length==0){
+            return _createElementWithHolderOrCloneDeep(node);
+        }
+        
+        let result = node.cloneNode(false);
+        for(let i=0; i<node.childNodes.length; i++){
+            let childNode = node.childNodes[i].cloneNode(true);
+            let newNode = this.createMirrorForNode(childNode, false);
+            result.appendChild(newNode);
+            if(newNode.nodeName=="AA-HOLDER") { 
+                newNode.restoreNode()
+            };
+        };
+        return result;
+
+    }
 
 
     run() {
+    
 
-        this.started = true;
+        this.attachTemplateToNode(this.myTemplate, this);
+
+     
+
+        // this.started = true;
        
-        this._replaceChildNodesWithHolderElements(this.myTemplate.content);
-        this.appendChild(this.myTemplate.content);
+        // this._replaceChildrenHolderElements(this.myTemplate.content);
+        // this.appendChild(this.myTemplate.content);
 
-        if ((this.shouldRun === null) || (this.shouldRun === true)) {
-            this._restoreHeldNodes(this);
-        }
+        // if ((this.shouldRun === null) || (this.shouldRun === true)) {
+        //     this._restoreHeldNodes(this);
+        // }
 
-        this.initialChildNodesList = [];
-        for (let i = 0; i < this.childNodes.length; i++) {
-            this.initialChildNodesList.push(this.childNodes[i]);
-        }
-        for (let i = 0; i < this.initialChildNodesList.length; i++) {
-            let child = this.initialChildNodesList[i];
-            if (typeof child.nodeName != 'undefined') {
-                if (child.nodeName === 'TEMPLATE') {
-                    this._replaceChildNodesWithHolderElements(child.content);
-                    this.appendChild(child.content);
+        // this.initialChildNodesList = [];
+        // for (let i = 0; i < this.childNodes.length; i++) {
+        //     this.initialChildNodesList.push(this.childNodes[i]);
+        // }
+        // for (let i = 0; i < this.initialChildNodesList.length; i++) {
+        //     let child = this.initialChildNodesList[i];
+        //     if (typeof child.nodeName != 'undefined') {
+        //         if (child.nodeName === 'TEMPLATE') {
+        //             this._replaceChildrenHolderElements(child.content);
+        //             this.appendChild(child.content);
 
-                    if ((this.shouldRun === null) || (this.shouldRun === true)) {
-                        this._restoreHeldNodes(this);
-                    }
-                }
+        //             if ((this.shouldRun === null) || (this.shouldRun === true)) {
+        //                 debugger;
+        //                 this._restoreHeldNodes(this);
+        //             }
+        //         }
+        //     }
+        // }
+    }
+
+    _createElementWithHolderOrCloneDeep(node){
+        if(node.nodeType==Node.ELEMENT_NODE){
+            if(node.nodeName=="TEMPLATE"){
+                createMirrorForNode()
             }
+            return AAHolder.createHolderForElement(node);
+        } else{
+            return node.cloneNode(true);
         }
     }
 

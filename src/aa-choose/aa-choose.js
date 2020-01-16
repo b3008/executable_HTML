@@ -14,14 +14,18 @@ export default class AAChoose extends BaseElement {
         super();
         this.root = this.attachShadow({ mode: 'open' });
         this.root.innerHTML = "<slot></slot>"
-
+        this.originalContent = this.innerHTML;
     }
 
+    _restoreOriginalContent(){
+
+    }
     connectedCallback() {
+        debugger;
         this._shouldRun = (this.shouldRun === null) || (this.shouldRun === true);
         this.sessionElement = this._getParentSession();
-        
-        if (this.started) { return; }
+        debugger;
+        // if (this.started) { return; }
         if (this._shouldRun) {
             if (typeof this.innerFragment !== 'undefined') {
                 this._replaceChildNodesWithHolderElements(this.innerFragment);
@@ -31,14 +35,13 @@ export default class AAChoose extends BaseElement {
                 } else {
                     for (let i = 0; i < nodes.length; i++) {
                         let node = nodes[i];
-                        if (typeof node === 'undefined') {
-                            this._dispatchEndEvent();
-                        }
-                        else {
+                        if (typeof node!== 'undefined') {
                             this.appendChild(node);
                             this._restoreHeldNodes(this);
                         }
+                       
                     }
+                    this._dispatchEndEvent();
                 }
             }
             else {
@@ -52,6 +55,7 @@ export default class AAChoose extends BaseElement {
 
     _getNodeToInstantiate() {
 
+        debugger;
         this.started = true;
         let nodesToReturn = [];
         let nodeOtherwise = [];
@@ -121,9 +125,9 @@ export default class AAChoose extends BaseElement {
         let expr = this.replaceExpressionIdentifiersWithValues(test);
         // after replacing known variable names with their values in the string, test to see if the expression can be parsed
         try {
-            var parseTree = jsep(test);
+            var parseTree = jsep(expr);
             if ((parseTree.left.type == "Literal") && (parseTree.right.type == "Literal")) {
-                return eval(test);
+                return eval(expr);
             } 
             else {
               // there are still strings in the expression, which are unknown, an exception should be raised
