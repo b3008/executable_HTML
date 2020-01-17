@@ -22,7 +22,7 @@ export default class AASequence extends BaseElement {
         this.root.addEventListener("endEvent", this.endEventListener.bind(this));
         // if (this.id === '') console.warn(this, 'has no id');
 
-        // console.log('ready sequence', this.name);
+
         this.started = false;
 
         if ((this.shouldRun === null) || (this.shouldRun === true)) {
@@ -96,7 +96,7 @@ export default class AASequence extends BaseElement {
 
 
     init() {
-
+        this.nextStarted = false;
         if (this.writeInto) {
             this.target = document.querySelector(this.writeInto);
         } else {
@@ -113,15 +113,15 @@ export default class AASequence extends BaseElement {
         else {
 
         }
-
-        this.started = this.stopped !== true;
+        debugger;
+        
         this.sIndex = 0;
-        this.formerNodes = [];
-        this.formerIndex = 0;
+        // this.formerNodes = [];
+        // this.formerIndex = 0;
         this.nextCalls = [true];
         this.nextIndex = 0;
 
-        if (this.started) { start() }
+        if (!this.stopped) { this.start() }
     }
 
     start() {
@@ -138,8 +138,9 @@ export default class AASequence extends BaseElement {
     }
 
     nextWithTimeout(name){
+       this.next(name);
         setTimeout(()=>{
-            this.next(name);
+            
             let nextParam = this.hasNext()
             if(nextParam){
                 this.nextWithTimeout(nextParam)
@@ -153,7 +154,8 @@ export default class AASequence extends BaseElement {
 
 
     next(name) {
-
+       
+        
         if (!this.counter) {
             this.counter = 1;
         } else {
@@ -168,7 +170,7 @@ export default class AASequence extends BaseElement {
 
         if (typeof name === "string") {
             for (let i = 0; i < this.innerFragment.childNodes.length; i++) {
-                // console.log(this.innerFragment.childNodes[i]);
+
                 // 
                 if (this.innerFragment.childNodes[i].getAttribute) if (this.innerFragment.childNodes[i].getAttribute("name") == name) {
                     this.sIndex = i;
@@ -185,42 +187,51 @@ export default class AASequence extends BaseElement {
             if (fragmentChild.nodeType != Node.ELEMENT_NODE) {
                 this.nextCalls.push(true);
                 this.sIndex += 1;
-                console.log("rejecting", fragmentChild);
                 return;
             }
         }
         let fragmentChildCopy = this.copy(fragmentChild);
 
-        // console.log(this.innerFragment.childNodes);
-        // console.log(fragmentChildCopy);
-        this.formerNodes.push(fragmentChildCopy);
-        console.log("original", fragmentChild);
-        console.log("copy", fragmentChildCopy);
+
+
         this.sIndex += 1;
 
 
 
-        let n = this.formerNodes[this.formerIndex];
-        // 
-        this.target.appendChild(n);
-        this.formerIndex++;
+        // let n = this.formerNodes[this.formerIndex];
+        // this.formerIndex++;
+        
+        this.target.appendChild(fragmentChildCopy);
         AAHolder.scanAndRestore(this.target.childNodes[this.childNodes.length - 1]);
-        if (!n._dispatchEndEvent) {
+        
+        
+        if (!fragmentChildCopy._dispatchEndEvent) {
             this.nextCalls.push(true);
         } else {
             // this.nextCalls.push(false);
+            // this.nextCalls.push(true);
 
         }
 
-        setTimeout(() => { }, 0);
+        if(!this.prevPerformance){
+            this.prevPerformance = performance.now();
+            debugger;
+        }else{
+            this.time = performance.now() - this.prevPerformance;
+            this.prevPerformance = performance.now();
+            debugger;
+        }
 
+        // if(this.sIndex==6) this.sIndex=1;
+
+        
     }
 
 
     hasNext() {
         if (this.nextCalls.length > 10000) return null;
         if (this.started === false) return null;
-        console.log(this.nextCalls);
+
         if (this.nextIndex < this.nextCalls.length) {
             let val = this.nextCalls[this.nextIndex];
             this.nextIndex++;
