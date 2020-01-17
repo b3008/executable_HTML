@@ -13,10 +13,10 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'aaCustomElements.js',
-    jsonpScriptType:"module"
+    // jsonpScriptType:"module"
   },
-  mode: "development",
-  devtool:"source-map",
+  mode: "production",
+  // devtool:"source-map",
  
   plugins: [
     new webpack.DefinePlugin({

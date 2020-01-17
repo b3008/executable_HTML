@@ -107,7 +107,7 @@ export default class BaseElement extends HTMLElement {
 
     _restoreHeldNodes(element) {
         
-        console.log("restoring", element)
+
         let childNodes = element.childNodes;
         for (let i = 0; i < childNodes.length; i++) {
             let child = childNodes[i];
