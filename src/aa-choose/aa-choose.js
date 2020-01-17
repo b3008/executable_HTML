@@ -14,35 +14,38 @@ export default class AAChoose extends BaseElement {
         super();
         this.root = this.attachShadow({ mode: 'open' });
         this.root.innerHTML = "<slot></slot>"
-
+        this.originalContent = this.innerHTML;
     }
 
+    _restoreOriginalContent(){
+
+    }
     connectedCallback() {
+        
         this._shouldRun = (this.shouldRun === null) || (this.shouldRun === true);
         this.sessionElement = this._getParentSession();
         
-        if (this.started) { return; }
+      
         if (this._shouldRun) {
             if (typeof this.innerFragment !== 'undefined') {
-                this._replaceChildNodesWithHolderElements(this.innerFragment);
+                
                 let nodes = this._getNodeToInstantiate();
                 if (nodes.length == 0) {
                     this._dispatchEndEvent();
                 } else {
                     for (let i = 0; i < nodes.length; i++) {
                         let node = nodes[i];
-                        if (typeof node === 'undefined') {
-                            this._dispatchEndEvent();
-                        }
-                        else {
+                        if (typeof node!== 'undefined') {
                             this.appendChild(node);
-                            this._restoreHeldNodes(this);
+                            // this._restoreHeldNodes(this);
                         }
+                       
                     }
+                    this._dispatchEndEvent();
                 }
             }
             else {
-                this._restoreHeldNodes(this);
+                // this._restoreHeldNodes(this);
                 if (this.childNodes.length == 0) {
                     this._dispatchEndEvent();
                 }
@@ -52,6 +55,7 @@ export default class AAChoose extends BaseElement {
 
     _getNodeToInstantiate() {
 
+        
         this.started = true;
         let nodesToReturn = [];
         let nodeOtherwise = [];
@@ -63,21 +67,22 @@ export default class AAChoose extends BaseElement {
             let child = this.innerFragment.children[i];
 
             this.myFragmentChildren.push(child)
-            if (this._isHolder(child)) {
-                if (child.heldElement.nodeName == 'AA-WHEN') {
-                    isChildTrue = this.evaluate(child.heldElement);
+            // if (child.nodeName==='AA-HOLDER') {
+                
+            if (child.nodeName == 'AA-WHEN') {
+                    isChildTrue = this.evaluate(child);
                     if (isChildTrue) {
-                        nodesToReturn.push(child)
+                        nodesToReturn.push(this.copy(child))
                         // return child;
                     };
                 }
 
-                if (child.heldElement.nodeName == 'AA-OTHERWISE') {
+                if (child.nodeName == 'AA-OTHERWISE') {
                     //we reached otherwise, should we stop and attach it?
                     // /return child;
-                    nodeOtherwise.push(child)
+                    nodeOtherwise.push(this.copy(child))
                 }
-            }
+            // }
         }
 
         if (nodesToReturn.length == 0) {
@@ -121,9 +126,9 @@ export default class AAChoose extends BaseElement {
         let expr = this.replaceExpressionIdentifiersWithValues(test);
         // after replacing known variable names with their values in the string, test to see if the expression can be parsed
         try {
-            var parseTree = jsep(test);
+            var parseTree = jsep(expr);
             if ((parseTree.left.type == "Literal") && (parseTree.right.type == "Literal")) {
-                return eval(test);
+                return eval(expr);
             } 
             else {
               // there are still strings in the expression, which are unknown, an exception should be raised

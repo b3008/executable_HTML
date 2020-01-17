@@ -20,6 +20,7 @@ export default class AAScreen extends BaseElement {
 
     connectedCallback() {
         super.connectedCallback();
+
         this.submitButtonText = this._submitButtonText || 'submit';
         this.root.innerHTML = this.css + this.html;
 
@@ -31,11 +32,11 @@ export default class AAScreen extends BaseElement {
         }
 
 
-        if (typeof this.innerFragment != 'undefined') {
-            this._replaceChildNodesWithHolderElements(this.innerFragment);
-            this.appendChild(this.innerFragment);
-            this._restoreHeldNodes(this);
-        }
+        // if (typeof this.innerFragment != 'undefined') {
+        //     this._replaceChildNodesWithHolderElements(this.innerFragment);
+        //     this.appendChild(this.innerFragment);
+        //     this._restoreHeldNodes(this);
+        // }
 
         this.root.querySelector('.submitButton').addEventListener('click', this.submitButtonClick.bind(this));
 

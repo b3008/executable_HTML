@@ -1,4 +1,4 @@
-console.log("loading baseElement");
+
 
 
 var html = function (txt, ...val) {
@@ -22,6 +22,7 @@ export default class BaseElement extends HTMLElement {
     }
 
     connectedCallback() {
+        console.log(this.tagName, " connected");
         this._attachedTimestamp = new Date().getTime();
         this._debug = (this.debug===true)||(this.debug===null);
     }
@@ -40,10 +41,9 @@ export default class BaseElement extends HTMLElement {
 
 
             if (typeof this[prop] != 'undefined') {
-                // console.log(prop, this[prop]);
                 continue;
             } else {
-                // console.log('defining property for ', prop);
+                
                 Object.defineProperty(this, prop, {
                     get: () => {
                      
@@ -93,33 +93,11 @@ export default class BaseElement extends HTMLElement {
         return result;
     }
 
-    _replaceChildNodesWithHolderElements(element) {
-        // console.log(element, 'isAAElement=', this._isAAElement(element))
-        if (this._isAAElement(element)) {
-            this._replaceElementWithHolder(element);
-        }
-        else for (let i = 0; i < element.childNodes.length; i++) {
-            // if (this._isAAElement(element.childNodes[i])) {
-            //     this._replaceElementWithHolder(element.childNodes[i])
-            // } else {
-                this._replaceChildNodesWithHolderElements(element.childNodes[i]);
-            // }
-        }
-
-    }
 
 
-    _isAAElement(element) {
 
-        if (AANodeNames.indexOf(element.nodeName) != -1) {
-            return true;
-        }
-        return false;
-    }
-
-    _isHolder(element) {
-        if(!element) return false;
-        if (element.tagName == 'AA-HOLDER') {
+    static isAAElement(node) {
+        if (AANodeNames.indexOf(node.nodeName) != -1) {
             return true;
         }
         return false;
@@ -128,12 +106,13 @@ export default class BaseElement extends HTMLElement {
 
 
     _restoreHeldNodes(element) {
-    
+        
+        console.log("restoring", element)
         let childNodes = element.childNodes;
         for (let i = 0; i < childNodes.length; i++) {
             let child = childNodes[i];
-            if (this._isHolder(child)) {
-                this._replaceHolderWithElement(child);
+            if (child.nodeName=='AA-HOLDER') {
+                child.restoreNode();
             }
             else if (child.childNodes.length > 0) {
                 this._restoreHeldNodes(child);
@@ -141,49 +120,36 @@ export default class BaseElement extends HTMLElement {
         }
     }
 
-    _createHolderWithHeldElement(element){
-        let holder = document.createElement("aa-holder");
-        holder.id = element.getAttribute("name") + "-holder";
-        holder.heldElementOuterHTML = element.outerHTML;
-        console.log(element.innerHTML);
-        // holder.innerHTML = "holder for " + element.nodeName + " with name " + element.getAttribute("name")
-        // console.log("replacing", element, "with", holder);
-     
-        holder.heldElement = element.cloneNode(true);
-        console.log(holder.heldElement.innerHTML);
-        holder.setAttribute("name",element.getAttribute("name"));
-        holder.id = element.id;
 
-        //holder.heldElement.innerFragment = document.createRange().createContextualFragment(element.innerHTML);
-        holder.heldElement.innerFragment = this._createFragmentForElement(holder.heldElement);
-        return holder
+    
+   
 
-    }
-    _replaceElementWithHolder(element) {
-
-        let holder = this._createHolderWithHeldElement(element);        
-        element.replaceWith(holder);
-        return holder;
-    }
-    _replaceHolderWithElement(holder) {
-        holder.replaceWith(holder.heldElement);
-        return holder.heldElement;
-    }
-
-    _createFragmentForElement(element) {
+    _createFragmentForNode(node) {
         let fragment = document.createDocumentFragment();
         //  first get references to the children,
-        //  because the element.children array will be modified as they are appended elsewhere
+        //  because the element.children array will be modified as they are appended to the fragment
         let childNodes = [];
-        for (let i = 0; i < element.childNodes.length; i++) {
-            childNodes.push(element.childNodes[i]);
-        }
-        // the append each child to the fragment
-        for (let i = 0; i < childNodes.length; i++) {
-            fragment.appendChild(childNodes[i])
+        for(let i=0; i<node.childNodes.length; i++){
+            fragment.append(node.childNodes[i].cloneNode(true));
         }
         return fragment;
     }
+
+
+    copy(node){
+        let nodeCopy;
+        if (node.nodeName == "AA-HOLDER") {
+            nodeCopy = node.clone();
+        } else if (BaseElement.isAAElement(node)) {
+            nodeCopy = node.cloneNode();
+            nodeCopy.innerFragment = this._createFragmentForNode(node);
+        }
+        else {
+            nodeCopy = node.cloneNode(true);
+        }
+        return nodeCopy;
+    }
+
 
     _dispatchDebugEvent(detail) {
         if (this.debug) {

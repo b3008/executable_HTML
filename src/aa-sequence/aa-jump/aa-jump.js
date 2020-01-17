@@ -7,7 +7,6 @@ export default class AAJump extends BaseElement {
     }
 
     connectedCallback() {
-        
         this.dispatchEvent(new CustomEvent("endEvent", {
             bubbles: true, 
             detail: {

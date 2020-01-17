@@ -1,4 +1,4 @@
-import BaseElement from './../aa-baseElement/baseElement.js';
+import BaseElement from '../aa-baseElement/baseElement.js';
 
 export default class AAFunctionRandom extends BaseElement {
 
@@ -10,8 +10,7 @@ export default class AAFunctionRandom extends BaseElement {
     }
 
     connectedCallback(){
-
-        let session = this.this._getParentSession()
+        let session = this._getParentSession()
         this.value = this.getValue();
         session.setData(this.name, this.value);
         this._dispatchEndEvent();
@@ -37,6 +36,7 @@ export default class AAFunctionRandom extends BaseElement {
 
 
 if (!customElements.get('aa-function-random')) {
+    
     window.AANodeNames = window.AANodeNames || [];
     window.AANodeNames.push('AA-FUNCTION-RANDOM');
     customElements.define('aa-function-random', AAFunctionRandom);
