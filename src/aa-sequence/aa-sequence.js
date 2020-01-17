@@ -17,21 +17,11 @@ export default class AASequence extends BaseElement {
         this.root.innerHTML = '<slot></slot>';
     }
     connectedCallback() {
-
-
         this.root.addEventListener("endEvent", this.endEventListener.bind(this));
-        // if (this.id === '') console.warn(this, 'has no id');
-
-
         this.started = false;
-
         if ((this.shouldRun === null) || (this.shouldRun === true)) {
-
             this.init()
         };
-
-
-
     }
 
 
@@ -50,50 +40,7 @@ export default class AASequence extends BaseElement {
             <slot></slot>
             <button id='nextButton' hidden></button>
         `
-
     }
-
-
-
-
-    properties() {
-
-        return {
-            shouldRun: {
-                type: Boolean,
-                value: true,
-                reflectToAttribute: false,
-                reflectToConfig: false
-            },
-
-            showNextButton: {
-                type: Boolean,
-                value: false
-            },
-
-            nextKeyCode: {
-                type: Number,
-                value: 0
-            },
-
-            prevKeyCode: {
-                type: Number,
-                value: 0
-            },
-
-            displayAll: {
-                type: Boolean,
-                value: false
-            }
-        }
-    }
-
-
-
-
-
-    
-
 
     init() {
         this.nextStarted = false;
@@ -110,14 +57,10 @@ export default class AASequence extends BaseElement {
             this.restoreHeldNodes(this)
             return;
         }
-        else {
 
-        }
-        debugger;
         
         this.sIndex = 0;
-        // this.formerNodes = [];
-        // this.formerIndex = 0;
+
         this.nextCalls = [true];
         this.nextIndex = 0;
 
@@ -125,7 +68,6 @@ export default class AASequence extends BaseElement {
     }
 
     start() {
-        debugger;
         if(this.started){return;}
         this.started=true;
         this.nextWithTimeout(this.hasNext())
@@ -134,7 +76,6 @@ export default class AASequence extends BaseElement {
     stop() {
         this.stopped = true;
         this.started = false;
-        debugger;
     }
 
     nextWithTimeout(name){
@@ -155,34 +96,19 @@ export default class AASequence extends BaseElement {
 
     next(name) {
        
-        
-        if (!this.counter) {
-            this.counter = 1;
-        } else {
-            this.counter++;
-            // if (this.counter > 500) {
-            //     return null;
-            // }
-        }
-
-
         if (this.sIndex >= this.innerFragment.childNodes.length) return null;
 
         if (typeof name === "string") {
             for (let i = 0; i < this.innerFragment.childNodes.length; i++) {
-
-                // 
                 if (this.innerFragment.childNodes[i].getAttribute) if (this.innerFragment.childNodes[i].getAttribute("name") == name) {
                     this.sIndex = i;
                     break;
                 }
             }
-
         }
 
 
         let fragmentChild = this.innerFragment.childNodes[this.sIndex];
-        // 
         if (this.type === "elements") {
             if (fragmentChild.nodeType != Node.ELEMENT_NODE) {
                 this.nextCalls.push(true);
@@ -192,14 +118,7 @@ export default class AASequence extends BaseElement {
         }
         let fragmentChildCopy = this.copy(fragmentChild);
 
-
-
         this.sIndex += 1;
-
-
-
-        // let n = this.formerNodes[this.formerIndex];
-        // this.formerIndex++;
         
         this.target.appendChild(fragmentChildCopy);
         AAHolder.scanAndRestore(this.target.childNodes[this.childNodes.length - 1]);
@@ -207,24 +126,19 @@ export default class AASequence extends BaseElement {
         
         if (!fragmentChildCopy._dispatchEndEvent) {
             this.nextCalls.push(true);
-        } else {
+        } //else {
             // this.nextCalls.push(false);
             // this.nextCalls.push(true);
-
-        }
+        // }
 
         if(!this.prevPerformance){
             this.prevPerformance = performance.now();
-            debugger;
+
         }else{
             this.time = performance.now() - this.prevPerformance;
             this.prevPerformance = performance.now();
-            debugger;
+
         }
-
-        // if(this.sIndex==6) this.sIndex=1;
-
-        
     }
 
 
@@ -242,7 +156,6 @@ export default class AASequence extends BaseElement {
 
 
     endEventListener(e) {
-
         e.stopPropagation();
         let goto = null
         if (e.detail) {
