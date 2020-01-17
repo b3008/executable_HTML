@@ -45,7 +45,7 @@ describe('baseElement', () => {
        
     })
 
-    xdescribe('derived elements', function(){
+    describe('derived elements', function(){
         it('derived element inherits from baseElement, has getters and setters for properties that reflect attributes',  (done) => {
             class TestElement extends BaseElement {
                 static get observedAttributes() {

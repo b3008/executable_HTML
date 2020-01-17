@@ -120,69 +120,8 @@ export default class BaseElement extends HTMLElement {
         }
     }
 
-    // _createHolderWithHeldElement(element){
-    //     debugger;
-    //     let holder = document.createElement("aa-holder");
-    //     if(element.getAttribute){
-    //         holder.id = element.getAttribute("name") + "-holder";
-    //         holder.heldElementOuterHTML = element.outerHTML;
-    //         holder.setAttribute("name",element.getAttribute("name"));
-    //     }
-    //     // holder.innerHTML = "holder for " + element.nodeName + " with name " + element.getAttribute("name")
-    //     // console.log("replacing", element, "with", holder);
-     
-    //     holder.heldElement = element.cloneNode(true);
-       
+
     
-    //     //holder.heldElement.innerFragment = document.createRange().createContextualFragment(element.innerHTML);
-    //     holder.heldElement.innerFragment = this._createFragmentForElement(holder.heldElement);
-    
-    //     return holder
-
-    // }
-
-
-    _replaceChildrenHolderElements(node) {
-        let holderChildren = [];
-        for (let i = 0; i < node.children.length; i++) {
-                // this._replaceChildNodesWithHolderElements(node.childNodes[i]);
-                if(node.children[i].nodeName!="#document-fragment"){
-                    holderChildren.push(this._replaceNodeWithHolder(node.children[i]));
-                }
-        }
-        if(node.nodeName=="TEMPLATE"){
-            debugger;
-        }
-        // if(node.nodeName!="#document-fragment"){
-        //     this._replaceNodeWithHolder(node);
-        // }
-        
-
-    }
-
-
-    // _replaceNodeWithHolder(node) {
-        
-    //     let holder = this._createHolderForNode(node);        
-    //     node.replaceWith(holder);
-    //     return holder;
-    // }
-
-  
-    // _createHolderForNode(node, deep){
-    //     let holder = document.createElement("aa-holder");
-    //     holder.holdElement()
-    //     holder.node = node.cloneNode(true);
-    //     if(node.id) {
-    //         holder.id = node.id;
-    //     }
-    //     else{
-    //         holder.id=node.nodeName;
-    //     }
-    //     holder.innerFragment = this._createFragmentForNode(node);
-    //     return holder;
-    // }
-
    
 
     _createFragmentForNode(node) {
@@ -194,6 +133,21 @@ export default class BaseElement extends HTMLElement {
             fragment.append(node.childNodes[i].cloneNode(true));
         }
         return fragment;
+    }
+
+
+    copy(node){
+        let nodeCopy;
+        if (node.nodeName == "AA-HOLDER") {
+            nodeCopy = node.clone();
+        } else if (BaseElement.isAAElement(node)) {
+            nodeCopy = node.cloneNode();
+            nodeCopy.innerFragment = this._createFragmentForNode(node);
+        }
+        else {
+            nodeCopy = node.cloneNode(true);
+        }
+        return nodeCopy;
     }
 
 

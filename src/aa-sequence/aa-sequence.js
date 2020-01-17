@@ -1,11 +1,14 @@
 import BaseElement from './../aa-baseElement/baseElement.js'
+import AAFunctionRandom from '../aa-function/aa-function-random.js';
 import AAJump from "./aa-jump/aa-jump.js";
+import AAHolder from '../aa-holder/aa-holder.js';
+
 
 export default class AASequence extends BaseElement {
 
 
     static get observedAttributes() {
-        return ['name', 'should-run', 'debug'];
+        return ['name', 'write-into', 'should-run', 'debug', 'type', "stopped"];
     }
 
     constructor() {
@@ -14,29 +17,17 @@ export default class AASequence extends BaseElement {
         this.root.innerHTML = '<slot></slot>';
     }
     connectedCallback() {
-        
 
-        
+
+        this.root.addEventListener("endEvent", this.endEventListener.bind(this));
         // if (this.id === '') console.warn(this, 'has no id');
-       
+
         // console.log('ready sequence', this.name);
         this.started = false;
 
+        if ((this.shouldRun === null) || (this.shouldRun === true)) {
 
-        // console.log('attached sequence');
-        if (this.displayAll) {
-
-            //if(typeof this.innerFragment=='undefined')
-            {
-                // console.warn('.innerFragment is undefined');
-                this.restoreHeldNodes(this)
-            }
-            return;
-        }
-
-        if ( (this.shouldRun===null)||(this.shouldRun===true)) {
-
-            this.start()
+            this.init()
         };
 
 
@@ -59,7 +50,7 @@ export default class AASequence extends BaseElement {
             <slot></slot>
             <button id='nextButton' hidden></button>
         `
-    
+
     }
 
 
@@ -101,16 +92,20 @@ export default class AASequence extends BaseElement {
 
 
 
+    
 
 
+    init() {
 
-    start() {
-        
-        
+        if (this.writeInto) {
+            this.target = document.querySelector(this.writeInto);
+        } else {
+            this.target = this;
+        }
+
         if (this.started) return;
-        //  an  .innerFragment member should have been supplied by an ema-session element containing this ema-sequence
-        //  somewhere in its subtree. pick each child of the fragment separately
-        if (typeof this.innerFragment ==='undefined') {
+
+        if (typeof this.innerFragment === 'undefined') {
             console.warn('.innerFragment is undefined');
             this.restoreHeldNodes(this)
             return;
@@ -118,141 +113,153 @@ export default class AASequence extends BaseElement {
         else {
 
         }
-        //  first  replace any nested <ema-*> elements
-        this._replaceChildNodesWithHolderElements(this.innerFragment);
-        //this.replaceEmaChildNodesWithHolders(this.innerFragment);
 
-
-        this.started = true;
-        this.fragmentChildrenCounter = 0;
+        this.started = this.stopped !== true;
+        this.sIndex = 0;
         this.formerNodes = [];
-        this.myFragmentChildren = [];
+        this.formerIndex = 0;
+        this.nextCalls = [true];
+        this.nextIndex = 0;
 
-        //  don't assign listeners here, only to the final fragment child
-        for (let i = 0; i < this.innerFragment.children.length; i++) {
-
-            this.myFragmentChildren.push(this.innerFragment.children[i])
-            this.innerFragment.children[i].endEventListener = this.endEventListener.bind(this);
-        }
-
-        // this.next()
-
-        if (this.nextKeyCode) {
-            this.addEventListener('keyup', function (e) {
-
-            })
-        }
+        if (this.started) { start() }
     }
+
+    start() {
+        debugger;
+        if(this.started){return;}
+        this.started=true;
+        this.nextWithTimeout(this.hasNext())
+    }
+
+    stop() {
+        this.stopped = true;
+        this.started = false;
+        debugger;
+    }
+
+    nextWithTimeout(name){
+        setTimeout(()=>{
+            this.next(name);
+            let nextParam = this.hasNext()
+            if(nextParam){
+                this.nextWithTimeout(nextParam)
+            }else{
+                if(nextParam==null){
+                        this._dispatchEndEvent();        
+                }
+            }
+        },0);
+    }
+
 
     next(name) {
-        if(!this.counter){
-            this.counter = 1;
-        }else{
-            this.counter++;
-            if(this.counter>500){
-                return null;
-            }
-        }
-        if (!this.started) { 
-            this.start(); 
-        }
-        
-        if (this.myFragmentChildren.length === 0) return;       
-        this._makeCurrentNodeAFormerNode();
 
-        let fragmentChild;
-        if(name){
-          
-            for(let i=0; i<this.myFragmentChildren.length; i++){
-                let child =  this.myFragmentChildren[i].heldElement || this.myFragmentChildren[i];
-                if(child.name==name){
-                    // if( this.formerNodes.indexOf(child)!=-1){
-                    
-                    //     debugger;
-                    //     fragmentChild = this._createHolderWithHeldElement(child, false, "debug");
-                    // }else{
-                        fragmentChild = this.myFragmentChildren[i];
-                    // }
-                    this.fragmentChildrenCounter = i;
+        if (!this.counter) {
+            this.counter = 1;
+        } else {
+            this.counter++;
+            // if (this.counter > 500) {
+            //     return null;
+            // }
+        }
+
+
+        if (this.sIndex >= this.innerFragment.childNodes.length) return null;
+
+        if (typeof name === "string") {
+            for (let i = 0; i < this.innerFragment.childNodes.length; i++) {
+                // console.log(this.innerFragment.childNodes[i]);
+                // 
+                if (this.innerFragment.childNodes[i].getAttribute) if (this.innerFragment.childNodes[i].getAttribute("name") == name) {
+                    this.sIndex = i;
                     break;
                 }
-            } 
-           
-           
-        }else{
-            if (this.fragmentChildrenCounter >= this.myFragmentChildren.length) return null;
-            fragmentChild = this.myFragmentChildren[this.fragmentChildrenCounter];
-        }
-        if(fragmentChild.tagName!="AA-HOLDER"){
-            fragmentChild = this._createHolderWithHeldElement(fragmentChild, false, "debug");
-        }
-        debugger;
-        //  update the current node
-        this.currentNode = this._replaceWithElementIfChildIsHolder(fragmentChild);;
-        this.currentNode.endEventListener = this.endEventListener.bind(this);
-        this.fragmentChildrenCounter += 1;
-        //  it's important that the listener is added and the fragmentChildrenCounter increase
-        //  before appending the child, otherwise, because appending nodes triggers their attached callback,
-        //  certain nodes (like ema-choose that fails to be true in any condition)
-        //  will immediately dispatch an 'endEvent'Event which in this case will call next()
-        //  again, before the current next() returns.
-        //  If the listener has not been added, no one will catch the event
-        //  and if fragmentChildrenCounter has not increased,
-        //  next() will grab the same object again from this.myFragmentChildren
+            }
 
-        this.currentNode.addEventListener('endEvent', this.currentNode.endEventListener);
-        console.log(this.currentNode);
-        setTimeout(()=>{
-            // this way appendChild will happen after next() returns, 
-            // and subsequent calls to next() that will result from it will not be recursive
-            this.appendChild(this.currentNode);
-            this._restoreHeldNodes(this.currentNode);
-        }, 0);
-        
-       
-        
-        if(!this.currentNode._dispatchEndEvent){
-            debugger;
-            this.next();
         }
-        return this.currentNode;
+
+
+        let fragmentChild = this.innerFragment.childNodes[this.sIndex];
+        // 
+        if (this.type === "elements") {
+            if (fragmentChild.nodeType != Node.ELEMENT_NODE) {
+                this.nextCalls.push(true);
+                this.sIndex += 1;
+                console.log("rejecting", fragmentChild);
+                return;
+            }
+        }
+        let fragmentChildCopy = this.copy(fragmentChild);
+
+        // console.log(this.innerFragment.childNodes);
+        // console.log(fragmentChildCopy);
+        this.formerNodes.push(fragmentChildCopy);
+        console.log("original", fragmentChild);
+        console.log("copy", fragmentChildCopy);
+        this.sIndex += 1;
+
+
+
+        let n = this.formerNodes[this.formerIndex];
+        // 
+        this.target.appendChild(n);
+        this.formerIndex++;
+        AAHolder.scanAndRestore(this.target.childNodes[this.childNodes.length - 1]);
+        if (!n._dispatchEndEvent) {
+            this.nextCalls.push(true);
+        } else {
+            // this.nextCalls.push(false);
+
+        }
+
+        setTimeout(() => { }, 0);
+
     }
 
-    _replaceWithElementIfChildIsHolder(fragmentChild){
-        if (this._isHolder(fragmentChild)) {
-            return this._replaceHolderWithElement(fragmentChild);
-        }
-        
-        return fragmentChild;
+
+    hasNext() {
+        if (this.nextCalls.length > 10000) return null;
+        if (this.started === false) return null;
+        console.log(this.nextCalls);
+        if (this.nextIndex < this.nextCalls.length) {
+            let val = this.nextCalls[this.nextIndex];
+            this.nextIndex++;
+            return val;
+        } else
+            return null;
     }
 
-    _makeCurrentNodeAFormerNode(){
-        if (typeof this.currentNode != 'undefined') {
-            this.currentNode.removeEventListener('endEvent', this.currentNode.endEventListener);
-            this.formerNodes.push(this.currentNode);
-        }
-    }
 
-    
-    
     endEventListener(e) {
 
         e.stopPropagation();
         let goto = null
-        if(e.detail) if(e.detail.goto) goto=e.detail.goto;
-        let next = this.next(goto);
-        if (next === null) {
-            this._dispatchEndEvent();
+        if (e.detail) {
+            if (e.detail.goto) {
+
+                goto = e.detail.goto;
+                this.nextCalls.push(goto);
+            } else {
+                this.nextCalls.push(true);
+            }
+        } else {
+            this.nextCalls.push(true);
+        }
+
+        if (!this.nextCalls[this.nextIndex]) {
+            
+                this.nextWithTimeout(this.hasNext())
+
         }
     }
-
 }
+
 
 
 
 if (!customElements.get('aa-sequence')) {
 
-    if (typeof window.AANodeNames ==='undefined') { window.AANodeNames = []; }
+    if (typeof window.AANodeNames === 'undefined') { window.AANodeNames = []; }
     window.AANodeNames.push('AA-SEQUENCE');
 
     customElements.define('aa-sequence', AASequence);

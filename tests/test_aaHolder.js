@@ -26,7 +26,7 @@ describe('aa-holder', () => {
     describe('member functions', function () {
 
 
-        xit('produces holder element from any given node and reproduces original content', (done) => {
+        it('produces holder element from any given node and reproduces original content', (done) => {
             let b = document.createElement('aa-base-element');
             let div = document.createElement('div');
             div.id = "mydiv";
@@ -54,7 +54,7 @@ describe('aa-holder', () => {
         })
 
 
-        xit('scans tree and replaces aa-elements with aa-holders', (done) => {
+        it('scans tree and replaces aa-elements with aa-holders', (done) => {
 
             container.innerHTML = html` This is the content of my div, it contains a text node, 
                                 <p>one child</p>

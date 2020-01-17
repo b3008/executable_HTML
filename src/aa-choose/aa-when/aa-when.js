@@ -1,5 +1,5 @@
 import BaseElement from './../../aa-baseElement/baseElement.js'
-
+import AAHolder from './../../aa-holder/aa-holder.js'
 export default class AAWhen extends BaseElement {
 
     static get observedAttributes() {
@@ -17,7 +17,7 @@ export default class AAWhen extends BaseElement {
         this.started = true;
         if(typeof this.innerFragment!="undefined")
         {
-            this._replaceChildNodesWithHolderElements(this.innerFragment);
+            AAHolder.scanAndReplace(this.innerFragment);
             this.appendChild(this.innerFragment);
             this._restoreHeldNodes(this);
         }

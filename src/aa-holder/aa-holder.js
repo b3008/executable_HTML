@@ -2,7 +2,7 @@ import BaseElement from './../aa-baseElement/baseElement.js'
 export default class AAHolder extends BaseElement {
 
 
-    static holderInstances = [];
+    // static holderInstances = [];
     static get observedAttributes() {
         return ["name"];
     }
@@ -10,16 +10,16 @@ export default class AAHolder extends BaseElement {
     static createHolderForNode(node) {
         let holder = document.createElement("aa-holder");
         holder.holdNode(node);
-        AAHolder.holderInstances.push(holder);
+        // AAHolder.holderInstances.push(holder);
         return holder;
 
     }
 
 
-
     static scanAndReplace(node) {
-        
-        if (node.nodeName == "TEMPLATE") AAHolder.scanAndReplace(node.content);
+        if (node.nodeName == "TEMPLATE") {
+            AAHolder.scanAndReplace(node.content);
+        }
         else if (BaseElement.isAAElement(node)) {
             let holder = AAHolder.createHolderForNode(node);
             node.replaceWith(holder);
@@ -27,46 +27,38 @@ export default class AAHolder extends BaseElement {
             for (let i = 0; i < node.childNodes.length; i++) {
                 AAHolder.scanAndReplace(node.childNodes[i]);
             }
+
     }
 
     static scanAndRestore(node) {
+
         if (node.nodeName == "TEMPLATE") AAHolder.scanAndRestore(node.content);
         else if (BaseElement.isAAElement(node)) {
-            if(node.nodeName=="AA-HOLDER"){
+            if (node.nodeName == "AA-HOLDER") {
                 node.restoreHeldNode();
             }
-        } 
-        else
-            for (let i = 0; i < node.childNodes.length; i++) {
-                AAHolder.scanAndRestore(node.childNodes[i]);
-            }
+        }
+        else for (let i = 0; i < node.childNodes.length; i++) {
+            AAHolder.scanAndRestore(node.childNodes[i]);
+        }
+
     }
 
-
+    clone(){
+        let clone = document.createElement('aa-holder');
+        clone.name = this.name;
+        clone.id = this.id;
+        clone.node = this.node.cloneNode(true);
+        clone.innerFragment =   document.createDocumentFragment();        
+        for(let i=0; i<this.innerFragment.childNodes.length; i++){
+            clone.innerFragment.appendChild(this.innerFragment.childNodes[i].cloneNode(true));
+        }
+        clone.holdsAAElement = this.holdsAAElement;
+        return clone;
+    }
 
     constructor() {
         super();
-        this._templateHolders = [];
-    }
-
-
-    get css() {
-        return html`
-            <style>
-            
-            </style>
-        `
-    }
-
-    get html() {
-        return html`
-            <slot>
-            </slot>
-
-            <pre id="display" class="prettyprint lang-html" hidden >
-
-            </pre>
-        `
     }
 
 

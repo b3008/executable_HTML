@@ -1,5 +1,6 @@
 import '../src/aa-session/aa-session.js';
 import '../src/aa-screen/aa-screen.js';
+import '../src/aa-sequence/aa-sequence.js';
 // var expect = chai.expect;
 var assert = chai.assert;
 var container;
@@ -51,18 +52,16 @@ describe('aa-session', () => {
 
             let session = document.querySelector('#session');
             let screen = document.querySelector("#screen1");
-            debugger;
             assert(session.tagName=="AA-SESSION", "AA-SESSION")
             assert(session.name=="test", "name should equal test");
             assert(session.debug===true, "true")
             assert(screen!==null, "screen should be an object")
 
-            debugger;
             done();            
 
         });
 
-        xit('session should not render contents when should-run is false', function (done) {
+        it('session should not render contents when should-run is false', function (done) {
 
             
             container.innerHTML = html`
@@ -84,6 +83,38 @@ describe('aa-session', () => {
             done();            
 
         });
+
+        it('session should contain shallow copies of aa-elements the innerHTML nodes of which are childNodes of an innerFragment property', (done)=>{
+            container.innerHTML = html`
+            first session:
+            <aa-session debug="true" name="test" id="session"> 
+                    some text;
+
+                    <div id="myDiv">my div</div>
+                    <aa-screen id="screen1" name="first">
+                        <div>test</div>
+                    </aa-screen>
+
+                    <template>
+                        <aa-screen id="screen2" name="second">
+                            <div>test 2</div>
+                        </aa-screen>
+
+                        <div>
+                            <p>
+                                <aa-sequence>
+                                    <aa-screen>screen1</aa-screen>
+                                    <aa-screen>screen2</aa-screen>
+                                </aa-sequence>
+                            <p>
+                        </div>
+                    </template>
+
+            </aa-session>`;
+
+
+            done();
+        })
 
         
 

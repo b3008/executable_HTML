@@ -2,7 +2,7 @@
 
 <head>
 
-    <!-- <script src="../../../dist/aaCustomElements.js"></script> -->
+    <!-- <script type="module" src="../../../dist/aaCustomElements.js"></script> -->
     <script type="module" src="../../index.js"></script>
     <style>
         @font-face {
@@ -26,29 +26,69 @@
            
             box-sizing:border-box;
         }
+
+   
     </style>
 </head>
 
 <body>
-    
-    <div class="democontainer">
+    <xmp class="sourceCode">
         <aa-session>
             <template>
-                <aa-sequence>
+                <aa-sequence class="democontainer">
                     <aa-function-random min="1" max="2" name="rnd"></aa-function-random>
-                    <!-- <aa-choose> -->
-                        <!-- <aa-when test="rnd==1"><div class="c64char">m​</div></aa-when> -->
-                        <!-- <aa-when test="rnd==2"><div class="c64char">n​</div></aa-when> -->
-                    <!-- </aa-choose> -->
-
-                    <div class="c64char">n​</div>
+                    <aa-choose>
+                        <aa-when test="rnd==1"><div class="c64char">m​</div></aa-when>
+                        <aa-when test="rnd==2"><div class="c64char">n​</div></aa-when>
+                    </aa-choose>
                     <aa-jump goto="rnd"></aa-jump>
                 </aa-sequence>
             </template>
         </aa-session>
-   
+    </xmp>
+
+    <button onclick="stop()">
+        stop
+    </button>
+    <button onclick="start()">
+        start
+    </button>
+
+    <h3>result</h3>
+    <div>
+        <aa-session>
+            <template>
+                <aa-sequence class="democontainer" type="elements" stopped="true">
+                    <aa-function-random min="1" max="2" name="rnd"></aa-function-random>
+                    <aa-choose>
+                        <aa-when test="rnd==1"><div class="c64char">m​</div></aa-when>
+                        <aa-when test="rnd==2"><div class="c64char">n​</div></aa-when>
+                    </aa-choose>
+
+                   
+                    <aa-jump goto="rnd"></aa-jump>
+                </aa-sequence>
+            </template>
+        </aa-session>
+      
     </div>
     
 </body>
 
+<script>
+
+start =function(){
+    console.log("start");
+    
+    s = document.querySelector("aa-sequence");
+    s.start();
+}
+
+stop =function(){
+    console.log("stop");
+
+    s = document.querySelector("aa-sequence");
+    s.stop();
+}
+</script>
 </html>

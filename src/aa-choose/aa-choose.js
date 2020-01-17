@@ -21,14 +21,14 @@ export default class AAChoose extends BaseElement {
 
     }
     connectedCallback() {
-        debugger;
+        
         this._shouldRun = (this.shouldRun === null) || (this.shouldRun === true);
         this.sessionElement = this._getParentSession();
-        debugger;
-        // if (this.started) { return; }
+        
+      
         if (this._shouldRun) {
             if (typeof this.innerFragment !== 'undefined') {
-                this._replaceChildNodesWithHolderElements(this.innerFragment);
+                
                 let nodes = this._getNodeToInstantiate();
                 if (nodes.length == 0) {
                     this._dispatchEndEvent();
@@ -37,7 +37,7 @@ export default class AAChoose extends BaseElement {
                         let node = nodes[i];
                         if (typeof node!== 'undefined') {
                             this.appendChild(node);
-                            this._restoreHeldNodes(this);
+                            // this._restoreHeldNodes(this);
                         }
                        
                     }
@@ -45,7 +45,7 @@ export default class AAChoose extends BaseElement {
                 }
             }
             else {
-                this._restoreHeldNodes(this);
+                // this._restoreHeldNodes(this);
                 if (this.childNodes.length == 0) {
                     this._dispatchEndEvent();
                 }
@@ -55,7 +55,7 @@ export default class AAChoose extends BaseElement {
 
     _getNodeToInstantiate() {
 
-        debugger;
+        
         this.started = true;
         let nodesToReturn = [];
         let nodeOtherwise = [];
@@ -67,21 +67,22 @@ export default class AAChoose extends BaseElement {
             let child = this.innerFragment.children[i];
 
             this.myFragmentChildren.push(child)
-            if (this._isHolder(child)) {
-                if (child.heldElement.nodeName == 'AA-WHEN') {
-                    isChildTrue = this.evaluate(child.heldElement);
+            // if (child.nodeName==='AA-HOLDER') {
+                
+            if (child.nodeName == 'AA-WHEN') {
+                    isChildTrue = this.evaluate(child);
                     if (isChildTrue) {
-                        nodesToReturn.push(child)
+                        nodesToReturn.push(this.copy(child))
                         // return child;
                     };
                 }
 
-                if (child.heldElement.nodeName == 'AA-OTHERWISE') {
+                if (child.nodeName == 'AA-OTHERWISE') {
                     //we reached otherwise, should we stop and attach it?
                     // /return child;
-                    nodeOtherwise.push(child)
+                    nodeOtherwise.push(this.copy(child))
                 }
-            }
+            // }
         }
 
         if (nodesToReturn.length == 0) {

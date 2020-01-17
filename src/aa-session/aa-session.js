@@ -13,8 +13,6 @@ export default class AASession extends BaseElement {
 
     constructor() {
         super();
-        // console.log('creating session');
-
         this._mem = document.createElement('aa-memory');
 
         this.myTemplate = document.createElement('template');
@@ -58,187 +56,49 @@ export default class AASession extends BaseElement {
     }
 
     myIdGenerator() {
-        // debugger;
-        // TODO: generate an id
+
         return 0;
     }
 
-
-
-
     connectedCallback() {
 
-        // console.log('attaching session');
         this.sessionID = this.myIdGenerator();
         this.sessionTime = new Date().getTime();
-
         let sessionDatum = Object.keys(this.dataset);
         for(let i in sessionDatum){
             this.setData(sessionDatum[i], this.dataset[sessionDatum[i]]);
         }
-        // console.log('shouldRun = ', this.shouldRun);
         if ((this.shouldRun === null) || (this.shouldRun === true)) {
             this.run();
         }
-
-
-    }
-
-    getElementContent(element) {
-        if (element.nodeName === 'SCRIPT') {
-
-        } else
-            if (element.nodeName === '#text') {
-                return element.textContent;
-            } else
-                if (element.nodeName === '#comment') {
-
-                    return '<!--' + element.textContent + '!-->';
-                } else
-                    if (element.nodeName === 'TEMPLATE') {
-                        return this.getElementContent(element.content);
-                    } else
-                        if (element.nodeName === '#document-fragment') {
-                            let result = '';
-                            for (let i = 0; i < element.childNodes.length; i++) {
-                                result += this.getElementContent(element.childNodes[i]);
-                            }
-                            // console.log('result is ', result)
-                            return result;
-                        }
-                        else {
-                            return element.outerHTML;
-                        }
-
     }
 
 
-    display() {
-
-        this.display = this.querySelector('#display');
-        this.initialNodesList = [];
-        for (let i = 0; i < this.childNodes.length; i++) {
-            this.initialNodesList.push(this.childNodes[i]);
-        }
-        this.sourceText = '';
-        for (let i = 0; i < this.initialNodesList.length; i++) {
-            let child = this.initialNodesList[i];
-            this.sourceText += this.getElementContent(child);
-        }
-        this.display.innerHTML = hljs.highlightAuto(this.sourceText).value;
-
-        // this.$.display.innerHTML = Prism.highlight(sourceText, Prism.languages.javascript)
-
-        this.display.addEventListener('input', (e) => {
-            // this.sourceText = hljs.highlightAuto(this.target.innerText).value;
-            // this.display.innerHTML = this.sourceText
-            // console.log('change')
-        })
-
-        this.$.updateButton.addEventListener('click', () => {
-            this.updateFromEditor();
-        });
-
-    }
-
-    updateFromEditor() {
-
-        let t = document.createElement('template');
-        t.innerHTML = this.sourceText;
-        let session = document.createElement('aa-session');
-        session.shouldRun = true;
-        session.appendChild(t);
-        this.appendChild(session)
-    }
-
-
-
-
-    findAAChildrenAndReplaceThemWithHolders(node){
-        for(let i=0; i<this.node.childNodes)
-    }
-
-
-    createMirrorForNode(node, isSessionTemplate){
-        if(node.childNodes.length==0){
-            return _createElementWithHolderOrCloneDeep(node);
-        }
+    attachTemplateChildNodesToMyself(templateClone){
         
-        let result = node.cloneNode(false);
-        for(let i=0; i<node.childNodes.length; i++){
-            let childNode = node.childNodes[i].cloneNode(true);
-            let newNode = this.createMirrorForNode(childNode, false);
-            result.appendChild(newNode);
-            if(newNode.nodeName=="AA-HOLDER") { 
-                newNode.restoreNode()
-            };
-        };
-        return result;
-
+        while(templateClone.content.childNodes.length){
+            //  if there's a direct template child, we want its children appended too
+            if(templateClone.content.childNodes[0].nodeName==="TEMPLATE"){
+                while(templateClone.content.childNodes[0].content.childNodes.length){
+                    this.appendChild(templateClone.content.childNodes[0].content.childNodes[0])
+                }
+                //  we are not appending the template element elsewhere 
+                //  so throw it way so that the childnode count can be reduced
+                templateClone.content.childNodes[0].remove();
+            }else{
+                this.appendChild(templateClone.content.childNodes[0]);
+            }
+        }
     }
-
 
     run() {
     
-
-        this.attachTemplateToNode(this.myTemplate, this);
-
-     
-
-        // this.started = true;
-       
-        // this._replaceChildrenHolderElements(this.myTemplate.content);
-        // this.appendChild(this.myTemplate.content);
-
-        // if ((this.shouldRun === null) || (this.shouldRun === true)) {
-        //     this._restoreHeldNodes(this);
-        // }
-
-        // this.initialChildNodesList = [];
-        // for (let i = 0; i < this.childNodes.length; i++) {
-        //     this.initialChildNodesList.push(this.childNodes[i]);
-        // }
-        // for (let i = 0; i < this.initialChildNodesList.length; i++) {
-        //     let child = this.initialChildNodesList[i];
-        //     if (typeof child.nodeName != 'undefined') {
-        //         if (child.nodeName === 'TEMPLATE') {
-        //             this._replaceChildrenHolderElements(child.content);
-        //             this.appendChild(child.content);
-
-        //             if ((this.shouldRun === null) || (this.shouldRun === true)) {
-        //                 debugger;
-        //                 this._restoreHeldNodes(this);
-        //             }
-        //         }
-        //     }
-        // }
-    }
-
-    _createElementWithHolderOrCloneDeep(node){
-        if(node.nodeType==Node.ELEMENT_NODE){
-            if(node.nodeName=="TEMPLATE"){
-                createMirrorForNode()
-            }
-            return AAHolder.createHolderForElement(node);
-        } else{
-            return node.cloneNode(true);
+        let myTemplateClone = this.myTemplate.cloneNode(true);
+        AAHolder.scanAndReplace(myTemplateClone);   
+        this.attachTemplateChildNodesToMyself(myTemplateClone);
+        for(let i=0; i<this.childNodes.length; i++){
+            AAHolder.scanAndRestore(this.childNodes[i]);
         }
-    }
-
-
-
-
-    getReferencedItems(element) {
-
-        let referencedItems = [];
-        if (this._isAAElement(element)) referencedItems.push(element);
-        for (let i = 0; i < element.childNodes.length; i++) {
-            let child = element.childNodes[i];
-            if (this._isAAElement(child)) {
-                referencedItems = referencedItems.concat(this.getReferencedItems(child))
-            }
-        }
-        return referencedItems;
     }
 
     getData(name){
@@ -251,25 +111,6 @@ export default class AASession extends BaseElement {
     getDataDump(){
         return this._mem.dataset;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 

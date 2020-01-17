@@ -12,9 +12,12 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'aaCustomElements.js'
+    filename: 'aaCustomElements.js',
+    jsonpScriptType:"module"
   },
   mode: "development",
+  devtool:"source-map",
+ 
   plugins: [
     new webpack.DefinePlugin({
       VERSION: build.version,
