@@ -15,38 +15,59 @@
         }
 
 
-        .democontainer{
-            display:flex;
+        .democontainer {
+            display: flex;
             flex-wrap: wrap;
         }
-        .c64char{
-            font-family: 'commodoreserverregular';
-            padding:0;
-            margin:-2px;
-           
-            box-sizing:border-box;
-        }
 
-   
+        .c64char {
+            font-family: 'commodoreserverregular';
+            padding: 0;
+            margin: -2px;
+
+            box-sizing: border-box;
+        }
     </style>
 </head>
 
 <body>
-    <xmp class="sourceCode">
-        <aa-session>
-            <template>
-                <aa-sequence class="democontainer">
-                    <aa-function-random min="1" max="2" name="rnd"></aa-function-random>
-                    <aa-choose>
-                        <aa-when test="rnd==1"><div class="c64char">m​</div></aa-when>
-                        <aa-when test="rnd==2"><div class="c64char">n​</div></aa-when>
-                    </aa-choose>
-                    <aa-jump goto="rnd"></aa-jump>
-                </aa-sequence>
-            </template>
-        </aa-session>
-    </xmp>
 
+    <div style="display:flex">
+        <div>
+            <xmp class="sourceCode">
+                <aa-session>
+                    <template>
+                        <aa-sequence class="democontainer">
+                            <aa-function-random min="1" max="2" name="rnd"></aa-function-random>
+                            <aa-choose>
+                                <aa-when test="rnd==1">
+                                    <div class="c64char">m​</div>
+                                </aa-when>
+                                <aa-otherwise>
+                                    <div class="c64char">n​</div>
+                                </aa-otherwise>
+                            </aa-choose>
+                            <aa-jump goto="rnd"></aa-jump>
+                        </aa-sequence>
+                    </template>
+                </aa-session>
+            </xmp>
+        </div>
+        <div>
+            <h3>Javascript equivaltent</h3>
+            <xmp>
+                r2 = document.querySelector("#result2");
+                let counter=0;
+                insert = function(){
+                let rnd = Math.random()
+                let char = `<div class="c64char">${rnd>0.5?'m':'n'}</div>`;
+                r2.innerHTML+=char;
+                counter++;
+                setTimeout(()=>insert(),0);
+                }
+            </xmp>
+        </div>
+    </div>
     <button onclick="stop()">
         stop
     </button>
@@ -61,34 +82,57 @@
                 <aa-sequence class="democontainer" type="elements">
                     <aa-function-random min="1" max="2" name="rnd"></aa-function-random>
                     <aa-choose>
-                        <aa-when test="rnd==1"><div class="c64char">m​</div></aa-when>
-                        <aa-when test="rnd==2"><div class="c64char">n​</div></aa-when>
+                        <aa-when test="rnd==1">
+                            <div class="c64char">m​</div>
+                        </aa-when>
+                        <aa-otherwise>
+                            <div class="c64char">n​</div>
+                        </aa-otherwise>
                     </aa-choose>
 
-                   
+
                     <aa-jump goto="rnd"></aa-jump>
                 </aa-sequence>
             </template>
         </aa-session>
-      
+
     </div>
-    
+
+    <div id="result2" class="democontainer" style="margin-top:50px">
+    </div>
+
 </body>
 
 <script>
 
-start =function(){
-    console.log("start");
-    
-    s = document.querySelector("aa-sequence");
-    s.start();
-}
+    start = function () {
+        console.log("start");
 
-stop =function(){
-    console.log("stop");
+        s = document.querySelector("aa-sequence");
+        s.start();
+    }
 
-    s = document.querySelector("aa-sequence");
-    s.stop();
-}
+    stop = function () {
+        console.log("stop");
+
+        s = document.querySelector("aa-sequence");
+        s.stop();
+    }
+
+
+    r2 = document.querySelector("#result2");
+    let counter = 0;
+    insert = function () {
+        let rnd = Math.random()
+        let char = `<div class="c64char">${rnd > 0.5 ? 'm' : 'n'}</div>`;
+        r2.innerHTML += char;
+        counter++;
+        setTimeout(() => insert(), 0);
+    }
+// insert();
+
+
+
 </script>
+
 </html>
