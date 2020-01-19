@@ -17,6 +17,7 @@ export default class AASequence extends BaseElement {
         this.root.innerHTML = '<slot></slot>';
     }
     connectedCallback() {
+        debugger;
         this.root.addEventListener("endEvent", this.endEventListener.bind(this));
         this.started = false;
         if ((this.shouldRun === null) || (this.shouldRun === true)) {
@@ -95,7 +96,7 @@ export default class AASequence extends BaseElement {
 
 
     next(name) {
-       
+       debugger;
         if (this.sIndex >= this.innerFragment.childNodes.length) return null;
 
         if (typeof name === "string") {

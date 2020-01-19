@@ -9,7 +9,7 @@ import AASequence from './aa-sequence/aa-sequence.js';
 import AASession from './aa-session/aa-session.js';
 //make sure session loads last
 
-
+import '@polymer/paper-button/paper-button.js';
 
 let aaCustomElements = {
     BaseElement,

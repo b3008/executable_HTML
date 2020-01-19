@@ -1,6 +1,6 @@
 {
-  "build": 24,
-  "date": "Fri Jan 17 2020 16:54:43 GMT+0200 (Eastern European Standard Time)",
+  "build": 25,
+  "date": "Sun Jan 19 2020 14:02:43 GMT+0200 (Eastern European Standard Time)",
   "version": "0.0.1",
-  "branch": "holder_rework"
+  "branch": "issue#25_add_polymer_elements_to_codebase"
 }
