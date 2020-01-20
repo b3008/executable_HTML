@@ -1,5 +1,4 @@
 import BaseElement from "../src/aa-baseElement/baseElement.js";
-import AAHolder from '../src/aa-holder/aa-holder.js';
 import AAScreen from '../src/aa-screen/aa-screen.js';
 
 // var expect = chai.expect;

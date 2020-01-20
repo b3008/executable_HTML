@@ -22,31 +22,34 @@ export default class AAChoose extends BaseElement {
     }
     connectedCallback() {
         
+        debugger;
         this._shouldRun = (this.shouldRun === null) || (this.shouldRun === true);
         this.sessionElement = this._getParentSession();
         
       
         if (this._shouldRun) {
             if (typeof this.innerFragment !== 'undefined') {
-                
+                BaseElement.scanAndReplace(this.innerFragment);
                 let nodes = this._getNodeToInstantiate();
                 if (nodes.length == 0) {
+                    debugger;
                     this._dispatchEndEvent();
                 } else {
                     for (let i = 0; i < nodes.length; i++) {
                         let node = nodes[i];
                         if (typeof node!== 'undefined') {
                             this.appendChild(node);
-                            // this._restoreHeldNodes(this);
                         }
                        
                     }
+                    debugger;
                     this._dispatchEndEvent();
                 }
             }
             else {
                 // this._restoreHeldNodes(this);
                 if (this.childNodes.length == 0) {
+                    debugger;
                     this._dispatchEndEvent();
                 }
             }

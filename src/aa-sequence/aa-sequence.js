@@ -1,7 +1,7 @@
 import BaseElement from './../aa-baseElement/baseElement.js'
 import AAFunctionRandom from '../aa-function/aa-function-random.js';
 import AAJump from "./aa-jump/aa-jump.js";
-import AAHolder from '../aa-holder/aa-holder.js';
+
 
 
 export default class AASequence extends BaseElement {
@@ -76,56 +76,62 @@ export default class AASequence extends BaseElement {
 
 
     next(name) {
+        return new Promise((resolve, reject) => {
 
-        if (this.stopped) { return; }
-        if (this.sIndex >= this.innerFragment.childNodes.length) return null;
 
-        if (typeof name === "string") {
-            for (let i = 0; i < this.innerFragment.childNodes.length; i++) {
-                if (this.innerFragment.childNodes[i].getAttribute) if (this.innerFragment.childNodes[i].getAttribute("name") == name) {
-                    this.sIndex = i;
-                    break;
+            if (this.stopped) { return; }
+            if (this.sIndex >= this.innerFragment.childNodes.length) return null;
+
+            if (typeof name === "string") {
+                for (let i = 0; i < this.innerFragment.childNodes.length; i++) {
+                    if (this.innerFragment.childNodes[i].getAttribute) if (this.innerFragment.childNodes[i].getAttribute("name") == name) {
+                        this.sIndex = i;
+                        break;
+                    }
                 }
             }
-        }
 
-        let fragmentChild = this.innerFragment.childNodes[this.sIndex];
-        //  if the child is not an element just add it immediately 
-        //  and move on to the next, there won't be a connectecCallback Function to execute anyway
-        while (fragmentChild.nodeType != Node.ELEMENT_NODE) {
+            let fragmentChild = this.innerFragment.childNodes[this.sIndex];
+            //  if the child is not an element just add it immediately 
+            //  and move on to the next, there won't be a connectecCallback Function to execute anyway
+            while (fragmentChild.nodeType != Node.ELEMENT_NODE) {
+
+                let fragmentChildCopy = this.copy(fragmentChild);
+                this.target.appendChild(fragmentChildCopy);
+                this.currentNode = fragmentChildCopy;
+                console.log("currentNode", this.currentNode);
+                this.sIndex++;
+                if (this.sIndex >= this.innerFragment.childNodes.length) {
+                    return;
+                }
+                fragmentChild = this.innerFragment.childNodes[this.sIndex];
+                // return;
+            }
+
 
             let fragmentChildCopy = this.copy(fragmentChild);
-            this.target.appendChild(fragmentChildCopy);
             this.currentNode = fragmentChildCopy;
-            this.sIndex++;
-            if (this.sIndex >= this.innerFragment.childNodes.length) {
-                return;
+            console.log("currentNode", this.currentNode);
+            this.sIndex += 1;
+
+
+
+            if (!fragmentChildCopy._dispatchEndEvent) {
+                resolve(this.next());
+            } else {
+                this.target.appendChild(fragmentChildCopy);
+                setTimeout(()=>{resolve()},0);
             }
-            fragmentChild = this.innerFragment.childNodes[this.sIndex];
-            // return;
-        }
 
+            if (!this.prevPerformance) {
+                this.prevPerformance = performance.now();
 
-        let fragmentChildCopy = this.copy(fragmentChild);
-        this.currentNode = fragmentChildCopy;
-        this.sIndex += 1;
+            } else {
+                this.time = performance.now() - this.prevPerformance;
+                this.prevPerformance = performance.now();
+            }
 
-
-
-        if (!fragmentChildCopy._dispatchEndEvent) {
-            this.next();
-        } else {
-            this.target.appendChild(fragmentChildCopy);
-            AAHolder.scanAndRestore(this.target.childNodes[this.childNodes.length - 1]);
-        }
-
-        if (!this.prevPerformance) {
-            this.prevPerformance = performance.now();
-
-        } else {
-            this.time = performance.now() - this.prevPerformance;
-            this.prevPerformance = performance.now();
-        }
+        })
     }
 
 
