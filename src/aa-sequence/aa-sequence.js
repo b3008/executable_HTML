@@ -105,22 +105,20 @@ export default class AASequence extends BaseElement {
                     return;
                 }
                 fragmentChild = this.innerFragment.childNodes[this.sIndex];
-                // return;
             }
-
 
             let fragmentChildCopy = this.copy(fragmentChild);
             this.currentNode = fragmentChildCopy;
             console.log("currentNode", this.currentNode);
             this.sIndex += 1;
 
-
-
             if (!fragmentChildCopy._dispatchEndEvent) {
-                resolve(this.next());
+                    resolve(this.next());
             } else {
-                this.target.appendChild(fragmentChildCopy);
-                setTimeout(()=>{resolve()},0);
+                setTimeout(()=>{
+                    this.target.appendChild(fragmentChildCopy);
+                    resolve();
+                },0);
             }
 
             if (!this.prevPerformance) {
@@ -133,9 +131,6 @@ export default class AASequence extends BaseElement {
 
         })
     }
-
-
-
 
     endEventListener(e) {
         e.stopPropagation();

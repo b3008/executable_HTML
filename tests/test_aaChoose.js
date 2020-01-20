@@ -22,7 +22,7 @@ describe('aa-choose', () => {
 
     describe('instance', function () {
 
-        it('empty aa-choose dispatches endEvent instantly, both in and out of a session',  (done)=> {
+        xit('empty aa-choose dispatches endEvent instantly, both in and out of a session',  (done)=> {
         
             let outsideSessionTest = false;
             let div = document.createElement('div');
@@ -62,11 +62,11 @@ describe('aa-choose', () => {
 
                     here it's ok also
                         <aa-when id="condition1" test="1==1">
-                               <div> 1 =1  </div>
+                               <div id="result1"> 1 =1  </div>
                         </aa-when>
 
                         <aa-when id-"condition2" test="1==2">
-                                <div>1=2</div>
+                                <div id="result2">1=2</div>
                         </aa-when>
 
                         <aa-otherwise>
@@ -80,8 +80,11 @@ describe('aa-choose', () => {
             </aa-session>`
 
             let c1 = document.querySelector("#condition1");
+            let r1 = document.querySelector("#result1");
             let c2 = document.querySelector("#condition2");
             assert(c1!==null, "#condition1 should be on page");
+            assert(r1!==null, "#result1 should be on page");
+            debugger;
             assert(c2==null, "#condition2 should not be on page");
          
 
@@ -89,7 +92,7 @@ describe('aa-choose', () => {
 
         });
 
-        it('parses nested expressions', (done)=>{
+        xit('parses nested expressions', (done)=>{
             
 
             let div = document.createElement('div');

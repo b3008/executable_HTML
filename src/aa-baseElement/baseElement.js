@@ -54,8 +54,6 @@ export default class BaseElement extends HTMLElement {
     }
 
 
-
-
     constructor() {
         super();
         this._props = this.makePropertiesFromAttributes();
@@ -101,15 +99,6 @@ export default class BaseElement extends HTMLElement {
         return props;
     }
 
-    // setAttributes(){
-    //     let propKeys = Object.keys(this._props)
-    //     for(let i=0; i<propKeys.length; i++){
-    //         let p = this._propKeys[i];
-    //         if(this[p]){
-    //             this.setAttribute(this._props[p])
-    //         }
-    //     }
-    // }
     toCamelCase(str) {
         let words = str.split('-');
         let result = words[0];
@@ -133,41 +122,17 @@ export default class BaseElement extends HTMLElement {
         return result;
     }
 
-
-
-
-
-
-
-    // _restoreHeldNodes(element) {
-        
-
-    //     let childNodes = element.childNodes;
-    //     for (let i = 0; i < childNodes.length; i++) {
-    //         let child = childNodes[i];
-    //         if (child.nodeName=='AA-HOLDER') {
-    //             child.restoreNode();
-    //         }
-    //         else if (child.childNodes.length > 0) {
-    //             this._restoreHeldNodes(child);
-    //         } 
-    //     }
-    // }
-
-
-    
-   
-
-
-
-
     copy(node){
         let nodeCopy;
-        if (node.nodeName == "AA-HOLDER") {
-            nodeCopy = node.clone();
-        } else if (BaseElement.isAAElement(node)) {
-            nodeCopy = node.cloneNode();
-            nodeCopy.innerFragment = BaseElement.createFragmentForNode(node);
+        if (BaseElement.isAAElement(node)) {
+            
+            if(node.innerFragment){
+                nodeCopy = node.cloneNode();
+                nodeCopy.innerFragment = BaseElement.createFragmentForNode(node.innerFragment);
+            }else{
+                nodeCopy = node.cloneNode();
+                nodeCopy.innerFragment = BaseElement.createFragmentForNode(node);
+            }
         }
         else {
             nodeCopy = node.cloneNode(true);
