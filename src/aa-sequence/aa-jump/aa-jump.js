@@ -7,13 +7,7 @@ export default class AAJump extends BaseElement {
     }
 
     connectedCallback() {
-        debugger;
-        this.dispatchEvent(new CustomEvent("endEvent", {
-            bubbles: true, 
-            detail: {
-                goto: this.goto
-            }
-        }))
+        this._dispatchEndEvent({goto:this.name})
     }
 }
 
