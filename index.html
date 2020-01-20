@@ -2,14 +2,31 @@
 
 <head>
     <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@1/src/zero-md.min.js"></script>
-    <script type="module" src="./src/index.js"></script>
+    <!-- <script type="module" src="./src/index.js"></script> -->
+    <script type="module" src="./dist/aaCustomElements.js"></script>
     <style>
         zero-md{
             padding:20px;
         }
     </style>
+
+
+
+
+
 </head>
 <body>
+
+    
+    <paper-button class="pink">link</paper-button>
+    <paper-button raised class="indigo">raised</paper-button>
+    <paper-button toggles raised class="green">toggles</paper-button>
+    <paper-button disabled class="disabled">disabled</paper-button>
+
+
     <zero-md src="./Readme.md"></zero-md>
+
+
+    
 </body>
 </html>

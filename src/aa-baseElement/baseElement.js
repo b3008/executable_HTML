@@ -160,7 +160,11 @@ export default class BaseElement extends HTMLElement {
     
 
     _dispatchEndEvent(detail) {
-        this.dispatchEvent(new CustomEvent('endEvent', { bubbles: true, detail }));
+        //  use setTimeout to allow aaSequence.next() to return,
+        //  so that calls to aaSequence.next are not recursive
+        setTimeout(()=>{
+            this.dispatchEvent(new CustomEvent('endEvent', { bubbles: true, detail }));
+        },0);
     }
 
     _getParentSession(){
@@ -170,7 +174,6 @@ export default class BaseElement extends HTMLElement {
         }
         return _sessionElement;
     }
-
 }
 
 

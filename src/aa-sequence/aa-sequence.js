@@ -18,7 +18,6 @@ export default class AASequence extends BaseElement {
     }
     connectedCallback() {
         this.root.addEventListener("endEvent", this.endEventListener.bind(this));
-        this.started = false;
         if ((this.shouldRun === null) || (this.shouldRun === true)) {
             this.init()
         };
@@ -43,14 +42,14 @@ export default class AASequence extends BaseElement {
     }
 
     init() {
-        this.nextStarted = false;
+        this.stopped = false;
         if (this.writeInto) {
             this.target = document.querySelector(this.writeInto);
         } else {
             this.target = this;
         }
 
-        if (this.started) return;
+
 
         if (typeof this.innerFragment === 'undefined') {
             console.warn('.innerFragment is undefined');
@@ -58,44 +57,27 @@ export default class AASequence extends BaseElement {
             return;
         }
 
-        
+
         this.sIndex = 0;
-
-        this.nextCalls = [true];
-        this.nextIndex = 0;
-
         if (!this.stopped) { this.start() }
     }
 
     start() {
-        if(this.started){return;}
-        this.started=true;
-        this.nextWithTimeout(this.hasNext())
+        if (this.stopped) { return; }
+        this.stopped = false;
+        this.next();
     }
 
     stop() {
         this.stopped = true;
-        this.started = false;
     }
 
-    nextWithTimeout(name){
-       this.next(name);
-        setTimeout(()=>{
-            
-            let nextParam = this.hasNext()
-            if(nextParam){
-                this.nextWithTimeout(nextParam)
-            }else{
-                if(nextParam==null){
-                        this._dispatchEndEvent();        
-                }
-            }
-        },0);
-    }
+
 
 
     next(name) {
-       
+
+        if (this.stopped) { return; }
         if (this.sIndex >= this.innerFragment.childNodes.length) return null;
 
         if (typeof name === "string") {
@@ -107,52 +89,46 @@ export default class AASequence extends BaseElement {
             }
         }
 
-
         let fragmentChild = this.innerFragment.childNodes[this.sIndex];
-        if (this.type === "elements") {
-            if (fragmentChild.nodeType != Node.ELEMENT_NODE) {
-                this.nextCalls.push(true);
-                this.sIndex += 1;
+        //  if the child is not an element just add it immediately 
+        //  and move on to the next, there won't be a connectecCallback Function to execute anyway
+        while (fragmentChild.nodeType != Node.ELEMENT_NODE) {
+
+            let fragmentChildCopy = this.copy(fragmentChild);
+            this.target.appendChild(fragmentChildCopy);
+            this.currentNode = fragmentChildCopy;
+            this.sIndex++;
+            if (this.sIndex >= this.innerFragment.childNodes.length) {
                 return;
             }
+            fragmentChild = this.innerFragment.childNodes[this.sIndex];
+            // return;
         }
+
+
         let fragmentChildCopy = this.copy(fragmentChild);
-
+        this.currentNode = fragmentChildCopy;
         this.sIndex += 1;
-        
-        this.target.appendChild(fragmentChildCopy);
-        AAHolder.scanAndRestore(this.target.childNodes[this.childNodes.length - 1]);
-        
-        
-        if (!fragmentChildCopy._dispatchEndEvent) {
-            this.nextCalls.push(true);
-        } //else {
-            // this.nextCalls.push(false);
-            // this.nextCalls.push(true);
-        // }
 
-        if(!this.prevPerformance){
+
+
+        if (!fragmentChildCopy._dispatchEndEvent) {
+            this.next();
+        } else {
+            this.target.appendChild(fragmentChildCopy);
+            AAHolder.scanAndRestore(this.target.childNodes[this.childNodes.length - 1]);
+        }
+
+        if (!this.prevPerformance) {
             this.prevPerformance = performance.now();
 
-        }else{
+        } else {
             this.time = performance.now() - this.prevPerformance;
             this.prevPerformance = performance.now();
-
         }
     }
 
 
-    hasNext() {
-        if (this.nextCalls.length > 10000) return null;
-        if (this.started === false) return null;
-
-        if (this.nextIndex < this.nextCalls.length) {
-            let val = this.nextCalls[this.nextIndex];
-            this.nextIndex++;
-            return val;
-        } else
-            return null;
-    }
 
 
     endEventListener(e) {
@@ -160,34 +136,19 @@ export default class AASequence extends BaseElement {
         let goto = null
         if (e.detail) {
             if (e.detail.goto) {
-
-                goto = e.detail.goto;
-                this.nextCalls.push(goto);
-            } else {
-                this.nextCalls.push(true);
+                this.next(e.detail.goto)
             }
         } else {
-            this.nextCalls.push(true);
-        }
-
-        if (!this.nextCalls[this.nextIndex]) {
-            
-                this.nextWithTimeout(this.hasNext())
-
+            this.next(true);
         }
     }
+
 }
 
 
-
-
 if (!customElements.get('aa-sequence')) {
-
     if (typeof window.AANodeNames === 'undefined') { window.AANodeNames = []; }
     window.AANodeNames.push('AA-SEQUENCE');
-
     customElements.define('aa-sequence', AASequence);
-
-
 }
 

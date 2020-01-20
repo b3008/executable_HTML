@@ -1,3 +1,6 @@
+import '../dist/paper-polymer.js';
+
+
 import BaseElement from './aa-baseElement/baseElement.js';
 import AAVariable from './aa-variable/aa-variable.js';
 import AAFunctionRandom from "./aa-function/aa-function-random.js"
@@ -8,8 +11,12 @@ import AAScreen from './aa-screen/aa-screen.js';
 import AASequence from './aa-sequence/aa-sequence.js';
 import AASession from './aa-session/aa-session.js';
 //make sure session loads last
+// try{
 
-
+// }
+// catch(e){
+//     console.error(e);
+// }
 
 let aaCustomElements = {
     BaseElement,

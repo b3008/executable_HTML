@@ -3,7 +3,8 @@
 <head>
 
     <!-- <script type="module" src="../../../dist/aaCustomElements.js"></script> -->
-    <script type="module" src="../../index.js"></script>
+    <!-- <script type="module" src="/dist/aaCustomElements.js"></script> -->
+    <script type="module" src="/src/index.js"></script>
     <style>
         @font-face {
             font-family: 'commodoreserverregular';
@@ -57,13 +58,11 @@
             <h3>Javascript equivaltent</h3>
             <xmp>
                 r2 = document.querySelector("#result2");
-                let counter=0;
                 insert = function(){
-                let rnd = Math.random()
-                let char = `<div class="c64char">${rnd>0.5?'m':'n'}</div>`;
-                r2.innerHTML+=char;
-                counter++;
-                setTimeout(()=>insert(),0);
+                    let rnd = Math.random()
+                    let char = `<div class="c64char">${rnd>0.5?'m':'n'}</div>`;
+                    r2.innerHTML+=char;
+                    setTimeout(()=>insert(),0);
                 }
             </xmp>
         </div>
