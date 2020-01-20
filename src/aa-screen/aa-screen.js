@@ -24,6 +24,7 @@ export default class AAScreen extends BaseElement {
         this.submitButtonText = this._submitButtonText || 'submit';
         this.root.innerHTML = this.css + this.html;
 
+        debugger;
         if (this._started) { return; }
         this._started = true;
 
@@ -32,7 +33,6 @@ export default class AAScreen extends BaseElement {
         }
 
         if(this.innerFragment!=undefined){
-            // TODO: innerFragment children should always be copied
             this.appendChild(this.innerFragment);
         }
         

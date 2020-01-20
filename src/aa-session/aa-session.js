@@ -1,5 +1,5 @@
 import BaseElement from './../aa-baseElement/baseElement.js'
-
+import AAHolder from  '../aa-holder/aa-holder.js';
 import  './../aa-memory/aa-memory.js'
 
 export default class AASession extends BaseElement {
@@ -92,9 +92,13 @@ export default class AASession extends BaseElement {
     }
 
     run() {
+    
         let myTemplateClone = this.myTemplate.cloneNode(true);
-        BaseElement.scanAndReplace(myTemplateClone);   
+        AAHolder.scanAndReplace(myTemplateClone);   
         this.attachTemplateChildNodesToMyself(myTemplateClone);
+        for(let i=0; i<this.childNodes.length; i++){
+            AAHolder.scanAndRestore(this.childNodes[i]);
+        }
     }
 
     getData(name){

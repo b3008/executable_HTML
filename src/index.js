@@ -5,7 +5,7 @@ import BaseElement from './aa-baseElement/baseElement.js';
 import AAVariable from './aa-variable/aa-variable.js';
 import AAFunctionRandom from "./aa-function/aa-function-random.js"
 import AAChoose from './aa-choose/aa-choose.js';
-
+import AAHolder from './aa-holder/aa-holder.js';
 import AAMemory from './aa-memory/aa-memory.js';
 import AAScreen from './aa-screen/aa-screen.js';
 import AASequence from './aa-sequence/aa-sequence.js';
@@ -26,7 +26,7 @@ let aaCustomElements = {
     AASequence,
     AASession,
     AAVariable,
-
+    AAHolder,
     // __VERSION: VERSION,
     // __BUILD_NUMBER: BUILD_NUMBER,
     // // __BUILD_BRANCH:BUILD_BRANCH,

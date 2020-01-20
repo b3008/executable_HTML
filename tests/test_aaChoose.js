@@ -1,6 +1,5 @@
 import '../src/aa-session/aa-session.js';
 import '../src/aa-choose/aa-choose.js';
-
 // var expect = chai.expect;
 var assert = chai.assert;
 var container;
@@ -32,20 +31,15 @@ describe('aa-choose', () => {
             });
             div.innerHTML = '<aa-choose></aa-choose>';
             container.appendChild(div)
-            
-                
+
             let div2 = document.createElement('div');
             div2.addEventListener('sessionEndEvent', (e)=>{
-
                 assert(outsideSessionTest == true, "previous event should have been received");
                 assert(e.detail=='sessionEnd', "endEvent should ultimately come from the session")
                 done();
             });
             div2.innerHTML = '<aa-session><aa-choose></aa-choose></aa-session>';
-
             container.appendChild(div2)
-            
-            
 
             
         })
