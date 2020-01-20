@@ -10,9 +10,9 @@ export default class AAOtherwise extends BaseElement {
         if (this.started) return;
         this.started = true;
         if (typeof this.innerFragment != "undefined") {
-            // this._replaceChildNodesWithHolderElements(this.innerFragment);
+            BaseElement.scanAndReplace(this.innerFragment);
             this.appendChild(this.innerFragment);
-            this._restoreHeldNodes(this);
+            // this._restoreHeldNodes(this);
         }
      
     }

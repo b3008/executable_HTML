@@ -15,6 +15,44 @@ if(window) window.html = html;
 
 export default class BaseElement extends HTMLElement {
 
+    
+    static isAAElement(node) {
+        if (AANodeNames.indexOf(node.nodeName) != -1) {
+            return true;
+        }
+        return false;
+    }
+
+    static createFragmentForNode(node) {
+        let fragment = document.createDocumentFragment();
+        //  first get references to the children,
+        //  because the element.children array will be modified as they are appended to the fragment
+        let childNodes = [];
+        for(let i=0; i<node.childNodes.length; i++){
+            fragment.append(node.childNodes[i].cloneNode(true));
+        }
+        return fragment;
+    }
+
+    static createHolderForNode(o) {
+        let node = o.cloneNode(false);
+        node.innerFragment = BaseElement.createFragmentForNode(o);
+        return node;
+    }
+
+    static scanAndReplace(node) {
+        if (node.nodeName == "TEMPLATE") {
+            BaseElement.scanAndReplace(node.content);
+        }
+        else if (BaseElement.isAAElement(node)) {
+            let holder = BaseElement.createHolderForNode(node);
+            node.replaceWith(holder);
+        } else
+            for (let i = 0; i < node.childNodes.length; i++) {
+                BaseElement.scanAndReplace(node.childNodes[i]);
+            }
+    }
+
 
     constructor() {
         super();
@@ -61,15 +99,6 @@ export default class BaseElement extends HTMLElement {
         return props;
     }
 
-    // setAttributes(){
-    //     let propKeys = Object.keys(this._props)
-    //     for(let i=0; i<propKeys.length; i++){
-    //         let p = this._propKeys[i];
-    //         if(this[p]){
-    //             this.setAttribute(this._props[p])
-    //         }
-    //     }
-    // }
     toCamelCase(str) {
         let words = str.split('-');
         let result = words[0];
@@ -93,56 +122,17 @@ export default class BaseElement extends HTMLElement {
         return result;
     }
 
-
-
-
-    static isAAElement(node) {
-        if (AANodeNames.indexOf(node.nodeName) != -1) {
-            return true;
-        }
-        return false;
-    }
-
-
-
-    _restoreHeldNodes(element) {
-        
-
-        let childNodes = element.childNodes;
-        for (let i = 0; i < childNodes.length; i++) {
-            let child = childNodes[i];
-            if (child.nodeName=='AA-HOLDER') {
-                child.restoreNode();
-            }
-            else if (child.childNodes.length > 0) {
-                this._restoreHeldNodes(child);
-            } 
-        }
-    }
-
-
-    
-   
-
-    _createFragmentForNode(node) {
-        let fragment = document.createDocumentFragment();
-        //  first get references to the children,
-        //  because the element.children array will be modified as they are appended to the fragment
-        let childNodes = [];
-        for(let i=0; i<node.childNodes.length; i++){
-            fragment.append(node.childNodes[i].cloneNode(true));
-        }
-        return fragment;
-    }
-
-
     copy(node){
         let nodeCopy;
-        if (node.nodeName == "AA-HOLDER") {
-            nodeCopy = node.clone();
-        } else if (BaseElement.isAAElement(node)) {
-            nodeCopy = node.cloneNode();
-            nodeCopy.innerFragment = this._createFragmentForNode(node);
+        if (BaseElement.isAAElement(node)) {
+            
+            if(node.innerFragment){
+                nodeCopy = node.cloneNode();
+                nodeCopy.innerFragment = BaseElement.createFragmentForNode(node.innerFragment);
+            }else{
+                nodeCopy = node.cloneNode();
+                nodeCopy.innerFragment = BaseElement.createFragmentForNode(node);
+            }
         }
         else {
             nodeCopy = node.cloneNode(true);
@@ -162,9 +152,9 @@ export default class BaseElement extends HTMLElement {
     _dispatchEndEvent(detail) {
         //  use setTimeout to allow aaSequence.next() to return,
         //  so that calls to aaSequence.next are not recursive
-        setTimeout(()=>{
+        // setTimeout(()=>{
             this.dispatchEvent(new CustomEvent('endEvent', { bubbles: true, detail }));
-        },0);
+        // },0);
     }
 
     _getParentSession(){

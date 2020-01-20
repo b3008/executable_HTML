@@ -17,36 +17,38 @@ export default class AAChoose extends BaseElement {
         this.originalContent = this.innerHTML;
     }
 
-    _restoreOriginalContent(){
 
-    }
     connectedCallback() {
-        
+
+        debugger;
         this._shouldRun = (this.shouldRun === null) || (this.shouldRun === true);
         this.sessionElement = this._getParentSession();
-        
-      
+
+
         if (this._shouldRun) {
             if (typeof this.innerFragment !== 'undefined') {
-                
+                debugger;
+                BaseElement.scanAndReplace(this.innerFragment);
                 let nodes = this._getNodeToInstantiate();
                 if (nodes.length == 0) {
+                    debugger;
                     this._dispatchEndEvent();
                 } else {
                     for (let i = 0; i < nodes.length; i++) {
                         let node = nodes[i];
-                        if (typeof node!== 'undefined') {
+                        if (typeof node !== 'undefined') {
                             this.appendChild(node);
-                            // this._restoreHeldNodes(this);
                         }
-                       
+
                     }
+                    debugger;
                     this._dispatchEndEvent();
                 }
             }
             else {
                 // this._restoreHeldNodes(this);
                 if (this.childNodes.length == 0) {
+                    debugger;
                     this._dispatchEndEvent();
                 }
             }
@@ -55,36 +57,29 @@ export default class AAChoose extends BaseElement {
 
     _getNodeToInstantiate() {
 
-        
-        this.started = true;
+
+
         let nodesToReturn = [];
         let nodeOtherwise = [];
 
-        this.myFragmentChildren = [];
+
         let isChildTrue = false;
         for (let i = 0; i < this.innerFragment.children.length; i++) {
 
             let child = this.innerFragment.children[i];
 
-            this.myFragmentChildren.push(child)
-            // if (child.nodeName==='AA-HOLDER') {
-                
             if (child.nodeName == 'AA-WHEN') {
-                    isChildTrue = this.evaluate(child);
-                    if (isChildTrue) {
-                        nodesToReturn.push(this.copy(child))
-                        // return child;
-                    };
-                }
-
-                if (child.nodeName == 'AA-OTHERWISE') {
+                isChildTrue = this.evaluate(child);
+                if (isChildTrue) {
+                    nodesToReturn.push(this.copy(child))
+                    // return child;
+                };
+            } else if (child.nodeName == 'AA-OTHERWISE') {
                     //we reached otherwise, should we stop and attach it?
                     // /return child;
                     nodeOtherwise.push(this.copy(child))
                 }
-            // }
-        }
-
+        } 
         if (nodesToReturn.length == 0) {
             return nodeOtherwise;
         }
@@ -118,7 +113,7 @@ export default class AAChoose extends BaseElement {
         let test = element.getAttribute('test');
         if ((test == null) || (test == '')) return null;
         return this.evaluateTestExpression(test);
-        
+
     }
 
     evaluateTestExpression(test) {
@@ -129,10 +124,10 @@ export default class AAChoose extends BaseElement {
             var parseTree = jsep(expr);
             if ((parseTree.left.type == "Literal") && (parseTree.right.type == "Literal")) {
                 return eval(expr);
-            } 
+            }
             else {
-              // there are still strings in the expression, which are unknown, an exception should be raised
-              throw "unknown identifiers in expression : " + expr;
+                // there are still strings in the expression, which are unknown, an exception should be raised
+                throw "unknown identifiers in expression : " + expr;
             }
 
         } catch (e) {
@@ -142,26 +137,25 @@ export default class AAChoose extends BaseElement {
     }
 
 
-    replaceExpressionIdentifiersWithValues(expression){
+    replaceExpressionIdentifiersWithValues(expression) {
         let session = this._getParentSession();
-         let result = expression.toUpperCase();
-        
+        let result = expression.toUpperCase();
+
         let originalIdentifiers = Object.keys(session.getDataDump());
-        let upperCaseIdentifiers = originalIdentifiers.map(s=>s.toUpperCase());
-        for(let i in upperCaseIdentifiers)
-        {
+        let upperCaseIdentifiers = originalIdentifiers.map(s => s.toUpperCase());
+        for (let i in upperCaseIdentifiers) {
             let value = session.getData(originalIdentifiers[i]);
             let finalValue = parseInt(value);
-            if(finalValue!=value) {
-                if(value==="null") { finalValue = `null`; }
-                else if(value==="true") {finalValue = "true";}
-                else if(value==="false") { finalValue = "false"}
+            if (finalValue != value) {
+                if (value === "null") { finalValue = `null`; }
+                else if (value === "true") { finalValue = "true"; }
+                else if (value === "false") { finalValue = "false" }
                 else finalValue = `"${value}"`
             }
             let r = new RegExp(upperCaseIdentifiers[i], "g");
-            result = result.replace( r, finalValue );
+            result = result.replace(r, finalValue);
         }
-       return result;
+        return result;
     }
 }
 
