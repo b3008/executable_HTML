@@ -9,14 +9,17 @@ let build = require("./dist/build.json");
 build.build++;
 build.version = require("./package.json").version;
 module.exports = {
-  entry: './src/index.js',
+  entry: { 
+    'aaCustomElements': './src/index.js',
+    'paper-polymer': './paper-polymer-imports.js',
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'aaCustomElements.js',
+    filename: '[name].js',
     // jsonpScriptType:"module"
   },
   mode: "production",
-  // devtool:"source-map",
+  devtool:"source-map",
  
   plugins: [
     new webpack.DefinePlugin({

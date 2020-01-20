@@ -45,7 +45,7 @@ describe('aa-sequence', () => {
                 </template>
 
             </aa-session>`;
-            debugger;
+           
             let session = document.querySelector('#session');
             let sequence = document.querySelector("#sequence");
 
@@ -62,7 +62,7 @@ describe('aa-sequence', () => {
         });
 
 
-        xit('jumps backwards', (done) => {
+        it('jumps backwards', (done) => {
             container.innerHTML = '';
             
             container.innerHTML = html`
@@ -94,13 +94,15 @@ describe('aa-sequence', () => {
             let screen1 = document.querySelector("#screen1");
             let screen2 = document.querySelector("#screen2");
         
+            
             assert(sequence.currentNode.name=="first", "currentNode should be named first");
             sequence.next();
             assert(sequence.currentNode.name=="second", "currentNode should be named second");
             sequence.next();
-            assert(sequence.currentNode.name=="first", "currentNode should be named first");
+            
+            assert(sequence.currentNode.name=="first", "currentNode should be named first, but is named " + sequence.currentNode.name);
             sequence.next();
-            assert(sequence.currentNode.name=="second", "currentNode should be named second");
+            assert(sequence.childNodes[sequence.childNodes.length-1].name=="second", "currentNode should be named second");
             sequence.next();
             
             done();
