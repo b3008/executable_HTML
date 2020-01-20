@@ -1,0 +1,96 @@
+<html>
+
+<head>
+
+    <!-- <script type="module" src="../../../dist/aaCustomElements.js"></script> -->
+    <!-- <script type="module" src="/dist/aaCustomElements.js"></script> -->
+    <script type="module" src="/src/index.js"></script>
+    <script type="module" src="/dist/paper-polymer.js"></script>
+
+    <style>
+        @font-face {
+            font-family: 'commodoreserverregular';
+            src: url('commodoreserver-webfont.woff2') format('woff2'),
+                url('commodoreserver-webfont.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+
+        }
+
+
+        .democontainer {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .c64char {
+            font-family: 'commodoreserverregular';
+            padding: 0;
+            margin: -2px;
+
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="display:flex">
+        <div>
+
+                <aa-session>
+                    <template>
+                        <aa-sequence class="democontainer">
+
+                            <aa-screen name="screen1">
+                                <div>screen1</div>
+                                <paper-button>submit</paper-button>
+                            </aa-screen>
+
+                            <aa-screen name="screen2">
+                                <div>screen2</div>
+                                <paper-button>submit</paper-button>
+                            </aa-screen>
+
+
+                        </aa-sequence>
+                    </template>
+                </aa-session>
+
+        </div>
+
+</body>
+
+<script>
+
+    start = function () {
+        console.log("start");
+
+        s = document.querySelector("aa-sequence");
+        s.start();
+    }
+
+    stop = function () {
+        console.log("stop");
+
+        s = document.querySelector("aa-sequence");
+        s.stop();
+    }
+
+
+    r2 = document.querySelector("#result2");
+    let counter = 0;
+    insert = function () {
+        let rnd = Math.random()
+        let char = `<div class="c64char">${rnd > 0.5 ? 'm' : 'n'}</div>`;
+        r2.innerHTML += char;
+        counter++;
+        setTimeout(() => insert(), 0);
+    }
+// insert();
+
+
+
+</script>
+
+</html>
