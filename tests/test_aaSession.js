@@ -52,6 +52,7 @@ describe('aa-session', () => {
 
             let session = document.querySelector('#session');
             let screen = document.querySelector("#screen1");
+
             assert(session.tagName=="AA-SESSION", "AA-SESSION")
             assert(session.name=="test", "name should equal test");
             assert(session.debug===true, "true")
