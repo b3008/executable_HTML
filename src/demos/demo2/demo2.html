@@ -8,27 +8,9 @@
     <script type="module" src="../../../dist/paper-polymer.js"></script>
 
     <style>
-        @font-face {
-            font-family: 'commodoreserverregular';
-            src: url('commodoreserver-webfont.woff2') format('woff2'),
-                url('commodoreserver-webfont.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-
-        }
-
-
         .democontainer {
             display: flex;
             flex-wrap: wrap;
-        }
-
-        .c64char {
-            font-family: 'commodoreserverregular';
-            padding: 0;
-            margin: -2px;
-
-            box-sizing: border-box;
         }
     </style>
 </head>
@@ -38,59 +20,38 @@
     <div style="display:flex">
         <div>
 
-                <aa-session>
-                    <template>
-                        <aa-sequence class="democontainer">
+            <aa-session>
+                <template>
+                    <aa-sequence class="democontainer">
 
-                            <aa-screen name="screen1">
-                                <div>screen1</div>
-                                <paper-button>submit</paper-button>
-                            </aa-screen>
+                        <aa-screen name="screen1">
+                            Questionnaires can be a more feasible and efficient research method than in-depth
+                            interviews. Questionnaires are a lot cheaper to conduct than in-person interviews, which
+                            require paying interviewers for their time. They also save time, for both parties, as
+                            customers can fill it quickly on their own time and employees don't have to take time out of
+                            their days to sit in on interviews.
 
-                            <aa-screen name="screen2">
-                                <div>screen2</div>
-                                <paper-button>submit</paper-button>
-                            </aa-screen>
+                            Lastly, questionnaires can capture a larger audience. While it would be impossible for a
+                            large company with upwards of tens of thousands of customers to interview every single
+                            customer in person, the same company could potentially get close to receiving feedback from
+                            their entire customer base when using online questionnaires.
+                           
+                        </aa-screen>
+
+                        <aa-screen name="screen2">
+                            <div>screen2</div>
+                            
+                        </aa-screen>
 
 
-                        </aa-sequence>
-                    </template>
-                </aa-session>
+                    </aa-sequence>
+                </template>
+            </aa-session>
 
         </div>
 
 </body>
 
-<script>
 
-    start = function () {
-        console.log("start");
-
-        s = document.querySelector("aa-sequence");
-        s.start();
-    }
-
-    stop = function () {
-        console.log("stop");
-
-        s = document.querySelector("aa-sequence");
-        s.stop();
-    }
-
-
-    r2 = document.querySelector("#result2");
-    let counter = 0;
-    insert = function () {
-        let rnd = Math.random()
-        let char = `<div class="c64char">${rnd > 0.5 ? 'm' : 'n'}</div>`;
-        r2.innerHTML += char;
-        counter++;
-        setTimeout(() => insert(), 0);
-    }
-// insert();
-
-
-
-</script>
 
 </html>

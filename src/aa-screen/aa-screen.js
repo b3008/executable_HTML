@@ -5,7 +5,7 @@ export default class AAScreen extends BaseElement {
 
 
 
-    static get observedAttributes() { 
+    static get observedAttributes() {
         return [
             'submit-button-text',
             'submit-button-hidden',
@@ -13,7 +13,7 @@ export default class AAScreen extends BaseElement {
         ];
     }
 
-    constructor() {        
+    constructor() {
         super();
         this.root = this.attachShadow({ mode: 'open' });
     }
@@ -21,8 +21,8 @@ export default class AAScreen extends BaseElement {
     connectedCallback() {
         super.connectedCallback();
 
-        this.submitButtonText = this._submitButtonText || 'submit';
         this.root.innerHTML = this.css + this.html;
+        this.submitButton = this.root.querySelector('.submitButton');
 
         if (this._started) { return; }
         this._started = true;
@@ -31,11 +31,11 @@ export default class AAScreen extends BaseElement {
             this.root.querySelector('.submitButtonContainer').style.display = 'none';
         }
 
-        if(this.innerFragment!=undefined){
+        if (this.innerFragment != undefined) {
             // TODO: innerFragment children should always be copied
             this.appendChild(this.innerFragment);
         }
-        
+
         this.root.querySelector('.submitButton').addEventListener('click', this.submitButtonClick.bind(this));
 
     }
@@ -49,12 +49,18 @@ export default class AAScreen extends BaseElement {
                     display: block;
                     height: fit-content;
                     border: solid thin;
+                    padding:20px;
+                    font-family:sans-serif;
                 }
 
                 .submitButtonContainer{
-                    display:flex; 
+                    border:solid thin;
+                    /* width:100%; */
+                    text-align:right;
+                    /* display:flex;  */
                     justify-content: space-between; 
                     align-items:center;
+                    padding:20px;
                 }
             
             </style>
@@ -62,21 +68,56 @@ export default class AAScreen extends BaseElement {
     }
 
     get html() {
-
         return html`
             <slot></slot>
-            
+            <div id="userMessage">
             <div class='submitButtonContainer'>
                 <div>
-                    <button class='submitButton'> button: ${this.submitButtonText}</button>
-                </div>
-                <div id='userMessage'></div>
+                    ${this.getSubmitButton()}
             </div>
-        
-        `
+                <div id='userMessage'></div>
+            </div>`;
     }
 
+    getSubmitButton() {
+        let buttonText = this.submitButtonText || "submit";
+        if (customElements.get('paper-button')) {
+            return html`<paper-button class="submitButton" raised class="indigo">${buttonText}</paper-button>`
+        } else {
+            return html`<button class='submitButton'>${buttonText}</button>`
+        }
+    }
 
+    submitButtonClick(e) {
+
+        let userMessage = this.querySelector("#userMessage");
+
+        if (this.hasChildrenThatDemandResponse()) {
+
+            userMessage.innerHTML = html`
+                    <div style="display:flex; align-items:center"> 
+                        <div>please fill out the required fields</div> 
+                            <div id="attention" style="color: red; font-size: 20px;  border: solid thin; border-radius: 50%; width: 20px;
+                                                margin-left:20px; height: 20px; 
+                                                text-align: center;
+                                                padding: 5px;">!</div></div>`
+            return;
+        }
+
+        //dispatch endEvent 
+        let valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: this.getValue() } });
+        this.dispatchEvent(valueSubmitEvent);
+
+        this._dispatchEndEvent(this.getValue());
+
+
+        if (typeof e.detail.callback != 'undefined') {
+            e.detail.callback(e);
+        }
+
+        if (this.dontHide == false) this.hide();
+
+    }
 
 
     attributeChangedCallback() {
@@ -88,62 +129,46 @@ export default class AAScreen extends BaseElement {
 
     hasChildrenThatDemandResponse() {
 
-        let emaChildren = this.getEmaChildren(this);
-        let result = false;
-        for (let i = 0; i < emaChildren.length; i++) {
-            let child = emaChildren[i];
-            if (child.demandsResponse) {
+        let aaChildren = this.getAAChildren(this);
+        let isMissingValues = false;
+        for (let i = 0; i < aaChildren.length; i++) {
+            if (aaChildren[i].mandatory) {
                 if (child.getValue() == null) {
                     // console.log(child, 'demands response');
-
-                    if (child.displayAttention) {
-                        child.displayAttention();
-                    }
-
+                    // TODO : add a class to the child
                     result = true;
                 }
             }
         }
-        if (result) {
-            this.userMessage.innerHTML = `<div style="display:flex; align-items:center"> <div>please fill out the required fields</div> <div id="attention" style="color: red; font-size: 20px;  border: solid thin; border-radius: 50%; width: 20px;
-                                            margin-left:20px; height: 20px; 
-                                            text-align: center;
-                                            padding: 5px;">!</div></div>`
-            this.userMessage.style.color = 'red';
+
+        return isMissingValues;
+    }
+
+    getAAChildren() {
+        let result = [];
+        for (let i = 0; i < this.children.length; i++) {
+            if (BaseElement.isAAElement(this.children[i])) { result.push(this.children[i]) }
         }
         return result;
     }
 
 
-    submitButtonClick(e) {
 
-
-
-
-        this.$.userMessage.innerHTML = '';
-
-        if (this.hasChildrenThatDemandResponse()) {
-            return;
-        }
-
-        //dispatch endEvent 
-        let valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: this.getValue() } });
-        this.dispatchEvent(valueSubmitEvent);
-
-        this._dispatchEndEvent(this.getValue());
+    getChildrenValues(){
+        let result = [];
         
-
-        if (typeof e.detail.callback != 'undefined') {
-            e.detail.callback(e);
+        for(let i=0; i<this.children.length; i++){
+            let c = this.children[i];
+            if(c.getValue){
+                result.push(c.getValue());
+            } else{
+                if(c.value){
+                    result.push({ [c.name]: c.value });
+                }
+            }
         }
-
-
-        //hide the screen
-
-        if (this.dontHide == false) this.hide();
-
+        return result;
     }
-
 
     getChildrenValuesOrder(element) {
         if (typeof element === 'undefined') element = this;
@@ -199,8 +224,6 @@ export default class AAScreen extends BaseElement {
         this.style.display = 'block'
         //this.removeAttribute('hidden');
     }
-
-
 }
 
 
