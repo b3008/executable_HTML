@@ -1,6 +1,8 @@
 import '../src/aa-sequence/aa-sequence.js';
 import '../src/aa-session/aa-session.js';
 import '../src/aa-screen/aa-screen.js';
+import '../src/aa-function/aa-function-random.js';
+
 // var expect = chai.expect;
 var assert = chai.assert;
 var container;
@@ -53,11 +55,12 @@ describe('aa-sequence', () => {
             let screen2 = document.querySelector("#screen2");
             assert(sequence.currentNode.id != null, "screen1 should not be null");
             assert(screen2 == null, "screen2 should be null");
-            sequence.next();
+            sequence.next().then(()=>{;
             screen2 = document.querySelector("#screen2");
             assert(screen2 != null, "screen2 should not be null after calling next");
 
             done();
+            });
 
         });
 
@@ -77,6 +80,7 @@ describe('aa-sequence', () => {
                                 <div>screen1</div>
                         </aa-screen>
 
+                        <aa-function-random></aa-function-random>
                         <aa-screen id="screen2" name="second">
                                 <div>screen2</div>
                         </aa-screen>
@@ -96,14 +100,23 @@ describe('aa-sequence', () => {
 
 
             assert(sequence.currentNode.name == "first", "currentNode should be named first");
+            debugger;
             sequence.next().then((f)=>{
+                console.log(sequence.currentNode);
                 assert(sequence.currentNode.name == "second", "currentNode should be named second");
+                debugger;
                 sequence.next();
+
             }).then(()=>{
+                console.log(sequence.currentNode);
                 assert(sequence.currentNode.name == "first", "currentNode should be named second");
+                debugger;
                 sequence.next(); 
+                
             }).then(()=>{
+                console.log(sequence.currentNode);
                 assert(sequence.currentNode.name == "second", "currentNode should be named second");
+                debugger;
                 done();
             })
             

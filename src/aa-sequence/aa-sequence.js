@@ -1,5 +1,4 @@
 import BaseElement from './../aa-baseElement/baseElement.js'
-import AAFunctionRandom from '../aa-function/aa-function-random.js';
 import AAJump from "./aa-jump/aa-jump.js";
 
 
@@ -99,7 +98,6 @@ export default class AASequence extends BaseElement {
                 let fragmentChildCopy = this.copy(fragmentChild);
                 this.target.appendChild(fragmentChildCopy);
                 this.currentNode = fragmentChildCopy;
-                console.log("currentNode", this.currentNode);
                 this.sIndex++;
                 if (this.sIndex >= this.innerFragment.childNodes.length) {
                     return;
@@ -109,15 +107,18 @@ export default class AASequence extends BaseElement {
 
             let fragmentChildCopy = this.copy(fragmentChild);
             this.currentNode = fragmentChildCopy;
-            console.log("currentNode", this.currentNode);
+            
             this.sIndex += 1;
 
             if (!fragmentChildCopy._dispatchEndEvent) {
                     resolve(this.next());
             } else {
+                this.target.appendChild(fragmentChildCopy);
+
                 setTimeout(()=>{
-                    this.target.appendChild(fragmentChildCopy);
-                    resolve();
+
+                   resolve();
+                    
                 },0);
             }
 
@@ -137,10 +138,18 @@ export default class AASequence extends BaseElement {
         let goto = null
         if (e.detail) {
             if (e.detail.goto) {
+            
                 this.next(e.detail.goto)
+
+            } 
+            else if(e.detail.autoDispatch){
+                this.next(true);
             }
         } else {
-            this.next(true);
+
+            setTimeout(()=>{
+                this.next(true);
+            })
         }
     }
 
