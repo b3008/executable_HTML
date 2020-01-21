@@ -22,7 +22,7 @@ describe('aa-choose', () => {
 
     describe('instance', function () {
 
-        xit('empty aa-choose dispatches endEvent instantly, both in and out of a session',  (done)=> {
+        it('empty aa-choose dispatches endEvent instantly, both in and out of a session',  (done)=> {
         
             let outsideSessionTest = false;
             let div = document.createElement('div');
@@ -92,7 +92,7 @@ describe('aa-choose', () => {
 
         });
 
-        xit('parses nested expressions', (done)=>{
+        it('parses nested expressions', (done)=>{
             
 
             let div = document.createElement('div');

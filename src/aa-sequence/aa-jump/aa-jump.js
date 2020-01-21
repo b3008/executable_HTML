@@ -6,9 +6,11 @@ export default class AAJump extends BaseElement {
         return ["name", "goto"]
     }
 
+     autoDispatch=true
+
     connectedCallback() {
         debugger;
-        this._dispatchEndEvent({goto:this.goto})
+        this._dispatchEndEvent({goto:this.goto, autoDispatch:true})
     }
 }
 

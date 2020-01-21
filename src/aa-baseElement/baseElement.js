@@ -60,7 +60,7 @@ export default class BaseElement extends HTMLElement {
     }
 
     connectedCallback() {
-        console.log(this.tagName, " connected");
+        console.log(this.tagName, this.id, " connected");
         this._attachedTimestamp = new Date().getTime();
         this._debug = (this.debug===true)||(this.debug===null);
     }
@@ -153,6 +153,7 @@ export default class BaseElement extends HTMLElement {
         //  use setTimeout to allow aaSequence.next() to return,
         //  so that calls to aaSequence.next are not recursive
         // setTimeout(()=>{
+            // debugger;
             this.dispatchEvent(new CustomEvent('endEvent', { bubbles: true, detail }));
         // },0);
     }
