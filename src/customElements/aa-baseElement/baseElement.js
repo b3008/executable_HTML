@@ -22,7 +22,7 @@ export default class BaseElement extends HTMLElement {
             customElements.define(name, elem);
         }
     }
-        
+
     static isAAElement(node) {
         if (AANodeNames.indexOf(node.nodeName) != -1) {
             return true;
@@ -70,6 +70,13 @@ export default class BaseElement extends HTMLElement {
         console.log(this.tagName, this.id, " connected");
         this._attachedTimestamp = new Date().getTime();
         this._debug = (this.debug===true)||(this.debug===null);
+        if(this.innerFragment){
+            BaseElement.scanAndReplace(this.innerFragment);
+            for(let i=0; i<this.innerFragment.childNodes.length; i++){
+                this.appendChild(BaseElement.copy(this.innerFragment.childNodes[i]))
+            }
+            
+        }
     }
 
 
@@ -129,7 +136,7 @@ export default class BaseElement extends HTMLElement {
         return result;
     }
 
-    copy(node){
+    static copy(node){
         let nodeCopy;
         if (BaseElement.isAAElement(node)) {
             

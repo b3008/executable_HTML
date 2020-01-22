@@ -7,13 +7,8 @@ export default class AAJump extends BaseElement {
     }
 
     connectedCallback() {
-        this._dispatchEndEvent({goto:this.goto, autoDispatch:true})
+        this._dispatchEndEvent({ goto: this.goto, autoDispatch: true })
     }
 }
 
-
-if (!customElements.get('aa-jump')) {
-    window.AANodeNames = window.AANodeNames || [];
-    window.AANodeNames.push('AA-JUMP');
-    customElements.define('aa-jump', AAJump);
-}
+BaseElement.registerAAElement('aa-jump', AAJump);

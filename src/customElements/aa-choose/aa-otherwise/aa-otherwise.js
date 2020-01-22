@@ -7,19 +7,9 @@ export default class AAOtherwise extends BaseElement {
     }
 
     connectedCallback() {
-        if (this.started) return;
-        this.started = true;
-        if (typeof this.innerFragment != "undefined") {
-            BaseElement.scanAndReplace(this.innerFragment);
-            this.appendChild(this.innerFragment);
-            // this._restoreHeldNodes(this);
-        }
-     
+        super.connectedCallback();
     }
 }
 
-if (!customElements.get('aa-otherwise')) {
-    window.AANodeNames = window.AANodeNames|| []; 
-    window.AANodeNames.push('AA-OTHERWISE');
-    customElements.define('aa-otherwise', AAOtherwise);
-}
+
+BaseElement.registerAAElement('aa-otherwise', AAOtherwise);

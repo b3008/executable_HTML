@@ -12,8 +12,6 @@ export default class AATextAnswer extends BaseElement {
 
 
     changeInputItem(type) {
-        console.log("setting to ", type);
-
         if (type === "long") {
             let value = this.value;
             let label = this.label;
@@ -28,10 +26,8 @@ export default class AATextAnswer extends BaseElement {
             })
             this.root.querySelector(".inputItem").replaceWith(this.inputItem);
         } else {
-
             let value = this.value;
             let label = this.label;
-
             this.inputItem = customElements.get('paper-input') ?
                 document.createElement('paper-input') : document.createElement('input');
             this.inputItem.value = value;
@@ -40,27 +36,11 @@ export default class AATextAnswer extends BaseElement {
             this.inputItem.addEventListener("change", (e) => {
                 this.value = e.target.value;
             })
-
             this.root.querySelector(".inputItem").replaceWith(this.inputItem);
         }
     }
 
-    // attributeChangedCallback(name, oldValue, newValue){
 
-    //     switch(name){
-    //         case "long":
-    //             debugger;
-    //             if((newValue!=="")&&(!newValue)){
-    //                 this.removeAttribute("long")
-    //                 this.changeInputItem("short")
-    //             }
-    //             if((oldValue===null)&&( (newValue==="")||newValue)){
-    //                 // this.setAttribute("long","");
-    //                 this.changeInputItem("long");
-    //             }
-    //             break;
-    //     }
-    // }
     get value() {
         if (!this.inputItem) {
             return this.getAttribute("value");
@@ -74,13 +54,11 @@ export default class AATextAnswer extends BaseElement {
         this.inputItem.value = val;
     }
 
-
     get label() {
         return this.getAttribute("label");
     }
 
     set label(val) {
-
         if (!this.inputItem) {
             this.setAttribute("label", val)
         }
@@ -97,7 +75,6 @@ export default class AATextAnswer extends BaseElement {
     }
 
     get long() {
-
         return this.getAttribute("long");
     }
 
@@ -144,7 +121,7 @@ export default class AATextAnswer extends BaseElement {
         }
         
     }
-    
+
     connectedCallback() {
         super.connectedCallback();
 
@@ -155,15 +132,11 @@ export default class AATextAnswer extends BaseElement {
         return `<style>
         :host{
             display:block;
-            
-            overflow:hidden;     
-            
+            overflow:hidden;        
         }
-
         paper-textarea textarea {
            overflow:hidden;
         }
-        
         </style>`;
     }
 

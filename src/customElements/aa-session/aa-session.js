@@ -33,7 +33,7 @@ export default class AASession extends BaseElement {
                 sessionName: this.name,
                 variables: Object.keys(e.detail.value),
             };
-            this._mem.saveReplyValue(e.detail.value, false);
+           // TODO:  this._mem.saveReplyValue(e.detail.value, false);
 
 
             let inputSubmitEvent = new CustomEvent('inputSubmit', { bubbles: true, detail: { input } });
@@ -112,14 +112,8 @@ export default class AASession extends BaseElement {
 
 }
 
+BaseElement.registerAAElement('aa-session', AASession);
 
-
-
-if (!customElements.get('aa-session')) {
-    window.AANodeNames = window.AANodeNames|| []; 
-    window.AANodeNames.push('AA-SESSION');
-    customElements.define('aa-session', AASession);
-}
 
 
 

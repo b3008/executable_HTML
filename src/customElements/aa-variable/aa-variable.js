@@ -21,9 +21,5 @@ export default class AAVariable extends BaseElement {
 
 }
 
+BaseElement.registerAAElement('aa-variable', AAVariable);
 
-if (!customElements.get('aa-variable')) {
-    window.AANodeNames = window.AANodeNames|| []; 
-    window.AANodeNames.push('AA-VARIABLE');
-    customElements.define('aa-variable', AAVariable);
-}

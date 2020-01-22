@@ -6,27 +6,16 @@ export default class AAWhen extends BaseElement {
         return ['name', 'should-run', 'debug'];
     }
 
-    constructor(){
+    constructor() {
         super();
         this.root = this.attachShadow({ mode: 'open' });
         this.root.innerHTML = '<slot></slot>'
     }
-    
-    connectedCallback(){
-        if(this.started) return;
-        this.started = true;
-        if(typeof this.innerFragment!="undefined")
-        {
-            BaseElement.scanAndReplace(this.innerFragment);
-            this.appendChild(this.innerFragment);
-        }
+
+    connectedCallback() {
+        super.connectedCallback();
     }
 }
 
+BaseElement.registerAAElement('aa-when', AAWhen);
 
-
-if (!customElements.get('aa-when')) {
-    window.AANodeNames = window.AANodeNames|| []; 
-    window.AANodeNames.push("AA-WHEN");
-    customElements.define('aa-when', AAWhen);
-}

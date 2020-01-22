@@ -54,10 +54,10 @@ export default class AAChoose extends BaseElement {
             if (child.nodeName == 'AA-WHEN') {
                 isChildTrue = this.evaluate(child);
                 if (isChildTrue) {
-                    nodesToReturn.push(this.copy(child))
+                    nodesToReturn.push(BaseElement.copy(child))
                 }
             } else if (child.nodeName == 'AA-OTHERWISE') {
-                nodeOtherwise.push(this.copy(child))
+                nodeOtherwise.push(BaseElement.copy(child))
             }
         }
         if (nodesToReturn.length == 0) {
@@ -137,10 +137,5 @@ export default class AAChoose extends BaseElement {
     }
 }
 
+BaseElement.registerAAElement('aa-choose', AAChoose);
 
-
-if (!customElements.get('aa-choose')) {
-    window.AANodeNames = window.AANodeNames || [];
-    window.AANodeNames.push('AA-CHOOSE');
-    customElements.define('aa-choose', AAChoose);
-}

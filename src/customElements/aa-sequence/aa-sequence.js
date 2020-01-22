@@ -95,41 +95,30 @@ export default class AASequence extends BaseElement {
             //  and move on to the next, there won't be a connectecCallback Function to execute anyway
             while (fragmentChild.nodeType != Node.ELEMENT_NODE) {
 
-                let fragmentChildCopy = this.copy(fragmentChild);
+                let fragmentChildCopy = BaseElement.copy(fragmentChild);
                 this.target.appendChild(fragmentChildCopy);
                 this.currentNode = fragmentChildCopy;
                 this.sIndex++;
-                if (this.sIndex >= this.innerFragment.childNodes.length) {
-                    return;
-                }
+                if (this.sIndex >= this.innerFragment.childNodes.length) { return; }
                 fragmentChild = this.innerFragment.childNodes[this.sIndex];
             }
-
-            let fragmentChildCopy = this.copy(fragmentChild);
+            let fragmentChildCopy = BaseElement.copy(fragmentChild);
             this.currentNode = fragmentChildCopy;
-            
             this.sIndex += 1;
-
             if (!fragmentChildCopy._dispatchEndEvent) {
-                    resolve(this.next());
+                resolve(this.next());
             } else {
                 this.target.appendChild(fragmentChildCopy);
-
-                setTimeout(()=>{
-
-                   resolve();
-                    
-                },0);
+                setTimeout(() => {
+                    resolve();
+                }, 0);
             }
-
             if (!this.prevPerformance) {
                 this.prevPerformance = performance.now();
-
             } else {
                 this.time = performance.now() - this.prevPerformance;
                 this.prevPerformance = performance.now();
             }
-
         })
     }
 
@@ -138,16 +127,19 @@ export default class AASequence extends BaseElement {
         let goto = null
         if (e.detail) {
             if (e.detail.goto) {
-            
+
                 this.next(e.detail.goto)
 
-            } 
-            else if(e.detail.autoDispatch){
+            }
+            else if (e.detail.autoDispatch) {
                 this.next(true);
+            } else {
+                setTimeout(() => {
+                    this.next(true);
+                })
             }
         } else {
-
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.next(true);
             })
         }
@@ -155,10 +147,6 @@ export default class AASequence extends BaseElement {
 
 }
 
+BaseElement.registerAAElement('aa-sequence', AASequence);
 
-if (!customElements.get('aa-sequence')) {
-    if (typeof window.AANodeNames === 'undefined') { window.AANodeNames = []; }
-    window.AANodeNames.push('AA-SEQUENCE');
-    customElements.define('aa-sequence', AASequence);
-}
 

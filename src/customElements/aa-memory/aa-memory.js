@@ -25,12 +25,4 @@ export default class AAMemory extends BaseElement {
     }
 }
 
-
-if (!customElements.get('aa-memory')) {
-
-    if (typeof window.AANodeNames ==="undefined") { 
-        window.AANodeNames = []; 
-    }
-    window.AANodeNames.push("AA-MEMORY");
-    customElements.define('aa-memory', AAMemory);
-}
+BaseElement.registerAAElement('aa-memory', AAMemory);

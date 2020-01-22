@@ -36,7 +36,10 @@ export default class AAScreen extends BaseElement {
 
     connectedCallback() {
         super.connectedCallback();
-
+        if(this.innerFragment){
+            BaseElement.scanAndReplace(this.innerFragment);
+            this.appendChild(this.innerFragment);
+        }
         this.root.innerHTML = this.css + this.html;
         this.submitButton = this.root.querySelector('.submitButton');
 
@@ -47,11 +50,7 @@ export default class AAScreen extends BaseElement {
             this.root.querySelector('.submitButtonContainer').style.display = 'none';
         }
 
-        if (this.innerFragment != undefined) {
-            // TODO: innerFragment children should always be copied
-            this.appendChild(this.innerFragment);
-        }
-
+        
         this.root.querySelector('.submitButton').addEventListener('click', this.submitButtonClick.bind(this));
 
     }
@@ -239,9 +238,5 @@ export default class AAScreen extends BaseElement {
     }
 }
 
+BaseElement.registerAAElement('aa-screen', AAScreen);
 
-if (!customElements.get('aa-screen')) {
-    window.AANodeNames = window.AANodeNames || [];
-    window.AANodeNames.push('AA-SCREEN');
-    customElements.define('aa-screen', AAScreen);
-}
