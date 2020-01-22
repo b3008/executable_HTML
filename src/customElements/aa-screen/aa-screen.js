@@ -64,13 +64,13 @@ export default class AAScreen extends BaseElement {
                 :host {
                     display: block;
                     height: fit-content;
-                    border: solid thin;
+                    /* border: solid thin; */
                     padding:20px;
                     font-family:sans-serif;
                 }
 
                 .submitButtonContainer{
-                    border:solid thin;
+                    /* border:solid thin; */
                     /* width:100%; */
                     text-align:right;
                     /* display:flex;  */

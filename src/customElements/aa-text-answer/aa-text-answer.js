@@ -22,7 +22,7 @@ export default class AATextAnswer extends BaseElement {
             this.inputItem.value = value;
             this.inputItem.label = label;
             this.inputItem.classList.add("inputItem");
-            this.fixBugInPaperTextArea(this.inputItem);
+            this.fixBugInPaperTextarea(this.inputItem);
             this.inputItem.addEventListener("change", (e) => {
                 this.value = e.target.value;
             })
@@ -113,7 +113,7 @@ export default class AATextAnswer extends BaseElement {
         this.inputItem = this.root.querySelector('.inputItem');
         if (label) this.inputItem.label = label;
         if (value) this.inputItem.value = value;
-        this.fixBugInPaperTextArea(this.inputItem);
+        this.fixBugInPaperTextarea(this.inputItem);
 
         this.inputItem.addEventListener("change", (e) => {
             this.value = e.target.value;
@@ -121,7 +121,8 @@ export default class AATextAnswer extends BaseElement {
     }
 
 
-    fixBugInPaperTextArea(inputItem) {
+    fixBugInPaperTextarea(inputItem) {
+        // solves issue documented here: https://github.com/PolymerElements/paper-input/issues/125
         if (inputItem.tagName === "PAPER-TEXTAREA") {
             inputItem.root.childNodes[2].children[1].textarea.style.overflow = "hidden";
             let width = window.getComputedStyle(this.root.querySelector(".inputContainer")).width;
@@ -143,6 +144,7 @@ export default class AATextAnswer extends BaseElement {
         }
         
     }
+    
     connectedCallback() {
         super.connectedCallback();
 
