@@ -36,10 +36,7 @@ export default class AAScreen extends BaseElement {
 
     connectedCallback() {
         super.connectedCallback();
-        if(this.innerFragment){
-            BaseElement.scanAndReplace(this.innerFragment);
-            this.appendChild(this.innerFragment);
-        }
+       
         this.root.innerHTML = this.css + this.html;
         this.submitButton = this.root.querySelector('.submitButton');
 
