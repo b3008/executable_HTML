@@ -15,7 +15,14 @@ if(window) window.html = html;
 
 export default class BaseElement extends HTMLElement {
 
-    
+    static registerAAElement(name, elem){
+        if (!customElements.get(name)) {
+            window.AANodeNames = window.AANodeNames || [];
+            window.AANodeNames.push(name.toUpperCase());
+            customElements.define(name, elem);
+        }
+    }
+        
     static isAAElement(node) {
         if (AANodeNames.indexOf(node.nodeName) != -1) {
             return true;

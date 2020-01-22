@@ -1,5 +1,5 @@
-import '../src/aa-session/aa-session.js';
-import '../src/aa-choose/aa-choose.js';
+import '../src/customElements/aa-session/aa-session.js';
+import '../src/customElements/aa-choose/aa-choose.js';
 
 // var expect = chai.expect;
 var assert = chai.assert;
@@ -84,7 +84,6 @@ describe('aa-choose', () => {
             let c2 = document.querySelector("#condition2");
             assert(c1!==null, "#condition1 should be on page");
             assert(r1!==null, "#result1 should be on page");
-            debugger;
             assert(c2==null, "#condition2 should not be on page");
          
 

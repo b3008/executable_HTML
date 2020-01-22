@@ -13,6 +13,22 @@ export default class AAScreen extends BaseElement {
         ];
     }
 
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch(name){
+            case "submit-button-text":
+                this.submitButton.innerHTML = newValue;
+                break;
+            case "submit-button-hidden":
+                if((newValue!==true)||(newValue!=="true")){
+                    this.root.querySelector(".submitButtonContainer").style.display="block"
+                } else{
+                    this.root.querySelector(".submitButtonContainer").style.display="none"
+                }
+                break;
+        }
+    }
+
     constructor() {
         super();
         this.root = this.attachShadow({ mode: 'open' });
@@ -62,8 +78,14 @@ export default class AAScreen extends BaseElement {
                     align-items:center;
                     padding:20px;
                 }
-            
-            </style>
+
+
+                paper-button.darkBlue {
+                    background-color: #0d47a1;
+                    color: white;
+                 }
+  
+         </style>
         `;
     }
 
@@ -82,7 +104,7 @@ export default class AAScreen extends BaseElement {
     getSubmitButton() {
         let buttonText = this.submitButtonText || "submit";
         if (customElements.get('paper-button')) {
-            return html`<paper-button class="submitButton" raised class="indigo">${buttonText}</paper-button>`
+            return html`<paper-button class="submitButton darkBlue" raised class="indigo">${buttonText}</paper-button>`
         } else {
             return html`<button class='submitButton'>${buttonText}</button>`
         }
@@ -91,7 +113,6 @@ export default class AAScreen extends BaseElement {
     submitButtonClick(e) {
 
         let userMessage = this.querySelector("#userMessage");
-
         if (this.hasChildrenThatDemandResponse()) {
 
             userMessage.innerHTML = html`
@@ -104,25 +125,17 @@ export default class AAScreen extends BaseElement {
             return;
         }
 
-        //dispatch endEvent 
         let valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: this.getValue() } });
         this.dispatchEvent(valueSubmitEvent);
-
         this._dispatchEndEvent(this.getValue());
-
-
         if (typeof e.detail.callback != 'undefined') {
             e.detail.callback(e);
         }
-
         if (this.dontHide == false) this.hide();
 
     }
 
 
-    attributeChangedCallback() {
-
-    }
 
 
 

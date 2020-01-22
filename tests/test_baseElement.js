@@ -1,5 +1,5 @@
-import BaseElement from "../src/aa-baseElement/baseElement.js";
-import AAScreen from '../src/aa-screen/aa-screen.js';
+import BaseElement from "../src/customElements/aa-baseElement/baseElement.js";
+import AAScreen from '../src/customElements/aa-screen/aa-screen.js';
 
 // var expect = chai.expect;
 var assert = chai.assert;

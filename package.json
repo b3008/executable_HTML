@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@polymer/paper-button": "^3.0.1",
+    "@polymer/paper-input": "^3.2.0",
     "jsep": "^0.3.4",
     "karma-coverage": "^2.0.1"
   },

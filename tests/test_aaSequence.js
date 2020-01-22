@@ -1,7 +1,7 @@
-import '../src/aa-sequence/aa-sequence.js';
-import '../src/aa-session/aa-session.js';
-import '../src/aa-screen/aa-screen.js';
-import '../src/aa-function/aa-function-random.js';
+import '../src/customElements/aa-sequence/aa-sequence.js';
+import '../src/customElements/aa-session/aa-session.js';
+import '../src/customElements/aa-screen/aa-screen.js';
+import '../src/customElements/aa-function/aa-function-random.js';
 
 // var expect = chai.expect;
 var assert = chai.assert;
@@ -100,31 +100,21 @@ describe('aa-sequence', () => {
 
 
             assert(sequence.currentNode.name == "first", "currentNode should be named first");
-            debugger;
             sequence.next().then((f)=>{
-                console.log(sequence.currentNode);
                 assert(sequence.currentNode.name == "second", "currentNode should be named second");
-                debugger;
                 sequence.next();
-
             }).then(()=>{
-                console.log(sequence.currentNode);
                 assert(sequence.currentNode.name == "first", "currentNode should be named second");
-                debugger;
                 sequence.next(); 
-                
             }).then(()=>{
-                console.log(sequence.currentNode);
                 assert(sequence.currentNode.name == "second", "currentNode should be named second");
-                debugger;
                 done();
             })
             
         })
 
         it('jumps forwards', (done) => {
-            container.innerHTML = '';
-
+            
             container.innerHTML = html`
              session:
             <aa-session debug="true" name="test" id="session"> 

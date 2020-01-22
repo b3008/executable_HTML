@@ -1,4 +1,4 @@
-import '../src/aa-screen/aa-screen.js';
+import '../src/customElements/aa-screen/aa-screen.js';
 import '../dist/paper-polymer.js';
 // var expect = chai.expect;
 var assert = chai.assert;

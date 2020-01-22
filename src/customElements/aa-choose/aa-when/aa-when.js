@@ -15,7 +15,6 @@ export default class AAWhen extends BaseElement {
     connectedCallback(){
         if(this.started) return;
         this.started = true;
-        debugger;
         if(typeof this.innerFragment!="undefined")
         {
             BaseElement.scanAndReplace(this.innerFragment);

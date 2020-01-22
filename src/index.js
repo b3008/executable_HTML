@@ -1,15 +1,17 @@
 import '../dist/paper-polymer.js';
 
 
-import BaseElement from './aa-baseElement/baseElement.js';
-import AAVariable from './aa-variable/aa-variable.js';
-import AAFunctionRandom from "./aa-function/aa-function-random.js"
-import AAChoose from './aa-choose/aa-choose.js';
+import BaseElement from './customElements/aa-baseElement/baseElement.js';
+import AAVariable from './customElements/aa-variable/aa-variable.js';
+import AAFunctionRandom from "./customElements/aa-function/aa-function-random.js"
+import AAChoose from './customElements/aa-choose/aa-choose.js';
 
-import AAMemory from './aa-memory/aa-memory.js';
-import AAScreen from './aa-screen/aa-screen.js';
-import AASequence from './aa-sequence/aa-sequence.js';
-import AASession from './aa-session/aa-session.js';
+import AAMemory from './customElements/aa-memory/aa-memory.js';
+import AAScreen from './customElements/aa-screen/aa-screen.js';
+import AASequence from './customElements/aa-sequence/aa-sequence.js';
+import AASession from './customElements/aa-session/aa-session.js';
+
+import AATextAnswer from './customElements/aa-text-answer/aa-text-answer.js';
 //make sure session loads last
 // try{
 

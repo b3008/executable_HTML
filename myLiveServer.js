@@ -1,5 +1,5 @@
 var liveServer = require("live-server");
-var childProcess = require('child_process');
+var childProcess = require('child_process').spawn;
 
 var params = {
     port: 8080, // Set the server port. Defaults to 8080.
@@ -11,19 +11,22 @@ var params = {
     wait: 1000, // Waits for all changes, before reloading. Defaults to 0 sec.
     mount: [['/components', './node_modules']], // Mount a directory to a route.
     logLevel: 2, // 0 = errors only, 1 = some, 2 = lots
-    middleware: [function(req, res, next) { 
+    middleware: [function (req, res, next) {
 
         //code here does not seem to execute
-        
-        next(); }] // Takes an array of Connect-compatible middleware that are injected into the server middleware stack
+
+        next();
+    }] // Takes an array of Connect-compatible middleware that are injected into the server middleware stack
 };
 
 liveServer.start(params);
-liveServer.watcher.on('change', function(e){
-    if(e.indexOf('/dist/')==-1){
+liveServer.watcher.on('change', function (e) {
+    if (e.indexOf('/dist/') == -1) {
         console.log('executing: npm run build');
-        childProcess.execSync(`cd ${__dirname}; npm run build`);
-        
+        childProcess(`cd ${__dirname}; npm run build`).on('error', function (err) {
+            console.log('ouch: ' + err);
+        });
     }
-   
+
 })
+
