@@ -1,4 +1,4 @@
-import BaseElement from './../aa-baseElement/baseElement.js'
+import BaseElement from './../aa-baseElement/baseElement.js';
 
 
 export default class AAScreen extends BaseElement {
@@ -111,7 +111,7 @@ export default class AAScreen extends BaseElement {
                             <div id='attention' style='color: red; font-size: 20px;  border: solid thin; border-radius: 50%; width: 20px;
                                                 margin-left:20px; height: 20px; 
                                                 text-align: center;
-                                                padding: 5px;'>!</div></div>`
+                                                padding: 5px;'>!</div></div>`;
             return;
         }
 
@@ -121,7 +121,7 @@ export default class AAScreen extends BaseElement {
         if (typeof e.detail.callback != 'undefined') {
             e.detail.callback(e);
         }
-        if (this.dontHide === false) this.hide();
+        if (this.dontHide === false) {this.hide();}
 
     }
 
@@ -139,7 +139,7 @@ export default class AAScreen extends BaseElement {
                 if (child.getValue() === null) {
                     // console.log(child, 'demands response');
                     // TODO : add a class to the child
-                    result = true;
+                    isMissingValues = true;
                 }
             }
         }
@@ -150,7 +150,7 @@ export default class AAScreen extends BaseElement {
     getAAChildren() {
         let result = [];
         for (let i = 0; i < this.children.length; i++) {
-            if (BaseElement.isAAElement(this.children[i])) { result.push(this.children[i]) }
+            if (BaseElement.isAAElement(this.children[i])) { result.push(this.children[i]); }
         }
         return result;
     }
@@ -178,24 +178,24 @@ export default class AAScreen extends BaseElement {
 
 
     getValue() {
-        var __meta = {
+        let __meta = {
             attachedTimestamp: this.attachedTimestamp,
             submitTimestamp: new Date().getTime()
-        }
-        var result = this.getChildrenValues(this);
+        };
+        let result = this.getChildrenValues(this);
         return result;
     }
 
     getValueWithKey() {
-        var result = {}
+        let result = {};
         result[this.name] = this.getValue();
         return result;
     }
 
 
     automate() {
-        for (var i = 0; i < this.children.length; i++) {
-            if (this.isEmaElement(this.children[i])) {
+        for (let i = 0; i < this.children.length; i++) {
+            if (BaseElement.isAAElement(this.children[i])) {
                 if (typeof this.children[i].automate != 'undefined') {
                     this.children[i].automate();
                 }
@@ -204,15 +204,12 @@ export default class AAScreen extends BaseElement {
         this.submitButtonClick();
     }
 
-
     hide() {
-        this.style.display = 'none'
-
+        this.style.display = 'none';
     }
 
     show() {
-        this.style.display = 'block'
-        //this.removeAttribute('hidden');
+        this.style.display = 'block';
     }
 }
 

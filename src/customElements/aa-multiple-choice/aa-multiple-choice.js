@@ -30,9 +30,9 @@ export default class AAMultipleChoice extends BaseElement {
         this.root.innerHTML = this.css + this.html;
         this.radioGroup = this.root.querySelector('#radioGroup');
         this.radioGroup.addEventListener('change', (e) => {
-            this.value = e.target.name
+            this.value = e.target.name;
             console.log(this.value);
-        })
+        });
 
     }
 
@@ -52,7 +52,6 @@ export default class AAMultipleChoice extends BaseElement {
             this.root.appendChild(BaseElement.copy(node));
         } else {
             if (node.tagName === 'AA-CHOICE-ITEM') {
-                console.log('appending ')
                 let child = document.createElement('paper-radio-button');
                 if (node.getAttribute('value')) {
                     child.setAttribute('name', node.getAttribute('value'));

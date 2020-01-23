@@ -48,7 +48,7 @@ export default class AATextAnswer extends BaseElement {
         return this.inputItem.value;
     }
     set value(val) {
-        this.setAttribute('value', val)
+        this.setAttribute('value', val);
         if (this.inputItem) {
             this.inputItem.value = val;
         }
@@ -60,11 +60,10 @@ export default class AATextAnswer extends BaseElement {
     }
 
     set label(val) {
-        this.setAttribute('label', val)
+        this.setAttribute('label', val);
         if (this.inputItem) {
             this.inputItem.label = val;
         }
-
     }
 
     set long(val) {
@@ -83,7 +82,7 @@ export default class AATextAnswer extends BaseElement {
     constructor() {
         super();
         this.root = this.attachShadow({ mode: 'open' });
-        let html = (this.long || (this.long == '')) ? this.longHtml : this.html;
+        let html = (this.long || (this.long === '')) ? this.longHtml : this.html;
 
         this.root.innerHTML = this.css + `<div class='inputContainer'>${html}<div>`;
 
@@ -115,14 +114,14 @@ export default class AATextAnswer extends BaseElement {
                 })
 
                 window.addEventListener('resize', () => {
-                    inputItem.root.childNodes[2].style.width = ''
+                    inputItem.root.childNodes[2].style.width = '';
                     setTimeout(() => {
                         let width = window.getComputedStyle(this.root.querySelector('.inputContainer')).width;
                         inputItem.root.childNodes[2].style.width = width;
                     }, 100);
 
                 })
-            }
+            };
         }, 0);
         
     }
