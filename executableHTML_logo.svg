@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="252px" height="327px" viewBox="0 0 252 327" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>executableHTML_logo</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M19,5 C11.2680135,5 5,11.2680135 5,19 L5,308 C5,315.731986 11.2680135,322 19,322 L233,322 C240.731986,322 247,315.731986 247,308 L247,19 C247,11.2680135 240.731986,5 233,5 L19,5 Z" id="Rectangle" stroke="#000000" stroke-width="10" fill="#FFFFFF"></path>
+        <path d="M56.5,133.5 L169.5,133.5 C179.99341,133.5 188.5,142.00659 188.5,152.5 L188.5,357.5 C188.5,367.99341 179.99341,376.5 169.5,376.5 L56.5,376.5 L56.5,133.5 Z" id="Rectangle" fill="#000000" transform="translate(122.500000, 255.000000) rotate(-270.000000) translate(-122.500000, -255.000000) "></path>
+        <text id="100001-100001" font-family="Menlo-Bold, Menlo" font-size="55" font-weight="bold" fill="#0A0A0A">
+            <tspan x="27" y="87">100001</tspan>
+            <tspan x="27" y="151">100001</tspan>
+        </text>
+        <text id="HTML" font-family="Impact" font-size="98" font-style="condensed" font-weight="700" fill="#FFFFFF">
+            <tspan x="22" y="294">HTML</tspan>
+        </text>
+    </g>
+</svg>
