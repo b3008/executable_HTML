@@ -37,5 +37,5 @@
     "build": "node node_modules/webpack/bin/webpack.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "BSD-3-Clause-Clear"
 }

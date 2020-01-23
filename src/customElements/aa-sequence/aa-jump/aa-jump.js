@@ -3,7 +3,7 @@ import BaseElement from "../../aa-baseElement/baseElement.js";
 export default class AAJump extends BaseElement {
 
     static get observedAttributes() {
-        return ["name", "goto"]
+        return ["name", "goto"];
     }
 
     connectedCallback() {

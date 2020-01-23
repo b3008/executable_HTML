@@ -25,7 +25,7 @@ export default class AAChoose extends BaseElement {
             if (typeof this.innerFragment !== 'undefined') {
                 BaseElement.scanAndReplace(this.innerFragment);
                 let nodes = this._getNodeToInstantiate();
-                if (nodes.length == 0) {
+                if (nodes.length === 0) {
                     this._dispatchEndEvent();
                 } else {
                     for (let i = 0; i < nodes.length; i++) {
@@ -38,7 +38,7 @@ export default class AAChoose extends BaseElement {
                 }
             }
             else {
-                if (this.childNodes.length == 0) {
+                if (this.childNodes.length === 0) {
                     this._dispatchEndEvent();
                 }
             }
@@ -51,16 +51,16 @@ export default class AAChoose extends BaseElement {
         let isChildTrue = false;
         for (let i = 0; i < this.innerFragment.children.length; i++) {
             let child = this.innerFragment.children[i];
-            if (child.nodeName == 'AA-WHEN') {
+            if (child.nodeName === 'AA-WHEN') {
                 isChildTrue = this.evaluate(child);
                 if (isChildTrue) {
-                    nodesToReturn.push(BaseElement.copy(child).innerFragment)
+                    nodesToReturn.push(BaseElement.copy(child).innerFragment);
                 }
-            } else if (child.nodeName == 'AA-OTHERWISE') {
-                nodeOtherwise.push(BaseElement.copy(child).innerFragment)
+            } else if (child.nodeName === 'AA-OTHERWISE') {
+                nodeOtherwise.push(BaseElement.copy(child).innerFragment);
             }
         }
-        if (nodesToReturn.length == 0) {
+        if (nodesToReturn.length === 0) {
             return nodeOtherwise;
         }
         else {

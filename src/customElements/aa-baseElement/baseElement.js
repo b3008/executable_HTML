@@ -11,11 +11,11 @@ var html = function (txt, ...val) {
     return result;
 }
 
-if(window) window.html = html;
+if (window) window.html = html;
 
 export default class BaseElement extends HTMLElement {
 
-    static registerAAElement(name, elem){
+    static registerAAElement(name, elem) {
         if (!customElements.get(name)) {
             window.AANodeNames = window.AANodeNames || [];
             window.AANodeNames.push(name.toUpperCase());
@@ -32,10 +32,7 @@ export default class BaseElement extends HTMLElement {
 
     static createFragmentForNode(node) {
         let fragment = document.createDocumentFragment();
-        //  first get references to the children,
-        //  because the element.children array will be modified as they are appended to the fragment
-        let childNodes = [];
-        for(let i=0; i<node.childNodes.length; i++){
+        for (let i = 0; i < node.childNodes.length; i++) {
             fragment.append(node.childNodes[i].cloneNode(true));
         }
         return fragment;
@@ -48,7 +45,7 @@ export default class BaseElement extends HTMLElement {
     }
 
     static scanAndReplace(node) {
-        if (node.nodeName == "TEMPLATE") {
+        if (node.nodeName === "TEMPLATE") {
             BaseElement.scanAndReplace(node.content);
         }
         else if (BaseElement.isAAElement(node)) {
@@ -60,7 +57,6 @@ export default class BaseElement extends HTMLElement {
             }
     }
 
-
     constructor() {
         super();
         this._props = this.makePropertiesFromAttributes();
@@ -69,19 +65,19 @@ export default class BaseElement extends HTMLElement {
     connectedCallback() {
         console.log(this.tagName, this.id, " connected");
         this._attachedTimestamp = new Date().getTime();
-        this._debug = (this.debug===true)||(this.debug===null);
-        if(this.innerFragment){
+        this._debug = (this.debug === true) || (this.debug === null);
+        if (this.innerFragment) {
             BaseElement.scanAndReplace(this.innerFragment);
-            for(let i=0; i<this.innerFragment.childNodes.length; i++){
-                this.appendChild(BaseElement.copy(this.innerFragment.childNodes[i]))
+            for (let i = 0; i < this.innerFragment.childNodes.length; i++) {
+                this.appendChild(BaseElement.copy(this.innerFragment.childNodes[i]));
             }
-            
+
         }
     }
 
 
     makePropertiesFromAttributes() {
-        
+
         let ElementClass = customElements.get(this.tagName.toLowerCase());
 
         let attr = ElementClass.observedAttributes;
@@ -95,10 +91,10 @@ export default class BaseElement extends HTMLElement {
             if (typeof this[prop] != 'undefined') {
                 continue;
             } else {
-                
+
                 Object.defineProperty(this, prop, {
                     get: () => {
-                     
+
                         let result = this.getAttribute(attr[i]);
                         if (result === 'true') { return true; }
                         else if (result === 'false') { return false; }
@@ -136,14 +132,14 @@ export default class BaseElement extends HTMLElement {
         return result;
     }
 
-    static copy(node){
+    static copy(node) {
         let nodeCopy;
         if (BaseElement.isAAElement(node)) {
-            
-            if(node.innerFragment){
+
+            if (node.innerFragment) {
                 nodeCopy = node.cloneNode();
                 nodeCopy.innerFragment = BaseElement.createFragmentForNode(node.innerFragment);
-            }else{
+            } else {
                 nodeCopy = node.cloneNode();
                 nodeCopy.innerFragment = BaseElement.createFragmentForNode(node);
             }
@@ -157,22 +153,22 @@ export default class BaseElement extends HTMLElement {
 
     _dispatchDebugEvent(detail) {
         if (this.debug) {
-            this.dispatchEvent(new CustomEvent('debugEvent', { detail, bubbles:true }));
+            this.dispatchEvent(new CustomEvent('debugEvent', { detail, bubbles: true }));
         }
     }
 
-    
+
 
     _dispatchEndEvent(detail) {
         //  use setTimeout to allow aaSequence.next() to return,
         //  so that calls to aaSequence.next are not recursive
         // setTimeout(()=>{
-            // debugger;
-            this.dispatchEvent(new CustomEvent('endEvent', { bubbles: true, detail }));
+        // debugger;
+        this.dispatchEvent(new CustomEvent('endEvent', { bubbles: true, detail }));
         // },0);
     }
 
-    _getParentSession(){
+    _getParentSession() {
         let _sessionElement = this;
         while ((_sessionElement != null) && (_sessionElement.nodeName != 'AA-SESSION')) {
             _sessionElement = _sessionElement.parentNode;

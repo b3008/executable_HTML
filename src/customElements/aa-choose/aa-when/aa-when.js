@@ -1,4 +1,4 @@
-import BaseElement from './../../aa-baseElement/baseElement.js'
+import BaseElement from './../../aa-baseElement/baseElement.js';
 
 export default class AAWhen extends BaseElement {
 

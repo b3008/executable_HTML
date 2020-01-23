@@ -16,14 +16,14 @@ export default class AAScreen extends BaseElement {
 
     attributeChangedCallback(name, oldValue, newValue) {
         switch(name){
-            case "submit-button-text":
+            case 'submit-button-text':
                 this.submitButton.innerHTML = newValue;
                 break;
-            case "submit-button-hidden":
-                if((newValue!==true)||(newValue!=="true")){
-                    this.root.querySelector(".submitButtonContainer").style.display="block"
+            case 'submit-button-hidden':
+                if((newValue!==true)||(newValue!=='true')){
+                    this.root.querySelector('.submitButtonContainer').style.display='block';
                 } else{
-                    this.root.querySelector(".submitButtonContainer").style.display="none"
+                    this.root.querySelector('.submitButtonContainer').style.display='none';
                 }
                 break;
         }
@@ -55,21 +55,16 @@ export default class AAScreen extends BaseElement {
 
     get css() {
 
-        return html`
-            <style>
+        return html`<style>
                 :host {
                     display: block;
                     height: fit-content;
-                    /* border: solid thin; */
                     padding:20px;
                     font-family:sans-serif;
                 }
 
                 .submitButtonContainer{
-                    /* border:solid thin; */
-                    /* width:100%; */
                     text-align:right;
-                    /* display:flex;  */
                     justify-content: space-between; 
                     align-items:center;
                     padding:20px;
@@ -81,14 +76,13 @@ export default class AAScreen extends BaseElement {
                     color: white;
                  }
   
-         </style>
-        `;
+         </style>`;
     }
 
     get html() {
         return html`
             <slot></slot>
-            <div id="userMessage">
+            <div id='userMessage'>
             <div class='submitButtonContainer'>
                 <div>
                     ${this.getSubmitButton()}
@@ -98,26 +92,26 @@ export default class AAScreen extends BaseElement {
     }
 
     getSubmitButton() {
-        let buttonText = this.submitButtonText || "submit";
+        let buttonText = this.submitButtonText || 'submit';
         if (customElements.get('paper-button')) {
-            return html`<paper-button class="submitButton darkBlue" raised class="indigo">${buttonText}</paper-button>`
+            return html`<paper-button class='submitButton darkBlue' raised class='indigo'>${buttonText}</paper-button>`;
         } else {
-            return html`<button class='submitButton'>${buttonText}</button>`
+            return html`<button class='submitButton'>${buttonText}</button>`;
         }
     }
 
     submitButtonClick(e) {
 
-        let userMessage = this.querySelector("#userMessage");
+        let userMessage = this.querySelector('#userMessage');
         if (this.hasChildrenThatDemandResponse()) {
 
             userMessage.innerHTML = html`
-                    <div style="display:flex; align-items:center"> 
+                    <div style='display:flex; align-items:center'> 
                         <div>please fill out the required fields</div> 
-                            <div id="attention" style="color: red; font-size: 20px;  border: solid thin; border-radius: 50%; width: 20px;
+                            <div id='attention' style='color: red; font-size: 20px;  border: solid thin; border-radius: 50%; width: 20px;
                                                 margin-left:20px; height: 20px; 
                                                 text-align: center;
-                                                padding: 5px;">!</div></div>`
+                                                padding: 5px;'>!</div></div>`
             return;
         }
 
@@ -127,7 +121,7 @@ export default class AAScreen extends BaseElement {
         if (typeof e.detail.callback != 'undefined') {
             e.detail.callback(e);
         }
-        if (this.dontHide == false) this.hide();
+        if (this.dontHide === false) this.hide();
 
     }
 
@@ -142,7 +136,7 @@ export default class AAScreen extends BaseElement {
         let isMissingValues = false;
         for (let i = 0; i < aaChildren.length; i++) {
             if (aaChildren[i].mandatory) {
-                if (child.getValue() == null) {
+                if (child.getValue() === null) {
                     // console.log(child, 'demands response');
                     // TODO : add a class to the child
                     result = true;
@@ -179,20 +173,7 @@ export default class AAScreen extends BaseElement {
         return result;
     }
 
-    getChildrenValuesOrder(element) {
-        if (typeof element === 'undefined') element = this;
-        var emaChildren = this.getEmaChildren(element);
-        var result = [];
-        for (var i = 0; i < emaChildren.length; i++) {
-            var child = emaChildren[i]
-            if (typeof this.name != 'undefined') {
-                result.push(this.name + '$' + child.getName());
-            }
-            else {
-                result.push(child.getName());
-            }
-        }
-    }
+
 
 
 
