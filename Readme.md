@@ -1,3 +1,5 @@
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/b3008/executable_HTML.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/b3008/executable_HTML/context:javascript)
+
 # executable HTML
 
 ## TL;DR
