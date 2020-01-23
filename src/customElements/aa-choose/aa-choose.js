@@ -54,10 +54,10 @@ export default class AAChoose extends BaseElement {
             if (child.nodeName == 'AA-WHEN') {
                 isChildTrue = this.evaluate(child);
                 if (isChildTrue) {
-                    nodesToReturn.push(BaseElement.copy(child))
+                    nodesToReturn.push(BaseElement.copy(child).innerFragment)
                 }
             } else if (child.nodeName == 'AA-OTHERWISE') {
-                nodeOtherwise.push(BaseElement.copy(child))
+                nodeOtherwise.push(BaseElement.copy(child).innerFragment)
             }
         }
         if (nodesToReturn.length == 0) {
@@ -87,11 +87,9 @@ export default class AAChoose extends BaseElement {
     }
 
     evaluate(element) {
-
         let test = element.getAttribute('test');
         if ((test == null) || (test == '')) return null;
         return this.evaluateTestExpression(test);
-
     }
 
     evaluateTestExpression(test) {
@@ -107,13 +105,10 @@ export default class AAChoose extends BaseElement {
                 // there are still strings in the expression, which are unknown, an exception should be raised
                 throw "unknown identifiers in expression : " + expr;
             }
-
         } catch (e) {
             console.error("parse error:", e);
         }
-
     }
-
 
     replaceExpressionIdentifiersWithValues(expression) {
         let session = this._getParentSession();

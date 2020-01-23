@@ -38,14 +38,14 @@
             <xmp class="sourceCode">
                 <aa-session>
                     <template>
-                        <aa-sequence class="democontainer">
+                        <aa-sequence class="democontainer" type="elements">
                             <aa-function-random min="1" max="2" name="rnd"></aa-function-random>
                             <aa-choose>
                                 <aa-when test="rnd==1">
-                                    <div class="c64char">m​</div>
+                                    m​
                                 </aa-when>
                                 <aa-otherwise>
-                                    <div class="c64char">n​</div>
+                                    n​
                                 </aa-otherwise>
                             </aa-choose>
                             <aa-jump goto="rnd"></aa-jump>
@@ -75,17 +75,17 @@
     </button>
 
     <h3>result</h3>
-    <div>
+    <div class="c64char">
         <aa-session>
             <template>
                 <aa-sequence class="democontainer" type="elements">
                     <aa-function-random min="1" max="2" name="rnd"></aa-function-random>
                     <aa-choose>
                         <aa-when test="rnd==1">
-                            <div class="c64char">m​</div>
+                            m​
                         </aa-when>
                         <aa-otherwise>
-                            <div class="c64char">n​</div>
+                            n​
                         </aa-otherwise>
                     </aa-choose>
 
@@ -95,7 +95,7 @@
             </template>
         </aa-session>
 
-    </div>
+    </div c>
 
     <div id="result2" class="democontainer" style="margin-top:50px">
     </div>
