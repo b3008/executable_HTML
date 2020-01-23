@@ -1,6 +1,6 @@
-import '../src/aa-session/aa-session.js';
-import '../src/aa-screen/aa-screen.js';
-import '../src/aa-sequence/aa-sequence.js';
+import '../src/customElements/aa-session/aa-session.js';
+import '../src/customElements/aa-screen/aa-screen.js';
+import '../src/customElements/aa-sequence/aa-sequence.js';
 // var expect = chai.expect;
 var assert = chai.assert;
 var container;

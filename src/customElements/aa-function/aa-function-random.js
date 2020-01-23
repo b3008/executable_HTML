@@ -33,11 +33,5 @@ export default class AAFunctionRandom extends BaseElement {
 
 }
 
+BaseElement.registerAAElement('aa-function-random', AAFunctionRandom);
 
-
-if (!customElements.get('aa-function-random')) {
-    
-    window.AANodeNames = window.AANodeNames || [];
-    window.AANodeNames.push('AA-FUNCTION-RANDOM');
-    customElements.define('aa-function-random', AAFunctionRandom);
-}

@@ -30,3 +30,10 @@ Run `npm run test`. It will run the browser tests and also produce a coverate re
 Make sure you have `webpack` and `webpack-cli` installed. Run webpack at the root directory to compile all modules under `./src` into a production-mode single source, stored under `./dist/aaCustomElements.js`
 
 Alternatively, run `npm run build`
+
+
+<!--
+```
+<b>my html</b>
+```
+-->

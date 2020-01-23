@@ -3,7 +3,7 @@ import './aa-when/aa-when.js';
 import './aa-otherwise/aa-otherwise.js';
 
 
-import jsep from './../lib/jsep/jsep.js';
+import jsep from '../../lib/jsep/jsep.js';
 export default class AAChoose extends BaseElement {
 
     static get observedAttributes() {
@@ -19,19 +19,13 @@ export default class AAChoose extends BaseElement {
 
 
     connectedCallback() {
-
-        debugger;
         this._shouldRun = (this.shouldRun === null) || (this.shouldRun === true);
         this.sessionElement = this._getParentSession();
-
-
         if (this._shouldRun) {
             if (typeof this.innerFragment !== 'undefined') {
-                debugger;
                 BaseElement.scanAndReplace(this.innerFragment);
                 let nodes = this._getNodeToInstantiate();
-                if (nodes.length == 0) {
-                    debugger;
+                if (nodes.length === 0) {
                     this._dispatchEndEvent();
                 } else {
                     for (let i = 0; i < nodes.length; i++) {
@@ -39,16 +33,12 @@ export default class AAChoose extends BaseElement {
                         if (typeof node !== 'undefined') {
                             this.appendChild(node);
                         }
-
                     }
-                    debugger;
                     this._dispatchEndEvent();
                 }
             }
             else {
-                // this._restoreHeldNodes(this);
-                if (this.childNodes.length == 0) {
-                    debugger;
+                if (this.childNodes.length === 0) {
                     this._dispatchEndEvent();
                 }
             }
@@ -56,37 +46,26 @@ export default class AAChoose extends BaseElement {
     }
 
     _getNodeToInstantiate() {
-
-
-
         let nodesToReturn = [];
         let nodeOtherwise = [];
-
-
         let isChildTrue = false;
         for (let i = 0; i < this.innerFragment.children.length; i++) {
-
             let child = this.innerFragment.children[i];
-
-            if (child.nodeName == 'AA-WHEN') {
+            if (child.nodeName === 'AA-WHEN') {
                 isChildTrue = this.evaluate(child);
                 if (isChildTrue) {
-                    nodesToReturn.push(this.copy(child))
-                    // return child;
-                };
-            } else if (child.nodeName == 'AA-OTHERWISE') {
-                    //we reached otherwise, should we stop and attach it?
-                    // /return child;
-                    nodeOtherwise.push(this.copy(child))
+                    nodesToReturn.push(BaseElement.copy(child).innerFragment);
                 }
-        } 
-        if (nodesToReturn.length == 0) {
+            } else if (child.nodeName === 'AA-OTHERWISE') {
+                nodeOtherwise.push(BaseElement.copy(child).innerFragment);
+            }
+        }
+        if (nodesToReturn.length === 0) {
             return nodeOtherwise;
         }
         else {
             return nodesToReturn;
         }
-
     }
 
     run() {
@@ -94,7 +73,6 @@ export default class AAChoose extends BaseElement {
         if (this.myFragmentChildren.length === 0) return;
         if (this.fragmentChildrenCounter >= this.myFragmentChildren.length) return;
         if (!this.currentNode) { this.formerNodes.push(this.currentNode); }
-
         let finalFragmentChild;
         let fragmentChild = this.myFragmentChildren[this.fragmentChildrenCounter];
         if (this.isHolder(fragmentChild)) {
@@ -109,11 +87,9 @@ export default class AAChoose extends BaseElement {
     }
 
     evaluate(element) {
-
         let test = element.getAttribute('test');
         if ((test == null) || (test == '')) return null;
         return this.evaluateTestExpression(test);
-
     }
 
     evaluateTestExpression(test) {
@@ -129,13 +105,10 @@ export default class AAChoose extends BaseElement {
                 // there are still strings in the expression, which are unknown, an exception should be raised
                 throw "unknown identifiers in expression : " + expr;
             }
-
         } catch (e) {
             console.error("parse error:", e);
         }
-
     }
-
 
     replaceExpressionIdentifiersWithValues(expression) {
         let session = this._getParentSession();
@@ -159,10 +132,5 @@ export default class AAChoose extends BaseElement {
     }
 }
 
+BaseElement.registerAAElement('aa-choose', AAChoose);
 
-
-if (!customElements.get('aa-choose')) {
-    window.AANodeNames = window.AANodeNames || [];
-    window.AANodeNames.push('AA-CHOOSE');
-    customElements.define('aa-choose', AAChoose);
-}

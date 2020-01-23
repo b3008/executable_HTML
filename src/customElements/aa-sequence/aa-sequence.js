@@ -1,13 +1,13 @@
-import BaseElement from './../aa-baseElement/baseElement.js'
-import AAJump from "./aa-jump/aa-jump.js";
+import BaseElement from './../aa-baseElement/baseElement.js';
+import './aa-jump/aa-jump.js';
 
 
 
 export default class AASequence extends BaseElement {
 
 
-    static get observedAttributes() {
-        return ['name', 'write-into', 'should-run', 'debug', 'type', "stopped"];
+static get observedAttributes() {
+        return ['name', 'write-into', 'should-run', 'debug', 'type', 'stopped'];
     }
 
     constructor() {
@@ -16,7 +16,7 @@ export default class AASequence extends BaseElement {
         this.root.innerHTML = '<slot></slot>';
     }
     connectedCallback() {
-        this.root.addEventListener("endEvent", this.endEventListener.bind(this));
+        this.root.addEventListener('endEvent', this.endEventListener.bind(this));
         if ((this.shouldRun === null) || (this.shouldRun === true)) {
             this.init()
         };
@@ -81,9 +81,9 @@ export default class AASequence extends BaseElement {
             if (this.stopped) { return; }
             if (this.sIndex >= this.innerFragment.childNodes.length) return null;
 
-            if (typeof name === "string") {
+            if (typeof name === 'string') {
                 for (let i = 0; i < this.innerFragment.childNodes.length; i++) {
-                    if (this.innerFragment.childNodes[i].getAttribute) if (this.innerFragment.childNodes[i].getAttribute("name") == name) {
+                    if (this.innerFragment.childNodes[i].getAttribute) if (this.innerFragment.childNodes[i].getAttribute('name') == name) {
                         this.sIndex = i;
                         break;
                     }
@@ -95,70 +95,37 @@ export default class AASequence extends BaseElement {
             //  and move on to the next, there won't be a connectecCallback Function to execute anyway
             while (fragmentChild.nodeType != Node.ELEMENT_NODE) {
 
-                let fragmentChildCopy = this.copy(fragmentChild);
+                let fragmentChildCopy = BaseElement.copy(fragmentChild);
                 this.target.appendChild(fragmentChildCopy);
                 this.currentNode = fragmentChildCopy;
                 this.sIndex++;
-                if (this.sIndex >= this.innerFragment.childNodes.length) {
-                    return;
-                }
+                if (this.sIndex >= this.innerFragment.childNodes.length) { return; }
                 fragmentChild = this.innerFragment.childNodes[this.sIndex];
             }
-
-            let fragmentChildCopy = this.copy(fragmentChild);
+            let fragmentChildCopy = BaseElement.copy(fragmentChild);
             this.currentNode = fragmentChildCopy;
-            
             this.sIndex += 1;
-
             if (!fragmentChildCopy._dispatchEndEvent) {
-                    resolve(this.next());
+                resolve(this.next());
             } else {
                 this.target.appendChild(fragmentChildCopy);
-
-                setTimeout(()=>{
-
-                   resolve();
-                    
-                },0);
+                setTimeout(() => resolve());
             }
-
-            if (!this.prevPerformance) {
-                this.prevPerformance = performance.now();
-
-            } else {
-                this.time = performance.now() - this.prevPerformance;
-                this.prevPerformance = performance.now();
-            }
-
         })
     }
 
     endEventListener(e) {
         e.stopPropagation();
-        let goto = null
         if (e.detail) {
-            if (e.detail.goto) {
-            
-                this.next(e.detail.goto)
-
-            } 
-            else if(e.detail.autoDispatch){
-                this.next(true);
-            }
+            if (e.detail.goto) { this.next(e.detail.goto); }
+            else if (e.detail.autoDispatch) { this.next(true); } 
+            else { setTimeout(() => this.next(true));}
         } else {
-
-            setTimeout(()=>{
-                this.next(true);
-            })
+            setTimeout(() => this.next(true))
         }
     }
-
 }
 
+BaseElement.registerAAElement('aa-sequence', AASequence);
 
-if (!customElements.get('aa-sequence')) {
-    if (typeof window.AANodeNames === 'undefined') { window.AANodeNames = []; }
-    window.AANodeNames.push('AA-SEQUENCE');
-    customElements.define('aa-sequence', AASequence);
-}
 

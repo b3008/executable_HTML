@@ -1,5 +1,5 @@
-import '../src/aa-session/aa-session.js';
-import '../src/aa-variable/aa-variable.js';
+import '../src/customElements/aa-session/aa-session.js';
+import '../src/customElements/aa-variable/aa-variable.js';
 // var expect = chai.expect;
 var assert = chai.assert;
 var container;
