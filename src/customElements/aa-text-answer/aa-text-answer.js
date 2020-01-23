@@ -48,10 +48,11 @@ export default class AATextAnswer extends BaseElement {
         return this.inputItem.value;
     }
     set value(val) {
-        if (!this.inputItem) {
-            this.setAttribute("value", val)
+        this.setAttribute("value", val)
+        if (this.inputItem) {
+            this.inputItem.value = val;
         }
-        this.inputItem.value = val;
+
     }
 
     get label() {
@@ -59,10 +60,11 @@ export default class AATextAnswer extends BaseElement {
     }
 
     set label(val) {
-        if (!this.inputItem) {
-            this.setAttribute("label", val)
+        this.setAttribute("label", val)
+        if (this.inputItem) {
+            this.inputItem.label = val;
         }
-        this.inputItem.label = val;
+
     }
 
     set long(val) {
@@ -100,25 +102,28 @@ export default class AATextAnswer extends BaseElement {
 
     fixBugInPaperTextarea(inputItem) {
         // solves issue documented here: https://github.com/PolymerElements/paper-input/issues/125
-        if (inputItem.tagName === "PAPER-TEXTAREA") {
-            inputItem.root.childNodes[2].children[1].textarea.style.overflow = "hidden";
-            let width = window.getComputedStyle(this.root.querySelector(".inputContainer")).width;
-            
-            inputItem.root.childNodes[2].style.width = width;
-            inputItem.addEventListener("focus", (e)=>{
-                let width = window.getComputedStyle(this.root.querySelector(".inputContainer")).width;
-                inputItem.root.childNodes[2].style.width = width;
-            })
 
-            window.addEventListener('resize', ()=>{
-                inputItem.root.childNodes[2].style.width = ""
-                setTimeout(()=>{
-                    let width = window.getComputedStyle(this.root.querySelector(".inputContainer")).width;
+        setTimeout(() => {
+            if (inputItem.tagName === "PAPER-TEXTAREA") {
+                inputItem.root.childNodes[2].children[1].textarea.style.overflow = "hidden";
+                let width = window.getComputedStyle(this.root.querySelector(".inputContainer")).width;
+
                 inputItem.root.childNodes[2].style.width = width;
-                },100);
-                
-            })
-        }
+                inputItem.addEventListener("focus", (e) => {
+                    let width = window.getComputedStyle(this.root.querySelector(".inputContainer")).width;
+                    inputItem.root.childNodes[2].style.width = width;
+                })
+
+                window.addEventListener('resize', () => {
+                    inputItem.root.childNodes[2].style.width = ""
+                    setTimeout(() => {
+                        let width = window.getComputedStyle(this.root.querySelector(".inputContainer")).width;
+                        inputItem.root.childNodes[2].style.width = width;
+                    }, 100);
+
+                })
+            }
+        }, 0);
         
     }
 

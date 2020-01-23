@@ -82,10 +82,11 @@ describe('aa-choose', () => {
             let c1 = document.querySelector("#condition1");
             let r1 = document.querySelector("#result1");
             let c2 = document.querySelector("#condition2");
-            assert(c1!==null, "#condition1 should be on page");
+            let r2 = document.querySelector("#result2");
+            assert(c1==null, "#condition1 not should be on page");
             assert(r1!==null, "#result1 should be on page");
             assert(c2==null, "#condition2 should not be on page");
-         
+            assert(r2==null, "#result2 should not be on page");
 
             done();
 

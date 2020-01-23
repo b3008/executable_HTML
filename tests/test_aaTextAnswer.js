@@ -52,7 +52,7 @@ describe('aa-text-answer', () => {
             container.innerHTML = '<aa-text-answer value="v1"></aa-text-answer>';
             let textAnswer = document.querySelector('aa-text-answer');
             textAnswer.label= "label1";
-            assert(textAnswer.label === "label1", `label of elementg is set`);
+            assert(textAnswer.label === "label1", `label of elementgis set`);
             assert(textAnswer.inputItem.label === "label1", `label of element is passed into its inputItem`);
             done();
         });
@@ -61,22 +61,17 @@ describe('aa-text-answer', () => {
           
             container.innerHTML = '<aa-text-answer label="tata" value="val"></aa-text-answer>';
             let textAnswer = document.querySelector('aa-text-answer');
-            console.log(textAnswer);
-            
+
             textAnswer.long = true;
             assert(textAnswer.inputItem.tagName==="PAPER-TEXTAREA", "input should be a textfield");
-            console.log(textAnswer);
 
             textAnswer.long = false;
-
-            console.log(textAnswer);
             assert(textAnswer.inputItem.tagName==="PAPER-INPUT", "input should be simple input");
 
             assert(textAnswer.inputItem.value==="val", "inputItem retains value");
             assert(textAnswer.inputItem.label==="tata", "inputItem retains label");
             assert(textAnswer.value==="val", "element retains value");
             assert(textAnswer.label==="tata", "element retains label");
-            // assert(baseElement.toHyphenated(camelString) == hyphenated, `conversion to hyphenated is not coorect: ${baseElement.toHyphenated(camelString)}`);
             done();
         });
     })
