@@ -18,6 +18,8 @@
     "karma-coverage": "^2.0.1"
   },
   "devDependencies": {
+    "@adobe/es-modules-middleware": "^1.1.0",
+    "@open-wc/karma-esm": "^2.12.6",
     "chai": "^4.2.0",
     "karma": "^4.4.1",
     "karma-chai": "^0.1.0",
