@@ -1,4 +1,4 @@
-import '../dist/paper-polymer.js';
+// import '../dist/paper-polymer.js';
 import  './customElements/aa-baseElement/baseElement.js';
 import  './customElements/aa-variable/aa-variable.js';
 import  './customElements/aa-function/aa-function-random.js';
