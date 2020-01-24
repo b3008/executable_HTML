@@ -95,7 +95,7 @@ export default class AATextAnswer extends BaseElement {
 
         this.inputItem.addEventListener('change', (e) => {
             this.value = e.target.value;
-        })
+        });
     }
 
 

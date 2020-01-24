@@ -2,7 +2,7 @@ const path = require('path');
 var webpack = require("webpack");
 
 
-var childProcess = require('child_process')
+var childProcess = require('child_process');
 var buildBranch = childProcess.execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
 
 let build = require("./dist/build.json");

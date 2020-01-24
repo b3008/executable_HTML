@@ -62,7 +62,8 @@ static get observedAttributes() {
     }
 
     start() {
-        if (this.stopped) { return; }
+        debugger;
+        // if (this.stopped) { return; }
         this.stopped = false;
         this.next();
     }
