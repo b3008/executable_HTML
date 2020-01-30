@@ -5,7 +5,8 @@ export default class AAVariable extends BaseElement {
     static get observedAttributes() {
         return [
             'name',
-            'value'
+            'value',
+            'debug'
         ];
     }
     constructor() {
@@ -17,7 +18,7 @@ export default class AAVariable extends BaseElement {
         let session = this._getParentSession();
         session.setData(this.name, this.value);
         this._dispatchEndEvent({autoDispatch:true});
-        this.remove();
+        if(!this.debug) this.remove();
     };
 
 
