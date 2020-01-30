@@ -61,7 +61,7 @@ export default class AASession extends BaseElement {
     }
 
     connectedCallback() {
-        console.log(this.tagName+"#"+this.id,"connected");
+        // console.log(this.tagName+"#"+this.id,"connected");
 
         this.sessionID = this.myIdGenerator();
         this.sessionTime = new Date().getTime();

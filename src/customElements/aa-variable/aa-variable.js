@@ -18,7 +18,7 @@ export default class AAVariable extends BaseElement {
         let session = this._getParentSession();
         session.setData(this.name, this.value);
         this._dispatchEndEvent({autoDispatch:true});
-        if(!this.debug) this.remove();
+        if(!this.debug) {this.remove();}
     };
 
 

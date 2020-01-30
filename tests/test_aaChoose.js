@@ -58,7 +58,7 @@ describe('aa-choose', () => {
                 
                 <template>
                     here it's ok too
-                    <aa-choose id="aaChoose" name='choose'>
+                    <aa-choose id='aaChoose' name='choose'>
 
                     here it's ok also
                         <aa-when id='condition1' test='1==1'>
@@ -83,7 +83,7 @@ describe('aa-choose', () => {
             let r1 = document.querySelector('#result1');
             let c2 = document.querySelector('#condition2');
             let r2 = document.querySelector('#result2');
-            let choose = document.querySelector("#aaChoose");
+            let choose = document.querySelector('#aaChoose');
 
             assert(c1===null, '#condition1  should not be on page');
             assert(r1!==null, '#result1 should be on page');
@@ -110,7 +110,7 @@ describe('aa-choose', () => {
             </aa-session>
             `
             container.appendChild(div);
-            let session = document.querySelector("#session");
+            let session = document.querySelector('#session');
             let choose = document.createElement('aa-choose');
 
             let exp = choose.replaceExpressionIdentifiersWithValues('(myVar==1)||(yourVar==2)', session);
