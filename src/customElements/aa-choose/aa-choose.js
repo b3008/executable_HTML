@@ -45,6 +45,7 @@ export default class AAChoose extends BaseElement {
             }
         }
         this.remove();
+        debugger;
     }
 
     _getNodeToInstantiate() {

@@ -14,6 +14,7 @@ export default class AAFunctionRandom extends BaseElement {
         this.value = this.getValue();
         session.setData(this.name, this.value);
         this._dispatchEndEvent({autoDispatch:true});
+        this.remove();
     }
 
     getValue()

@@ -7,7 +7,8 @@ export default class AAJump extends BaseElement {
     }
 
     connectedCallback() {
-        this._dispatchEndEvent({ goto: this.goto, autoDispatch: true })
+        this._dispatchEndEvent({ goto: this.goto, autoDispatch: true });
+        this.remove();
     }
 }
 
