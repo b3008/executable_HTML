@@ -13,7 +13,7 @@ export default class AAChoose extends BaseElement {
     constructor() {
         super();
         this.root = this.attachShadow({ mode: 'open' });
-        this.root.innerHTML = '<slot></slot>'
+        this.root.innerHTML = '<slot></slot>';
         this.originalContent = this.innerHTML;
     }
 
@@ -83,7 +83,7 @@ export default class AAChoose extends BaseElement {
         // after replacing known variable names with their values in the string, test to see if the expression can be parsed
         try {
             var parseTree = jsep(expr);
-            if ((parseTree.left.type == 'Literal') && (parseTree.right.type == 'Literal')) {
+            if ((parseTree.left.type === 'Literal') && (parseTree.right.type === 'Literal')) {
                 return eval(expr);
             }
             else {
@@ -105,9 +105,9 @@ export default class AAChoose extends BaseElement {
             let value = session.getData(originalIdentifiers[i]);
             let finalValue = parseInt(value);
             if (finalValue != value) {
-                if (value === 'null') { finalValue = `null`; }
+                if (value === 'null') { finalValue = 'null'; }
                 else if (value === 'true') { finalValue = 'true'; }
-                else if (value === 'false') { finalValue = 'false' }
+                else if (value === 'false') { finalValue = 'false'; }
                 else finalValue = `"${value}"`
             }
             let r = new RegExp(upperCaseIdentifiers[i], 'g');
