@@ -17,7 +17,8 @@ export default class AAScreen extends BaseElement {
     attributeChangedCallback(name, oldValue, newValue) {
         switch(name){
             case 'submit-button-text':
-                this.submitButton.innerHTML = newValue;
+                if(this.submitButton)
+                    {this.submitButton.innerHTML = newValue;}
                 break;
             case 'submit-button-hidden':
                 if((newValue!==true)||(newValue!=='true')){

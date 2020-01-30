@@ -58,7 +58,7 @@ describe('aa-choose', () => {
                 
                 <template>
                     here it's ok too
-                    <aa-choose name='choose'>
+                    <aa-choose id="aaChoose" name='choose'>
 
                     here it's ok also
                         <aa-when id='condition1' test='1==1'>
@@ -83,10 +83,13 @@ describe('aa-choose', () => {
             let r1 = document.querySelector('#result1');
             let c2 = document.querySelector('#condition2');
             let r2 = document.querySelector('#result2');
+            let choose = document.querySelector("#aaChoose");
+
             assert(c1===null, '#condition1  should not be on page');
             assert(r1!==null, '#result1 should be on page');
             assert(c2===null, '#condition2 should not be on page');
             assert(r2===null, '#result2 should not be on page');
+            assert(choose===null, '#aaChoose should not be on page');
 
             done();
 
@@ -107,9 +110,10 @@ describe('aa-choose', () => {
             </aa-session>
             `
             container.appendChild(div);
-            
-            let choose = document.querySelector('#choose');
-            let exp = choose.replaceExpressionIdentifiersWithValues('(myVar==1)||(yourVar==2)');
+            let session = document.querySelector("#session");
+            let choose = document.createElement('aa-choose');
+
+            let exp = choose.replaceExpressionIdentifiersWithValues('(myVar==1)||(yourVar==2)', session);
             assert( exp=='(1==1)||(2==2)', 'variable names should be replaced by their values: ' + exp);
             done();
         })

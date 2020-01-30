@@ -40,9 +40,9 @@ describe('aa-session', () => {
 
                         <div>
                             <p>
-                                <aa-sequence>
-                                    <aa-screen>screen1</aa-screen>
-                                    <aa-screen>screen2</aa-screen>
+                                <aa-sequence id="sequence1">
+                                    <aa-screen id="screen3">screen3</aa-screen>
+                                    <aa-screen id="screen4">screen4</aa-screen>
                                 </aa-sequence>
                             <p>
                         </div>

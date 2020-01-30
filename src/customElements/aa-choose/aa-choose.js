@@ -31,7 +31,8 @@ export default class AAChoose extends BaseElement {
                     for (let i = 0; i < nodes.length; i++) {
                         let node = nodes[i];
                         if (typeof node !== 'undefined') {
-                            this.appendChild(node);
+                            // this.appendChild(node);
+                            this.parentNode.insertBefore(node, this.nextSibling);
                         }
                     }
                     this._dispatchEndEvent();
@@ -43,6 +44,7 @@ export default class AAChoose extends BaseElement {
                 }
             }
         }
+        this.remove();
     }
 
     _getNodeToInstantiate() {
@@ -68,23 +70,6 @@ export default class AAChoose extends BaseElement {
         }
     }
 
-    run() {
-        this.started = true;
-        if (this.myFragmentChildren.length === 0) return;
-        if (this.fragmentChildrenCounter >= this.myFragmentChildren.length) return;
-        if (!this.currentNode) { this.formerNodes.push(this.currentNode); }
-        let finalFragmentChild;
-        let fragmentChild = this.myFragmentChildren[this.fragmentChildrenCounter];
-        if (this.isHolder(fragmentChild)) {
-            finalFragmentChild = this.replaceHolderWithElement(fragmentChild);
-        }
-        else {
-            finalFragmentChild = fragmentChild;
-        }
-        this.appendChild(finalFragmentChild);
-        this._restoreHeldNodes(finalFragmentChild);
-        this.fragmentChildrenCounter += 1;
-    }
 
     evaluate(element) {
         let test = element.getAttribute('test');
@@ -110,8 +95,8 @@ export default class AAChoose extends BaseElement {
         }
     }
 
-    replaceExpressionIdentifiersWithValues(expression) {
-        let session = this._getParentSession();
+    replaceExpressionIdentifiersWithValues(expression, sessionElement) {
+        let session = sessionElement || this._getParentSession();
         let result = expression.toUpperCase();
 
         let originalIdentifiers = Object.keys(session.getDataDump());
