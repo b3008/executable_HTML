@@ -6,21 +6,21 @@ var assert = chai.assert;
 var container;
 
 describe('aa-session', () => {
-    before(function(){
+    before(function () {
         container = document.querySelector('#container');
-        if(!container){
+        if (!container) {
             container = document.createElement('div');
             container.id = "container";
             document.body.appendChild(container);
         }
     });
 
-    beforeEach(function() {
+    beforeEach(function () {
         container = document.querySelector('#container');
         container.innerHTML = "";
     });
 
-    describe('instance',  () => {
+    describe('instance', () => {
         it('should find session', (done) => {
 
             container.innerHTML = html`
@@ -53,18 +53,18 @@ describe('aa-session', () => {
             let session = document.querySelector('#session');
             let screen = document.querySelector("#screen1");
 
-            assert(session.tagName=="AA-SESSION", "AA-SESSION")
-            assert(session.name=="test", "name should equal test");
-            assert(session.debug===true, "true")
-            assert(screen!==null, "screen should be an object")
+            assert(session.tagName == "AA-SESSION", "AA-SESSION")
+            assert(session.name == "test", "name should equal test");
+            assert(session.debug === true, "true")
+            assert(screen !== null, "screen should be an object")
 
-            done();            
+            done();
 
         });
 
         it('session should not render contents when should-run is false', function (done) {
 
-            
+
             container.innerHTML = html`
             second session:
             <aa-session debug=true name="test" id="session" should-run=false> 
@@ -77,15 +77,15 @@ describe('aa-session', () => {
 
             let session = document.querySelector('#session');
             let screen = document.querySelector("#screen3");
-            assert(session.shouldRun==false, "shouldRun is false")
-            assert(session.name=="test", "session.name should be test")
+            assert(session.shouldRun == false, "shouldRun is false")
+            assert(session.name == "test", "session.name should be test")
             assert(session.debug, "session.debug should be true");
-            assert(screen===null, "screen should be null")
-            done();            
+            assert(screen === null, "screen should be null")
+            done();
 
         });
 
-        it('session should contain shallow copies of aa-elements the innerHTML nodes of which are childNodes of an innerFragment property', (done)=>{
+        it('session should contain shallow copies of aa-elements the innerHTML nodes of which are childNodes of an innerFragment property', (done) => {
             container.innerHTML = html`
             first session:
             <aa-session debug="true" name="test" id="session"> 
@@ -117,10 +117,10 @@ describe('aa-session', () => {
             done();
         })
 
-        
 
 
-        
+
+
     })
 })
 
