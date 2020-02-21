@@ -17,6 +17,10 @@ export default class AAChoiceItem extends BaseElement {
         ];
     }
 
+    static get acceptsElements(){
+        return null;
+    }
+
     constructor() {
         super();
 
