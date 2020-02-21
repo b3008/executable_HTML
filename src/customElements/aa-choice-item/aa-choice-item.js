@@ -1,6 +1,15 @@
-import BaseElement from '../../aa-baseElement/baseElement.js';
+import BaseElement from '../aa-baseElement/baseElement.js';
 export default class AAChoiceItem extends BaseElement {
 
+
+    static get properties(){
+        return{
+            value:{
+                type:String,
+                userDefined:true
+            }           
+        }
+    }
     static get observedAttributes() {
         return [
             'name',
