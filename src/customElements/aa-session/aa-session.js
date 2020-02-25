@@ -120,7 +120,6 @@ export default class AASession extends BaseElement {
         let myTemplateClone = this.myTemplate.cloneNode(true);
         BaseElement.scanAndReplace(myTemplateClone);   
         this.attachTemplateChildNodesToMyself(myTemplateClone);
-
     }
 
     getData(name){
