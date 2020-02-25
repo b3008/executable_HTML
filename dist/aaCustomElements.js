@@ -1671,7 +1671,6 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
         let myTemplateClone = this.myTemplate.cloneNode(true);
         _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].scanAndReplace(myTemplateClone);   
         this.attachTemplateChildNodesToMyself(myTemplateClone);
-
     }
 
     getData(name){
