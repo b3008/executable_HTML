@@ -3,14 +3,31 @@ import BaseElement from './../aa-baseElement/baseElement.js';
 
 export default class AAScreen extends BaseElement {
 
+    static get properties(){
+        return {
+            name:{
+                type:String,
+                userDefined:true
+            },
+            "submit-button-text":{
+                type:String,
+                value:"submit",
+                userDefined:true
+            },
 
+            "submit-button-hidden":{
+                type:Boolean,
+                value:false,
+                userDefined:true
+            }
+        }
+    }
 
+    static get acceptsElements(){
+        return null;
+    }
     static get observedAttributes() {
-        return [
-            'submit-button-text',
-            'submit-button-hidden',
-            'name'
-        ];
+        return Object.keys(AAScreen.properties);
     }
 
 

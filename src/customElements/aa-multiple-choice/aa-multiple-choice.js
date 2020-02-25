@@ -1,14 +1,46 @@
 import BaseElement from '../aa-baseElement/baseElement.js';
-import './aa-choice-item/aa-choice-item.js';
+import '../aa-choice-item/aa-choice-item.js';
+
 export default class AAMultipleChoice extends BaseElement {
 
-    static get observedAttributes() {
+
+
+    static get properties(){
+        return {
+            horizontal:{
+                type:Boolean,
+                value:false,
+                userDefined:true
+            },
+
+            vertical:{
+                type:Boolean,
+                value:true,
+                userDefined:true
+            },
+            
+            name:{
+                type:String,
+                userDefined:true
+            },
+
+            value:{
+                type:String,
+                userDefined:false
+            },
+
+           
+        }
+    }
+
+    static get acceptsElements(){
         return [
-            'horizontal',
-            'vertical',
-            'name',
-            'value',
-        ];
+            "aa-choice-item"
+        ]
+    }
+
+    static get observedAttributes() {
+        return Object.keys(AAMultipleChoice.properties);
     }
 
 

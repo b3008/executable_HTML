@@ -2,10 +2,51 @@ import BaseElement from '../aa-baseElement/baseElement.js';
 
 export default class AAFunctionRandom extends BaseElement {
 
-    static get observedAttributes() {
-        return ['name', 'debug', 'value', 'min', 'max'];
+
+    static get properties(){
+        return {
+            name:{
+                type:String,
+                userDefined:true
+            },
+           
+            "debug":{
+                type:Boolean,
+                value:false,
+                userDefined:false
+            },
+
+            "value":{
+                type:Number,
+                userDefined:false,
+            },
+
+            "min":{
+                type:Number,
+                userDefined:true,
+            },
+            
+            "max":{
+                type:Number,
+                userDefined:true,
+            },
+            
+
+        }
     }
-    constructor() {
+
+    static get acceptsElements(){
+        return null
+    }
+
+    static get observedAttributes() {
+        return Object.keys(AAFunctionRandom.properties);
+    }
+
+
+
+    constructor(){
+
         super();
     }
 

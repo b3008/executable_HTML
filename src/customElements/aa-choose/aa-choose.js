@@ -6,8 +6,34 @@ import './aa-otherwise/aa-otherwise.js';
 import jsep from '../../lib/jsep/jsep.js';
 export default class AAChoose extends BaseElement {
 
+
+    static get properties(){
+        return {
+            name:{
+                type:String,
+                userDefined:true
+            },
+            "should-run":{
+                type:Boolean,
+                value:true,
+                userDefined:false
+            },
+            "debug":{
+                type:Boolean,
+                value:false,
+                userDefined:false
+            }
+        }
+    }
+
+    static get acceptsElements(){
+        return[
+            "aa-when", "aa-otherwise"
+        ]
+    }
+
     static get observedAttributes() {
-        return ['name', 'should-run', 'debug'];
+        return Object.keys(AAChoose.properties);
     }
 
     constructor() {
