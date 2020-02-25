@@ -145,6 +145,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _polymer_polymer_polymer_legacy_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @polymer/polymer/polymer-legacy.js */ "./node_modules/@polymer/polymer/polymer-legacy.js");
 /* harmony import */ var _polymer_polymer_lib_legacy_polymer_fn_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @polymer/polymer/lib/legacy/polymer-fn.js */ "./node_modules/@polymer/polymer/lib/legacy/polymer-fn.js");
 /* harmony import */ var _polymer_polymer_lib_utils_html_tag_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @polymer/polymer/lib/utils/html-tag.js */ "./node_modules/@polymer/polymer/lib/utils/html-tag.js");
+
 /**
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
@@ -193,6 +194,7 @@ Note: announcements are only audible if you have a screen reader enabled.
 @group Iron Elements
 @demo demo/index.html
 */
+
 const IronA11yAnnouncer = Object(_polymer_polymer_lib_legacy_polymer_fn_js__WEBPACK_IMPORTED_MODULE_1__["Polymer"])({
   _template: _polymer_polymer_lib_utils_html_tag_js__WEBPACK_IMPORTED_MODULE_2__["html"]`
     <style>
@@ -271,6 +273,7 @@ IronA11yAnnouncer.requestAvailability = function() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IronA11yKeysBehavior", function() { return IronA11yKeysBehavior; });
 /* harmony import */ var _polymer_polymer_polymer_legacy_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @polymer/polymer/polymer-legacy.js */ "./node_modules/@polymer/polymer/polymer-legacy.js");
+
 /**
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
@@ -337,6 +340,7 @@ var MODIFIER_KEYS = {
 };
 
 /**
+
  * KeyboardEvent.key is mostly represented by printable character made by
  * the keyboard, with unprintable keys labeled nicely.
  *
@@ -344,6 +348,7 @@ var MODIFIER_KEYS = {
  * Apple-specific mapping. In this case, we fall back to .keyCode.
  */
 var KEY_CHAR = /[a-z0-9*]/;
+
 
 /**
  * Matches a keyIdentifier string.
@@ -437,6 +442,7 @@ function transformKeyCode(keyCode) {
 }
 
 /**
+
  * Calculates the normalized key for a KeyboardEvent.
  * @param {KeyboardEvent} keyEvent
  * @param {Boolean} [noSpecialChars] Set to true to limit keyEvent.key
@@ -497,6 +503,7 @@ function parseEventString(eventString) {
     return parseKeyComboString(keyComboString);
   });
 }
+
 
 /**
  * `Polymer.IronA11yKeysBehavior` provides a normalized interface for processing
@@ -785,7 +792,6 @@ found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as
 part of the polymer project is also subject to an additional IP rights grant
 found at http://polymer.github.io/PATENTS.txt
 */
-
 
 
 
@@ -19305,6 +19311,7 @@ function hasPlaceholderBug() {
 }
 
 /**
+
  * Some browsers have a bug with textarea, where placeholder text is copied as
  * a textnode child of the textarea.
  *
@@ -19846,6 +19853,7 @@ const TemplateStamp = Object(_utils_mixin_js__WEBPACK_IMPORTED_MODULE_1__["dedup
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "calculateSplices", function() { return calculateSplices; });
 /* harmony import */ var _boot_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./boot.js */ "./node_modules/@polymer/polymer/lib/utils/boot.js");
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -19854,6 +19862,7 @@ The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
 The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+
 */
 
 
@@ -20163,6 +20172,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "idlePeriod", function() { return idlePeriod; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "microTask", function() { return microTask; });
 /* harmony import */ var _boot_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./boot.js */ "./node_modules/@polymer/polymer/lib/utils/boot.js");
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -20172,6 +20182,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
+
 
 /**
  * @fileoverview
@@ -20383,6 +20394,7 @@ const microTask = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -20395,6 +20407,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 /* eslint-disable no-unused-vars */
 /**
+
  * When using Closure Compiler, JSCompiler_renameProperty(property, object) is replaced by the munged name for object[property]
  * We cannot alias this function, so we have to use a small shim that has the same behavior when not compiling.
  *
@@ -20424,6 +20437,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dashToCamelCase", function() { return dashToCamelCase; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "camelToDashCase", function() { return camelToDashCase; });
 /* harmony import */ var _boot_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./boot.js */ "./node_modules/@polymer/polymer/lib/utils/boot.js");
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -20435,9 +20449,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 */
 
 
+
 const caseMap = {};
 const DASH_TO_CAMEL = /-[a-z]/g;
 const CAMEL_TO_DASH = /([A-Z])/g;
+
 
 /**
  * @fileoverview Module with utilities for converting between "dash-case" and
@@ -20445,6 +20461,7 @@ const CAMEL_TO_DASH = /([A-Z])/g;
  */
 
 /**
+
  * Converts "dash-case" identifier (e.g. `foo-bar-baz`) to "camelCase"
  * (e.g. `fooBarBaz`).
  *
@@ -20490,6 +20507,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _boot_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./boot.js */ "./node_modules/@polymer/polymer/lib/utils/boot.js");
 /* harmony import */ var _mixin_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mixin.js */ "./node_modules/@polymer/polymer/lib/utils/mixin.js");
 /* harmony import */ var _async_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./async.js */ "./node_modules/@polymer/polymer/lib/utils/async.js");
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -20499,6 +20517,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
+
 
 
 
@@ -20672,6 +20691,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _array_splice_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./array-splice.js */ "./node_modules/@polymer/polymer/lib/utils/array-splice.js");
 /* harmony import */ var _async_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./async.js */ "./node_modules/@polymer/polymer/lib/utils/async.js");
 /* harmony import */ var _wrap_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./wrap.js */ "./node_modules/@polymer/polymer/lib/utils/wrap.js");
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -20681,6 +20701,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
+
 
 
 
@@ -21003,6 +21024,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_debounce_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/debounce.js */ "./node_modules/@polymer/polymer/lib/utils/debounce.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "enqueueDebouncer", function() { return _utils_debounce_js__WEBPACK_IMPORTED_MODULE_1__["enqueueDebouncer"]; });
 
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -21012,6 +21034,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
+
 
 
 
@@ -21063,6 +21086,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _debounce_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./debounce.js */ "./node_modules/@polymer/polymer/lib/utils/debounce.js");
 /* harmony import */ var _settings_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./settings.js */ "./node_modules/@polymer/polymer/lib/utils/settings.js");
 /* harmony import */ var _wrap_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./wrap.js */ "./node_modules/@polymer/polymer/lib/utils/wrap.js");
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -21072,6 +21096,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
+
 
 /**
  * @fileoverview
@@ -22405,6 +22430,7 @@ const dedupingMixin = function(mixin) {
     if (baseSet && baseSet[mixinDedupeId]) {
       return base;
     }
+
     let map = mixinApplications;
     let extended = map.get(base);
     if (!extended) {
@@ -22448,6 +22474,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "set", function() { return set; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isDeep", function() { return isDeep; });
 /* harmony import */ var _boot_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./boot.js */ "./node_modules/@polymer/polymer/lib/utils/boot.js");
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -22457,6 +22484,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
+
 
 
 /**
@@ -22646,6 +22674,7 @@ function get(root, path, info) {
     if (!prop) {
       return;
     }
+
     let part = parts[i];
     prop = prop[part];
   }
@@ -22675,6 +22704,7 @@ function set(root, path, value) {
       prop = prop[part];
       if (!prop) {
         return;
+
       }
     }
     // Set value to object at end of path
@@ -22685,6 +22715,7 @@ function set(root, path, value) {
   }
   return parts.join('.');
 }
+
 
 /**
  * Returns true if the given string is a structured data path (has dots).
@@ -22855,6 +22886,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resolveCss", function() { return resolveCss; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pathFromUrl", function() { return pathFromUrl; });
 /* harmony import */ var _boot_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./boot.js */ "./node_modules/@polymer/polymer/lib/utils/boot.js");
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -22864,6 +22896,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
+
 
 
 let CSS_URL_RX = /(url\()([^)]*)(\))/g;
@@ -22966,6 +22999,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scopeSubtree", function() { return scopeSubtree; });
 /* harmony import */ var _boot_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./boot.js */ "./node_modules/@polymer/polymer/lib/utils/boot.js");
 /* harmony import */ var _wrap_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./wrap.js */ "./node_modules/@polymer/polymer/lib/utils/wrap.js");
+
 /**
 @license
 Copyright (c) 2019 The Polymer Project Authors. All rights reserved.
@@ -23108,6 +23142,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
+
 const useShadow = !(window.ShadyDOM);
 const useNativeCSSProperties = Boolean(!window.ShadyCSS || window.ShadyCSS.nativeCss);
 const useNativeCustomElements = !(window.customElements.polyfillWrapFlushCallback);
@@ -23169,6 +23204,7 @@ const setSanitizeDOMValue = function(newSanitizeDOMValue) {
  * Defaults to `false` for backwards compatibility.
  */
 let passiveTouchGestures = false;
+
 
 /**
  * Sets `passiveTouchGestures` globally for all elements using Polymer Gestures.
@@ -23306,6 +23342,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
+
 
 /**
  * Module with utilities for collection CSS text from `<templates>`, external
@@ -23543,6 +23580,7 @@ function cssFromTemplate(template, baseURI) {
 }
 
 /**
+
  * Returns CSS text from stylesheets loaded via `<link rel="import" type="css">`
  * links within the specified `dom-module`.
  *
@@ -23589,6 +23627,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registrations", function() { return registrations; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "register", function() { return register; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dumpRegistrations", function() { return dumpRegistrations; });
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -23599,6 +23638,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
+
 /**
  * Total number of Polymer element instances created.
  * @type {number}
@@ -23608,6 +23648,7 @@ let instanceCount = 0;
 function incrementInstanceCount() {
   instanceCount++;
 }
+
 
 /**
  * Array of Polymer element classes that have been finalized.
@@ -23669,6 +23710,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
+
 /**
  * Module for preparing and stamping instances of templates that utilize
  * Polymer's data-binding and declarative event listener features.
@@ -23705,6 +23747,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
  * @summary Module for preparing and stamping instances of templates
  *   utilizing Polymer templating features.
  */
+
 
 
 
@@ -24332,9 +24375,11 @@ if (document.readyState === 'interactive' || document.readyState === 'complete')
 /*! exports provided: wrap */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "wrap", function() { return wrap; });
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -24344,6 +24389,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
+
 
 /* eslint-disable valid-jsdoc */
 /**
@@ -24361,7 +24407,9 @@ const wrap = (window['ShadyDOM'] && window['ShadyDOM']['noPatch'] && window['Sha
 
 
 
+
 /***/ }),
+
 
 /***/ "./node_modules/@polymer/polymer/polymer-element.js":
 /*!**********************************************************!*\
@@ -24369,6 +24417,7 @@ const wrap = (window['ShadyDOM'] && window['ShadyDOM']['noPatch'] && window['Sha
   \**********************************************************/
 /*! exports provided: html, version, PolymerElement */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
+
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
@@ -24712,6 +24761,7 @@ window.ShadyCSS.ApplyShim = applyShim;
 
 /***/ }),
 
+
 /***/ "./node_modules/@webcomponents/shadycss/entrypoints/custom-style-interface.js":
 /*!************************************************************************************!*\
   !*** ./node_modules/@webcomponents/shadycss/entrypoints/custom-style-interface.js ***!
@@ -24724,6 +24774,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_custom_style_interface_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../src/custom-style-interface.js */ "./node_modules/@webcomponents/shadycss/src/custom-style-interface.js");
 /* harmony import */ var _src_common_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../src/common-utils.js */ "./node_modules/@webcomponents/shadycss/src/common-utils.js");
 /* harmony import */ var _src_style_settings_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../src/style-settings.js */ "./node_modules/@webcomponents/shadycss/src/style-settings.js");
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -24733,6 +24784,8 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
+
+
 
 
 
@@ -24829,6 +24882,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "elementsAreInvalid", function() { return elementsAreInvalid; });
 /* harmony import */ var _template_map_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./template-map.js */ "./node_modules/@webcomponents/shadycss/src/template-map.js");
 /* harmony import */ var _css_parse_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./css-parse.js */ "./node_modules/@webcomponents/shadycss/src/css-parse.js");
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -24838,6 +24892,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
+
 
 
 
@@ -25552,6 +25607,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
+
 const VAR_ASSIGN = /(?:^|[;\s{]\s*)(--[\w-]*?)\s*:\s*(?:((?:'(?:\\'|.)*?'|"(?:\\"|.)*?"|\([^)]*?\)|[^};{])+)|\{([^}]*)\}(?:(?=[;\s}])|$))/gi;
 const MIXIN_MATCH = /(?:^|\W+)@apply\s*\(?([^);\n]*)\)?/gi;
 const VAR_CONSUMED = /(--[\w-]+)\s*([:,;)]|$)/gi;
@@ -25578,6 +25634,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getComputedStyleValue", function() { return getComputedStyleValue; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "detectMixin", function() { return detectMixin; });
 /* harmony import */ var _common_regex_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./common-regex.js */ "./node_modules/@webcomponents/shadycss/src/common-regex.js");
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -25625,6 +25682,7 @@ function getComputedStyleValue(element, property) {
   }
 }
 
+
 /**
  * return true if `cssText` contains a mixin definition or consumption
  * @param {string} cssText
@@ -25655,6 +25713,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stringify", function() { return stringify; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeCustomPropAssignment", function() { return removeCustomPropAssignment; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "types", function() { return types; });
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -25669,6 +25728,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 Extremely simple css parser. Intended to be not more than what we need
 and definitely not necessarily correct =).
 */
+
 
 
 
@@ -25971,6 +26031,7 @@ In addition, these styles may also need to be processed for @apply rules and CSS
 
 To add document-level styles to ShadyCSS, one can call `ShadyCSS.addDocumentStyle(styleElement)` or `ShadyCSS.addDocumentStyle({getStyle: () => styleElement})`
 
+
 In addition, if the process used to discover document-level styles can be synchronously flushed, one should set `ShadyCSS.documentStyleFlush`.
 This function will be called when calculating styles.
 
@@ -26114,6 +26175,7 @@ const CustomStyleInterfaceInterface = {};
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return documentWait; });
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -26123,6 +26185,8 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
+
+
 
 
 
@@ -26163,6 +26227,7 @@ function documentWait(callback) {
 
 /***/ }),
 
+
 /***/ "./node_modules/@webcomponents/shadycss/src/style-settings.js":
 /*!********************************************************************!*\
   !*** ./node_modules/@webcomponents/shadycss/src/style-settings.js ***!
@@ -26176,6 +26241,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cssBuild", function() { return cssBuild; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "disableRuntime", function() { return disableRuntime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "nativeCssVariables", function() { return nativeCssVariables; });
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -26285,6 +26351,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
+
 /**
  * @param {string|StyleNode} rules
  * @param {function(StyleNode)=} callback
@@ -26299,6 +26366,7 @@ function toCssText (rules, callback) {
   }
   if (callback) {
     forEachRule(rules, callback);
+
   }
   return Object(_css_parse_js__WEBPACK_IMPORTED_MODULE_1__["stringify"])(rules, _style_settings_js__WEBPACK_IMPORTED_MODULE_0__["nativeCssVariables"]);
 }
@@ -26693,8 +26761,10 @@ function removeBuildComment(element) {
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -26704,6 +26774,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
+
 
 
 
@@ -26728,6 +26799,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scopingAttribute", function() { return scopingAttribute; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "processUnscopedStyle", function() { return processUnscopedStyle; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isUnscopedStyle", function() { return isUnscopedStyle; });
+
 /**
 @license
 Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -26746,6 +26818,7 @@ const styleTextSet = new Set();
 const scopingAttribute = 'shady-unscoped';
 
 /**
+
  * Add a specifically-marked style to the document directly, and only one copy of that style.
  *
  * @param {!HTMLStyleElement} style
@@ -26762,6 +26835,7 @@ function processUnscopedStyle(style) {
   }
 }
 
+
 /**
  * Check if a style is supposed to be unscoped
  * @param {!HTMLStyleElement} style
@@ -26770,6 +26844,7 @@ function processUnscopedStyle(style) {
 function isUnscopedStyle(style) {
   return style.hasAttribute(scopingAttribute);
 }
+
 
 /***/ }),
 
@@ -26799,4 +26874,5 @@ __webpack_require__.r(__webpack_exports__);
 
 /******/ });
 });
+
 //# sourceMappingURL=paper-polymer.js.map

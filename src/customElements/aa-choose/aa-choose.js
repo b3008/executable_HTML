@@ -39,7 +39,7 @@ export default class AAChoose extends BaseElement {
     constructor() {
         super();
         this.root = this.attachShadow({ mode: 'open' });
-        this.root.innerHTML = "<slot></slot>"
+        this.root.innerHTML = '<slot></slot>';
         this.originalContent = this.innerHTML;
     }
 
@@ -57,7 +57,8 @@ export default class AAChoose extends BaseElement {
                     for (let i = 0; i < nodes.length; i++) {
                         let node = nodes[i];
                         if (typeof node !== 'undefined') {
-                            this.appendChild(node);
+                            // this.appendChild(node);
+                            this.parentNode.insertBefore(node, this.nextSibling);
                         }
                     }
                     this._dispatchEndEvent();
@@ -69,6 +70,7 @@ export default class AAChoose extends BaseElement {
                 }
             }
         }
+        this.remove();
     }
 
     _getNodeToInstantiate() {
@@ -94,23 +96,6 @@ export default class AAChoose extends BaseElement {
         }
     }
 
-    run() {
-        this.started = true;
-        if (this.myFragmentChildren.length === 0) return;
-        if (this.fragmentChildrenCounter >= this.myFragmentChildren.length) return;
-        if (!this.currentNode) { this.formerNodes.push(this.currentNode); }
-        let finalFragmentChild;
-        let fragmentChild = this.myFragmentChildren[this.fragmentChildrenCounter];
-        if (this.isHolder(fragmentChild)) {
-            finalFragmentChild = this.replaceHolderWithElement(fragmentChild);
-        }
-        else {
-            finalFragmentChild = fragmentChild;
-        }
-        this.appendChild(finalFragmentChild);
-        this._restoreHeldNodes(finalFragmentChild);
-        this.fragmentChildrenCounter += 1;
-    }
 
     evaluate(element) {
         let test = element.getAttribute('test');
@@ -124,20 +109,20 @@ export default class AAChoose extends BaseElement {
         // after replacing known variable names with their values in the string, test to see if the expression can be parsed
         try {
             var parseTree = jsep(expr);
-            if ((parseTree.left.type == "Literal") && (parseTree.right.type == "Literal")) {
+            if ((parseTree.left.type === 'Literal') && (parseTree.right.type === 'Literal')) {
                 return eval(expr);
             }
             else {
                 // there are still strings in the expression, which are unknown, an exception should be raised
-                throw "unknown identifiers in expression : " + expr;
+                throw 'unknown identifiers in expression : ' + expr;
             }
         } catch (e) {
-            console.error("parse error:", e);
+            console.error('parse error:', e);
         }
     }
 
-    replaceExpressionIdentifiersWithValues(expression) {
-        let session = this._getParentSession();
+    replaceExpressionIdentifiersWithValues(expression, sessionElement) {
+        let session = sessionElement || this._getParentSession();
         let result = expression.toUpperCase();
 
         let originalIdentifiers = Object.keys(session.getDataDump());
@@ -146,12 +131,12 @@ export default class AAChoose extends BaseElement {
             let value = session.getData(originalIdentifiers[i]);
             let finalValue = parseInt(value);
             if (finalValue != value) {
-                if (value === "null") { finalValue = `null`; }
-                else if (value === "true") { finalValue = "true"; }
-                else if (value === "false") { finalValue = "false" }
+                if (value === 'null') { finalValue = 'null'; }
+                else if (value === 'true') { finalValue = 'true'; }
+                else if (value === 'false') { finalValue = 'false'; }
                 else finalValue = `"${value}"`
             }
-            let r = new RegExp(upperCaseIdentifiers[i], "g");
+            let r = new RegExp(upperCaseIdentifiers[i], 'g');
             result = result.replace(r, finalValue);
         }
         return result;

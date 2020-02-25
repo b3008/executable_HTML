@@ -27,7 +27,7 @@ describe('aa-variable', () => {
             first session:
             <aa-session debug="true" name="test" id="session"> 
                 <template>
-                    <aa-variable id="v" name="var1" value="val1"></aa-variable>
+                    <aa-variable id="v" name="var1" value="val1" debug="true"></aa-variable>
                 </template>
             </aa-session>`;
 

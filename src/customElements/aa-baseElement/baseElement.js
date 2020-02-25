@@ -59,11 +59,12 @@ export default class BaseElement extends HTMLElement {
 
     constructor() {
         super();
+        // console.log(this.nodeName+"#"+this.id, "created");
         this._props = this.makePropertiesFromAttributes();
     }
 
     connectedCallback() {
-        console.log(this.tagName, this.id, " connected");
+        // console.log(this.id, " connected");
         this._attachedTimestamp = new Date().getTime();
         this._debug = (this.debug === true) || (this.debug === null);
         if (this.innerFragment) {

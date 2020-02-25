@@ -6,8 +6,8 @@ module.exports = function (config) {
         files: [
 
             
-            { pattern: './tests/**/*.js', type: "module" },
-            // { pattern: './src/**/*.js', type: "module" },
+            { pattern: './tests/**/*.js', type: 'module' },
+            // { pattern: './src/**/*.js', type: 'module' },
         ],
         reporters: ['progress', 'coverage'],
         port: 9876,  // karma web server port
@@ -20,8 +20,8 @@ module.exports = function (config) {
             nodeResolve: true,
             coverage: true,
         },
-        "module": "es6",
-        "moduleResolution": "node",
+        'module': 'es6',
+        'moduleResolution': 'node',
         // customLaunchers: {
         //     FirefoxHeadless: {
         //         base: 'Firefox',
@@ -39,13 +39,13 @@ module.exports = function (config) {
 
 
         preprocessors: {
-            './src/**/*.js': ["karma-coverage-istanbul-instrumenter"],
+            './src/**/*.js': ['karma-coverage-istanbul-instrumenter'],
 
         },
         coverageIstanbulInstrumenter: {
             esModules: true,
             reporters: [
-                { type: "text", subdir: '.', file: "text.txt" }
+                { type: 'text', subdir: '.', file: 'text.txt' }
             ],
 
             dir: 'coverage/',
@@ -68,7 +68,7 @@ module.exports = function (config) {
 
 
 
-    })
+    });
 
 
-}
+};

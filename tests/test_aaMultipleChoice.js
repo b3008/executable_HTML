@@ -34,8 +34,6 @@ describe('aa-multiple-choice', () => {
             done();
         });
 
-    })
+    });
 
-    
-    
-})
+});

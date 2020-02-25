@@ -75,23 +75,7 @@
     </button>
 
     <h3>result</h3>
-    <div class="c64char">
-        <aa-session>
-            <template>
-                <aa-sequence class="democontainer" type="elements">
-                    <aa-function-random min="1" max="2" name="rnd"></aa-function-random>
-                    <aa-choose>
-                        <aa-when test="rnd==1">
-                            m​
-                        </aa-when>
-                        <aa-otherwise>
-                            n​
-                        </aa-otherwise>
-                    </aa-choose>
-
-
-                    <aa-jump goto="rnd"></aa-jump>
-                </aa-sequence>
+    <div class="c64char"><aa-session><template><aa-sequence class="democontainer" type="elements"><aa-function-random min="1" max="2" name="rnd"></aa-function-random><aa-choose><aa-when test="rnd==1">m​</aa-when><aa-otherwise>n​</aa-otherwise></aa-choose><aa-jump goto="rnd"></aa-jump>/</aa-sequence>
             </template>
         </aa-session>
 

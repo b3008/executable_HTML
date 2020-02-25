@@ -1,4 +1,4 @@
-import BaseElement from "../src/customElements/aa-baseElement/baseElement.js";
+import BaseElement from '../src/customElements/aa-baseElement/baseElement.js';
 import AAScreen from '../src/customElements/aa-screen/aa-screen.js';
 
 // var expect = chai.expect;
@@ -11,7 +11,7 @@ describe('baseElement', () => {
         container = document.querySelector('#container');
         if (!container) {
             container = document.createElement('div');
-            container.id = "container";
+            container.id = 'container';
             document.body.appendChild(container);
         }
     });
@@ -19,16 +19,16 @@ describe('baseElement', () => {
 
     beforeEach(function () {
 
-        container.innerHTML = "";
+        container.innerHTML = '';
     });
 
     describe('member functions', function () {
         it('converts hyphenated attribute toCamelCase property ', (done) => {
             container.innerHTML = '<aa-base-element id="e1">';
             let baseElement = document.querySelector('#e1');
-            let hyphenated = "this-is-a-hyphenated-sentence";
+            let hyphenated = 'this-is-a-hyphenated-sentence';
 
-            assert(baseElement.toCamelCase(hyphenated) == "thisIsAHyphenatedSentence", `conversion to camelcase is not coorect: ${baseElement.toCamelCase(hyphenated)}`);
+            assert(baseElement.toCamelCase(hyphenated) == 'thisIsAHyphenatedSentence', `conversion to camelcase is not coorect: ${baseElement.toCamelCase(hyphenated)}`);
             done();
         });
 
@@ -66,8 +66,8 @@ describe('baseElement', () => {
             customElements.define('test-element', TestElement);
             container.innerHTML = '<test-element id="e2" name="elem1" my-session="mySession">';
             let testElement = document.querySelector('#e2');
-            assert(testElement.mySession === testElement.getAttribute('my-session'), "object property should equal element attribute, " + testElement.mySession + " , " + testElement.getAttribute('my-session') + " ");
-            assert(testElement.name === "element-specific getter was called for name", "value of property should be returned from the derived class' getter");
+            assert(testElement.mySession === testElement.getAttribute('my-session'), 'object property should equal element attribute, ' + testElement.mySession + ' , ' + testElement.getAttribute('my-session') + ' ');
+            assert(testElement.name === 'element-specific getter was called for name', 'value of property should be returned from the derived class\' getter');
             done();
         })
 
@@ -76,7 +76,7 @@ describe('baseElement', () => {
             class TestEndEventElement extends BaseElement {
                 
                 connectedCallback(){
-                    this._dispatchEndEvent("testData");
+                    this._dispatchEndEvent('testData');
                 }
             }
 
@@ -95,13 +95,13 @@ describe('baseElement', () => {
             class TestDebugEventElement extends BaseElement {
                 
                 static get observedAttributes(){
-                    return ["debug"];
+                    return ['debug'];
                 }
                 constructor(){
                     super();
                 }
                 connectedCallback(){
-                    this._dispatchDebugEvent("debugData");
+                    this._dispatchDebugEvent('debugData');
                 }
             }
 
@@ -113,7 +113,7 @@ describe('baseElement', () => {
                 done();
             })
             div.innerHTML = '<test-debug-event-element id="e4" debug="true"></test-debug-event-element>';
-            container.appendChild(div)
+            container.appendChild(div);
         })
     })
 })

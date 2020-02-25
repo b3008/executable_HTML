@@ -47,11 +47,11 @@ export default class AASequence extends BaseElement {
 
     constructor() {
         super();
-        this.root = this.attachShadow({ mode: 'open' });
-        this.root.innerHTML = '<slot></slot>';
+        // this.root = this.attachShadow({ mode: 'open' });
+        // this.root.innerHTML = '<slot></slot>';
     }
     connectedCallback() {
-        this.root.addEventListener('endEvent', this.endEventListener.bind(this));
+        this.addEventListener('endEvent', this.endEventListener.bind(this));
         if ((this.shouldRun === null) || (this.shouldRun === true)) {
             this.init()
         };
