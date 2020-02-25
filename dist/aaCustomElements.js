@@ -330,6 +330,159 @@ if (!customElements.get('aa-base-element')) {
 
 /***/ }),
 
+/***/ "./src/customElements/aa-checkboxes/aa-checkboxes.js":
+/*!***********************************************************!*\
+  !*** ./src/customElements/aa-checkboxes/aa-checkboxes.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AACheckboxes; });
+/* harmony import */ var _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../aa-baseElement/baseElement.js */ "./src/customElements/aa-baseElement/baseElement.js");
+/* harmony import */ var _aa_choice_item_aa_choice_item_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../aa-choice-item/aa-choice-item.js */ "./src/customElements/aa-choice-item/aa-choice-item.js");
+
+
+
+class AACheckboxes extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+
+
+
+    static get properties() {
+        return {
+            horizontal: {
+                type: Boolean,
+                value: false,
+                userDefined: true
+            },
+
+            vertical: {
+                type: Boolean,
+                value: true,
+                userDefined: true
+            },
+
+            name: {
+                type: String,
+                userDefined: true
+            },
+
+            value: {
+                type: String,
+                userDefined: false
+            },
+
+
+        }
+    }
+
+    static get acceptsElements() {
+        return [
+            'aa-choice-item'
+        ]
+    }
+
+    static get observedAttributes() {
+        return Object.keys(AACheckboxes.properties);
+    }
+
+
+    get value() {
+
+        let result = [];
+        if (this.boxes) {
+            for (let i = 0; i < this.boxes.length; i++) {
+                if (this.boxes[i].checked) {
+                    result.push(this.boxes[i].value);
+                }
+                else {
+                    result.push(null);
+                }
+            }
+
+        }
+        console.log(result);
+        return result
+    }
+
+    set value(val) {
+        this.setAttribute('value', val);
+        this.boxGroup.selected = val;
+    }
+
+    constructor() {
+        super();
+        this.root = this.attachShadow({ mode: 'open' });
+
+
+
+    }
+
+    connectedCallback() {
+        super.connectedCallback();
+        this.root.innerHTML = this.css + this.html;
+        this.boxes = [];
+        for (let i = 0; i < this.childNodes.length; i++) {
+            this.attachToShadowDomAccordingToKind(this.childNodes[i]);
+        }
+
+        this.boxes = this.root.querySelectorAll('paper-checkbox')
+
+        let val = this.getAttribute('value');
+        if (this.boxes) {
+            for (let i = 0; i < this.boxes.length; i++) {
+                if (this.boxes[i].value == val) {
+                    this.boxes[i].checked = true
+                }
+            }
+        }
+
+
+    }
+
+    attachToShadowDomAccordingToKind(node) {
+
+
+        if (!_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].isAAElement(node)) {
+            this.root.appendChild(_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].copy(node));
+        } else {
+            if (node.tagName === 'AA-CHOICE-ITEM') {
+                let child = document.createElement('paper-checkbox');
+                if (node.getAttribute('value')) {
+                    child.setAttribute('name', node.getAttribute('value'));
+                    child.setAttribute('value', node.getAttribute('value'));
+                } else {
+                    child.setAttribute('name', node.innerText.trim());
+                    child.setAttribute('value', node.innerText.trim());
+                }
+                if (!((this.horizontal === '') || (this.horizontal))) {
+                    child.style.display = 'block';
+                }
+                child.innerHTML = node.innerHTML;
+                this.root.appendChild(child);
+
+                console.log('name: ', child.name)
+                this.boxes.push(child);
+            }
+        }
+    }
+
+    get html() {
+        return html``;
+    }
+
+    get css() {
+        return ``;
+    }
+
+}
+
+
+_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerAAElement('aa-checkboxes', AACheckboxes);
+
+/***/ }),
+
 /***/ "./src/customElements/aa-choice-item/aa-choice-item.js":
 /*!*************************************************************!*\
   !*** ./src/customElements/aa-choice-item/aa-choice-item.js ***!
@@ -1815,12 +1968,11 @@ _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerA
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! exports provided: BaseElement, AAVariable, skata */
+/*! exports provided: BaseElement, AAVariable, AAFunctionRandom, AAChoose, AAWhen, AAOtherwise, AAMemory, AAScreen, AASequence, AASession, AATextAnswer, AAChoiceItem, AAMultipleChoice, AACheckboxes */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "skata", function() { return skata; });
 /* harmony import */ var _customElements_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./customElements/aa-baseElement/baseElement.js */ "./src/customElements/aa-baseElement/baseElement.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "BaseElement", function() { return _customElements_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
@@ -1828,16 +1980,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAVariable", function() { return _customElements_aa_variable_aa_variable_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
 /* harmony import */ var _customElements_aa_function_aa_function_random_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./customElements/aa-function/aa-function-random.js */ "./src/customElements/aa-function/aa-function-random.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAFunctionRandom", function() { return _customElements_aa_function_aa_function_random_js__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+
 /* harmony import */ var _customElements_aa_choose_aa_choose_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./customElements/aa-choose/aa-choose.js */ "./src/customElements/aa-choose/aa-choose.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAChoose", function() { return _customElements_aa_choose_aa_choose_js__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+
 /* harmony import */ var _customElements_aa_choose_aa_when_aa_when_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./customElements/aa-choose/aa-when/aa-when.js */ "./src/customElements/aa-choose/aa-when/aa-when.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAWhen", function() { return _customElements_aa_choose_aa_when_aa_when_js__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+
 /* harmony import */ var _customElements_aa_choose_aa_otherwise_aa_otherwise_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./customElements/aa-choose/aa-otherwise/aa-otherwise.js */ "./src/customElements/aa-choose/aa-otherwise/aa-otherwise.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAOtherwise", function() { return _customElements_aa_choose_aa_otherwise_aa_otherwise_js__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+
 /* harmony import */ var _customElements_aa_memory_aa_memory_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./customElements/aa-memory/aa-memory.js */ "./src/customElements/aa-memory/aa-memory.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAMemory", function() { return _customElements_aa_memory_aa_memory_js__WEBPACK_IMPORTED_MODULE_6__["default"]; });
+
 /* harmony import */ var _customElements_aa_screen_aa_screen_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./customElements/aa-screen/aa-screen.js */ "./src/customElements/aa-screen/aa-screen.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAScreen", function() { return _customElements_aa_screen_aa_screen_js__WEBPACK_IMPORTED_MODULE_7__["default"]; });
+
 /* harmony import */ var _customElements_aa_sequence_aa_sequence_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./customElements/aa-sequence/aa-sequence.js */ "./src/customElements/aa-sequence/aa-sequence.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AASequence", function() { return _customElements_aa_sequence_aa_sequence_js__WEBPACK_IMPORTED_MODULE_8__["default"]; });
+
 /* harmony import */ var _customElements_aa_session_aa_session_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./customElements/aa-session/aa-session.js */ "./src/customElements/aa-session/aa-session.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AASession", function() { return _customElements_aa_session_aa_session_js__WEBPACK_IMPORTED_MODULE_9__["default"]; });
+
 /* harmony import */ var _customElements_aa_text_answer_aa_text_answer_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./customElements/aa-text-answer/aa-text-answer.js */ "./src/customElements/aa-text-answer/aa-text-answer.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AATextAnswer", function() { return _customElements_aa_text_answer_aa_text_answer_js__WEBPACK_IMPORTED_MODULE_10__["default"]; });
+
 /* harmony import */ var _customElements_aa_multiple_choice_aa_multiple_choice_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./customElements/aa-multiple-choice/aa-multiple-choice.js */ "./src/customElements/aa-multiple-choice/aa-multiple-choice.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAMultipleChoice", function() { return _customElements_aa_multiple_choice_aa_multiple_choice_js__WEBPACK_IMPORTED_MODULE_11__["default"]; });
+
 /* harmony import */ var _customElements_aa_choice_item_aa_choice_item_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./customElements/aa-choice-item/aa-choice-item.js */ "./src/customElements/aa-choice-item/aa-choice-item.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAChoiceItem", function() { return _customElements_aa_choice_item_aa_choice_item_js__WEBPACK_IMPORTED_MODULE_12__["default"]; });
+
+/* harmony import */ var _customElements_aa_checkboxes_aa_checkboxes_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./customElements/aa-checkboxes/aa-checkboxes.js */ "./src/customElements/aa-checkboxes/aa-checkboxes.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AACheckboxes", function() { return _customElements_aa_checkboxes_aa_checkboxes_js__WEBPACK_IMPORTED_MODULE_13__["default"]; });
+
 // import '../dist/paper-polymer.js';
 
 
@@ -1856,13 +2033,8 @@ __webpack_require__.r(__webpack_exports__);
 
 // debugger;
 
-console.log(_customElements_aa_variable_aa_variable_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
-function skata(){console.log("skata")}
-// export  {BaseElement, AAVariable, AAFunctionRandom, 
-//     AAChoose,  AAOtherwise, AAMemory, AAScreen, 
-//     AASequence, AASession, AATextAnswer,
-//     AAMultipleChoice, AAChoiceItem }
+
 
 /***/ }),
 

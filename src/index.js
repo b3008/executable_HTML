@@ -12,14 +12,12 @@ import AASession from './customElements/aa-session/aa-session.js';
 import AATextAnswer from './customElements/aa-text-answer/aa-text-answer.js';
 import AAMultipleChoice from './customElements/aa-multiple-choice/aa-multiple-choice.js';
 import AAChoiceItem from './customElements/aa-choice-item/aa-choice-item.js';
-
+import AACheckboxes from './customElements/aa-checkboxes/aa-checkboxes.js';
 
 // debugger;
 
-console.log(AAVariable);
-export { BaseElement, AAVariable}
-export function skata(){console.log("skata")}
-// export  {BaseElement, AAVariable, AAFunctionRandom, 
-//     AAChoose,  AAOtherwise, AAMemory, AAScreen, 
-//     AASequence, AASession, AATextAnswer,
-//     AAMultipleChoice, AAChoiceItem }
+
+export  {BaseElement, AAVariable, AAFunctionRandom, 
+    AAChoose,  AAWhen, AAOtherwise, AAMemory, AAScreen, 
+    AASequence, AASession, AATextAnswer,
+    AAChoiceItem, AAMultipleChoice, AACheckboxes  }
