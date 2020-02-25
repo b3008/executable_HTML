@@ -11,13 +11,13 @@ describe('aa-screen', () => {
         container = document.querySelector('#container');
         if (!container) {
             container = document.createElement('div');
-            container.id = "container";
+            container.id = 'container';
             document.body.appendChild(container);
         }
     });
 
     beforeEach(function () {
-        container.innerHTML = "";
+        container.innerHTML = '';
     });
 
     describe('instance', function () {
@@ -28,14 +28,14 @@ describe('aa-screen', () => {
                     <div>test</div>
                 </aa-screen>`
             let screen1 = document.querySelector('#screen1');
-            assert(screen1.name === "first", "screen1 shold have a name attribute");
+            assert(screen1.name === 'first', 'screen1 shold have a name attribute');
             done();
 
         });
 
 
 
-        it('has submitButton and it submits a valueSubmit"', function (done) {
+        it('has submitButton and it submits a valueSubmit', function (done) {
 
             container.innerHTML = html`
             <div id = "screenContainer">
@@ -45,12 +45,12 @@ describe('aa-screen', () => {
             </div>`
 
             let screen1 = document.querySelector('#screen1');
-            assert(screen1.name === "first", "screen1 shold have a name attribute");
-            assert(screen1.submitButton, "submit button member does not exist");
-            assert(screen1.submitButton.click, "submitButton.click method does not exist")
+            assert(screen1.name === 'first', 'screen1 shold have a name attribute');
+            assert(screen1.submitButton, 'submit button member does not exist');
+            assert(screen1.submitButton.click, 'submitButton.click method does not exist')
 
-            document.querySelector("#screenContainer").addEventListener("valueSubmit", (e) => {
-                assert(e.detail.value, "should receive value after click")
+            document.querySelector('#screenContainer').addEventListener('valueSubmit', (e) => {
+                assert(e.detail.value, 'should receive value after click')
                 console.log(e.detail)
                 done();
             })
@@ -68,16 +68,16 @@ describe('aa-screen', () => {
             </div>`
 
             let screen1 = document.querySelector('#screen1');
-            assert(screen1.name === "first", "screen1 shold have a name attribute");
-            assert(screen1.submitButton, "submit button member does not exist");
-            assert(screen1.submitButton.click, "submitButton.click method does not exist")
+            assert(screen1.name === 'first', 'screen1 shold have a name attribute');
+            assert(screen1.submitButton, 'submit button member does not exist');
+            assert(screen1.submitButton.click, 'submitButton.click method does not exist')
 
 
 
-            document.querySelector("#screenContainer").addEventListener("endEvent", (e) => {
-                console.log(e.detail)
-                assert(e.detail, "should receive value after click")
-                console.log(e.detail)
+            document.querySelector('#screenContainer').addEventListener('endEvent', (e) => {
+                console.log(e.detail);
+                assert(e.detail, 'should receive value after click');
+                console.log(e.detail);
                 done();
             })
             screen1.submitButton.click();
@@ -95,14 +95,14 @@ describe('aa-screen', () => {
             </div>`
 
             let screen1 = document.querySelector('#screen1');
-            assert(screen1.name === "first", "screen1 shold have a name attribute");
-            assert(screen1.submitButton, "submit button member does not exist");
-            assert(screen1.submitButton.click, "submitButton.click method does not exist")
+            assert(screen1.name === 'first', 'screen1 shold have a name attribute');
+            assert(screen1.submitButton, 'submit button member does not exist');
+            assert(screen1.submitButton.click, 'submitButton.click method does not exist')
             if (customElements.get('paper-button')) {
                 console.log(screen1.submitButton.tagName);
-                assert(screen1.submitButton.tagName == "PAPER-BUTTON", "submit button should be paper-button");
+                assert(screen1.submitButton.tagName == 'PAPER-BUTTON', 'submit button should be paper-button');
             } else {
-                assert(screen1.submitButton.tagName == "BUTTON", "submit button should be paper-button");
+                assert(screen1.submitButton.tagName == 'BUTTON', 'submit button should be paper-button');
             }
             done()
 
@@ -128,17 +128,17 @@ describe('aa-screen', () => {
             </div>`
 
             let screen1 = document.querySelector('#screen1');
-            assert(screen1.name === "first", "screen1 shold have a name attribute");
-            assert(screen1.submitButton, "submit button member does not exist");
-            assert(screen1.submitButton.click, "submitButton.click method does not exist")
+            assert(screen1.name === 'first', 'screen1 shold have a name attribute');
+            assert(screen1.submitButton, 'submit button member does not exist');
+            assert(screen1.submitButton.click, 'submitButton.click method does not exist');
 
             let valWithKey = screen1.getValueWithKey();
             console.log(valWithKey);
-            assert(Object.keys(valWithKey)[0] == "first");
-            assert(valWithKey.first[0].myInput == "myValue")
-            assert(valWithKey.first[1].car == "saab", "car should be saab");    
-            document.querySelector("#screenContainer").addEventListener("valueSubmit", (e) => {
-                assert(e.detail.value[0].myInput == "myValue", "value contains value of input field")
+            assert(Object.keys(valWithKey)[0] == 'first');
+            assert(valWithKey.first[0].myInput == 'myValue');
+            assert(valWithKey.first[1].car == 'saab', 'car should be saab');
+            document.querySelector('#screenContainer').addEventListener('valueSubmit', (e) => {
+                assert(e.detail.value[0].myInput == 'myValue', 'value contains value of input field');
                 // console.log(e.detail)
                 done();
             })

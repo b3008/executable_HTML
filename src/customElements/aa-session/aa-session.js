@@ -13,7 +13,7 @@ export default class AASession extends BaseElement {
 
     constructor() {
         super();
-        this._mem = document.createElement('aa-memory');
+        
 
         this.myTemplate = document.createElement('template');
         this.myTemplate.innerHTML = this.innerHTML;
@@ -21,7 +21,7 @@ export default class AASession extends BaseElement {
 
         // this.root = this.attachShadow({ mode: 'closed' });
         // this.root.innerHTML = '<template><slot></slot></template>'
-
+        this._mem = document.createElement('aa-memory');
         this.addEventListener('valueSubmit', (e) => {
 
 
@@ -61,6 +61,7 @@ export default class AASession extends BaseElement {
     }
 
     connectedCallback() {
+        // console.log(this.tagName+"#"+this.id,"connected");
 
         this.sessionID = this.myIdGenerator();
         this.sessionTime = new Date().getTime();
@@ -80,7 +81,7 @@ export default class AASession extends BaseElement {
             //  if there's a direct template child, we want its children appended too
             if(templateClone.content.childNodes[0].nodeName==="TEMPLATE"){
                 while(templateClone.content.childNodes[0].content.childNodes.length){
-                    this.appendChild(templateClone.content.childNodes[0].content.childNodes[0])
+                    this.appendChild(templateClone.content.childNodes[0].content.childNodes[0]);
                 }
                 //  we are not appending the template element elsewhere 
                 //  so throw it way so that the childnode count can be reduced

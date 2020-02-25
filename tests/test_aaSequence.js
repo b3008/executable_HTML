@@ -13,13 +13,13 @@ describe('aa-sequence', () => {
         container = document.querySelector('#container');
         if (!container) {
             container = document.createElement('div');
-            container.id = "container";
+            container.id = 'container';
             document.body.appendChild(container);
         }
     });
 
     beforeEach(function () {
-        container.innerHTML = "";
+        container.innerHTML = '';
     });
 
     describe('instance', function () {
@@ -28,16 +28,16 @@ describe('aa-sequence', () => {
             container.innerHTML = html`
 
             first session:
-            <aa-session debug="true" name="test" id="session"> 
+            <aa-session debug='true' name='test' id='session'> 
                   
                 <template>
-                    <aa-sequence id="sequence" type="elements">textBefore1
+                    <aa-sequence id='sequence' type='elements'>textBefore1
                     
-                        <aa-screen id="screen1" name="first">
+                        <aa-screen id='screen1' name='first'>
                                 <div>screen1</div>
                         </aa-screen>textBefore2
 
-                        <aa-screen id="screen2" name="second">
+                        <aa-screen id='screen2' name='second'>
                                 <div>screen2</div>
                         </aa-screen>textAfter2
 
@@ -49,17 +49,18 @@ describe('aa-sequence', () => {
             </aa-session>`;
 
             let session = document.querySelector('#session');
-            let sequence = document.querySelector("#sequence");
+            let sequence = document.querySelector('#sequence');
 
-            let screen1 = document.querySelector("#screen1");
-            let screen2 = document.querySelector("#screen2");
-            assert(sequence.currentNode.id != null, "screen1 should not be null");
-            assert(screen2 == null, "screen2 should be null");
-            sequence.next().then(()=>{;
-            screen2 = document.querySelector("#screen2");
-            assert(screen2 != null, "screen2 should not be null after calling next");
+            let screen1 = document.querySelector('#screen1');
+            let screen2 = document.querySelector('#screen2');
+            assert(sequence.currentNode.id != null, 'screen1 should not be null');
+            assert(screen2 == null, 'screen2 should be null');
+            sequence.next().then(() => {
+                ;
+                screen2 = document.querySelector('#screen2');
+                assert(screen2 != null, 'screen2 should not be null after calling next');
 
-            done();
+                done();
             });
 
         });
@@ -70,22 +71,22 @@ describe('aa-sequence', () => {
 
             container.innerHTML = html`
              session:
-            <aa-session debug="true" name="test" id="session"> 
+            <aa-session debug='true' name='test' id='session'> 
                   
                 <template>
 
-                    <aa-sequence id="sequence">
+                    <aa-sequence id='sequence'>
                     
-                        <aa-screen id="screen1" name="first">
+                        <aa-screen id='screen1' name='first'>
                                 <div>screen1</div>
                         </aa-screen>
 
                         <aa-function-random></aa-function-random>
-                        <aa-screen id="screen2" name="second">
+                        <aa-screen id='screen2' name='second'>
                                 <div>screen2</div>
                         </aa-screen>
 
-                        <aa-jump goto="first" name="jump"></aa-jump>
+                        <aa-jump goto='first' name='jump'></aa-jump>
                     </aa-sequence>
 
                   
@@ -94,42 +95,42 @@ describe('aa-sequence', () => {
             </aa-session>`;
 
             let session = document.querySelector('#session');
-            let sequence = document.querySelector("#sequence");
-            let screen1 = document.querySelector("#screen1");
-            let screen2 = document.querySelector("#screen2");
+            let sequence = document.querySelector('#sequence');
+            let screen1 = document.querySelector('#screen1');
+            let screen2 = document.querySelector('#screen2');
 
 
-            assert(sequence.currentNode.name == "first", "currentNode should be named first");
-            sequence.next().then((f)=>{
-                assert(sequence.currentNode.name == "second", "currentNode should be named second");
+            assert(sequence.currentNode.name == 'first', 'currentNode should be named first');
+            sequence.next().then((f) => {
+                assert(sequence.currentNode.name == 'second', 'currentNode should be named second');
                 sequence.next();
-            }).then(()=>{
-                assert(sequence.currentNode.name == "first", "currentNode should be named second");
-                sequence.next(); 
-            }).then(()=>{
-                assert(sequence.currentNode.name == "second", "currentNode should be named second");
+            }).then(() => {
+                assert(sequence.currentNode.name == 'first', 'currentNode should be named second');
+                sequence.next();
+            }).then(() => {
+                assert(sequence.currentNode.name == 'second', 'currentNode should be named second');
                 done();
             })
-            
+
         })
 
         it('jumps forwards', (done) => {
-            
+
             container.innerHTML = html`
              session:
-            <aa-session debug="true" name="test" id="session"> 
+            <aa-session debug='true' name='test' id='session'> 
                   
                 <template>
 
-                    <aa-sequence id="sequence">
+                    <aa-sequence id='sequence'>
 
-                    <aa-jump goto="second" name="jump"></aa-jump>
+                    <aa-jump goto='second' name='jump'></aa-jump>
 
-                        <aa-screen id="screen1" name="first">
+                        <aa-screen id='screen1' name='first'>
                                 <div>screen1</div>
                         </aa-screen>
 
-                        <aa-screen id="screen2" name="second">
+                        <aa-screen id='screen2' name='second'>
                                 <div>screen2</div>
                         </aa-screen>
 
@@ -141,13 +142,13 @@ describe('aa-sequence', () => {
             </aa-session>`;
 
             let session = document.querySelector('#session');
-            let sequence = document.querySelector("#sequence");
-            let screen1 = document.querySelector("#screen1");
-            let screen2 = document.querySelector("#screen2");
+            let sequence = document.querySelector('#sequence');
+            let screen1 = document.querySelector('#screen1');
+            let screen2 = document.querySelector('#screen2');
 
-            assert(sequence.currentNode.name == "second", "currentNode should be named second");
-            assert(screen1==null, "screen 1 should be null");
-            
+            assert(sequence.currentNode.name == 'second', 'currentNode should be named second');
+            assert(screen1 == null, 'screen 1 should be null');
+
             done();
         })
 

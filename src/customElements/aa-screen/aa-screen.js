@@ -15,15 +15,15 @@ export default class AAScreen extends BaseElement {
 
 
     attributeChangedCallback(name, oldValue, newValue) {
-        switch(name){
+        switch (name) {
             case 'submit-button-text':
-                this.submitButton.innerHTML = newValue;
+                if (this.submitButton) { this.submitButton.innerHTML = newValue; }
                 break;
             case 'submit-button-hidden':
-                if((newValue!==true)||(newValue!=='true')){
-                    this.root.querySelector('.submitButtonContainer').style.display='block';
-                } else{
-                    this.root.querySelector('.submitButtonContainer').style.display='none';
+                if ((newValue !== true) || (newValue !== 'true')) {
+                    this.root.querySelector('.submitButtonContainer').style.display = 'block';
+                } else {
+                    this.root.querySelector('.submitButtonContainer').style.display = 'none';
                 }
                 break;
         }
@@ -36,7 +36,7 @@ export default class AAScreen extends BaseElement {
 
     connectedCallback() {
         super.connectedCallback();
-       
+
         this.root.innerHTML = this.css + this.html;
         this.submitButton = this.root.querySelector('.submitButton');
 
@@ -47,7 +47,7 @@ export default class AAScreen extends BaseElement {
             this.root.querySelector('.submitButtonContainer').style.display = 'none';
         }
 
-        
+
         this.root.querySelector('.submitButton').addEventListener('click', this.submitButtonClick.bind(this));
 
     }
@@ -121,7 +121,7 @@ export default class AAScreen extends BaseElement {
         if (typeof e.detail.callback != 'undefined') {
             e.detail.callback(e);
         }
-        if (this.dontHide === false) {this.hide();}
+        if (this.dontHide === false) { this.hide(); }
 
     }
 
@@ -157,15 +157,15 @@ export default class AAScreen extends BaseElement {
 
 
 
-    getChildrenValues(){
+    getChildrenValues() {
         let result = [];
-        
-        for(let i=0; i<this.children.length; i++){
+
+        for (let i = 0; i < this.children.length; i++) {
             let c = this.children[i];
-            if(c.getValue){
+            if (c.getValue) {
                 result.push(c.getValue());
-            } else{
-                if(c.value){
+            } else {
+                if (c.value) {
                     result.push({ [c.name]: c.value });
                 }
             }

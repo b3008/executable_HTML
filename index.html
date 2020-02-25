@@ -1,10 +1,11 @@
 <html>
 
 <head>
-    <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@1/src/zero-md.min.js"></script>
-    <!-- <script type="module" src="./src/index.js"></script> -->
     <script type="module" src="./dist/paper-polymer.js"></script>
-    <script type="module" src="./dist/aaCustomElements.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@1/src/zero-md.min.js"></script>
+    <script type="module" src="./src/index.js"></script>
+   
+    <!-- <script type="module" src="./dist/aaCustomElements.js"></script> -->
     <style>
         zero-md{
             padding:20px;
@@ -19,6 +20,88 @@
 <body>
 
     
+    <aa-session>
+        <template>
+      
+      <aa-sequence>
+      
+      <aa-screen submit-button-text="see an example">
+        <p>
+              Executable HTML is a set of custom elements,
+              which help an author of HTML content prescribe
+              the way pieces of HTML are inserted into the document,
+              without necessitating the use of JavaScript by the author.
+        </p>
+        
+        <p>
+            One main element is &ltaa-sequence&gt, which will insert its children into the document,
+                one after the other, in sequence, when notified to do so.            
+        </p>
+
+        <p>
+            Another set of elements, &ltaa-choose&gt, &ltaa-when&gt, and &ltaa-otherwise&gt help
+            define an if-then-else kind of structure, where their children will be inserted into
+            the document depending on whether a certain condition is true or false
+        </p>
+      </aa-screen>
+
+
+
+      
+      
+      
+          <aa-screen>
+      
+      <p style="margin-top:20px">
+        This example uses <a href="https://link.springer.com/article/10.3758/s13428-018-1148-y">executable HTML</a> to replicate the famous Commodore 64 BASIC oneliner: <pre>10 PRINT CHR$(205.5+RND(1)); : GOTO 10</pre>
+        An example of the running c64 program can be found <a href="https://www.youtube.com/watch?v=m9joBLOZVEo">at this youtube video</a>.
+      
+      </p>
+      
+      
+        Done in executable HTML, this could be written as:
+        <pre>
+        &lt;aa-sequence&gt;
+            &lt;aa-function-random min="1" max="2" name="rnd"&gt;&lt;aa-function-random&gt;
+            &lt;aa-choose&gt;
+                &lt;aa-when test="rnd==1">m​&lt;aa-when&gt;
+                &lt;aa-otherwise>n​&lt;aa-otherwise&gt;
+            &lt;aa-choose&gt;
+            &lt;aa-jump goto="rnd">&lt;aa-jump&gt;
+        &lt;aa-sequence&gt;
+      </pre>
+      
+        The following CodePen demonstrates it running:
+      
+      
+        <p class="codepen" data-height="554" data-theme-id="default" data-default-tab="result" data-user="b3008" data-slug-hash="abzRPjp" style="height: 554px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="10 PRINT CHR$(205.5+RND(1)); : GOTO 10">
+          <span>See the Pen <a href="https://codepen.io/b3008/pen/abzRPjp">
+          10 PRINT CHR$(205.5+RND(1)); : GOTO 10</a> by b3008 (<a href="https://codepen.io/b3008">@b3008</a>)
+          on <a href="https://codepen.io">CodePen</a>.</span>
+        </p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+      
+    </aa-screen>
+            
+</aa-sequence>
+
+
+      </template>
+      </aa-session>
+      
+      
+      
+      <p>The repository for executable HTML can be found at <a href="https://github.com/b3008/executable_HTML">https://github.com/b3008/executable_HTML</a></p>
+      
+      
+      
+
+
+
+
+
+
+
 
     <zero-md src="./Readme.md"></zero-md>
 
