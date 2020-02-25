@@ -1,7 +1,6 @@
 {
-  "build": 171,
-  "date": "Tue Feb 25 2020 17:59:36 GMT+0200 (Eastern European Standard Time)",
+  "build": 172,
+  "date": "Tue Feb 25 2020 18:03:27 GMT+0200 (Eastern European Standard Time)",
   "version": "0.0.1",
-  "branch": "issue#45-aaChoose_should_replace_itself"
-
+  "branch": "aa-checkboxes"
 }
