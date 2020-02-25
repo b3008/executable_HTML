@@ -17,10 +17,12 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
     chunkFilename: '[name].js',
-    publicPath: 'dist/'
-    // jsonpScriptType:"module"
+    // publicPath: 'dist/',
+    // jsonpScriptType:"module",
+    libraryTarget: "umd",
+    library:"executableHTML"
   },
-  mode: "production",
+  mode: "development",
   devtool:"source-map",
   
   plugins: [

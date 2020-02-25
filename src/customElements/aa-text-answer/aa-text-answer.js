@@ -1,13 +1,36 @@
 import BaseElement from '../aa-baseElement/baseElement.js';
 export default class AATextAnswer extends BaseElement {
 
+
+
+    static get properties() {
+        return {
+            name: {
+                type: String,
+                userDefined: true
+            },
+            'long': {
+                type: Boolean,
+                userDefined: true
+            },
+            label: {
+                type: String,
+                userDefined: true
+            },
+            'value': {
+                type: String,
+                userDefined: false
+            },
+
+        }
+    }
+
+    static get acceptsElements() {
+        return null
+    }
+
     static get observedAttributes() {
-        return [
-            'long',
-            'label',
-            'name',
-            'value'
-        ];
+        return Object.keys(AATextAnswer.properties);
     }
 
 
@@ -123,7 +146,7 @@ export default class AATextAnswer extends BaseElement {
                 })
             };
         }, 0);
-        
+
     }
 
     connectedCallback() {

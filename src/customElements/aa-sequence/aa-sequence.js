@@ -5,9 +5,44 @@ import './aa-jump/aa-jump.js';
 
 export default class AASequence extends BaseElement {
 
+    static get properties() {
+        return {
+            name: {
+                type: String,
+                userDefined: true
+            },
+            'write-into': {
+                type: String,
+                userDefined: true
+            },
 
-static get observedAttributes() {
-        return ['name', 'write-into', 'should-run', 'debug', 'type', 'stopped'];
+            'should-run':{
+                type:Boolean,
+                userDefined:true
+            },
+
+            'debug': {
+                type: Boolean,
+                value: false,
+                userDefined: false
+            },
+            'type':{
+                type:String, //there should be an array of options type
+                userDefined: false
+            },
+            'stopped':{
+                type:Boolean,
+                userDefined:false
+            }
+        }
+    }
+
+    static get acceptsElements(){
+        return null
+    }
+
+    static get observedAttributes() {
+        return Object.keys(AASequence.properties);
     }
 
     constructor() {
@@ -117,8 +152,8 @@ static get observedAttributes() {
         e.stopPropagation();
         if (e.detail) {
             if (e.detail.goto) { this.next(e.detail.goto); }
-            else if (e.detail.autoDispatch) { this.next(true); } 
-            else { setTimeout(() => this.next(true));}
+            else if (e.detail.autoDispatch) { this.next(true); }
+            else { setTimeout(() => this.next(true)); }
         } else {
             setTimeout(() => this.next(true))
         }

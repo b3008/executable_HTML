@@ -4,9 +4,32 @@ import  './../aa-memory/aa-memory.js'
 
 export default class AASession extends BaseElement {
 
+    static get properties(){
+        return {
+            name:{
+                type:String,
+                userDefined:true
+            },
+            'should-run':{
+                type:Boolean,
+                userDefined:true
+            },
+
+            'debug': {
+                type: Boolean,
+                value: false,
+                userDefined: false
+            },
+
+        }
+    }
+
+    static get acceptsElements(){
+        return null
+    }
 
     static get observedAttributes() {
-        return ['name', 'should-run', 'debug'];
+      return Object.keys(AASession.properties);
     }
 
 
