@@ -887,6 +887,117 @@ _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerA
 
 /***/ }),
 
+/***/ "./src/customElements/aa-likert-scale/aa-likert-scale.js":
+/*!***************************************************************!*\
+  !*** ./src/customElements/aa-likert-scale/aa-likert-scale.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AALikertScale; });
+/* harmony import */ var _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../aa-baseElement/baseElement.js */ "./src/customElements/aa-baseElement/baseElement.js");
+/* harmony import */ var _aa_multiple_choice_aa_multiple_choice_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../aa-multiple-choice/aa-multiple-choice.js */ "./src/customElements/aa-multiple-choice/aa-multiple-choice.js");
+
+
+
+class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+
+
+    static get properties(){
+        return {
+            name:{
+                type:String,
+                userDefined:true
+            },
+           
+            "debug":{
+                type:Boolean,
+                value:false,
+                userDefined:false
+            },
+
+            "value":{
+                type:Number,
+                userDefined:false,
+            },
+
+            "items":{
+                type:Number,
+                userDefined:true,
+            },
+            
+
+        }
+    }
+
+    static get acceptsElements(){
+        return [];
+    }
+
+    static get observedAttributes() {
+        return Object.keys(AALikertScale.properties);
+    }
+
+
+
+    constructor(){
+
+        super();
+
+        this.root = this.attachShadow({ mode: 'open' });
+    }
+
+    connectedCallback() {
+        super.connectedCallback();
+
+        this.root.innerHTML = this.html;
+
+        this.mChoice = this.root.querySelector("aa-multiple-choice")
+        this.choiceItems = this.mChoice.choiceItems
+    }
+
+
+    get html(){
+
+        let items = ``;
+        if(!this.items) this.items = 5;
+        for(let i=0; i<this.items; i++){
+            items += `<aa-choice-item name="${i+1}">${i+1}</aa-choice-item>`;
+        }
+        let result =  html`<aa-multiple-choice horizontal="true" name="${this.name}">${items}</aa-multiple-choice>`
+        console.log(result);
+        return result;
+    }
+
+
+    get value(){
+
+        if(this.mChoice)
+        {
+            return parseInt(this.mChoice.value);
+        } else{
+            return parseInt(this.getAttribute('value'));
+        }
+    }
+
+
+    getValue() {
+       return this.mChoice.value; 
+    }
+
+ 
+
+
+}
+
+_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerAAElement('aa-likert-scale', AALikertScale);
+
+
+
+/***/ }),
+
 /***/ "./src/customElements/aa-memory/aa-memory.js":
 /*!***************************************************!*\
   !*** ./src/customElements/aa-memory/aa-memory.js ***!
@@ -989,6 +1100,7 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
 
 
     get value() {
+
         if (this.radioGroup) {
             return this.radioGroup.selected;
         }
@@ -1014,6 +1126,7 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
 
     connectedCallback() {
         super.connectedCallback();
+        this.choiceItems = [];
         for (let i = 0; i < this.childNodes.length; i++) {
             this.attachToShadowDomAccordingToKind(this.childNodes[i]);
         }
@@ -1024,6 +1137,7 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
     }
 
     attachToShadowDomAccordingToKind(node) {
+        
         if (!_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].isAAElement(node)) {
             this.root.appendChild(_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].copy(node));
         } else {
@@ -1039,6 +1153,7 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
                 }
                 child.innerHTML = node.innerHTML;
                 this.radioGroup.appendChild(child);
+                this.choiceItems.push(child);
             }
         }
     }
@@ -2007,6 +2122,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _customElements_aa_checkboxes_aa_checkboxes_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./customElements/aa-checkboxes/aa-checkboxes.js */ "./src/customElements/aa-checkboxes/aa-checkboxes.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AACheckboxes", function() { return _customElements_aa_checkboxes_aa_checkboxes_js__WEBPACK_IMPORTED_MODULE_13__["default"]; });
 
+/* harmony import */ var _customElements_aa_likert_scale_aa_likert_scale_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./customElements/aa-likert-scale/aa-likert-scale.js */ "./src/customElements/aa-likert-scale/aa-likert-scale.js");
 // import '../dist/paper-polymer.js';
 
 
