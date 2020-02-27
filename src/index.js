@@ -13,7 +13,7 @@ import AATextAnswer from './customElements/aa-text-answer/aa-text-answer.js';
 import AAMultipleChoice from './customElements/aa-multiple-choice/aa-multiple-choice.js';
 import AAChoiceItem from './customElements/aa-choice-item/aa-choice-item.js';
 import AACheckboxes from './customElements/aa-checkboxes/aa-checkboxes.js';
-
+import AALikertScale from './customElements/aa-likert-scale/aa-likert-scale.js';
 // debugger;
 
 

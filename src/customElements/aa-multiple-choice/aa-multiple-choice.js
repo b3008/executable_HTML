@@ -45,6 +45,7 @@ export default class AAMultipleChoice extends BaseElement {
 
 
     get value() {
+
         if (this.radioGroup) {
             return this.radioGroup.selected;
         }
@@ -70,6 +71,7 @@ export default class AAMultipleChoice extends BaseElement {
 
     connectedCallback() {
         super.connectedCallback();
+        this.choiceItems = [];
         for (let i = 0; i < this.childNodes.length; i++) {
             this.attachToShadowDomAccordingToKind(this.childNodes[i]);
         }
@@ -80,6 +82,7 @@ export default class AAMultipleChoice extends BaseElement {
     }
 
     attachToShadowDomAccordingToKind(node) {
+        
         if (!BaseElement.isAAElement(node)) {
             this.root.appendChild(BaseElement.copy(node));
         } else {
@@ -95,6 +98,7 @@ export default class AAMultipleChoice extends BaseElement {
                 }
                 child.innerHTML = node.innerHTML;
                 this.radioGroup.appendChild(child);
+                this.choiceItems.push(child);
             }
         }
     }
