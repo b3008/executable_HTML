@@ -1,5 +1,5 @@
 import BaseElement from '../aa-baseElement/baseElement.js';
-import AAMultipleChoice from '../aa-multiple-choice/aa-multiple-choice.js';
+import '../aa-multiple-choice/aa-multiple-choice.js';
 
 export default class AALikertScale extends BaseElement {
 

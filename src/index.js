@@ -20,4 +20,4 @@ import AALikertScale from './customElements/aa-likert-scale/aa-likert-scale.js';
 export  {BaseElement, AAVariable, AAFunctionRandom, 
     AAChoose,  AAWhen, AAOtherwise, AAMemory, AAScreen, 
     AASequence, AASession, AATextAnswer,
-    AAChoiceItem, AAMultipleChoice, AACheckboxes  }
+    AAChoiceItem, AAMultipleChoice, AACheckboxes, AALikertScale  }
