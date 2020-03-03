@@ -6,6 +6,8 @@
 ## TL;DR
 This is a set of custom elements to provide piecemeal insertion of HTML into the DOM tree, in either sequential or conditional fashion, effectively rendering said HTML executable.
 
+For a demo, see https://b3008.github.io/
+
 ## What is executable HTML
 
 executable HTML is a set of custom elements which help the author of HTML content determine the way pieces of HTML are inserted into the document, without necessitating the use of JavaScript by the author.
