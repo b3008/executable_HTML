@@ -18,7 +18,8 @@ export default class AASequence extends BaseElement {
 
             'should-run':{
                 type:Boolean,
-                userDefined:true
+                userDefined:true,
+                value:true
             },
 
             'debug': {
