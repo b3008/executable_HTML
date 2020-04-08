@@ -3,6 +3,8 @@ import BaseElement from './../aa-baseElement/baseElement.js';
 
 export default class AAScreen extends BaseElement {
 
+
+   
     static get properties(){
         return {
             name:{
@@ -21,7 +23,13 @@ export default class AAScreen extends BaseElement {
                 userDefined:true
             },
 
-            'expectWait':{
+            'expect-wait':{
+                type:Boolean,
+                userDefined:false,
+                value:true
+            },
+
+            'autohide':{
                 type:Boolean,
                 userDefined:false,
                 value:true
@@ -44,10 +52,12 @@ export default class AAScreen extends BaseElement {
                 if (this.submitButton) { this.submitButton.innerHTML = newValue; }
                 break;
             case 'submit-button-hidden':
-                if ((newValue !== true) || (newValue !== 'true')) {
-                    this.root.querySelector('.submitButtonContainer').style.display = 'block';
-                } else {
-                    this.root.querySelector('.submitButtonContainer').style.display = 'none';
+                if(this.submitButtonContainer){
+                    if ((newValue !== true) || (newValue !== 'true')) {
+                        this.submitButtonContainer.style.display = 'block';
+                    } else {
+                        this.submitButtonContainer.style.display = 'none';
+                    }
                 }
                 break;
         }
@@ -56,26 +66,33 @@ export default class AAScreen extends BaseElement {
     constructor() {
         super();
         this.root = this.attachShadow({ mode: 'open' });
-        this.expectWait = true;
+        // this.expectWait = true;
+
     }
 
     connectedCallback() {
        
         super.connectedCallback();
+        
+
 
         this.root.innerHTML = this.css + this.html;
         this.submitButton = this.root.querySelector('.submitButton');
+        this.submitButtonContainer = this.root.querySelector('.submitButtonContainer');
 
         if (this._started) { return; }
         this._started = true;
 
         if (this.submitButtonHidden) {
-            this.root.querySelector('.submitButtonContainer').style.display = 'none';
+            if(this.submitButtonContainer){
+                this.submitButtonContainer.style.display = 'none';
+            }
         }
 
 
         this.root.querySelector('.submitButton').addEventListener('click', this.submitButtonClick.bind(this));
 
+        
     }
 
 

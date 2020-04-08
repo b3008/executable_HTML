@@ -27,11 +27,6 @@ export default class AALikertScale extends BaseElement {
                 userDefined:true,
             },
             
-            'expectWait':{
-                type:Boolean,
-                userDefined:false,
-                value:true
-            }
 
         }
     }

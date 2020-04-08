@@ -78,7 +78,10 @@ export default class AAChoose extends BaseElement {
                             **/
                            
                             for(let j=0; j<node.childNodes.length;j++){
-                                if(node.childNodes[j].expectWait){
+                                
+                                if(node.childNodes[j].constructor)
+                                if(node.childNodes[j].constructor.properties)
+                                if(node.childNodes[j].constructor.properties['expect-wait']){
                                     doesAnyNodeExpectWait = true;
                                 }
                             }
