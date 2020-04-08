@@ -164,7 +164,7 @@ export default class AAScreen extends BaseElement {
         if (typeof e.detail.callback != 'undefined') {
             e.detail.callback(e);
         }
-        if (this.dontHide === false) { this.hide(); }
+        if (this.autohide) { this.hide(); }
 
     }
 
