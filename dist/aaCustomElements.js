@@ -207,6 +207,7 @@ class BaseElement extends HTMLElement {
     }
 
     connectedCallback() {
+       
         // console.log(this.id, " connected");
         this._attachedTimestamp = new Date().getTime();
         this._debug = (this.debug === true) || (this.debug === null);
@@ -217,9 +218,40 @@ class BaseElement extends HTMLElement {
             }
 
         }
+
+        this.setAttributeDefaultValues();
     }
 
+    /**
+     * Properties are the member variables of the HTMLElement object.
+     * Attributes are the html tag's attributes.
+     * By convention, properties are in camelCase, e.g., someMembVariable
+     * while the corresponding attribute whould be hyphenated, e.g., some-member-variable.
+     * The purpose of this function is, based on the hyphenated attributes 
+     * of the element, to generate corresponding camelCase properties
+     * 
+     * Attribute names are provided by observedAttributes of the HTMLElement object,
+     * however objects that inherit from baseElement can also provide a more
+     * meaningful declaration, including datatype and default value, in 
+     * a static get properties function, like so:
+     * 
+     *  static get properties(){
+        return {
+            name:{
+                type:String,
+                userDefined:true
+            },
+            "submit-button-text":{
+                type:String,
+                value:"submit",
+                userDefined:true
+            },
 
+    
+     * This function also generates corresponding getter and setter functions
+     * for each property, so that properties and attributes always remain in sync
+     * with each other 
+     */
     makePropertiesFromAttributes() {
 
         let ElementClass = customElements.get(this.tagName.toLowerCase());
@@ -274,6 +306,24 @@ class BaseElement extends HTMLElement {
             }
         }
         return result;
+    }
+
+    setAttributeDefaultValues(){
+
+        let p = this.constructor.properties;
+        if(p){
+            let keys =Object.keys(p)
+            for(let i=0; i<keys.length; i++){
+                console.log(keys[i], p[keys[i]].value)
+                
+                let prop = this.toCamelCase(keys[i]);
+                if((typeof this[prop]==="undefined")||(this[prop]===null)){
+                    this[prop] = p[keys[i]].value;
+                }
+                
+            }
+        }
+        
     }
 
     static copy(node) {
@@ -373,6 +423,8 @@ class AACheckboxes extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
                 type: String,
                 userDefined: false
             },
+            
+
 
 
         }
@@ -415,9 +467,6 @@ class AACheckboxes extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
     constructor() {
         super();
         this.root = this.attachShadow({ mode: 'open' });
-
-
-
     }
 
     connectedCallback() {
@@ -596,6 +645,8 @@ class AAChoose extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     connectedCallback() {
         this._shouldRun = (this.shouldRun === null) || (this.shouldRun === true);
         this.sessionElement = this._getParentSession();
+
+        
         if (this._shouldRun) {
             if (typeof this.innerFragment !== 'undefined') {
                 _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].scanAndReplace(this.innerFragment);
@@ -603,14 +654,50 @@ class AAChoose extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
                 if (nodes.length === 0) {
                     this._dispatchEndEvent();
                 } else {
+                    let doesAnyNodeExpectWait = false;
                     for (let i = 0; i < nodes.length; i++) {
                         let node = nodes[i];
                         if (typeof node !== 'undefined') {
-                            // this.appendChild(node);
+
+                            /**
+                             * certain elements, mainly the screen,
+                             * are synchronous and need to dispatch
+                             * their own "end" events.
+                             * 
+                             * so look into the list of childNodes
+                             * contained into the part of the choose-when-otherwise
+                             * block that gets instantiated, and if you see
+                             * one with the property expectWait, don't tell
+                             * the sequence to move forward.
+                             * 
+                             * Possibly the architecture for this needs to change,
+                             * and have the sequence specifically extract newly
+                             * produced nodes and insert them itself
+                            **/
+                           
+                            for(let j=0; j<node.childNodes.length;j++){
+                                
+                                // the element has not been attached
+                                // so we have to access the static properties getter
+                                // to get the default value for expectWait
+                                if(node.childNodes[j].constructor)
+                                if(node.childNodes[j].constructor.properties)
+                                if(node.childNodes[j].constructor.properties['expect-wait']){
+                                    doesAnyNodeExpectWait = true;
+                                }
+                            }
+
                             this.parentNode.insertBefore(node, this.nextSibling);
                         }
                     }
-                    this._dispatchEndEvent();
+            
+                    /** 
+                     * so here dispatch evdEvent only if you haven't encountered
+                     * something that has expectWait:true
+                     */
+                    if(!doesAnyNodeExpectWait) {
+                        this._dispatchEndEvent();
+                    }
                 }
             }
             else {
@@ -948,6 +1035,8 @@ class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
         super();
 
         this.root = this.attachShadow({ mode: 'open' });
+
+
     }
 
     connectedCallback() {
@@ -1085,7 +1174,6 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
                 userDefined:false
             },
 
-           
         }
     }
 
@@ -1195,6 +1283,8 @@ __webpack_require__.r(__webpack_exports__);
 
 class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
+
+   
     static get properties(){
         return {
             name:{
@@ -1211,7 +1301,20 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
                 type:Boolean,
                 value:false,
                 userDefined:true
+            },
+
+            'expect-wait':{
+                type:Boolean,
+                userDefined:false,
+                value:true
+            },
+
+            'autohide':{
+                type:Boolean,
+                userDefined:false,
+                value:true
             }
+            
         }
     }
 
@@ -1229,10 +1332,12 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
                 if (this.submitButton) { this.submitButton.innerHTML = newValue; }
                 break;
             case 'submit-button-hidden':
-                if ((newValue !== true) || (newValue !== 'true')) {
-                    this.root.querySelector('.submitButtonContainer').style.display = 'block';
-                } else {
-                    this.root.querySelector('.submitButtonContainer').style.display = 'none';
+                if(this.submitButtonContainer){
+                    if ((newValue !== true) || (newValue !== 'true')) {
+                        this.submitButtonContainer.style.display = 'block';
+                    } else {
+                        this.submitButtonContainer.style.display = 'none';
+                    }
                 }
                 break;
         }
@@ -1241,24 +1346,33 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     constructor() {
         super();
         this.root = this.attachShadow({ mode: 'open' });
+        // this.expectWait = true;
+
     }
 
     connectedCallback() {
+       
         super.connectedCallback();
+        
+
 
         this.root.innerHTML = this.css + this.html;
         this.submitButton = this.root.querySelector('.submitButton');
+        this.submitButtonContainer = this.root.querySelector('.submitButtonContainer');
 
         if (this._started) { return; }
         this._started = true;
 
         if (this.submitButtonHidden) {
-            this.root.querySelector('.submitButtonContainer').style.display = 'none';
+            if(this.submitButtonContainer){
+                this.submitButtonContainer.style.display = 'none';
+            }
         }
 
 
         this.root.querySelector('.submitButton').addEventListener('click', this.submitButtonClick.bind(this));
 
+        
     }
 
 
@@ -1330,7 +1444,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         if (typeof e.detail.callback != 'undefined') {
             e.detail.callback(e);
         }
-        if (this.dontHide === false) { this.hide(); }
+        if (this.autohide) { this.hide(); }
 
     }
 
@@ -1525,7 +1639,8 @@ class AASequence extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
             'stopped':{
                 type:Boolean,
                 userDefined:false
-            }
+            },
+
         }
     }
 
@@ -1601,8 +1716,8 @@ class AASequence extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
 
 
     next(name) {
-        return new Promise((resolve, reject) => {
 
+        return new Promise((resolve, reject) => {
 
             if (this.stopped) { return; }
             if (this.sIndex >= this.innerFragment.childNodes.length) return null;
