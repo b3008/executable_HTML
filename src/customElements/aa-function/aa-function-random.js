@@ -51,6 +51,7 @@ export default class AAFunctionRandom extends BaseElement {
     }
 
     connectedCallback() {
+
         let session = this._getParentSession();
         this.value = this.getValue();
         session.setData(this.name, this.value);

@@ -859,6 +859,7 @@ class AAFunctionRandom extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
     }
 
     connectedCallback() {
+
         let session = this._getParentSession();
         this.value = this.getValue();
         session.setData(this.name, this.value);
@@ -1114,8 +1115,10 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
 
     constructor() {
         super();
+        
         this.root = this.attachShadow({ mode: 'open' });
         this.root.innerHTML = this.css + this.html;
+        
         this.radioGroup = this.root.querySelector('#radioGroup');
         this.radioGroup.addEventListener('change', (e) => {
             this.value = e.target.name;
@@ -1126,6 +1129,7 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
 
     connectedCallback() {
         super.connectedCallback();
+
         this.choiceItems = [];
         for (let i = 0; i < this.childNodes.length; i++) {
             this.attachToShadowDomAccordingToKind(this.childNodes[i]);
@@ -1134,6 +1138,8 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
         if (this.getAttribute('value')) {
             this.radioGroup.setAttribute('selected', this.getAttribute('value'));
         }
+
+        this.style.display="block";
     }
 
     attachToShadowDomAccordingToKind(node) {
@@ -1503,7 +1509,8 @@ class AASequence extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
 
             'should-run':{
                 type:Boolean,
-                userDefined:true
+                userDefined:true,
+                value:true
             },
 
             'debug': {

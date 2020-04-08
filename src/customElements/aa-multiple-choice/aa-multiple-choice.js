@@ -59,8 +59,10 @@ export default class AAMultipleChoice extends BaseElement {
 
     constructor() {
         super();
+        
         this.root = this.attachShadow({ mode: 'open' });
         this.root.innerHTML = this.css + this.html;
+        
         this.radioGroup = this.root.querySelector('#radioGroup');
         this.radioGroup.addEventListener('change', (e) => {
             this.value = e.target.name;
@@ -71,6 +73,7 @@ export default class AAMultipleChoice extends BaseElement {
 
     connectedCallback() {
         super.connectedCallback();
+
         this.choiceItems = [];
         for (let i = 0; i < this.childNodes.length; i++) {
             this.attachToShadowDomAccordingToKind(this.childNodes[i]);
@@ -79,6 +82,8 @@ export default class AAMultipleChoice extends BaseElement {
         if (this.getAttribute('value')) {
             this.radioGroup.setAttribute('selected', this.getAttribute('value'));
         }
+
+        this.style.display="block";
     }
 
     attachToShadowDomAccordingToKind(node) {

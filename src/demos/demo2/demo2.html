@@ -3,9 +3,13 @@
 <head>
 
     <!-- <script type="module" src="../../../dist/aaCustomElements.js"></script> -->
-    <!-- <script type="module" src="/dist/aaCustomElements.js"></script> -->
-    <script type="module" src="../../index.js"></script>
     <script type="module" src="../../../dist/paper-polymer.js"></script>
+    <!-- <script type="module" src="/dist/aaCustomElements.js"></script> -->
+
+
+
+    <script type="module" src="../../index.js"></script>
+
 
     <style>
         .democontainer {
@@ -17,45 +21,52 @@
 
 <body>
 
-    
-     
+
+
     <div>
 
-            <aa-session >
-                <template>
-                    <aa-sequence class="democontainer">
+        <aa-session>
+            <template>
+                <aa-sequence debug="true" id="s1">
+                    <aa-function-random min="1" max="3" name="random_choice">
+                        </aa-function-random>
+                        <aa-choose>
+                            <aa-when test="random_choice==1">
+                                <aa-screen>Did you do any of the following?<aa-multiple-choice name="behaviours1">
+                                        <aa-choice-item value="1"> I listened attentively to the other(s)
+                                        </aa-choice-item>
+                                        <aa-choice-item value="2">I tried to get the other(s) to do something else
+                                        </aa-choice-item>
+                                        <aa-choice-item value="3">I let other(s) make plans or decisions
+                                        </aa-choice-item>
+                                    </aa-multiple-choice>
+                                </aa-screen>
+                            </aa-when>
+                            <aa-when test="random_choice==2">
+                                <aa-screen>Did you do any of the following?<aa-multiple-choice name="behaviours2">
+                                        <aa-choice-item value="1">I made a concession to avoid unpleasantness
+                                        </aa-choice-item>
+                                        <aa-choice-item value="2">I did not state my own views</aa-choice-item>
+                                        <aa-choice-item value="3">I expressed the 'real me' instead of my public persona
+                                        </aa-choice-item>
+                                    </aa-multiple-choice>
+                                </aa-screen>
+                            </aa-when>
+                            <aa-otherwise>
+                                <aa-screen>Did you do any of the following?<aa-multiple-choice name="behaviours3">
+                                        <aa-choice-item value="1">I took the lead in planning an activity
+                                        </aa-choice-item>
+                                        <aa-choice-item value="2">I avoided taking the lead</aa-choice-item>
+                                        <aa-choice-item value="3">I ignored the other(s) comments</aa-choice-item>
+                                    </aa-multiple-choice>
+                                </aa-screen>
+                            </aa-otherwise>
+                        </aa-choose>
+                </aa-sequence>
+            </template>
+        </aa-session>
 
-                        <aa-screen name="screen1">
-                            Questionnaires can be a more feasible and efficient research method than in-depth
-                            interviews. Questionnaires are a lot cheaper to conduct than in-person interviews, which
-                            require paying interviewers for their time. They also save time, for both parties, as
-                            customers can fill it quickly on their own time and employees don't have to take time out of
-                            their days to sit in on interviews.
-
-                            Lastly, questionnaires can capture a larger audience. While it would be impossible for a
-                            large company with upwards of tens of thousands of customers to interview every single
-                            customer in person, the same company could potentially get close to receiving feedback from
-                            their entire customer base when using online questionnaires.
-                           
-                            <aa-text-answer id="a1" label="short response" name="answer1"></aa-text-answer>
-
-                            <aa-text-answer id="a2" long label="long response" name="answer2"></aa-text-answer>
-
-                            
-
-                        </aa-screen>
-
-                        <aa-screen name="screen2">
-                            <div>screen2</div>
-                            
-                        </aa-screen>
-
-
-                    </aa-sequence>
-                </template>
-            </aa-session>
-
-        </div>
+    </div>
 
 </body>
 
