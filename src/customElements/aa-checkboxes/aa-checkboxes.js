@@ -28,6 +28,8 @@ export default class AACheckboxes extends BaseElement {
                 type: String,
                 userDefined: false
             },
+            
+
 
 
         }
@@ -70,9 +72,6 @@ export default class AACheckboxes extends BaseElement {
     constructor() {
         super();
         this.root = this.attachShadow({ mode: 'open' });
-
-
-
     }
 
     connectedCallback() {

@@ -46,6 +46,8 @@ export default class AALikertScale extends BaseElement {
         super();
 
         this.root = this.attachShadow({ mode: 'open' });
+
+
     }
 
     connectedCallback() {
