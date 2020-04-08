@@ -19,7 +19,14 @@ export default class AAScreen extends BaseElement {
                 type:Boolean,
                 value:false,
                 userDefined:true
+            },
+
+            'expectWait':{
+                type:Boolean,
+                userDefined:false,
+                value:true
             }
+            
         }
     }
 
@@ -49,9 +56,11 @@ export default class AAScreen extends BaseElement {
     constructor() {
         super();
         this.root = this.attachShadow({ mode: 'open' });
+        this.expectWait = true;
     }
 
     connectedCallback() {
+       
         super.connectedCallback();
 
         this.root.innerHTML = this.css + this.html;

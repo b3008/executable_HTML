@@ -34,7 +34,8 @@ export default class AASequence extends BaseElement {
             'stopped':{
                 type:Boolean,
                 userDefined:false
-            }
+            },
+
         }
     }
 
@@ -110,8 +111,8 @@ export default class AASequence extends BaseElement {
 
 
     next(name) {
-        return new Promise((resolve, reject) => {
 
+        return new Promise((resolve, reject) => {
 
             if (this.stopped) { return; }
             if (this.sIndex >= this.innerFragment.childNodes.length) return null;

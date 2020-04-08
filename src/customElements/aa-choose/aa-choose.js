@@ -47,6 +47,8 @@ export default class AAChoose extends BaseElement {
     connectedCallback() {
         this._shouldRun = (this.shouldRun === null) || (this.shouldRun === true);
         this.sessionElement = this._getParentSession();
+
+        
         if (this._shouldRun) {
             if (typeof this.innerFragment !== 'undefined') {
                 BaseElement.scanAndReplace(this.innerFragment);
@@ -54,14 +56,44 @@ export default class AAChoose extends BaseElement {
                 if (nodes.length === 0) {
                     this._dispatchEndEvent();
                 } else {
+                    let doesAnyNodeExpectWait = false;
                     for (let i = 0; i < nodes.length; i++) {
                         let node = nodes[i];
                         if (typeof node !== 'undefined') {
-                            // this.appendChild(node);
+
+                            /**
+                             * certain elements, mainly the screen,
+                             * are synchronous and need to dispatch
+                             * their own "end" events.
+                             * 
+                             * so look into the list of childNodes
+                             * contained into the part of the choose-when-otherwise
+                             * block that gets instantiated, and if you see
+                             * one with the property expectWait, don't tell
+                             * the sequence to move forward.
+                             * 
+                             * Possibly the architecture for this needs to change,
+                             * and have the sequence specifically extract newly
+                             * produced nodes and insert them itself
+                            **/
+                           
+                            for(let j=0; j<node.childNodes.length;j++){
+                                if(node.childNodes[j].expectWait){
+                                    doesAnyNodeExpectWait = true;
+                                }
+                            }
+
                             this.parentNode.insertBefore(node, this.nextSibling);
                         }
                     }
-                    this._dispatchEndEvent();
+            
+                    /** 
+                     * so here dispatch evdEvent only if you haven't encountered
+                     * something that has expectWait:true
+                     */
+                    if(!doesAnyNodeExpectWait) {
+                        this._dispatchEndEvent();
+                    }
                 }
             }
             else {

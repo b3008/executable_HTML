@@ -27,12 +27,13 @@
 
         <aa-session>
             <template>
-                <aa-sequence debug="true" id="s1">
+                <aa-sequence id="s1">
                     <aa-function-random min="1" max="3" name="random_choice">
                         </aa-function-random>
                         <aa-choose>
                             <aa-when test="random_choice==1">
-                                <aa-screen>Did you do any of the following?<aa-multiple-choice name="behaviours1">
+                                <aa-screen>Did you do any of the following? (random_choice was 1)
+                                    <aa-multiple-choice name="behaviours1">
                                         <aa-choice-item value="1"> I listened attentively to the other(s)
                                         </aa-choice-item>
                                         <aa-choice-item value="2">I tried to get the other(s) to do something else
@@ -43,7 +44,8 @@
                                 </aa-screen>
                             </aa-when>
                             <aa-when test="random_choice==2">
-                                <aa-screen>Did you do any of the following?<aa-multiple-choice name="behaviours2">
+                                <aa-screen>Did you do any of the following? (random_choice was 2)
+                                    <aa-multiple-choice name="behaviours2">
                                         <aa-choice-item value="1">I made a concession to avoid unpleasantness
                                         </aa-choice-item>
                                         <aa-choice-item value="2">I did not state my own views</aa-choice-item>
@@ -53,7 +55,8 @@
                                 </aa-screen>
                             </aa-when>
                             <aa-otherwise>
-                                <aa-screen>Did you do any of the following?<aa-multiple-choice name="behaviours3">
+                                <aa-screen>Did you do any of the following? (random_choice was 3)
+                                    <aa-multiple-choice name="behaviours3">
                                         <aa-choice-item value="1">I took the lead in planning an activity
                                         </aa-choice-item>
                                         <aa-choice-item value="2">I avoided taking the lead</aa-choice-item>
@@ -62,6 +65,10 @@
                                 </aa-screen>
                             </aa-otherwise>
                         </aa-choose>
+
+                        <aa-screen>
+                            Thank you for responding
+                        </aa-screen>
                 </aa-sequence>
             </template>
         </aa-session>

@@ -29,7 +29,6 @@ export default class AAMultipleChoice extends BaseElement {
                 userDefined:false
             },
 
-           
         }
     }
 

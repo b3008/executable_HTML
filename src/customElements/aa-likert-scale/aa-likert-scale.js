@@ -27,6 +27,11 @@ export default class AALikertScale extends BaseElement {
                 userDefined:true,
             },
             
+            'expectWait':{
+                type:Boolean,
+                userDefined:false,
+                value:true
+            }
 
         }
     }
@@ -46,6 +51,8 @@ export default class AALikertScale extends BaseElement {
         super();
 
         this.root = this.attachShadow({ mode: 'open' });
+
+
     }
 
     connectedCallback() {
