@@ -79,6 +79,9 @@ export default class AAChoose extends BaseElement {
                            
                             for(let j=0; j<node.childNodes.length;j++){
                                 
+                                // the element has not been attached
+                                // so we have to access the static properties getter
+                                // to get the default value for expectWait
                                 if(node.childNodes[j].constructor)
                                 if(node.childNodes[j].constructor.properties)
                                 if(node.childNodes[j].constructor.properties['expect-wait']){
