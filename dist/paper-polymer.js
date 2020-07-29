@@ -190,10 +190,10 @@ Example:
 
 Note: announcements are only audible if you have a screen reader enabled.
 
-@group Iron Elements
 @demo demo/index.html
 */
 const IronA11yAnnouncer = Object(_polymer_polymer_lib_legacy_polymer_fn_js__WEBPACK_IMPORTED_MODULE_1__["Polymer"])({
+  /** @override */
   _template: _polymer_polymer_lib_utils_html_tag_js__WEBPACK_IMPORTED_MODULE_2__["html"]`
     <style>
       :host {
@@ -216,16 +216,22 @@ const IronA11yAnnouncer = Object(_polymer_polymer_lib_legacy_polymer_fn_js__WEBP
      */
     mode: {type: String, value: 'polite'},
 
-    _text: {type: String, value: ''}
+    /**
+     * The timeout on refreshing the announcement text. Larger timeouts are
+     * needed for certain screen readers to re-announce the same message.
+     */
+    timeout: {type: Number, value: 150},
+
+    _text: {type: String, value: ''},
   },
 
+  /** @override */
   created: function() {
     if (!IronA11yAnnouncer.instance) {
       IronA11yAnnouncer.instance = this;
     }
 
-    document.body.addEventListener(
-        'iron-announce', this._onIronAnnounce.bind(this));
+    document.addEventListener('iron-announce', this._onIronAnnounce.bind(this));
   },
 
   /**
@@ -237,7 +243,7 @@ const IronA11yAnnouncer = Object(_polymer_polymer_lib_legacy_polymer_fn_js__WEBP
     this._text = '';
     this.async(function() {
       this._text = text;
-    }, 100);
+    }, this.timeout);
   },
 
   _onIronAnnounce: function(event) {
@@ -254,7 +260,13 @@ IronA11yAnnouncer.requestAvailability = function() {
     IronA11yAnnouncer.instance = document.createElement('iron-a11y-announcer');
   }
 
-  document.body.appendChild(IronA11yAnnouncer.instance);
+  if (document.body) {
+    document.body.appendChild(IronA11yAnnouncer.instance);
+  } else {
+    document.addEventListener('load', function() {
+      document.body.appendChild(IronA11yAnnouncer.instance);
+    });
+  }
 };
 
 
@@ -812,11 +824,10 @@ Custom property | Description | Default
 `--iron-autogrow-textarea` | Mixin applied to the textarea | `{}`
 `--iron-autogrow-textarea-placeholder` | Mixin applied to the textarea placeholder | `{}`
 
-@group Iron Elements
-@hero hero.svg
 @demo demo/index.html
 */
 Object(_polymer_polymer_lib_legacy_polymer_fn_js__WEBPACK_IMPORTED_MODULE_4__["Polymer"])({
+  /** @override */
   _template: _polymer_polymer_lib_utils_html_tag_js__WEBPACK_IMPORTED_MODULE_6__["html"]`
     <style>
       :host {
@@ -880,7 +891,7 @@ Object(_polymer_polymer_lib_legacy_polymer_fn_js__WEBPACK_IMPORTED_MODULE_4__["P
 
     <!-- size the input/textarea with a div, because the textarea has intrinsic size in ff -->
     <div class="textarea-container fit">
-      <textarea id="textarea" name\$="[[name]]" aria-label\$="[[label]]" autocomplete\$="[[autocomplete]]" autofocus\$="[[autofocus]]" inputmode\$="[[inputmode]]" placeholder\$="[[placeholder]]" readonly\$="[[readonly]]" required\$="[[required]]" disabled\$="[[disabled]]" rows\$="[[rows]]" minlength\$="[[minlength]]" maxlength\$="[[maxlength]]"></textarea>
+      <textarea id="textarea" name$="[[name]]" aria-label$="[[label]]" autocomplete$="[[autocomplete]]" autofocus$="[[autofocus]]" autocapitalize$="[[autocapitalize]]" inputmode$="[[inputmode]]" placeholder$="[[placeholder]]" readonly$="[[readonly]]" required$="[[required]]" disabled$="[[disabled]]" rows$="[[rows]]" minlength$="[[minlength]]" maxlength$="[[maxlength]]"></textarea>
     </div>
 `,
 
@@ -927,8 +938,15 @@ Object(_polymer_polymer_lib_legacy_polymer_fn_js__WEBPACK_IMPORTED_MODULE_4__["P
 
     /**
      * Bound to the textarea's `autofocus` attribute.
+     *
+     * @type {!boolean}
      */
     autofocus: {type: Boolean, value: false},
+
+    /**
+     * Bound to the textarea's `autocapitalize` attribute.
+     */
+    autocapitalize: {type: String, value: 'none'},
 
     /**
      * Bound to the textarea's `inputmode` attribute.
@@ -974,7 +992,7 @@ Object(_polymer_polymer_lib_legacy_polymer_fn_js__WEBPACK_IMPORTED_MODULE_4__["P
    * @return {!HTMLTextAreaElement}
    */
   get textarea() {
-    return this.$.textarea;
+    return /** @type {!HTMLTextAreaElement} */ (this.$.textarea);
   },
 
   /**
@@ -1007,13 +1025,15 @@ Object(_polymer_polymer_lib_legacy_polymer_fn_js__WEBPACK_IMPORTED_MODULE_4__["P
     this.$.textarea.selectionEnd = value;
   },
 
+  /** @override */
   attached: function() {
     /* iOS has an arbitrary left margin of 3px that isn't present
      * in any other browser, and means that the paper-textarea's cursor
      * overlaps the label.
      * See https://github.com/PolymerElements/paper-input/issues/468.
      */
-    var IS_IOS = navigator.userAgent.match(/iP(?:[oa]d|hone)/);
+    var IS_IOS = navigator.userAgent.match(/iP(?:[oa]d|hone)/) &&
+        !navigator.userAgent.match(/OS 1[3456789]/);
     if (IS_IOS) {
       this.$.textarea.style.marginLeft = '-3px';
     }
@@ -5360,6 +5380,8 @@ const PaperInputBehaviorImpl = {
      * If you're using PaperInputBehavior to implement your own paper-input-like
      * element, bind this to the `<input is="iron-input">`'s `autofocus`
      * property.
+     *
+     * @type {!boolean}
      */
     autofocus: {type: Boolean, observer: '_autofocusChanged'},
 

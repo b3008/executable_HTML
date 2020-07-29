@@ -318,7 +318,8 @@ class BaseElement extends HTMLElement {
                 
                 let prop = this.toCamelCase(keys[i]);
                 if((typeof this[prop]==="undefined")||(this[prop]===null)){
-                    this[prop] = p[keys[i]].value;
+                    // this[prop] = p[keys[i]].value ;
+                    this.setAttribute(this.prop, this.getAttribute("prop") || p[keys[i]].value);
                 }
                 
             }
@@ -1050,9 +1051,8 @@ class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
 
 
     get html(){
-
         let items = ``;
-        if(!this.items) this.items = 5;
+        if((!this.items)||(this.items==="undefined")) this.items = 5;
         for(let i=0; i<this.items; i++){
             items += `<aa-choice-item name="${i+1}">${i+1}</aa-choice-item>`;
         }
@@ -1171,7 +1171,7 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
 
             value:{
                 type:String,
-                userDefined:false
+                userDefined:true
             },
 
         }
@@ -1197,6 +1197,7 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
     }
 
     set value(val) {
+
         this.setAttribute('value', val);
         this.radioGroup.selected = val;
     }
