@@ -26,9 +26,8 @@ describe('aa-likert-scale', () => {
             container.innerHTML =  `<aa-likert-scale name="scale1" id="scale1" value="1">
                                     </aa-likert-scale>`;
             
-            let container1 = document.querySelector('#container');
+
             let scale1 = document.querySelector('#scale1');
-            debugger;
             scale1.choiceItems[1].click();
             assert(scale1.value === 2, 'value should be 2');
             
