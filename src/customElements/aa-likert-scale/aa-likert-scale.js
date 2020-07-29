@@ -61,9 +61,8 @@ export default class AALikertScale extends BaseElement {
 
 
     get html(){
-
         let items = ``;
-        if(!this.items) this.items = 5;
+        if((!this.items)||(this.items==="undefined")) this.items = 5;
         for(let i=0; i<this.items; i++){
             items += `<aa-choice-item name="${i+1}">${i+1}</aa-choice-item>`;
         }
