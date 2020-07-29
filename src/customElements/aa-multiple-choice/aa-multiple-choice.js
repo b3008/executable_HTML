@@ -26,7 +26,7 @@ export default class AAMultipleChoice extends BaseElement {
 
             value:{
                 type:String,
-                userDefined:false
+                userDefined:true
             },
 
         }
@@ -52,6 +52,7 @@ export default class AAMultipleChoice extends BaseElement {
     }
 
     set value(val) {
+
         this.setAttribute('value', val);
         this.radioGroup.selected = val;
     }
