@@ -1,5 +1,5 @@
 import BaseElement from '../aa-baseElement/baseElement.js';
-export default class AATextAnswer extends BaseElement {
+export default class AASlider extends BaseElement {
 
 
 
@@ -9,16 +9,24 @@ export default class AATextAnswer extends BaseElement {
                 type: String,
                 userDefined: true
             },
-            'long': {
-                type: Boolean,
+            'min': {
+                type: Number,
                 userDefined: true
             },
-            label: {
+            'max': {
+                type: Number,
+                userDefined: true
+            },
+            minLabel: {
+                type: String,
+                userDefined: true
+            },
+            maxLabel: {
                 type: String,
                 userDefined: true
             },
             'value': {
-                type: String,
+                type: Number,
                 userDefined: false
             },
 
@@ -30,7 +38,7 @@ export default class AATextAnswer extends BaseElement {
     }
 
     static get observedAttributes() {
-        return Object.keys(AATextAnswer.properties);
+        return Object.keys(AASlider.properties);
     }
 
 
@@ -78,43 +86,64 @@ export default class AATextAnswer extends BaseElement {
 
     }
 
-    get label() {
-        return this.getAttribute('label');
+    get minLabel() {
+        return this.getAttribute('min-label');
     }
 
-    set label(val) {
-        this.setAttribute('label', val);
+    get maxLabel() {
+        return this.getAttribute('max-label');
+    }
+
+    set minLabel(val) {
+        this.setAttribute('min-label', val);
         if (this.inputItem) {
-            this.inputItem.label = val;
+            this.inputItem.minLabel = val;
         }
     }
 
-    set long(val) {
-        this.setAttribute('long', val);
-        if (val) {
-            this.changeInputItem('long');
-        } else {
-            this.changeInputItem('short');
+    set maxLabel(val) {
+        this.setAttribute('max-label', val);
+        if (this.inputItem) {
+            this.inputItem.maxLabel = val;
         }
     }
 
-    get long() {
-        return this.getAttribute('long');
+    set min(val) {
+        this.setAttribute('min', val);
+        if (this.inputItem) {
+            this.inputItem.min = val;
+        }
     }
+
+    set max(val) {
+        this.setAttribute('max', val);
+        if (this.inputItem) {
+            this.inputItem.max = val;
+        }
+    }
+
 
     constructor() {
         super();
         this.root = this.attachShadow({ mode: 'open' });
-        let html = (this.long || (this.long === '')) ? this.longHtml : this.html;
+        
+        let innerHTML = this.css + `<div class='inputContainer'>${this.html}</div>`;
+        this.root.innerHTML = innerHTML;
 
-        this.root.innerHTML = this.css + `<div class='inputContainer'>${html}</div>`;
-
-        let label = this.label;
-        let value = this.value;
+        let minLabel = this.minLabel;
+        let maxLabel = this.maxLabel;
+        let min = this.min || 0;
+        let max = this.max || 100;
+        let value = this.value || (this.min + this.max)/2;
         this.inputItem = this.root.querySelector('.inputItem');
-        if (label) { this.inputItem.label = label; }
+        this.minLabelItem = this.root.querySelector('.minLabel');
+        this.maxLabelItem = this.root.querySelector('.maxLabel');
+        
+        if (minLabel) { this.minLabelItem.innerHTML = minLabel;}
+        if (maxLabel) { this.maxLabelItem.innerHTML = maxLabel;}
         if (value) { this.inputItem.value = value; }
-        this.fixBugInPaperTextarea(this.inputItem);
+        
+
 
         this.inputItem.addEventListener('change', (e) => {
             this.value = e.target.value;
@@ -122,32 +151,6 @@ export default class AATextAnswer extends BaseElement {
     }
 
 
-    fixBugInPaperTextarea(inputItem) {
-        // solves issue documented here: https://github.com/PolymerElements/paper-input/issues/125
-
-        setTimeout(() => {
-            if (inputItem.tagName === 'PAPER-TEXTAREA') {
-                inputItem.root.childNodes[2].children[1].textarea.style.overflow = 'hidden';
-                let width = window.getComputedStyle(this.root.querySelector('.inputContainer')).width;
-
-                inputItem.root.childNodes[2].style.width = width;
-                inputItem.addEventListener('focus', (e) => {
-                    let width = window.getComputedStyle(this.root.querySelector('.inputContainer')).width;
-                    inputItem.root.childNodes[2].style.width = width;
-                })
-
-                window.addEventListener('resize', () => {
-                    inputItem.root.childNodes[2].style.width = '';
-                    setTimeout(() => {
-                        let width = window.getComputedStyle(this.root.querySelector('.inputContainer')).width;
-                        inputItem.root.childNodes[2].style.width = width;
-                    }, 100);
-
-                })
-            };
-        }, 0);
-
-    }
 
     connectedCallback() {
         super.connectedCallback();
@@ -161,25 +164,27 @@ export default class AATextAnswer extends BaseElement {
             display:block;
             overflow:hidden;        
         }
-        paper-textarea textarea {
-           overflow:hidden;
-        }
-        </style>`;
+        </style>
+        `;
     }
 
     get html() {
-        let inputElement = customElements.get('paper-input')
-            ? `<paper-input class='inputItem'></paper-input>`
-            : `<input class='inputItem'>`;
-        return html`${inputElement}`
+        let inputElement = customElements.get('paper-slider')
+            ? `<paper-slider style="width:100%" class='inputItem min=${this.min} max=${this.max}'></paper-slider>`
+            : `<input style="width:100%" type="range" class="inputItem" min="${this.min}" max="${this.max}" value="${(this.max+this.min)/2}">`;
+        
+
+        let source = html`
+        <div>${inputElement}</div>
+        <div style="display:flex; justify-content:space-between">
+            <div class="minLabel">${this.minLabel || ''}</div>
+            <div style="text-align:right" class="maxLabel">${this.maxLabel || ''}</div>
+        </div>
+        `
+        return source;
     }
-    get longHtml() {
-        let inputElement = customElements.get('paper-input')
-            ? `<paper-textarea class='inputItem'></paper-input>`
-            : `<textarea class='inputItem'></textarea`;
-        return html`${inputElement}`
-    }
+   
 
 }
 
-BaseElement.registerAAElement('aa-text-answer', AATextAnswer);
+BaseElement.registerAAElement('aa-slider', AASlider);

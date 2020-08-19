@@ -2056,7 +2056,7 @@ class AATextAnswer extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
         this.root = this.attachShadow({ mode: 'open' });
         let html = (this.long || (this.long === '')) ? this.longHtml : this.html;
 
-        this.root.innerHTML = this.css + `<div class='inputContainer'>${html}<div>`;
+        this.root.innerHTML = this.css + `<div class='inputContainer'>${html}</div>`;
 
         let label = this.label;
         let value = this.value;
