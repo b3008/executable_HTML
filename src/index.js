@@ -14,10 +14,14 @@ import AAMultipleChoice from './customElements/aa-multiple-choice/aa-multiple-ch
 import AAChoiceItem from './customElements/aa-choice-item/aa-choice-item.js';
 import AACheckboxes from './customElements/aa-checkboxes/aa-checkboxes.js';
 import AALikertScale from './customElements/aa-likert-scale/aa-likert-scale.js';
+import AASlider from './customElements/aa-slider/aa-slider.js';
 // debugger;
 
 
-export  {BaseElement, AAVariable, AAFunctionRandom, 
-    AAChoose,  AAWhen, AAOtherwise, AAMemory, AAScreen, 
+export {
+    BaseElement, AAVariable, AAFunctionRandom,
+    AAChoose, AAWhen, AAOtherwise, AAMemory, AAScreen,
     AASequence, AASession, AATextAnswer,
-    AAChoiceItem, AAMultipleChoice, AACheckboxes, AALikertScale  }
+    AAChoiceItem, AAMultipleChoice, AACheckboxes, AALikertScale,
+    AASlider
+}

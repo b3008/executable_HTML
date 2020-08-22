@@ -1936,6 +1936,210 @@ _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerA
 
 /***/ }),
 
+/***/ "./src/customElements/aa-slider/aa-slider.js":
+/*!***************************************************!*\
+  !*** ./src/customElements/aa-slider/aa-slider.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AASlider; });
+/* harmony import */ var _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../aa-baseElement/baseElement.js */ "./src/customElements/aa-baseElement/baseElement.js");
+
+class AASlider extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+
+
+
+    static get properties() {
+        return {
+            name: {
+                type: String,
+                userDefined: true
+            },
+            'min': {
+                type: Number,
+                userDefined: true
+            },
+            'max': {
+                type: Number,
+                userDefined: true
+            },
+            minLabel: {
+                type: String,
+                userDefined: true
+            },
+            maxLabel: {
+                type: String,
+                userDefined: true
+            },
+            'value': {
+                type: Number,
+                userDefined: false
+            },
+
+        }
+    }
+
+    static get acceptsElements() {
+        return null
+    }
+
+    static get observedAttributes() {
+        return Object.keys(AASlider.properties);
+    }
+
+
+    changeInputItem(type) {
+        if (type === 'long') {
+            let value = this.value;
+            let label = this.label;
+            this.inputItem = customElements.get('paper-textarea') ?
+                document.createElement('paper-textarea') : document.createElement('textarea');
+            this.inputItem.value = value;
+            this.inputItem.label = label;
+            this.inputItem.classList.add('inputItem');
+            this.fixBugInPaperTextarea(this.inputItem);
+            this.inputItem.addEventListener('change', (e) => {
+                this.value = e.target.value;
+            })
+            this.root.querySelector('.inputItem').replaceWith(this.inputItem);
+        } else {
+            let value = this.value;
+            let label = this.label;
+            this.inputItem = customElements.get('paper-input') ?
+                document.createElement('paper-input') : document.createElement('input');
+            this.inputItem.value = value;
+            this.inputItem.label = label;
+            this.inputItem.classList.add('inputItem');
+            this.inputItem.addEventListener('change', (e) => {
+                this.value = e.target.value;
+            })
+            this.root.querySelector('.inputItem').replaceWith(this.inputItem);
+        }
+    }
+
+
+    get value() {
+        if (!this.inputItem) {
+            return this.getAttribute('value');
+        }
+        return this.inputItem.value;
+    }
+    set value(val) {
+        this.setAttribute('value', val);
+        if (this.inputItem) {
+            this.inputItem.value = val;
+        }
+
+    }
+
+    get minLabel() {
+        return this.getAttribute('min-label');
+    }
+
+    get maxLabel() {
+        return this.getAttribute('max-label');
+    }
+
+    set minLabel(val) {
+        this.setAttribute('min-label', val);
+        if (this.inputItem) {
+            this.inputItem.minLabel = val;
+        }
+    }
+
+    set maxLabel(val) {
+        this.setAttribute('max-label', val);
+        if (this.inputItem) {
+            this.inputItem.maxLabel = val;
+        }
+    }
+
+    set min(val) {
+        this.setAttribute('min', val);
+        if (this.inputItem) {
+            this.inputItem.min = val;
+        }
+    }
+
+    set max(val) {
+        this.setAttribute('max', val);
+        if (this.inputItem) {
+            this.inputItem.max = val;
+        }
+    }
+
+
+    constructor() {
+        super();
+        this.root = this.attachShadow({ mode: 'open' });
+        
+        let innerHTML = this.css + `<div class='inputContainer'>${this.html}</div>`;
+        this.root.innerHTML = innerHTML;
+
+        let minLabel = this.minLabel;
+        let maxLabel = this.maxLabel;
+        let min = this.min || 0;
+        let max = this.max || 100;
+        let value = this.value || (this.min + this.max)/2;
+        this.inputItem = this.root.querySelector('.inputItem');
+        this.minLabelItem = this.root.querySelector('.minLabel');
+        this.maxLabelItem = this.root.querySelector('.maxLabel');
+        
+        if (minLabel) { this.minLabelItem.innerHTML = minLabel;}
+        if (maxLabel) { this.maxLabelItem.innerHTML = maxLabel;}
+        if (value) { this.inputItem.value = value; }
+        
+
+
+        this.inputItem.addEventListener('change', (e) => {
+            this.value = e.target.value;
+        });
+    }
+
+
+
+    connectedCallback() {
+        super.connectedCallback();
+
+
+    }
+
+    get css() {
+        return `<style>
+        :host{
+            display:block;
+            overflow:hidden;        
+        }
+        </style>
+        `;
+    }
+
+    get html() {
+        let inputElement = customElements.get('paper-slider')
+            ? `<paper-slider style="width:100%" class='inputItem min=${this.min} max=${this.max}'></paper-slider>`
+            : `<input style="width:100%" type="range" class="inputItem" min="${this.min}" max="${this.max}" value="${(this.max+this.min)/2}">`;
+        
+
+        let source = html`
+        <div>${inputElement}</div>
+        <div style="display:flex; justify-content:space-between">
+            <div class="minLabel">${this.minLabel || ''}</div>
+            <div style="text-align:right" class="maxLabel">${this.maxLabel || ''}</div>
+        </div>
+        `
+        return source;
+    }
+   
+
+}
+
+_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerAAElement('aa-slider', AASlider);
+
+/***/ }),
+
 /***/ "./src/customElements/aa-text-answer/aa-text-answer.js":
 /*!*************************************************************!*\
   !*** ./src/customElements/aa-text-answer/aa-text-answer.js ***!
@@ -2198,7 +2402,7 @@ _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerA
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! exports provided: BaseElement, AAVariable, AAFunctionRandom, AAChoose, AAWhen, AAOtherwise, AAMemory, AAScreen, AASequence, AASession, AATextAnswer, AAChoiceItem, AAMultipleChoice, AACheckboxes, AALikertScale */
+/*! exports provided: BaseElement, AAVariable, AAFunctionRandom, AAChoose, AAWhen, AAOtherwise, AAMemory, AAScreen, AASequence, AASession, AATextAnswer, AAChoiceItem, AAMultipleChoice, AACheckboxes, AALikertScale, AASlider */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2248,7 +2452,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _customElements_aa_likert_scale_aa_likert_scale_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./customElements/aa-likert-scale/aa-likert-scale.js */ "./src/customElements/aa-likert-scale/aa-likert-scale.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AALikertScale", function() { return _customElements_aa_likert_scale_aa_likert_scale_js__WEBPACK_IMPORTED_MODULE_14__["default"]; });
 
+/* harmony import */ var _customElements_aa_slider_aa_slider_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./customElements/aa-slider/aa-slider.js */ "./src/customElements/aa-slider/aa-slider.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AASlider", function() { return _customElements_aa_slider_aa_slider_js__WEBPACK_IMPORTED_MODULE_15__["default"]; });
+
 // import '../dist/paper-polymer.js';
+
 
 
 
