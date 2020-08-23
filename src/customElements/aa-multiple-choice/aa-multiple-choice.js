@@ -121,6 +121,8 @@ export default class AAMultipleChoice extends BaseElement {
                     d2.style.textAlign = 'center'
                     d2.style.marginLeft = '0px';
                     d2.style.padding = '5px';
+                    d2.style.whiteSpace = "nowrap";
+                    d2.style.minWidth = "100px";
                     let newDiv = document.createElement('div');
                     newDiv.style.marginLeft = 'var(--paper-radio-button-label-spacing,10px)';
                     newDiv.style.display='flex';
