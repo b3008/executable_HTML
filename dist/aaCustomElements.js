@@ -1016,6 +1016,23 @@ class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
                 type:Number,
                 userDefined:true,
             },
+
+            "tag-start":{
+                type:String,
+                userDefined:true,
+                value:''
+            },
+            "tag-end":{
+                type:String,
+                userDefined:true,
+                value:''
+            },
+            "tag-middle":{
+                type:String,
+                userDefined:true,
+                value:''
+            },
+
             
 
         }
@@ -1056,7 +1073,17 @@ class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
         for(let i=0; i<this.items; i++){
             items += `<aa-choice-item name="${i+1}">${i+1}</aa-choice-item>`;
         }
-        let result =  html`<aa-multiple-choice horizontal="true" name="${this.name}">${items}</aa-multiple-choice>`
+        let result =  html`<div>
+                                <aa-multiple-choice horizontal="true" name="${this.name}">${items}</aa-multiple-choice>
+                                <div style="width:100%; display:flex; justify-content:space-evenly; text-align:center">
+                                <div >${this.getAttribute("tag-start") || ''}</div>
+                                <div style="width:20%"></div>
+                                <div style="width:20%; text-align:center; border:solid">${this.getAttribute("tag-start") || ''}</div>
+                                <div style="width:20%"></div>
+                                <div >${this.getAttribute("tag-end") || ''}</div>
+                                </div>
+                            </div>
+                                `
         console.log(result);
         return result;
     }
@@ -1258,7 +1285,7 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
                     
 
                     this.radioGroup.style.display='flex';
-                    this.radioGroup.style.justifyContent='space-around';
+                    this.radioGroup.style.justifyContent='space-evenly';
 
                     // debugger;
                     let d1 = child.shadowRoot.querySelector('#radioContainer');
@@ -1266,8 +1293,9 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
                     d2.style.textAlign = 'center'
                     d2.style.marginLeft = '0px';
                     d2.style.padding = '5px';
-                    d2.style.whiteSpace = "nowrap";
-                    d2.style.minWidth = "100px";
+                    // d2.style.whiteSpace = "nowrap";
+                    // d2.style.minWidth = "50px";
+                    // d2.style.maxWidth = "90px";
                     let newDiv = document.createElement('div');
                     newDiv.style.marginLeft = 'var(--paper-radio-button-label-spacing,10px)';
                     newDiv.style.display='flex';

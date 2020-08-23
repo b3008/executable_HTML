@@ -23,7 +23,7 @@ describe('aa-likert-scale', () => {
     describe('functions', function () {
         it('gets and sets value', (done) => {
           
-            container.innerHTML =  `<aa-likert-scale name="scale1" id="scale1" value="1">
+            container.innerHTML =  `<aa-likert-scale items=6 name="scale1" id="scale1" value="1" tag-start="not at all" tag-middle="neutral" tag-end="very much">
                                     </aa-likert-scale>`;
             
 
