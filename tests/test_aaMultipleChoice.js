@@ -34,6 +34,20 @@ describe('aa-multiple-choice', () => {
             done();
         });
 
+        it('is horizontal', (done) => {
+          
+            container.innerHTML =  `<aa-multiple-choice label='tata' value='h' horizontal>
+                                        <aa-choice-item value='h'> choice one </aa-choice-item>
+                                        <aa-choice-item> choice two </aa-choice-item>
+                                    </aa-multiple-choice>`;
+            let mChoice = document.querySelector('aa-multiple-choice');
+            assert(mChoice.value === 'h', 'value should be h');
+            mChoice.radioGroup.children[1].click();
+            assert(mChoice.value === 'choice two', 'value should be text of aa-choice-item without value set');
+            done();
+        });
+
+
     });
 
 });
