@@ -1067,6 +1067,41 @@ class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
     }
 
 
+    getTags(){
+        
+        let c = '';
+        let start = `<div style="width:100px; white-space:nowrap">${this.getAttribute("tag-start") || ''}</div>`
+        let middle = `<div style="width:100px; white-space:nowrap">${this.getAttribute("tag-middle") || ''}</div>`
+        let end = `<div style="width:100px; white-space:nowrap">${this.getAttribute("tag-end") || ''}</div>`
+        let placeholder = `<div style="width:50px"></div>`;
+        
+
+        let items = parseInt(this.items)
+        for(let i=1; i<=items; i++){
+            
+            console.log(Math.floor((items+1)/2));
+            
+            if(i==1) {
+                c+=start;
+            }
+            else if(i==Math.floor((items+1)/2)) {
+
+                c+=middle;
+            }
+            else if(i==items) {
+                c+=end;
+            } else{
+                c+=placeholder;
+            }
+
+            
+        }   
+
+        let result = `<div style="font-family: Roboto, Noto, sans-serif; width:100%; display:flex; justify-content:space-evenly; text-align:center">${c}</div>`
+            console.log(result);
+            return result;
+
+    }
     get html(){
         let items = ``;
         if((!this.items)||(this.items==="undefined")) this.items = 5;
@@ -1075,13 +1110,7 @@ class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
         }
         let result =  html`<div>
                                 <aa-multiple-choice horizontal="true" name="${this.name}">${items}</aa-multiple-choice>
-                                <div style="width:100%; display:flex; justify-content:space-evenly; text-align:center">
-                                <div >${this.getAttribute("tag-start") || ''}</div>
-                                <div style="width:20%"></div>
-                                <div style="width:20%; text-align:center; border:solid">${this.getAttribute("tag-start") || ''}</div>
-                                <div style="width:20%"></div>
-                                <div >${this.getAttribute("tag-end") || ''}</div>
-                                </div>
+                                ${this.getTags()}    
                             </div>
                                 `
         console.log(result);
