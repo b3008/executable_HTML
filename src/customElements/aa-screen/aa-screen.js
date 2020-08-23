@@ -72,6 +72,7 @@ export default class AAScreen extends BaseElement {
 
     connectedCallback() {
        
+        debugger;
         super.connectedCallback();
         
 
@@ -144,7 +145,7 @@ export default class AAScreen extends BaseElement {
     }
 
     submitButtonClick(e) {
-
+        debugger;
         let userMessage = this.querySelector('#userMessage');
         if (this.hasChildrenThatDemandResponse()) {
 
@@ -164,7 +165,10 @@ export default class AAScreen extends BaseElement {
         if (typeof e.detail.callback != 'undefined') {
             e.detail.callback(e);
         }
-        if (this.autohide) { this.hide(); }
+        if (this.autohide) { 
+            debugger;
+            this.hide(); 
+        }
 
     }
 

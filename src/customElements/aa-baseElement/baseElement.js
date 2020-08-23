@@ -176,7 +176,7 @@ export default class BaseElement extends HTMLElement {
                 let prop = this.toCamelCase(keys[i]);
                 if((typeof this[prop]==="undefined")||(this[prop]===null)){
                     // this[prop] = p[keys[i]].value ;
-                    this.setAttribute(this.prop, this.getAttribute("prop") || p[keys[i]].value);
+                    this.setAttribute(keys[i], this.getAttribute(keys[i]) || p[keys[i]].value);
                 }
                 
             }
