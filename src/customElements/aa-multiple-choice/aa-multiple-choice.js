@@ -113,7 +113,7 @@ export default class AAMultipleChoice extends BaseElement {
                     
 
                     this.radioGroup.style.display='flex';
-                    this.radioGroup.style.justifyContent='space-around';
+                    this.radioGroup.style.justifyContent='space-evenly';
 
                     // debugger;
                     let d1 = child.shadowRoot.querySelector('#radioContainer');
@@ -121,8 +121,9 @@ export default class AAMultipleChoice extends BaseElement {
                     d2.style.textAlign = 'center'
                     d2.style.marginLeft = '0px';
                     d2.style.padding = '5px';
-                    d2.style.whiteSpace = "nowrap";
-                    d2.style.minWidth = "100px";
+                    // d2.style.whiteSpace = "nowrap";
+                    // d2.style.minWidth = "50px";
+                    // d2.style.maxWidth = "90px";
                     let newDiv = document.createElement('div');
                     newDiv.style.marginLeft = 'var(--paper-radio-button-label-spacing,10px)';
                     newDiv.style.display='flex';
