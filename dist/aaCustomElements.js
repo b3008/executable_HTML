@@ -1150,36 +1150,36 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
 
 
 
-    static get properties(){
+    static get properties() {
         return {
-            horizontal:{
-                type:Boolean,
-                value:false,
-                userDefined:true
+            horizontal: {
+                type: Boolean,
+                value: false,
+                userDefined: true
             },
 
-            vertical:{
-                type:Boolean,
-                value:true,
-                userDefined:true
-            },
-            
-            name:{
-                type:String,
-                userDefined:true
+            vertical: {
+                type: Boolean,
+                value: true,
+                userDefined: true
             },
 
-            value:{
-                type:String,
-                userDefined:true
+            name: {
+                type: String,
+                userDefined: true
+            },
+
+            value: {
+                type: String,
+                userDefined: true
             },
 
         }
     }
 
-    static get acceptsElements(){
+    static get acceptsElements() {
         return [
-            "aa-choice-item"
+            'aa-choice-item'
         ]
     }
 
@@ -1204,10 +1204,10 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
 
     constructor() {
         super();
-        
+
         this.root = this.attachShadow({ mode: 'open' });
         this.root.innerHTML = this.css + this.html;
-        
+
         this.radioGroup = this.root.querySelector('#radioGroup');
         this.radioGroup.addEventListener('change', (e) => {
             this.value = e.target.name;
@@ -1228,15 +1228,16 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
             this.radioGroup.setAttribute('selected', this.getAttribute('value'));
         }
 
-        this.style.display="block";
+        this.style.display = 'block';
     }
 
     attachToShadowDomAccordingToKind(node) {
-        
+
         if (!_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].isAAElement(node)) {
             this.root.appendChild(_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].copy(node));
         } else {
             if (node.tagName === 'AA-CHOICE-ITEM') {
+
                 let child = document.createElement('paper-radio-button');
                 if (node.getAttribute('value')) {
                     child.setAttribute('name', node.getAttribute('value'));
@@ -1246,9 +1247,40 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
                 if (!((this.horizontal === '') || (this.horizontal))) {
                     child.style.display = 'block';
                 }
+
                 child.innerHTML = node.innerHTML;
+                 
                 this.radioGroup.appendChild(child);
                 this.choiceItems.push(child);
+
+
+                if (((this.horizontal === '') || (this.horizontal))) {
+                    
+
+                    this.radioGroup.style.display='flex';
+                    this.radioGroup.style.justifyContent='space-around';
+
+                    // debugger;
+                    let d1 = child.shadowRoot.querySelector('#radioContainer');
+                    let d2 = child.shadowRoot.querySelector('#radioLabel');
+                    d2.style.textAlign = 'center'
+                    d2.style.marginLeft = '0px';
+                    d2.style.padding = '5px';
+                    let newDiv = document.createElement('div');
+                    newDiv.style.marginLeft = 'var(--paper-radio-button-label-spacing,10px)';
+                    newDiv.style.display='flex';
+                    newDiv.style.flexDirection='column';
+                    newDiv.style.alignItems = 'center';
+                    newDiv.style.textAlign = 'center';
+                    child.shadowRoot.appendChild(newDiv);
+                    newDiv.appendChild(d1);
+                    newDiv.appendChild(d2);
+ 
+                
+                } else {
+
+                }
+
             }
         }
     }
