@@ -133,7 +133,7 @@ export default class AAMultipleChoice extends BaseElement {
  
                 
                 } else {
-                    // debugger;
+
                 }
 
             }
