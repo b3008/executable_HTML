@@ -134,6 +134,11 @@ describe('aa-sequence', () => {
                                 <div>screen2</div>
                         </aa-screen>
 
+
+
+                        <aa-screen id='screen3' name='third'>
+                                <div>screen3</div>
+                        </aa-screen>
                     </aa-sequence>
 
                   

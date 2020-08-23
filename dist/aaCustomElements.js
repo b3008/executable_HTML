@@ -319,7 +319,7 @@ class BaseElement extends HTMLElement {
                 let prop = this.toCamelCase(keys[i]);
                 if((typeof this[prop]==="undefined")||(this[prop]===null)){
                     // this[prop] = p[keys[i]].value ;
-                    this.setAttribute(this.prop, this.getAttribute("prop") || p[keys[i]].value);
+                    this.setAttribute(keys[i], this.getAttribute(keys[i]) || p[keys[i]].value);
                 }
                 
             }
@@ -1353,6 +1353,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
     connectedCallback() {
        
+        debugger;
         super.connectedCallback();
         
 
@@ -1425,7 +1426,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     }
 
     submitButtonClick(e) {
-
+        debugger;
         let userMessage = this.querySelector('#userMessage');
         if (this.hasChildrenThatDemandResponse()) {
 
@@ -1445,7 +1446,10 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         if (typeof e.detail.callback != 'undefined') {
             e.detail.callback(e);
         }
-        if (this.autohide) { this.hide(); }
+        if (this.autohide) { 
+            debugger;
+            this.hide(); 
+        }
 
     }
 
