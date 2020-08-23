@@ -34,7 +34,7 @@ export default class AAMultipleChoice extends BaseElement {
 
     static get acceptsElements() {
         return [
-            "aa-choice-item"
+            'aa-choice-item'
         ]
     }
 
@@ -83,7 +83,7 @@ export default class AAMultipleChoice extends BaseElement {
             this.radioGroup.setAttribute('selected', this.getAttribute('value'));
         }
 
-        this.style.display = "block";
+        this.style.display = 'block';
     }
 
     attachToShadowDomAccordingToKind(node) {
@@ -112,21 +112,21 @@ export default class AAMultipleChoice extends BaseElement {
                 if (((this.horizontal === '') || (this.horizontal))) {
                     
 
-                    this.radioGroup.style.display="flex";
-                    this.radioGroup.style.justifyContent="space-around";
+                    this.radioGroup.style.display='flex';
+                    this.radioGroup.style.justifyContent='space-around';
 
                     // debugger;
-                    let d1 = child.shadowRoot.querySelector("#radioContainer");
-                    let d2 = child.shadowRoot.querySelector("#radioLabel");
-                    d2.style.textAlign = "center"
-                    d2.style.marginLeft = "0px";
-                    d2.style.padding = "5px";
-                    let newDiv = document.createElement("div");
+                    let d1 = child.shadowRoot.querySelector('#radioContainer');
+                    let d2 = child.shadowRoot.querySelector('#radioLabel');
+                    d2.style.textAlign = 'center'
+                    d2.style.marginLeft = '0px';
+                    d2.style.padding = '5px';
+                    let newDiv = document.createElement('div');
                     newDiv.style.marginLeft = 'var(--paper-radio-button-label-spacing,10px)';
-                    newDiv.style.display="flex";
-                    newDiv.style.flexDirection="column";
-                    newDiv.style.alignItems = "center";
-                    newDiv.style.textAlign = "center";
+                    newDiv.style.display='flex';
+                    newDiv.style.flexDirection='column';
+                    newDiv.style.alignItems = 'center';
+                    newDiv.style.textAlign = 'center';
                     child.shadowRoot.appendChild(newDiv);
                     newDiv.appendChild(d1);
                     newDiv.appendChild(d2);
