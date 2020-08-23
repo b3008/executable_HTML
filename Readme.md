@@ -47,3 +47,41 @@ Alternatively, run `npm run build`
 <b>my html</b>
 ```
 -->
+
+## Developing
+
+
+
+### Import BaseElement
+
+Develop a new component by inheriting from BaseElement
+
+```
+import BaseElement from './../aa-baseElement/baseElement.js';
+
+export default class NewComponent extends BaseElement {
+}
+```
+
+### properties
+
+The `properties` getter describes the attributes for the element e.g.
+
+```
+myAttribute:{
+    type : <String, Nubmer, Boolean, etc>
+    userDefined : <true | false>  is it a property that can be set by the user? (knowing this can be used in building an editor for the element)
+    value : does it have a default value?
+
+}   
+```
+
+`acceptsElements` is an array of the tags that can be nested inside this element. knowing this can be used in building an editor for the element.
+
+
+
+
+
+### Building
+
+To get the new component built into the release package, import it in to ./src/index.js
