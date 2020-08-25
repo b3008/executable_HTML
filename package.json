@@ -15,8 +15,10 @@
     "@polymer/paper-radio-group": "^3.0.1",
     "@polymer/paper-slider": "^3.0.1",
     "@polymer/paper-toggle-button": "^3.0.1",
+    "js-yaml": "^3.14.0",
     "jsep": "^0.3.4",
-    "karma-coverage": "^2.0.3"
+    "karma-coverage": "^2.0.3",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@adobe/es-modules-middleware": "^1.1.0",

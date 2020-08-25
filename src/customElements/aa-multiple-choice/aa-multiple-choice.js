@@ -63,6 +63,10 @@ export default class AAMultipleChoice extends BaseElement {
     constructor() {
         super();
 
+        debugger;
+        if(this.horizontal===''){
+            this.horizontal = true;
+        }
         this.root = this.attachShadow({ mode: 'open' });
         this.root.innerHTML = this.css + this.html;
 
@@ -157,6 +161,10 @@ export default class AAMultipleChoice extends BaseElement {
 
     toJSON(){
         let result = super.toJSON();
+        if((result.horizontal)){
+            result.horizontal = true;
+        }
+
         let children = [];
         for(let i=0; i<this.children.length; i++){
             children.push(this.children[i].toJSON());

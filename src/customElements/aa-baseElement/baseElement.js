@@ -1,4 +1,4 @@
-
+import * as yaml from '../../lib/yaml/js-yaml.js';
 
 
 var html = function (txt, ...val) {
@@ -204,9 +204,11 @@ export default class BaseElement extends HTMLElement {
 
     getAttributes(){
         let result = {};
-        let attributes = Object.keys(temp1.constructor.properties)
+        let attributes = Object.keys(this.constructor.properties)
         for(let i=0; i<attributes.length; i++){
-            result[attributes[i]]  = this.getAttribute(attributes[i]);
+            if(typeof this.getAttribute(attributes[i])!="undefined"){
+                result[attributes[i]]  = this.getAttribute(attributes[i]);
+            }
         }
         return result;
         
@@ -217,6 +219,11 @@ export default class BaseElement extends HTMLElement {
         let result = {};
         result[this.tagName.toLowerCase()] = this.getAttributes()
         return result;
+    }
+
+    toYAML(){
+        // return YAML.stringify(this.toJSON(), 4);
+        return jsyaml.dump(this.toJSON())
     }
 
     _dispatchDebugEvent(detail) {
