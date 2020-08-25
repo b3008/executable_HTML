@@ -395,7 +395,16 @@ class BaseElement extends HTMLElement {
         let result = {};
         let attributes = Object.keys(this.constructor.properties)
         for(let i=0; i<attributes.length; i++){
+            if(!this.constructor.properties[attributes[i]].userDefined) {
+                // users should need not be concerned
+                continue;
+            }
+            
             if(typeof this.getAttribute(attributes[i])!="undefined"){
+                if(this.constructor.properties[attributes[i]].value == this.getAttribute(attributes[i])){
+                    // value is default value, no need to be part of specification
+                    continue;
+                }
                 result[attributes[i]]  = this.getAttribute(attributes[i]);
             }
         }
