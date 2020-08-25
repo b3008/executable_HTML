@@ -1353,7 +1353,6 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
     constructor() {
         super();
 
-        debugger;
         if(this.horizontal===''){
             this.horizontal = true;
         }

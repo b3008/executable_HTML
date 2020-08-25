@@ -63,7 +63,6 @@ export default class AAMultipleChoice extends BaseElement {
     constructor() {
         super();
 
-        debugger;
         if(this.horizontal===''){
             this.horizontal = true;
         }
