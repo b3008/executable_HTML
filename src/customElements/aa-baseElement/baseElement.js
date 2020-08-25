@@ -202,6 +202,22 @@ export default class BaseElement extends HTMLElement {
         return nodeCopy;
     }
 
+    getAttributes(){
+        let result = {};
+        let attributes = Object.keys(temp1.constructor.properties)
+        for(let i=0; i<attributes.length; i++){
+            result[attributes[i]]  = this.getAttribute(attributes[i]);
+        }
+        return result;
+        
+    }
+
+    toJSON(){
+        
+        let result = {};
+        result[this.tagName.toLowerCase()] = this.getAttributes()
+        return result;
+    }
 
     _dispatchDebugEvent(detail) {
         if (this.debug) {

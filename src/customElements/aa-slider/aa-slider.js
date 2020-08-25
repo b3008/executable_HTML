@@ -17,11 +17,11 @@ export default class AASlider extends BaseElement {
                 type: Number,
                 userDefined: true
             },
-            minLabel: {
+            'min-label': {
                 type: String,
                 userDefined: true
             },
-            maxLabel: {
+            'max-label': {
                 type: String,
                 userDefined: true
             },

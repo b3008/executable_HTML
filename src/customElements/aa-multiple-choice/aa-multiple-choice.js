@@ -42,6 +42,9 @@ export default class AAMultipleChoice extends BaseElement {
         return Object.keys(AAMultipleChoice.properties);
     }
 
+    get staticObject(){
+        return AAMultipleChoice;
+    }
 
     get value() {
 
@@ -151,6 +154,17 @@ export default class AAMultipleChoice extends BaseElement {
         return ``;
     }
 
+
+    toJSON(){
+        let result = super.toJSON();
+        let children = [];
+        for(let i=0; i<this.children.length; i++){
+            children.push(this.children[i].toJSON());
+        }
+        
+        result[this.tagName.toLowerCase()].items = children;
+        return result; 
+    }
 }
 
 
