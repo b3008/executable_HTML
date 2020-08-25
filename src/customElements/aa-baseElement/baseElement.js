@@ -211,7 +211,7 @@ export default class BaseElement extends HTMLElement {
                 continue;
             }
             
-            if(typeof this.getAttribute(attributes[i])!="undefined"){
+            if((typeof this.getAttribute(attributes[i])!="undefined")&&(this.getAttribute(attributes[i])!="undefined")){
                 if(this.constructor.properties[attributes[i]].value == this.getAttribute(attributes[i])){
                     // value is default value, no need to be part of specification
                     continue;

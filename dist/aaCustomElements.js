@@ -400,7 +400,7 @@ class BaseElement extends HTMLElement {
                 continue;
             }
             
-            if(typeof this.getAttribute(attributes[i])!="undefined"){
+            if((typeof this.getAttribute(attributes[i])!="undefined")&&(this.getAttribute(attributes[i])!="undefined")){
                 if(this.constructor.properties[attributes[i]].value == this.getAttribute(attributes[i])){
                     // value is default value, no need to be part of specification
                     continue;
@@ -668,12 +668,9 @@ class AAChoiceItem extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
     }
 
     toJSON(){
-        return {
-            'aa-choice-item':{
-                value: this.getAttribute("value"),
-                label: this.innerHTML.trim()
-            }
-        }
+        let result= super.toJSON();
+        result[this.tagName.toLowerCase()].label = this.innerHTML.trim();
+        return result;
     }
 }
 
@@ -1115,22 +1112,24 @@ class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
                 userDefined:true,
             },
 
-            "tag-start":{
-                type:String,
-                userDefined:true,
-                value:''
-            },
-            "tag-end":{
-                type:String,
-                userDefined:true,
-                value:''
-            },
-            "tag-middle":{
+            "start-label":{
                 type:String,
                 userDefined:true,
                 value:''
             },
 
+            "middle-label":{
+                type:String,
+                userDefined:true,
+                value:''
+            },
+
+            "end-label":{
+                type:String,
+                userDefined:true,
+                value:''
+            },
+            
             
 
         }
@@ -1168,9 +1167,9 @@ class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
     getTags(){
         
         let c = '';
-        let start = `<div style="width:100px; white-space:nowrap">${this.getAttribute("tag-start") || ''}</div>`
-        let middle = `<div style="width:100px; white-space:nowrap">${this.getAttribute("tag-middle") || ''}</div>`
-        let end = `<div style="width:100px; white-space:nowrap">${this.getAttribute("tag-end") || ''}</div>`
+        let start = `<div style="width:100px; white-space:nowrap">${this.getAttribute("start-label") || ''}</div>`
+        let middle = `<div style="width:100px; white-space:nowrap">${this.getAttribute("middle-label") || ''}</div>`
+        let end = `<div style="width:100px; white-space:nowrap">${this.getAttribute("end-label") || ''}</div>`
         let placeholder = `<div style="width:50px"></div>`;
         
 

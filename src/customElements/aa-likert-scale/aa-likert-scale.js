@@ -27,22 +27,24 @@ export default class AALikertScale extends BaseElement {
                 userDefined:true,
             },
 
-            "tag-start":{
-                type:String,
-                userDefined:true,
-                value:''
-            },
-            "tag-end":{
-                type:String,
-                userDefined:true,
-                value:''
-            },
-            "tag-middle":{
+            "start-label":{
                 type:String,
                 userDefined:true,
                 value:''
             },
 
+            "middle-label":{
+                type:String,
+                userDefined:true,
+                value:''
+            },
+
+            "end-label":{
+                type:String,
+                userDefined:true,
+                value:''
+            },
+            
             
 
         }
@@ -80,9 +82,9 @@ export default class AALikertScale extends BaseElement {
     getTags(){
         
         let c = '';
-        let start = `<div style="width:100px; white-space:nowrap">${this.getAttribute("tag-start") || ''}</div>`
-        let middle = `<div style="width:100px; white-space:nowrap">${this.getAttribute("tag-middle") || ''}</div>`
-        let end = `<div style="width:100px; white-space:nowrap">${this.getAttribute("tag-end") || ''}</div>`
+        let start = `<div style="width:100px; white-space:nowrap">${this.getAttribute("start-label") || ''}</div>`
+        let middle = `<div style="width:100px; white-space:nowrap">${this.getAttribute("middle-label") || ''}</div>`
+        let end = `<div style="width:100px; white-space:nowrap">${this.getAttribute("end-label") || ''}</div>`
         let placeholder = `<div style="width:50px"></div>`;
         
 

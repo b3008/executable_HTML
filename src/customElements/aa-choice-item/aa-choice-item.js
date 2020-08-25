@@ -32,12 +32,9 @@ export default class AAChoiceItem extends BaseElement {
     }
 
     toJSON(){
-        return {
-            'aa-choice-item':{
-                value: this.getAttribute("value"),
-                label: this.innerHTML.trim()
-            }
-        }
+        let result= super.toJSON();
+        result[this.tagName.toLowerCase()].label = this.innerHTML.trim();
+        return result;
     }
 }
 
