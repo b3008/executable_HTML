@@ -85,3 +85,8 @@ myAttribute:{
 ### Building
 
 To get the new component built into the release package, import it in to ./src/index.js
+
+
+## External libraries
+
+This codebase uses slightly modified versions of jsep and js-yaml, to be able to import them (e.g, with the addition of `export default`)

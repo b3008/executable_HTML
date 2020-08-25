@@ -30,6 +30,15 @@ export default class AAChoiceItem extends BaseElement {
         super.connectedCallback();
 
     }
+
+    toJSON(){
+        return {
+            'aa-choice-item':{
+                value: this.getAttribute("value"),
+                label: this.innerHTML.trim()
+            }
+        }
+    }
 }
 
 BaseElement.registerAAElement('aa-choice-item', AAChoiceItem);
