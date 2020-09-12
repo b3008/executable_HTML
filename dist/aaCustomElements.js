@@ -187,10 +187,9 @@ module.exports = function(originalModule) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BaseElement; });
 /* harmony import */ var _lib_yaml_js_yaml_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/yaml/js-yaml.js */ "./src/lib/yaml/js-yaml.js");
-/* harmony import */ var _lib_jsl_jsl2_1_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/jsl/jsl2.1.js */ "./src/lib/jsl/jsl2.1.js");
-/* harmony import */ var _lib_jsl_jsl2_1_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_lib_jsl_jsl2_1_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _lib_html2jsl_html2jsl_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/html2jsl/html2jsl.js */ "./src/lib/html2jsl/html2jsl.js");
 
-
+// import * as jsl from '../../lib/jsl/jsl2.1.js';
 
 
 var html = function (txt, ...val) {
@@ -361,12 +360,12 @@ class BaseElement extends HTMLElement {
 
         let p = this.constructor.properties;
         if (p) {
-            let keys = Object.keys(p)
+            let keys = Object.keys(p);
             for (let i = 0; i < keys.length; i++) {
                 console.log(keys[i], p[keys[i]].value)
 
                 let prop = this.toCamelCase(keys[i]);
-                if ((typeof this[prop] === "undefined") || (this[prop] === null)) {
+                if ((typeof this[prop] === 'undefined') || (this[prop] === null)) {
                     // this[prop] = p[keys[i]].value ;
                     this.setAttribute(keys[i], this.getAttribute(keys[i]) || p[keys[i]].value);
                 }
@@ -396,14 +395,14 @@ class BaseElement extends HTMLElement {
 
     getAttributes() {
         let result = {};
-        let attributes = Object.keys(this.constructor.properties)
+        let attributes = Object.keys(this.constructor.properties);
         for (let i = 0; i < attributes.length; i++) {
             if (!this.constructor.properties[attributes[i]].userDefined) {
                 // users should need not be concerned
                 continue;
             }
 
-            if ((typeof this.getAttribute(attributes[i]) != "undefined") && (this.getAttribute(attributes[i]) != "undefined")) {
+            if ((typeof this.getAttribute(attributes[i]) !== 'undefined') && (this.getAttribute(attributes[i]) !== 'undefined')) {
                 if (this.constructor.properties[attributes[i]].value == this.getAttribute(attributes[i])) {
                     // value is default value, no need to be part of specification
                     continue;
@@ -423,7 +422,7 @@ class BaseElement extends HTMLElement {
     }
 
     static nodeToJSON(node) {
-        if (node.nodeType == document.TEXT_NODE) {
+        if (node.nodeType === document.TEXT_NODE) {
             let result = {};
             result[node.nodeName] = node.textContent;
             return result;
@@ -438,7 +437,7 @@ class BaseElement extends HTMLElement {
             let attrs = node.getAttributeNames();
             let attrObj = {};
             for (let i = 0; i < attrs.length; i++) {
-                attrObj[attrs[i]] = node.getAttribute(attrs[i])
+                attrObj[attrs[i]] = node.getAttribute(attrs[i]);
             }
             let childNodes = [];
             for (let i = 0; i < node.childNodes.length; i++) {
@@ -457,77 +456,12 @@ class BaseElement extends HTMLElement {
         return jsyaml.dump(this.toJSON())
     }
 
+
     toJSL(depth) {
-        if (!depth) depth = 0;
-        let tabs = "";
-        for (let i = 0; i < depth; i++) { tabs += "\t" };
-        let args = "";
-        for (let i = 0; i < this.childNodes.length; i++) {
-            if (i > 0) args += ", \n"
-            args += BaseElement.toJSL(this.childNodes[i])
-        }
-        let attrs = JSON.stringify(this.getAttributes());
-        console.log("args and attrs:", args, attrs);
-        if (attrs != "{}") {
-            return `${this.tagName}( ${args}, ${attrs} )`;
-        } else {
-            return `${this.tagName}(\n${args}\n)`;
-        }
+        return _lib_html2jsl_html2jsl_js__WEBPACK_IMPORTED_MODULE_1__["nodeToJSL"](this);
     }
 
 
-    static nodeToJSL(node, depth) {
-
-
-
-        if (!depth) depth = 0;
-        let tabs = "";
-        for (let i = 0; i < depth; i++) { tabs += "\t" };
-
-
-        if (node.nodeType == document.TEXT_NODE) {
-            let result = node.textContent.trim();
-            if (result == "") {
-                return undefined
-            } else { return `${tabs}"${result}"` };
-        }
-        else if (node.toJSL) {
-
-            return node.toJSL();
-        } else {
-
-            let result = {};
-            let attrs = node.getAttributeNames();
-            let attrObj = {};
-            for (let i = 0; i < attrs.length; i++) {
-                if (node.getAttribute(attrs[i]) != "undefined") {
-                    attrObj[attrs[i]] = node.getAttribute(attrs[i])
-                }
-            }
-            let attrStr = JSON.stringify(attrObj);
-
-            let args = "";
-            let prevAddition = null;
-            for (let i = 0; i < node.childNodes.length; i++) {
-                let addition = BaseElement.nodeToJSL(node.childNodes[i], depth + 1);
-                if (addition) {
-                    console.log(addition);
-                    if (prevAddition) args += `,\n${tabs}\t`; else args += `${tabs}`;
-                    args += BaseElement.nodeToJSL(node.childNodes[i], depth + 1);
-                    prevAddition = addition;
-                } 
-            }
-
-
-
-            if (attrStr != "{}") {
-                return `${node.tagName}(\n${args}, ${attrStr}\n${tabs})`;
-            } else
-                return `${node.tagName}(\n${args}\n${tabs})`;
-
-        }
-
-    }
 
 
     _dispatchDebugEvent(detail) {
@@ -697,7 +631,7 @@ class AACheckboxes extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
                 child.innerHTML = node.innerHTML;
                 this.root.appendChild(child);
 
-                console.log('name: ', child.name)
+                // console.log('name: ', child.name);
                 this.boxes.push(child);
             }
         }
@@ -972,7 +906,7 @@ class AAChoose extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
                 if (value === 'null') { finalValue = 'null'; }
                 else if (value === 'true') { finalValue = 'true'; }
                 else if (value === 'false') { finalValue = 'false'; }
-                else finalValue = `"${value}"`
+                else finalValue = `"${value}"`;
             }
             let r = new RegExp(upperCaseIdentifiers[i], 'g');
             result = result.replace(r, finalValue);
@@ -1528,7 +1462,7 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
                     // debugger;
                     let d1 = child.shadowRoot.querySelector('#radioContainer');
                     let d2 = child.shadowRoot.querySelector('#radioLabel');
-                    d2.style.textAlign = 'center'
+                    d2.style.textAlign = 'center';
                     d2.style.marginLeft = '0px';
                     d2.style.padding = '5px';
                     // d2.style.whiteSpace = "nowrap";
@@ -2406,8 +2340,8 @@ class AASlider extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
         let minLabel = this.minLabel;
         let maxLabel = this.maxLabel;
-        let min = this.min || 0;
-        let max = this.max || 100;
+        // let min = this.min || 0;
+        // let max = this.max || 100;
         let value = this.value || (this.min + this.max)/2;
         this.inputItem = this.root.querySelector('.inputItem');
         this.minLabelItem = this.root.querySelector('.minLabel');
@@ -2417,8 +2351,6 @@ class AASlider extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         if (maxLabel) { this.maxLabelItem.innerHTML = maxLabel;}
         if (value) { this.inputItem.value = value; }
         
-
-
         this.inputItem.addEventListener('change', (e) => {
             this.value = e.target.value;
         });
@@ -2800,6 +2732,114 @@ __webpack_require__.r(__webpack_exports__);
 // debugger;
 
 
+
+
+/***/ }),
+
+/***/ "./src/lib/html2jsl/html2jsl.js":
+/*!**************************************!*\
+  !*** ./src/lib/html2jsl/html2jsl.js ***!
+  \**************************************/
+/*! exports provided: nodeToJSL */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "nodeToJSL", function() { return nodeToJSL; });
+
+function nodeToJSL(node) {
+
+    if (node.nodeType === document.TEXT_NODE) {
+        let result = node.textContent.trim();
+        if (result === '') {
+            return undefined;
+        } else { return `"${result}"`; }
+
+    } else {
+
+        let result = {};
+        let attrNames = node.getAttributeNames();
+        let attrObj = {};
+        for (let i = 0; i < attrNames.length; i++) {
+            if (node.getAttribute(attrNames[i]) !== 'undefined') {
+                attrObj[attrNames[i]] = node.getAttribute(attrNames[i]);
+            }
+        }
+
+        let argsStrings = [];
+        for (let i = 0; i < node.childNodes.length; i++) {
+            let addition = nodeToJSL(node.childNodes[i]);
+            if (addition) {
+                argsStrings.push(nodeToJSL(node.childNodes[i]));
+
+            }
+        }
+
+        let tagName = node.tagName;
+        return formatJSLResult(tagName, attrObj, argsStrings);
+
+    }
+
+}
+
+
+
+function tab(s) {
+    let result = s.replace(/\n/g, '\n\t');
+    if (result[0] !== '\n') { result = `\t${result}`; }
+    return result;
+}
+
+
+function getAttrsAsString(attrObj) {
+    return JSON.stringify(attrObj);
+}
+
+function getArgsString(argsStrings) {
+    let result = '';
+    for (let i = 0; i < argsStrings.length; i++) {
+        result += `${argsStrings[i]}`;
+        if (i !== argsStrings.length - 1) {result += ',\n';}
+    }
+    return result;
+}
+
+function formatJSLResult(tagName, attrObj, argsStrings) {
+    let attrs = getAttrsAsString(attrObj);
+    let args = getArgsString(argsStrings);
+    let isArgsMultiline = /\n/.test(args);
+    debugger;
+    //decide if newline for attributes:
+    let attrParam;
+    let newLineForAttrs = false;
+    //do they exist
+    let attrsExist = attrs != '{}';
+    if (attrsExist) {
+        //do they contain newlines
+        if (attrs.indexOf('\n') != -1) {
+            newLineForAttrs = true;
+        } else {
+            //are they long
+            if (attrs.length > 50) {
+                newLineForAttrs = true;
+            }
+        }
+        if (newLineForAttrs) {
+            attrParam = `\n${tab(attrs)}${argsStrings.length ? ',' : ''}`
+        }
+        else {
+            attrParam = `${attrs}${argsStrings.length ? ',' : ''}`
+        }
+
+    } else {
+        //attributes don't exist;
+        attrParam = '';
+    }
+    // let argsParam;
+    // let newLineForArgs = false;
+    let result = `${tagName}( ${attrParam}${isArgsMultiline ? `\n${tab(args)}\n` : `${attrsExist ? ' ' : ''}${args}`} )`
+    return result;
+}
 
 
 /***/ }),
@@ -3519,17 +3559,6 @@ __webpack_require__.r(__webpack_exports__);
 }(undefined));
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/webpack/buildin/harmony-module.js */ "./node_modules/webpack/buildin/harmony-module.js")(module)))
-
-/***/ }),
-
-/***/ "./src/lib/jsl/jsl2.1.js":
-/*!*******************************!*\
-  !*** ./src/lib/jsl/jsl2.1.js ***!
-  \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
 
 /***/ }),
 

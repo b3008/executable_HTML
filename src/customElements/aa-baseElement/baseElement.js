@@ -1,4 +1,4 @@
-// import * as yaml from '../../lib/yaml/js-yaml.js';
+import * as yaml from '../../lib/yaml/js-yaml.js';
 // import * as jsl from '../../lib/jsl/jsl2.1.js';
 import * as html2jsl from '../../lib/html2jsl/html2jsl.js';
 
@@ -170,12 +170,12 @@ export default class BaseElement extends HTMLElement {
 
         let p = this.constructor.properties;
         if (p) {
-            let keys = Object.keys(p)
+            let keys = Object.keys(p);
             for (let i = 0; i < keys.length; i++) {
                 console.log(keys[i], p[keys[i]].value)
 
                 let prop = this.toCamelCase(keys[i]);
-                if ((typeof this[prop] === "undefined") || (this[prop] === null)) {
+                if ((typeof this[prop] === 'undefined') || (this[prop] === null)) {
                     // this[prop] = p[keys[i]].value ;
                     this.setAttribute(keys[i], this.getAttribute(keys[i]) || p[keys[i]].value);
                 }
@@ -205,14 +205,14 @@ export default class BaseElement extends HTMLElement {
 
     getAttributes() {
         let result = {};
-        let attributes = Object.keys(this.constructor.properties)
+        let attributes = Object.keys(this.constructor.properties);
         for (let i = 0; i < attributes.length; i++) {
             if (!this.constructor.properties[attributes[i]].userDefined) {
                 // users should need not be concerned
                 continue;
             }
 
-            if ((typeof this.getAttribute(attributes[i]) != "undefined") && (this.getAttribute(attributes[i]) != "undefined")) {
+            if ((typeof this.getAttribute(attributes[i]) !== 'undefined') && (this.getAttribute(attributes[i]) !== 'undefined')) {
                 if (this.constructor.properties[attributes[i]].value == this.getAttribute(attributes[i])) {
                     // value is default value, no need to be part of specification
                     continue;
@@ -232,7 +232,7 @@ export default class BaseElement extends HTMLElement {
     }
 
     static nodeToJSON(node) {
-        if (node.nodeType == document.TEXT_NODE) {
+        if (node.nodeType === document.TEXT_NODE) {
             let result = {};
             result[node.nodeName] = node.textContent;
             return result;
@@ -247,7 +247,7 @@ export default class BaseElement extends HTMLElement {
             let attrs = node.getAttributeNames();
             let attrObj = {};
             for (let i = 0; i < attrs.length; i++) {
-                attrObj[attrs[i]] = node.getAttribute(attrs[i])
+                attrObj[attrs[i]] = node.getAttribute(attrs[i]);
             }
             let childNodes = [];
             for (let i = 0; i < node.childNodes.length; i++) {
@@ -268,7 +268,7 @@ export default class BaseElement extends HTMLElement {
 
 
     toJSL(depth) {
-        return html2jsl.nodeToJSL(this)
+        return html2jsl.nodeToJSL(this);
     }
 
 
