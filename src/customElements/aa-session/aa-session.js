@@ -133,6 +133,12 @@ export default class AASession extends BaseElement {
         return this._mem.dataset;
     }
 
+
+    toJSON(){
+        let result  = super.toJSON();
+   
+    }
+
 }
 
 BaseElement.registerAAElement('aa-session', AASession);

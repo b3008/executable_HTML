@@ -187,6 +187,9 @@ module.exports = function(originalModule) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BaseElement; });
 /* harmony import */ var _lib_yaml_js_yaml_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/yaml/js-yaml.js */ "./src/lib/yaml/js-yaml.js");
+/* harmony import */ var _lib_jsl_jsl2_1_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/jsl/jsl2.1.js */ "./src/lib/jsl/jsl2.1.js");
+/* harmony import */ var _lib_jsl_jsl2_1_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_lib_jsl_jsl2_1_js__WEBPACK_IMPORTED_MODULE_1__);
+
 
 
 
@@ -253,7 +256,7 @@ class BaseElement extends HTMLElement {
     }
 
     connectedCallback() {
-       
+
         // console.log(this.id, " connected");
         this._attachedTimestamp = new Date().getTime();
         this._debug = (this.debug === true) || (this.debug === null);
@@ -354,23 +357,23 @@ class BaseElement extends HTMLElement {
         return result;
     }
 
-    setAttributeDefaultValues(){
+    setAttributeDefaultValues() {
 
         let p = this.constructor.properties;
-        if(p){
-            let keys =Object.keys(p)
-            for(let i=0; i<keys.length; i++){
+        if (p) {
+            let keys = Object.keys(p)
+            for (let i = 0; i < keys.length; i++) {
                 console.log(keys[i], p[keys[i]].value)
-                
+
                 let prop = this.toCamelCase(keys[i]);
-                if((typeof this[prop]==="undefined")||(this[prop]===null)){
+                if ((typeof this[prop] === "undefined") || (this[prop] === null)) {
                     // this[prop] = p[keys[i]].value ;
                     this.setAttribute(keys[i], this.getAttribute(keys[i]) || p[keys[i]].value);
                 }
-                
+
             }
         }
-        
+
     }
 
     static copy(node) {
@@ -391,38 +394,141 @@ class BaseElement extends HTMLElement {
         return nodeCopy;
     }
 
-    getAttributes(){
+    getAttributes() {
         let result = {};
         let attributes = Object.keys(this.constructor.properties)
-        for(let i=0; i<attributes.length; i++){
-            if(!this.constructor.properties[attributes[i]].userDefined) {
+        for (let i = 0; i < attributes.length; i++) {
+            if (!this.constructor.properties[attributes[i]].userDefined) {
                 // users should need not be concerned
                 continue;
             }
-            
-            if((typeof this.getAttribute(attributes[i])!="undefined")&&(this.getAttribute(attributes[i])!="undefined")){
-                if(this.constructor.properties[attributes[i]].value == this.getAttribute(attributes[i])){
+
+            if ((typeof this.getAttribute(attributes[i]) != "undefined") && (this.getAttribute(attributes[i]) != "undefined")) {
+                if (this.constructor.properties[attributes[i]].value == this.getAttribute(attributes[i])) {
                     // value is default value, no need to be part of specification
                     continue;
                 }
-                result[attributes[i]]  = this.getAttribute(attributes[i]);
+
+                result[attributes[i]] = this.getAttribute(attributes[i]);
             }
         }
         return result;
-        
+
     }
 
-    toJSON(){
-        
+    toJSON() {
         let result = {};
         result[this.tagName.toLowerCase()] = this.getAttributes()
         return result;
     }
 
-    toYAML(){
+    static nodeToJSON(node) {
+        if (node.nodeType == document.TEXT_NODE) {
+            let result = {};
+            result[node.nodeName] = node.textContent;
+            return result;
+        }
+        else if (node.toJSON) {
+            return node.toJSON();
+        } else {
+
+
+            let result = {};
+
+            let attrs = node.getAttributeNames();
+            let attrObj = {};
+            for (let i = 0; i < attrs.length; i++) {
+                attrObj[attrs[i]] = node.getAttribute(attrs[i])
+            }
+            let childNodes = [];
+            for (let i = 0; i < node.childNodes.length; i++) {
+                childNodes.push(BaseElement.nodeToJSON(node.childNodes[i]));
+            }
+
+            result[node.tagName.toLowerCase()] = attrObj;
+            result[node.tagName.toLowerCase()].childNodes = childNodes;
+
+            return result;
+        }
+    }
+
+    toYAML() {
         // return YAML.stringify(this.toJSON(), 4);
         return jsyaml.dump(this.toJSON())
     }
+
+    toJSL(depth) {
+        if (!depth) depth = 0;
+        let tabs = "";
+        for (let i = 0; i < depth; i++) { tabs += "\t" };
+        let args = "";
+        for (let i = 0; i < this.childNodes.length; i++) {
+            if (i > 0) args += ", \n"
+            args += BaseElement.toJSL(this.childNodes[i])
+        }
+        let attrs = JSON.stringify(this.getAttributes());
+        console.log("args and attrs:", args, attrs);
+        if (attrs != "{}") {
+            return `${this.tagName}( ${args}, ${attrs} )`;
+        } else {
+            return `${this.tagName}(\n${args}\n)`;
+        }
+    }
+
+
+    static nodeToJSL(node, depth) {
+
+
+
+        if (!depth) depth = 0;
+        let tabs = "";
+        for (let i = 0; i < depth; i++) { tabs += "\t" };
+
+
+        if (node.nodeType == document.TEXT_NODE) {
+            let result = node.textContent.trim();
+            if (result == "") {
+                return undefined
+            } else { return `${tabs}"${result}"` };
+        }
+        else if (node.toJSL) {
+
+            return node.toJSL();
+        } else {
+
+            let result = {};
+            let attrs = node.getAttributeNames();
+            let attrObj = {};
+            for (let i = 0; i < attrs.length; i++) {
+                if (node.getAttribute(attrs[i]) != "undefined") {
+                    attrObj[attrs[i]] = node.getAttribute(attrs[i])
+                }
+            }
+            let attrStr = JSON.stringify(attrObj);
+
+            let args = "";
+            let prevAddition = null;
+            for (let i = 0; i < node.childNodes.length; i++) {
+                let addition = BaseElement.nodeToJSL(node.childNodes[i], depth + 1);
+                if (addition) {
+                    console.log(addition);
+                    if (prevAddition) args += `,\n${tabs}\t`; else args += `${tabs}`;
+                    args += BaseElement.nodeToJSL(node.childNodes[i], depth + 1);
+                    prevAddition = addition;
+                } 
+            }
+
+
+
+            if (attrStr != "{}") {
+                return `${node.tagName}(\n${args}, ${attrStr}\n${tabs})`;
+            } else
+                return `${node.tagName}(\n${args}\n${tabs})`;
+
+        }
+
+    }
+
 
     _dispatchDebugEvent(detail) {
         if (this.debug) {
@@ -2135,6 +2241,12 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
         return this._mem.dataset;
     }
 
+
+    toJSON(){
+        let result  = super.toJSON();
+   
+    }
+
 }
 
 _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerAAElement('aa-session', AASession);
@@ -3407,6 +3519,17 @@ __webpack_require__.r(__webpack_exports__);
 }(undefined));
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/webpack/buildin/harmony-module.js */ "./node_modules/webpack/buildin/harmony-module.js")(module)))
+
+/***/ }),
+
+/***/ "./src/lib/jsl/jsl2.1.js":
+/*!*******************************!*\
+  !*** ./src/lib/jsl/jsl2.1.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
 
 /***/ }),
 
