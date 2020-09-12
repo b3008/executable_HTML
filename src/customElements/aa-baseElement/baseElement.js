@@ -1,5 +1,6 @@
 import * as yaml from '../../lib/yaml/js-yaml.js';
-
+// import * as jsl from '../../lib/jsl/jsl2.1.js';
+import * as html2jsl from '../../lib/html2jsl/html2jsl.js';
 
 var html = function (txt, ...val) {
 
@@ -64,7 +65,7 @@ export default class BaseElement extends HTMLElement {
     }
 
     connectedCallback() {
-       
+
         // console.log(this.id, " connected");
         this._attachedTimestamp = new Date().getTime();
         this._debug = (this.debug === true) || (this.debug === null);
@@ -165,23 +166,23 @@ export default class BaseElement extends HTMLElement {
         return result;
     }
 
-    setAttributeDefaultValues(){
+    setAttributeDefaultValues() {
 
         let p = this.constructor.properties;
-        if(p){
-            let keys =Object.keys(p)
-            for(let i=0; i<keys.length; i++){
+        if (p) {
+            let keys = Object.keys(p);
+            for (let i = 0; i < keys.length; i++) {
                 console.log(keys[i], p[keys[i]].value)
-                
+
                 let prop = this.toCamelCase(keys[i]);
-                if((typeof this[prop]==="undefined")||(this[prop]===null)){
+                if ((typeof this[prop] === 'undefined') || (this[prop] === null)) {
                     // this[prop] = p[keys[i]].value ;
                     this.setAttribute(keys[i], this.getAttribute(keys[i]) || p[keys[i]].value);
                 }
-                
+
             }
         }
-        
+
     }
 
     static copy(node) {
@@ -202,38 +203,76 @@ export default class BaseElement extends HTMLElement {
         return nodeCopy;
     }
 
-    getAttributes(){
+    getAttributes() {
         let result = {};
-        let attributes = Object.keys(this.constructor.properties)
-        for(let i=0; i<attributes.length; i++){
-            if(!this.constructor.properties[attributes[i]].userDefined) {
+        let attributes = Object.keys(this.constructor.properties);
+        for (let i = 0; i < attributes.length; i++) {
+            if (!this.constructor.properties[attributes[i]].userDefined) {
                 // users should need not be concerned
                 continue;
             }
-            
-            if((typeof this.getAttribute(attributes[i])!="undefined")&&(this.getAttribute(attributes[i])!="undefined")){
-                if(this.constructor.properties[attributes[i]].value == this.getAttribute(attributes[i])){
+
+            if ((typeof this.getAttribute(attributes[i]) !== 'undefined') && (this.getAttribute(attributes[i]) !== 'undefined')) {
+                if (this.constructor.properties[attributes[i]].value == this.getAttribute(attributes[i])) {
                     // value is default value, no need to be part of specification
                     continue;
                 }
-                result[attributes[i]]  = this.getAttribute(attributes[i]);
+
+                result[attributes[i]] = this.getAttribute(attributes[i]);
             }
         }
         return result;
-        
+
     }
 
-    toJSON(){
-        
+    toJSON() {
         let result = {};
         result[this.tagName.toLowerCase()] = this.getAttributes()
         return result;
     }
 
-    toYAML(){
+    static nodeToJSON(node) {
+        if (node.nodeType === document.TEXT_NODE) {
+            let result = {};
+            result[node.nodeName] = node.textContent;
+            return result;
+        }
+        else if (node.toJSON) {
+            return node.toJSON();
+        } else {
+
+
+            let result = {};
+
+            let attrs = node.getAttributeNames();
+            let attrObj = {};
+            for (let i = 0; i < attrs.length; i++) {
+                attrObj[attrs[i]] = node.getAttribute(attrs[i]);
+            }
+            let childNodes = [];
+            for (let i = 0; i < node.childNodes.length; i++) {
+                childNodes.push(BaseElement.nodeToJSON(node.childNodes[i]));
+            }
+
+            result[node.tagName.toLowerCase()] = attrObj;
+            result[node.tagName.toLowerCase()].childNodes = childNodes;
+
+            return result;
+        }
+    }
+
+    toYAML() {
         // return YAML.stringify(this.toJSON(), 4);
         return jsyaml.dump(this.toJSON())
     }
+
+
+    toJSL(depth) {
+        return html2jsl.nodeToJSL(this);
+    }
+
+
+
 
     _dispatchDebugEvent(detail) {
         if (this.debug) {

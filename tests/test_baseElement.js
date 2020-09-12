@@ -1,5 +1,7 @@
 import BaseElement from '../src/customElements/aa-baseElement/baseElement.js';
 import AAScreen from '../src/customElements/aa-screen/aa-screen.js';
+import AACheckboxes from '../src/customElements/aa-checkboxes/aa-checkboxes.js';
+import * as html2jsl from '../src/lib/html2jsl/html2jsl.js';
 
 // var expect = chai.expect;
 var assert = chai.assert;
@@ -115,5 +117,58 @@ describe('baseElement', () => {
             div.innerHTML = '<test-debug-event-element id="e4" debug="true"></test-debug-event-element>';
             container.appendChild(div);
         })
+
+
+
+        // it('converts HTML to JSON', (done)=>{
+
+        //     let div = document.createElement('div');                        
+        //     div.innerHTML = "<p>My cat is <strong>very grumpy.</p></strong>";
+        //     let j = BaseElement.nodeToJSON(div);
+        //     console.log(j);
+        //     console.log(JSON.stringify(j, null, 2));
+
+        //     done();
+        // })
+
+
+        it('converts HTML to JSL', (done)=>{
+
+            let div = document.createElement('div');                        
+            let j;
+            // div.innerHTML = "<p>My cat is <strong>very grumpy.</p></strong>";
+            // j = BaseElement.nodeToJSL(div);
+            // console.log(j);
+             
+            div.innerHTML=`
+            
+            <h4>This is the HTML5 logo </h4>
+<img src=""/>
+<div class="blue centered box">blue centered box</div>
+
+
+            
+            
+            <aa-checkboxes class="" horizontal="false" vertical="true" name="undefined">
+                            <aa-choice-item value="undefined">niemand</aa-choice-item>
+                            <aa-choice-item value="undefined">partner</aa-choice-item>
+                            <aa-choice-item value="undefined">inwonenden</aa-choice-item>
+                            <aa-choice-item value="undefined">gezin</aa-choice-item>
+                            <aa-choice-item value="undefined">familie uitwonend</aa-choice-item>
+                            <aa-choice-item value="undefined">vrienden</aa-choice-item>
+                            <aa-choice-item value="undefined">collegaﾒs/klasgenoten</aa-choice-item>
+                            <aa-choice-item value="undefined">hulpverleners</aa-choice-item>
+                            <aa-choice-item value="undefined">kennissen</aa-choice-item>
+                            <aa-choice-item value="undefined">onbekenden</aa-choice-item>
+                        </aa-checkboxes>`
+
+                        j = html2jsl.nodeToJSL(div);
+            console.log(j);
+            
+            done();
+        })
+
+
+
     })
 })

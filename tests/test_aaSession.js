@@ -1,6 +1,8 @@
 import '../src/customElements/aa-session/aa-session.js';
 import '../src/customElements/aa-screen/aa-screen.js';
 import '../src/customElements/aa-sequence/aa-sequence.js';
+// import * as yaml from '../src/lib/yaml/js-yaml.js';
+
 // var expect = chai.expect;
 var assert = chai.assert;
 var container;
@@ -118,9 +120,40 @@ describe('aa-session', () => {
         })
 
 
+        it('session should export to YAML', (done) => {
+            container.innerHTML = html`
+            first session:
+            <aa-session debug="true" name="test" id="session"> 
+                    some text;
 
+                    <div id="myDiv">my div</div>
+                    <aa-screen id="screen1" name="first">
+                        <div>test</div>
+                    </aa-screen>
 
+                    <template>
+                        <aa-screen id="screen2" name="second">
+                            <div>test 2</div>
+                        </aa-screen>
 
+                        <div>
+                            <p>
+                                <aa-sequence>
+                                    <aa-screen>screen1</aa-screen>
+                                    <aa-screen>screen2</aa-screen>
+                                </aa-sequence>
+                            <p>
+                        </div>
+                    </template>
+
+            </aa-session>`;
+
+            let s = document.querySelector('#session');
+            let y = s.toYAML();
+            console.log(y);
+
+            done();
+        })
     })
 })
 
