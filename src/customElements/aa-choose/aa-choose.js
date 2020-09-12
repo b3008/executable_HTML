@@ -172,7 +172,7 @@ export default class AAChoose extends BaseElement {
                 if (value === 'null') { finalValue = 'null'; }
                 else if (value === 'true') { finalValue = 'true'; }
                 else if (value === 'false') { finalValue = 'false'; }
-                else finalValue = `"${value}"`
+                else finalValue = `"${value}"`;
             }
             let r = new RegExp(upperCaseIdentifiers[i], 'g');
             result = result.replace(r, finalValue);

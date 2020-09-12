@@ -18,7 +18,6 @@ export function nodeToJSL(node) {
             }
         }
 
-
         let argsStrings = [];
         for (let i = 0; i < node.childNodes.length; i++) {
             let addition = nodeToJSL(node.childNodes[i]);

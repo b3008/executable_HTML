@@ -124,7 +124,7 @@ export default class AAMultipleChoice extends BaseElement {
                     // debugger;
                     let d1 = child.shadowRoot.querySelector('#radioContainer');
                     let d2 = child.shadowRoot.querySelector('#radioLabel');
-                    d2.style.textAlign = 'center'
+                    d2.style.textAlign = 'center';
                     d2.style.marginLeft = '0px';
                     d2.style.padding = '5px';
                     // d2.style.whiteSpace = "nowrap";

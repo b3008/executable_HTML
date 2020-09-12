@@ -132,8 +132,8 @@ export default class AASlider extends BaseElement {
 
         let minLabel = this.minLabel;
         let maxLabel = this.maxLabel;
-        let min = this.min || 0;
-        let max = this.max || 100;
+        // let min = this.min || 0;
+        // let max = this.max || 100;
         let value = this.value || (this.min + this.max)/2;
         this.inputItem = this.root.querySelector('.inputItem');
         this.minLabelItem = this.root.querySelector('.minLabel');
@@ -143,8 +143,6 @@ export default class AASlider extends BaseElement {
         if (maxLabel) { this.maxLabelItem.innerHTML = maxLabel;}
         if (value) { this.inputItem.value = value; }
         
-
-
         this.inputItem.addEventListener('change', (e) => {
             this.value = e.target.value;
         });
