@@ -21,6 +21,12 @@ export default class AATextAnswer extends BaseElement {
                 type: String,
                 userDefined: false
             },
+            'type':{
+                type: String,
+                userDefined: true,
+                value:"text",
+                valuesAllowed: ["date", "datetime", "datetime-local", "email", "number", "password", "tel", "text", "time" ]
+            }
 
         }
     }
@@ -169,8 +175,8 @@ export default class AATextAnswer extends BaseElement {
 
     get html() {
         let inputElement = customElements.get('paper-input')
-            ? `<paper-input class='inputItem'></paper-input>`
-            : `<input class='inputItem'>`;
+            ? `<paper-input type='${this.type}' class='inputItem'></paper-input>`
+            : `<input type='${this.type}' class='inputItem'>`;
         return html`${inputElement}`
     }
     get longHtml() {
