@@ -113,6 +113,7 @@ describe('aa-choose', () => {
             let session = document.querySelector('#session');
             let choose = document.createElement('aa-choose');
 
+
             let exp = choose.replaceExpressionIdentifiersWithValues('(myVar==1)||(yourVar==2)', session);
             assert( exp=='(1==1)||(2==2)', 'variable names should be replaced by their values: ' + exp);
             done();

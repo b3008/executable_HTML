@@ -4,41 +4,41 @@ import BaseElement from './../aa-baseElement/baseElement.js';
 export default class AAScreen extends BaseElement {
 
 
-   
-    static get properties(){
+
+    static get properties() {
         return {
-            name:{
-                type:String,
-                userDefined:true
+            name: {
+                type: String,
+                userDefined: true
             },
-            "submit-button-text":{
-                type:String,
-                value:"submit",
-                userDefined:true
-            },
-
-            "submit-button-hidden":{
-                type:Boolean,
-                value:false,
-                userDefined:true
+            "submit-button-text": {
+                type: String,
+                value: "submit",
+                userDefined: true
             },
 
-            'expect-wait':{
-                type:Boolean,
-                userDefined:false,
-                value:true
+            "submit-button-hidden": {
+                type: Boolean,
+                value: false,
+                userDefined: true
             },
 
-            'autohide':{
-                type:Boolean,
-                userDefined:false,
-                value:true
+            'expect-wait': {
+                type: Boolean,
+                userDefined: false,
+                value: true
+            },
+
+            'autohide': {
+                type: Boolean,
+                userDefined: false,
+                value: true
             }
-            
+
         }
     }
 
-    static get acceptsElements(){
+    static get acceptsElements() {
         return null;
     }
     static get observedAttributes() {
@@ -52,7 +52,7 @@ export default class AAScreen extends BaseElement {
                 if (this.submitButton) { this.submitButton.innerHTML = newValue; }
                 break;
             case 'submit-button-hidden':
-                if(this.submitButtonContainer){
+                if (this.submitButtonContainer) {
                     if ((newValue !== true) || (newValue !== 'true')) {
                         this.submitButtonContainer.style.display = 'block';
                     } else {
@@ -71,9 +71,9 @@ export default class AAScreen extends BaseElement {
     }
 
     connectedCallback() {
-       
+        debugger;
         super.connectedCallback();
-        
+
 
 
         this.root.innerHTML = this.css + this.html;
@@ -84,7 +84,7 @@ export default class AAScreen extends BaseElement {
         this._started = true;
 
         if (this.submitButtonHidden) {
-            if(this.submitButtonContainer){
+            if (this.submitButtonContainer) {
                 this.submitButtonContainer.style.display = 'none';
             }
         }
@@ -92,7 +92,7 @@ export default class AAScreen extends BaseElement {
 
         this.root.querySelector('.submitButton').addEventListener('click', this.submitButtonClick.bind(this));
 
-        
+
     }
 
 
@@ -164,9 +164,8 @@ export default class AAScreen extends BaseElement {
         if (typeof e.detail.callback != 'undefined') {
             e.detail.callback(e);
         }
-        if (this.autohide) { 
-
-            this.hide(); 
+        if (this.autohide) {
+            this.hide();
         }
 
     }
@@ -203,17 +202,17 @@ export default class AAScreen extends BaseElement {
 
 
 
-    getChildrenValues() {
-        let result = [];
-
-        for (let i = 0; i < this.children.length; i++) {
-            let c = this.children[i];
+    getChildrenValues(node, result) {
+        node = node || this;
+        result = result || [];
+        for (let i = 0; i < node.children.length; i++) {
+            let c = node.children[i];
             if (c.getValue) {
                 result.push(c.getValue());
+            } else if (c.value) {
+                result.push({ [c.name]: c.value });
             } else {
-                if (c.value) {
-                    result.push({ [c.name]: c.value });
-                }
+                this.getChildrenValues(c, result);
             }
         }
         return result;
@@ -225,7 +224,7 @@ export default class AAScreen extends BaseElement {
 
     getValue() {
         let __meta = {
-            attachedTimestamp: this.attachedTimestamp,
+            attachedTimestamp: this._attachedTimestamp,
             submitTimestamp: new Date().getTime()
         };
         let result = this.getChildrenValues(this);

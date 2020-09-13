@@ -10,12 +10,14 @@
 <body>
 
 
+
     <aa-session><template>
             <aa-sequence>
                 <!--
-    first, check to see if 
-    the participantNumber variable 
-    already has a value-->
+                first, check to see if 
+                the participantNumber variable 
+                already has a value-->
+                
                 <aa-choose>
                     <aa-when test="participantNumber==null">
                         <!--
@@ -32,7 +34,7 @@
                             </p>
                             <p>
                                 Please indicate your gender:
-                                <aa-multiple-choice name="gender" single-value>
+                                <aa-multiple-choice name="gender">
                                     <aa-choice-item> Male
                                     </aa-choice-item>
                                     <aa-choice-item> Female
@@ -42,9 +44,9 @@
                         </aa-screen>
                     </aa-when>
                     <!--
-    if participantNumber already had a value, 
-    ema-choose will quitely terminate.
-    -->
+                    if participantNumber already had a value, 
+                    ema-choose will quitely terminate.
+                    -->
                 </aa-choose>
 
 
@@ -75,7 +77,7 @@
 
                     <p>
                         Where did the interaction occur?
-                        <aa-multiple-choice name="place_of_interaction" single-value>
+                        <aa-multiple-choice name="place_of_interaction">
                             <aa-choice-item value="1">
                                 Student home/own home
                             </aa-choice-item>
@@ -360,9 +362,7 @@
 
             </aa-sequence>
 
-
-
-        </template></aa-session>
+    </template></aa-session>
 
 
 </body>
