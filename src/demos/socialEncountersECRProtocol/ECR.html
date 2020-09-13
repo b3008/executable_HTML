@@ -1,0 +1,368 @@
+<html>
+
+<head>
+    <!-- <script type="module" src="../../../dist/aaCustomElements.js"></script> -->
+    <script type="module" src="../../../dist/paper-polymer.js"></script>
+    <script type="module" src="../../index.js"></script>
+</head>
+
+
+<body>
+
+
+    <aa-session><template>
+            <aa-sequence>
+                <!--
+    first, check to see if 
+    the participantNumber variable 
+    already has a value-->
+                <aa-choose>
+                    <aa-when test="participantNumber==null">
+                        <!--
+      if not, then present a screen 
+      that asks for it-->
+                        <aa-screen name="idScreen" submit-button-text="Next">
+                            <p>
+                                Welcome!
+                                This is the first time you use
+                                this phone to log in.
+                                Please enter your participant number
+                                <aa-text-answer type="number" name="participantNumber" label="participant number">
+                                </aa-text-answer>
+                            </p>
+                            <p>
+                                Please indicate your gender:
+                                <aa-multiple-choice name="gender" single-value>
+                                    <aa-choice-item> Male
+                                    </aa-choice-item>
+                                    <aa-choice-item> Female
+                                    </aa-choice-item>
+                                </aa-multiple-choice>
+                            </p>
+                        </aa-screen>
+                    </aa-when>
+                    <!--
+    if participantNumber already had a value, 
+    ema-choose will quitely terminate.
+    -->
+                </aa-choose>
+
+
+                <!--proceed to the next screen-->
+                <aa-screen name="context" submit-button-text="Next">
+
+                    <p>
+                        Welcome back
+                        to the social interactions study!
+                        Brief description of interaction:
+                        <aa-text-answer name="description" label="description of interaction">
+                        </aa-text-answer>
+                    </p>
+                    <p>
+                        What time did the interaction start?
+                        (Report your interactions
+                        as soon as possible!)
+                        <aa-text-answer name="time_of_interaction" type="time" label="time of interaction">
+                        </aa-text-answer>
+                    </p>
+                    <p>
+                        How long did the interaction last?
+                        (in minutes)
+                        <aa-text-answer name="length_of_interaction" type="number"
+                            label="length of interaction (minutes)">
+                        </aa-text-answer>
+                    </p>
+
+                    <p>
+                        Where did the interaction occur?
+                        <aa-multiple-choice name="place_of_interaction" single-value>
+                            <aa-choice-item value="1">
+                                Student home/own home
+                            </aa-choice-item>
+                            <aa-choice-item value="2">
+                                Family home
+                            </aa-choice-item>
+                            <aa-choice-item value="3">
+                                Work/School
+                            </aa-choice-item>
+                            <aa-choice-item value="4">
+                                Recreation (cafe, cinema, etc)
+                            </aa-choice-item>
+                            <aa-choice-item>
+                                Other
+                            </aa-choice-item>
+                        </aa-multiple-choice>
+                    </p>
+                    <p>
+                        How?
+                        <aa-multiple-choice name="how_of_interaction" single-value>
+                            <aa-choice-item value="1">
+                                In person (face-to-face)
+                            </aa-choice-item>
+                            <aa-choice-item value="2">
+                                Per telephone
+                            </aa-choice-item>
+                            <aa-choice-item value="3">
+                                Via video (e.g. Skype)
+                            </aa-choice-item>
+                        </aa-multiple-choice>
+                    </p>
+
+                    <p>
+                        Who was present?
+                        <aa-multiple-choice name="others_present" single-value>
+                            <aa-choice-item value="1">One other
+                            </aa-choice-item>
+                            <aa-choice-item value="2">
+                                Multiple people,
+                                primary other
+                            </aa-choice-item>
+                            <aa-choice-item value="3">
+                                Multiple people,
+                                no primary other
+                            </aa-choice-item>
+                        </aa-multiple-choice>
+                    </p>
+
+                    <p>
+                        How many alcoholic drinks were consumed?
+                        (within 3hrs before or during the interaction)
+                        <aa-text-answer type="number" name="drinks">
+                        </aa-text-answer>
+                    </p>
+
+                </aa-screen>
+
+
+
+                <!-- if there was a primary other
+    display a screen asking about them !-->
+                <aa-choose>
+                    <aa-when test="others_present!=3">
+                        <aa-screen name="partner" submit-button-text="Next">
+                            Who was the (primary) other?
+
+                            <aa-multiple-choice name="partsex" single-value>
+                                <aa-choice-item>
+                                    Male
+                                </aa-choice-item>
+                                <aa-choice-item>
+                                    Female
+                                </aa-choice-item>
+                            </aa-multiple-choice>
+
+                            <aa-multiple-choice name="relation1" single-value>
+                                <aa-choice-item value="1">
+                                    Supervisor/teacher
+                                </aa-choice-item>
+                                <aa-choice-item value="2">
+                                    Co-worker/fellow student
+                                </aa-choice-item>
+                                <aa-choice-item value="3">
+                                    Supervisee
+                                </aa-choice-item>
+                                <aa-choice-item value="4">
+                                    Acquaintance
+                                </aa-choice-item>
+                                <aa-choice-item value="5">
+                                    Friend
+                                </aa-choice-item>
+                                <aa-choice-item value="6">
+                                    Romantic partner
+                                </aa-choice-item>
+                                <aa-choice-item value="7">
+                                    Father/mother
+                                </aa-choice-item>
+                                <aa-choice-item value="8">
+                                    Brother/sister
+                                </aa-choice-item>
+                                <aa-choice-item value="9">
+                                    Other
+                                </aa-choice-item>
+                            </aa-multiple-choice>
+                        </aa-screen>
+                    </aa-when>
+                </aa-choose>
+
+
+
+
+
+
+                <!-- choose one set of behaviours out of 4
+    at random
+    -->
+
+                <aa-function-random min="1" max="4" name="random_choice">
+                </aa-function-random>
+
+
+                <aa-choose>
+                    <aa-when test="random_choice==1">
+                        <aa-screen name="behaviours1_screen">
+                            Did you do any of the following?
+                            (Multiple answers are possible)
+
+                            <aa-multiple-choice name="behaviours1">
+                                <aa-choice-item value="1">
+                                    I listened attentively to the other(s)
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I tried to get the other(s)
+                                    to do something else
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I let other(s) make plans or decisions
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I expressed the 'real me' instead
+                                    of my public persona or 'image'
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I confronted the other(s) about
+                                    something I did not like
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I expressed affection
+                                    with words or gestures
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I spoke in a clear firm voice
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I withheld useful information
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I did not say how I felt
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I compromised about a decision
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I took the lead in
+                                    planning/organizing a project or activity
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I avoided taking the lead
+                                    or being responsible
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I ignored the other(s) comments
+                                </aa-choice-item>
+                            </aa-multiple-choice>
+                        </aa-screen>
+                    </aa-when>
+
+
+
+                    <aa-when test="random_choice==2">
+                        <aa-screen name="behaviours2_screen" submit-button-text="Next">
+                            Did you do any of the following?
+                            (Multiple answers are possible)
+                            <aa-multiple-choice name="behaviours2">
+                                <aa-choice-item value="1">
+                                    I criticized the other(s)
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I smiled and laughed with the other(s)
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I spoke softly
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I made a sarcastic comment
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I expressed an opinion
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I complimented or praised the other person(s)
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I did not express disagreement when I thought it
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I gave incorrect information
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I got immediately to the point
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I made a concession to avoid unpleaseantness
+                                </aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I did not state my own views</aa-choice-item>
+                                <aa-choice-item value="1">
+                                    I expressed the 'real me' instead of my public persona or 'image'
+                                </aa-choice-item>
+                            </aa-multiple-choice>
+                        </aa-screen>
+                    </aa-when>
+
+
+
+                    <aa-when test="random_choice==3">
+                        <aa-screen name="behaviours3_screen" submit-button-text="Next">
+                            Did you do any of the following?
+                            (Multiple answers are possible)
+
+                            <aa-multiple-choice name="behaviours3">
+                                <aa-choice-item value="1">I waited for the other person(s) to talk or act first
+                                </aa-choice-item>
+                                <aa-choice-item value="1">I stated strongly that I did not like or that I would not do
+                                    something</aa-choice-item>
+                                <aa-choice-item value="1">I assigned someone to a task</aa-choice-item>
+                                <aa-choice-item value="1">I exchanged pleasantries</aa-choice-item>
+                                <aa-choice-item value="1">I did not say what was on my mind</aa-choice-item>
+                                <aa-choice-item value="1">I did not respond to the other(s) questions or comments
+                                </aa-choice-item>
+                                <aa-choice-item value="1">I made a suggestion</aa-choice-item>
+                                <aa-choice-item value="1">I expressed the 'real me' instead of my public persona or
+                                    'image'</aa-choice-item>
+                                <aa-choice-item value="1">I showed sympathy</aa-choice-item>
+                                <aa-choice-item value="1">I did not say what I wanted directly</aa-choice-item>
+                                <aa-choice-item value="1">I discredited what someone said</aa-choice-item>
+                                <aa-choice-item value="1">I asked the other(s) to do something</aa-choice-item>
+                                <aa-choice-item value="1">I spoke favorably of someone who was not present
+                                </aa-choice-item>
+                            </aa-multiple-choice>
+                        </aa-screen>
+                    </aa-when>
+
+                    <aa-otherwise>
+
+                        <aa-screen name="behaviours4_screen" submit-button-text="Next">
+                            Did you do any of the following?
+                            (Multiple answers are possible)
+                            <aa-multiple-choice name="behaviours4">
+                                <aa-choice-item value="1">I expressed the 'real me' instead of my public persona or
+                                    'image'</aa-choice-item>
+                                <aa-choice-item value="1">I showed impatience</aa-choice-item>
+                                <aa-choice-item value="1">I asked for a volunteer</aa-choice-item>
+                                <aa-choice-item value="1">I went along with the other(s)</aa-choice-item>
+                                <aa-choice-item value="1">I raised my voice</aa-choice-item>
+                                <aa-choice-item value="1">I gave information</aa-choice-item>
+                                <aa-choice-item value="1">I expressed reassurance</aa-choice-item>
+                                <aa-choice-item value="1">I gave in</aa-choice-item>
+                                <aa-choice-item value="1">I demanded that the other(s) do what I wanted</aa-choice-item>
+                                <aa-choice-item value="1">I set goals for the other(s) or for us</aa-choice-item>
+                                <aa-choice-item value="1">I pointed out to the other(s) where there was agreement
+                                </aa-choice-item>
+                                <aa-choice-item value="1">I spoke only when I was spoken to</aa-choice-item>
+                                </aa-choice-item>
+
+                        </aa-screen>
+
+                    </aa-otherwise>
+
+
+                </aa-choose>
+
+            </aa-sequence>
+
+
+
+        </template></aa-session>
+
+
+</body>
