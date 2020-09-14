@@ -405,14 +405,17 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
         this.root.querySelector(".rightLabels").style.width = window.getComputedStyle(this.grid).height;
         
         //register a resize observer for top container
-        let gridResizeObserver = new ResizeObserver( ()=>{
-            console.log("resize");
-            this.totalContainer.style.height = window.getComputedStyle(this.totalContainer).width;
-            this.root.querySelector(".leftLabels").style.width = window.getComputedStyle(this.grid).height;
-            this.root.querySelector(".rightLabels").style.width = window.getComputedStyle(this.grid).height;
+        if(ResizeObserver){
+            let gridResizeObserver = new ResizeObserver( ()=>{
+                console.log("resize");
+                this.totalContainer.style.height = window.getComputedStyle(this.totalContainer).width;
+                this.root.querySelector(".leftLabels").style.width = window.getComputedStyle(this.grid).height;
+                this.root.querySelector(".rightLabels").style.width = window.getComputedStyle(this.grid).height;
 
-        }).observe(this.root.querySelector('.top-label'));
-
+            }).observe(this.root.querySelector('.top-label'));
+        }else{
+            console.warn("ResizeObserver is not defined here");
+        }
 
        
 
