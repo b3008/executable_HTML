@@ -196,6 +196,15 @@ export default class AAAffectGrid extends BaseElement {
         this.grid.addEventListener("click", (e)=>{
             let cell = e.path[0];
             this.value = [cell.dataset.x, cell.dataset.y];
+            
+            
+            if(this.selectedCell){
+                this.selectedCell.classList.remove("selected");
+            }
+            this.selectedCell = cell;
+            this.selectedCell.classList.add("selected");
+
+
             console.log(this.value);
             console.log(typeof this.value)
         })
@@ -224,6 +233,8 @@ export default class AAAffectGrid extends BaseElement {
 
     get css() {
         return `<style>
+
+        
         :host{
             display:block;
             font-family: Roboto, Noto, sans-serif;
@@ -307,6 +318,7 @@ export default class AAAffectGrid extends BaseElement {
         }
         .cell{
             border:solid thin;
+            transition:background-color 0.2s;
         }
 
         .cell.top{
@@ -324,6 +336,11 @@ export default class AAAffectGrid extends BaseElement {
         .cell.right{
             border-right: solid 2px;
         }
+        .cell.selected{
+            background-color: #3367D6;
+            
+        }
+
 
         .label{
             flex-grow:1

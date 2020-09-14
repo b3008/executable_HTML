@@ -24,6 +24,9 @@ describe('aa-affect-grid', () => {
         it('gets value', (done) => {
             container.innerHTML = `
             <aa-affect-grid style="width:50%" 
+
+                columns = 5
+                rows = 5
                 top-left-label="top-left" 
                 top-label="top" 
                 top-right-label="top-right"
