@@ -42,35 +42,7 @@ export default class AASlider extends BaseElement {
     }
 
 
-    changeInputItem(type) {
-        if (type === 'long') {
-            let value = this.value;
-            let label = this.label;
-            this.inputItem = customElements.get('paper-textarea') ?
-                document.createElement('paper-textarea') : document.createElement('textarea');
-            this.inputItem.value = value;
-            this.inputItem.label = label;
-            this.inputItem.classList.add('inputItem');
-            this.fixBugInPaperTextarea(this.inputItem);
-            this.inputItem.addEventListener('change', (e) => {
-                this.value = e.target.value;
-            })
-            this.root.querySelector('.inputItem').replaceWith(this.inputItem);
-        } else {
-            let value = this.value;
-            let label = this.label;
-            this.inputItem = customElements.get('paper-input') ?
-                document.createElement('paper-input') : document.createElement('input');
-            this.inputItem.value = value;
-            this.inputItem.label = label;
-            this.inputItem.classList.add('inputItem');
-            this.inputItem.addEventListener('change', (e) => {
-                this.value = e.target.value;
-            })
-            this.root.querySelector('.inputItem').replaceWith(this.inputItem);
-        }
-    }
-
+ 
 
     get value() {
         if (!this.inputItem) {

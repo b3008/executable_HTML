@@ -151,8 +151,11 @@ export default class AAChoose extends BaseElement {
                 return eval(expr);
             }
             else {
-                // there are still strings in the expression, which are unknown, an exception should be raised
-                throw 'unknown identifiers in expression : ' + expr;
+                // there are still strings in the expression, which are unknown
+                // evaluate with values that the parseTreeProvides
+                return  eval(`${parseTree.left.value}${parseTree.operator}${parseTree.right.value}`);
+                //an exception should be raised
+                // throw 'unknown identifiers in expression : ' + expr;
             }
         } catch (e) {
             console.error('parse error:', e);
@@ -165,7 +168,7 @@ export default class AAChoose extends BaseElement {
 
         let originalIdentifiers = Object.keys(session.getDataDump());
         let upperCaseIdentifiers = originalIdentifiers.map(s => s.toUpperCase());
-        for (let i in upperCaseIdentifiers) {
+        for (let i in originalIdentifiers) {
             let value = session.getData(originalIdentifiers[i]);
             let finalValue = parseInt(value);
             if (finalValue != value) {

@@ -35,6 +35,7 @@ export default class BaseElement extends HTMLElement {
         let fragment = document.createDocumentFragment();
         for (let i = 0; i < node.childNodes.length; i++) {
             fragment.append(node.childNodes[i].cloneNode(true));
+            // fragment.append(BaseElement.copy(node.childNodes[i])
         }
         return fragment;
     }
@@ -50,8 +51,11 @@ export default class BaseElement extends HTMLElement {
             BaseElement.scanAndReplace(node.content);
         }
         else if (BaseElement.isAAElement(node)) {
+            // if(node.innerFragment) { return };
             let holder = BaseElement.createHolderForNode(node);
             node.replaceWith(holder);
+            node.innerFragment = holder.innerFragment;
+
         } else
             for (let i = 0; i < node.childNodes.length; i++) {
                 BaseElement.scanAndReplace(node.childNodes[i]);
@@ -66,11 +70,16 @@ export default class BaseElement extends HTMLElement {
 
     connectedCallback() {
 
+
         // console.log(this.id, " connected");
         this._attachedTimestamp = new Date().getTime();
         this._debug = (this.debug === true) || (this.debug === null);
         if (this.innerFragment) {
-            BaseElement.scanAndReplace(this.innerFragment);
+
+            // I have commented BaseElement.scanAndReplace out because a shallow copy and an innerFragment
+            // is already created by BaseElement.copy for childNodes of this.innerFrament
+            // as they are appended to this element.
+            // BaseElement.scanAndReplace(this.innerFragment);
             for (let i = 0; i < this.innerFragment.childNodes.length; i++) {
                 this.appendChild(BaseElement.copy(this.innerFragment.childNodes[i]));
             }
@@ -177,7 +186,13 @@ export default class BaseElement extends HTMLElement {
                 let prop = this.toCamelCase(keys[i]);
                 if ((typeof this[prop] === 'undefined') || (this[prop] === null)) {
                     // this[prop] = p[keys[i]].value ;
-                    this.setAttribute(keys[i], this.getAttribute(keys[i]) || p[keys[i]].value);
+                    
+                    let val = this.getAttribute(keys[i]) || (p[keys[i]].value||null);
+                    
+                   
+                    
+                    if(val) this.setAttribute(keys[i], val);
+                    if(val===false) this.setAttribute(keys[i], val);
                 }
 
             }

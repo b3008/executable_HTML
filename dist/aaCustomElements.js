@@ -176,6 +176,444 @@ module.exports = function(originalModule) {
 
 /***/ }),
 
+/***/ "./src/customElements/aa-affect-grid/aa-affect-grid.js":
+/*!*************************************************************!*\
+  !*** ./src/customElements/aa-affect-grid/aa-affect-grid.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AAAffectGrid; });
+/* harmony import */ var _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../aa-baseElement/baseElement.js */ "./src/customElements/aa-baseElement/baseElement.js");
+
+class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+
+
+
+    static get properties() {
+        return {
+
+            'top-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'bottom-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'left-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'center-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'right-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'top-left-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'top-right-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'bottom-left-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'bottom-right-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'left-top-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'left-bottom-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'right-top-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'right-bottom-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            rows: {
+                type: Number,
+                userDefined: true,
+                value: 11
+            },
+
+            columns: {
+                type: Number,
+                userDefined: true,
+                value: 11
+            },
+
+            value:{
+                type: Array,
+
+            }
+
+        }
+    }
+
+    static get acceptsElements() {
+        return null
+    }
+
+    static get observedAttributes() {
+        return Object.keys(AAAffectGrid.properties);
+    }
+
+
+
+
+    get value() {
+        if (!this.inputItem) {
+            return this.getAttribute('value');
+        }
+        return this.inputItem.value;
+    }
+    set value(val) {
+        this.setAttribute('value', val);
+        if (this.inputItem) {
+            this.inputItem.value = val;
+        }
+
+    }
+
+    get minLabel() {
+        return this.getAttribute('min-label');
+    }
+
+    get maxLabel() {
+        return this.getAttribute('max-label');
+    }
+
+    set minLabel(val) {
+        this.setAttribute('min-label', val);
+        if (this.inputItem) {
+            this.inputItem.minLabel = val;
+        }
+    }
+
+    set maxLabel(val) {
+        this.setAttribute('max-label', val);
+        if (this.inputItem) {
+            this.inputItem.maxLabel = val;
+        }
+    }
+
+    set min(val) {
+        this.setAttribute('min', val);
+        if (this.inputItem) {
+            this.inputItem.min = val;
+        }
+    }
+
+    set max(val) {
+        this.setAttribute('max', val);
+        if (this.inputItem) {
+            this.inputItem.max = val;
+        }
+    }
+
+
+    constructor() {
+        super();
+
+        this.root = this.attachShadow({ mode: 'open' });
+
+        
+        
+    }
+
+
+
+    connectedCallback() {
+        super.connectedCallback();
+
+
+        this.root.innerHTML = this.css + this.html;
+
+        // this.topLeft = this.root.querySelector('.top-left');
+       
+        // this.topRight = this.root.querySelector('.top-right');
+        // this.leftMargin =  this.root.querySelector('.left-margin');
+        // this.rightMargin = this.root.querySelector('.right-margin');
+        
+
+        
+
+        this.grid = this.root.querySelector('.grid');
+        this.grid.addEventListener("click", (e)=>{
+            let cell = e.path[0];
+            this.value = [cell.dataset.x, cell.dataset.y];
+            
+            
+            if(this.selectedCell){
+                this.selectedCell.classList.remove("selected");
+            }
+            this.selectedCell = cell;
+            this.selectedCell.classList.add("selected");
+
+
+            console.log(this.value);
+            console.log(typeof this.value)
+        })
+
+        this.totalContainer = this.root.querySelector('.total-container');
+
+        this.totalContainer.style.height = window.getComputedStyle(this.totalContainer).width;
+        this.root.querySelector(".leftLabels").style.width = window.getComputedStyle(this.grid).height;
+        this.root.querySelector(".rightLabels").style.width = window.getComputedStyle(this.grid).height;
+        
+        //register a resize observer for top container
+        if(ResizeObserver){
+            let gridResizeObserver = new ResizeObserver( ()=>{
+                console.log("resize");
+                this.totalContainer.style.height = window.getComputedStyle(this.totalContainer).width;
+                this.root.querySelector(".leftLabels").style.width = window.getComputedStyle(this.grid).height;
+                this.root.querySelector(".rightLabels").style.width = window.getComputedStyle(this.grid).height;
+
+            }).observe(this.root.querySelector('.top-label'));
+        }else{
+            console.warn("ResizeObserver is not defined here");
+        }
+
+       
+
+
+        
+    }
+
+    get css() {
+        return `<style>
+
+        
+        :host{
+            display:block;
+            font-family: Roboto, Noto, sans-serif;
+            
+        }
+        .top-section{
+            height:40px;
+            width:100%;
+         
+        }
+
+        .top-left{
+            text-align:left;
+        }
+
+        .top-label{
+            text-align:center;
+        }
+        .top-right{
+            text-align:right;
+        }
+
+        .bottom-left{
+            text-align:left;
+        }
+        .bottom{
+            text-align:center;
+        }
+        .bottom-right{
+            text-align:right;
+        }
+
+
+        .top-left-corner{
+            width:40px;
+            height:40px;
+        }
+        .top-right-corner{
+            width:40px;
+            height:40px;
+        }
+
+        .bottom-left-corner{
+            width:40px;
+            height:40px;
+        }
+        .bottom-right-corner{
+            width:40px;
+            height:40px;
+        }
+
+
+        .middle-section{
+         
+            flex-grow:2;
+        }
+
+
+        
+        .bottom-section{
+           
+            height:40px;
+            width:100%;
+        }
+        .left-margin{
+            width:40px;
+            height:100%;
+        }
+        .right-margin{
+            width:40px;
+            height:100%;
+        }
+
+        .grid{
+            display:grid;
+            grid-template-columns: repeat(${this.columns}, ${100/this.columns}%);
+            
+            flex-grow:2;
+            width:100%;
+            height:100%;
+        }
+        .cell{
+            border:solid thin;
+            transition:background-color 0.2s;
+        }
+
+        .cell.top{
+            border-top:solid 2px;
+        }
+
+        .cell.bottom{
+            border-bottom:solid 2px;
+        }
+
+        .cell.left{
+            border-left:solid 2px;
+        }
+
+        .cell.right{
+            border-right: solid 2px;
+        }
+        .cell.selected{
+            background-color: #3367D6;
+            
+        }
+
+
+        .label{
+            flex-grow:1
+        }
+        </style>
+        `;
+    }
+
+    get html() {
+        
+
+        let grid ='';
+        for(let j=0; j<this.rows; j++){
+            for(let i=0; i<this.columns; i++){
+                grid+=html`<div class="cell  ${j==0?'top':''} ${j==this.rows-1?`bottom`:''}  ${i==0?`left`:''}  ${i==this.columns-1?`right`:''}" data-x="${ Math.round(this.columns/2) - i -1 }" data-y="${ j+1 - Math.round(this.rows/2)}">
+                <!-- ${ i+1 - Math.round(this.columns/2)  }, ${ Math.round(this.rows/2) - j-1} -->
+            </div>`;
+            }
+        }
+
+        let source = html`
+            <div class="total-container" style="position:relative; display:flex; flex-direction:column;">
+                
+                <div class="top-section" style="display:flex; flex-direction:row">
+                    <div class="top-left-corner"></div>    
+                    <div style="width:100%; display:flex; flex-direction:row; justify-content:space-between">
+                        <div class="top-left label" style="width:33.3%">${this.topLeftLabel}</div>
+                        <div class="top-label" style="width:33.3%; text-align:center">${this.topLabel}</div>
+                        <div class="top-right label" style="width:33.3%">${this.topRightLabel}</div>
+                    </div>
+                    <div class="top-right-corner"></div>    
+                </div>
+            
+                
+                <div class="middle-section" style="display:flex; flex-direction:row">
+                    <div class="left-margin" style="display:flex; flex-direction:column;"></div>
+                    <div class="grid" style="padding:0px">${grid}</div>
+                    <div class="right-margin" style="display:flex; flex-direction:column"></div>
+                </div>
+                
+
+                <div class="bottom-section" style="display:flex; flex-direction:row;margin-top:10px">
+                <div class="bottom-left-corner" ></div>    
+                <div style="width:100%; display:flex; flex-direction:row; justify-content:space-between">
+                    <div class="bottom-left label" style="width:33.3%">${this.bottomLeftLabel}</div>
+                    <div class="bottom label" style="width:33.3%">${this.bottomLabel}</div>
+                    <div class="bottom-right label" style="width:33.3%">${this.bottomRightLabel}</div>
+                
+                </div>
+                    <div class="bottom-right-corner"></div>    
+                
+                </div>
+
+                <div class="leftLabels" style="position:absolute; bottom:30px; left:0px;  display:flex; flex-direction:row; justify-content:space-between; transform:rotate(-90deg); transform-origin:top left;">
+                    <div style="width:33.3%; text-align:left; ">${this.leftBottomLabel}</div>    
+                    <div style="width:33.3%; text-align:center; flex-grow:2">${this.leftLabel}</div>    
+                    <div style="width:33.3%;text-align:right">${this.leftTopLabel}</div>    
+                </div>
+
+                <div class="rightLabels" style="position:absolute; bottom:50px; right:20px; display:flex; flex-direction:row; justify-content:space-between; transform:rotate(90deg); transform-origin:bottom right;">
+                    <div style="width:33.3%; text-align:left">${this.rightTopLabel}</div>    
+                    <div style="width:33.3%; text-align:center; flex-grow:2">${this.rightLabel}</div>    
+                    <div style="width:33.3%; text-align:right">${this.rightBottomLabel}</div>    
+                </div>
+
+            </div>
+        
+        `;
+       
+       console.log(source);
+        
+        return source;
+    }
+
+
+}
+
+_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerAAElement('aa-affect-grid', AAAffectGrid);
+
+/***/ }),
+
 /***/ "./src/customElements/aa-baseElement/baseElement.js":
 /*!**********************************************************!*\
   !*** ./src/customElements/aa-baseElement/baseElement.js ***!
@@ -225,6 +663,7 @@ class BaseElement extends HTMLElement {
         let fragment = document.createDocumentFragment();
         for (let i = 0; i < node.childNodes.length; i++) {
             fragment.append(node.childNodes[i].cloneNode(true));
+            // fragment.append(BaseElement.copy(node.childNodes[i])
         }
         return fragment;
     }
@@ -240,8 +679,11 @@ class BaseElement extends HTMLElement {
             BaseElement.scanAndReplace(node.content);
         }
         else if (BaseElement.isAAElement(node)) {
+            // if(node.innerFragment) { return };
             let holder = BaseElement.createHolderForNode(node);
             node.replaceWith(holder);
+            node.innerFragment = holder.innerFragment;
+
         } else
             for (let i = 0; i < node.childNodes.length; i++) {
                 BaseElement.scanAndReplace(node.childNodes[i]);
@@ -256,11 +698,16 @@ class BaseElement extends HTMLElement {
 
     connectedCallback() {
 
+
         // console.log(this.id, " connected");
         this._attachedTimestamp = new Date().getTime();
         this._debug = (this.debug === true) || (this.debug === null);
         if (this.innerFragment) {
-            BaseElement.scanAndReplace(this.innerFragment);
+
+            // I have commented BaseElement.scanAndReplace out because a shallow copy and an innerFragment
+            // is already created by BaseElement.copy for childNodes of this.innerFrament
+            // as they are appended to this element.
+            // BaseElement.scanAndReplace(this.innerFragment);
             for (let i = 0; i < this.innerFragment.childNodes.length; i++) {
                 this.appendChild(BaseElement.copy(this.innerFragment.childNodes[i]));
             }
@@ -367,7 +814,13 @@ class BaseElement extends HTMLElement {
                 let prop = this.toCamelCase(keys[i]);
                 if ((typeof this[prop] === 'undefined') || (this[prop] === null)) {
                     // this[prop] = p[keys[i]].value ;
-                    this.setAttribute(keys[i], this.getAttribute(keys[i]) || p[keys[i]].value);
+                    
+                    let val = this.getAttribute(keys[i]) || (p[keys[i]].value||null);
+                    
+                   
+                    
+                    if(val) this.setAttribute(keys[i], val);
+                    if(val===false) this.setAttribute(keys[i], val);
                 }
 
             }
@@ -885,8 +1338,11 @@ class AAChoose extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
                 return eval(expr);
             }
             else {
-                // there are still strings in the expression, which are unknown, an exception should be raised
-                throw 'unknown identifiers in expression : ' + expr;
+                // there are still strings in the expression, which are unknown
+                // evaluate with values that the parseTreeProvides
+                return  eval(`${parseTree.left.value}${parseTree.operator}${parseTree.right.value}`);
+                //an exception should be raised
+                // throw 'unknown identifiers in expression : ' + expr;
             }
         } catch (e) {
             console.error('parse error:', e);
@@ -899,7 +1355,7 @@ class AAChoose extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
         let originalIdentifiers = Object.keys(session.getDataDump());
         let upperCaseIdentifiers = originalIdentifiers.map(s => s.toUpperCase());
-        for (let i in upperCaseIdentifiers) {
+        for (let i in originalIdentifiers) {
             let value = session.getData(originalIdentifiers[i]);
             let finalValue = parseInt(value);
             if (finalValue != value) {
@@ -1364,7 +1820,8 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
 
             value: {
                 type: String,
-                userDefined: true
+                userDefined: true,
+
             },
 
         }
@@ -1416,14 +1873,15 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
     }
 
     connectedCallback() {
+        debugger;
         super.connectedCallback();
-
+        debugger;
         this.choiceItems = [];
         for (let i = 0; i < this.childNodes.length; i++) {
             this.attachToShadowDomAccordingToKind(this.childNodes[i]);
         }
 
-        if (this.getAttribute('value')) {
+        if ((this.getAttribute('value'))&&(this.getAttribute('value')!=='undefined')) {
             this.radioGroup.setAttribute('selected', this.getAttribute('value'));
         }
 
@@ -1534,41 +1992,41 @@ __webpack_require__.r(__webpack_exports__);
 class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 
-   
-    static get properties(){
+
+    static get properties() {
         return {
-            name:{
-                type:String,
-                userDefined:true
+            name: {
+                type: String,
+                userDefined: true
             },
-            "submit-button-text":{
-                type:String,
-                value:"submit",
-                userDefined:true
-            },
-
-            "submit-button-hidden":{
-                type:Boolean,
-                value:false,
-                userDefined:true
+            "submit-button-text": {
+                type: String,
+                value: "submit",
+                userDefined: true
             },
 
-            'expect-wait':{
-                type:Boolean,
-                userDefined:false,
-                value:true
+            "submit-button-hidden": {
+                type: Boolean,
+                value: false,
+                userDefined: true
             },
 
-            'autohide':{
-                type:Boolean,
-                userDefined:false,
-                value:true
+            'expect-wait': {
+                type: Boolean,
+                userDefined: false,
+                value: true
+            },
+
+            'autohide': {
+                type: Boolean,
+                userDefined: false,
+                value: true
             }
-            
+
         }
     }
 
-    static get acceptsElements(){
+    static get acceptsElements() {
         return null;
     }
     static get observedAttributes() {
@@ -1582,7 +2040,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
                 if (this.submitButton) { this.submitButton.innerHTML = newValue; }
                 break;
             case 'submit-button-hidden':
-                if(this.submitButtonContainer){
+                if (this.submitButtonContainer) {
                     if ((newValue !== true) || (newValue !== 'true')) {
                         this.submitButtonContainer.style.display = 'block';
                     } else {
@@ -1601,10 +2059,9 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     }
 
     connectedCallback() {
-       
         debugger;
         super.connectedCallback();
-        
+
 
 
         this.root.innerHTML = this.css + this.html;
@@ -1615,7 +2072,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         this._started = true;
 
         if (this.submitButtonHidden) {
-            if(this.submitButtonContainer){
+            if (this.submitButtonContainer) {
                 this.submitButtonContainer.style.display = 'none';
             }
         }
@@ -1623,7 +2080,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
         this.root.querySelector('.submitButton').addEventListener('click', this.submitButtonClick.bind(this));
 
-        
+
     }
 
 
@@ -1675,7 +2132,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     }
 
     submitButtonClick(e) {
-        debugger;
+
         let userMessage = this.querySelector('#userMessage');
         if (this.hasChildrenThatDemandResponse()) {
 
@@ -1695,9 +2152,8 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         if (typeof e.detail.callback != 'undefined') {
             e.detail.callback(e);
         }
-        if (this.autohide) { 
-            debugger;
-            this.hide(); 
+        if (this.autohide) {
+            this.hide();
         }
 
     }
@@ -1734,17 +2190,17 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
 
 
-    getChildrenValues() {
-        let result = [];
-
-        for (let i = 0; i < this.children.length; i++) {
-            let c = this.children[i];
+    getChildrenValues(node, result) {
+        node = node || this;
+        result = result || [];
+        for (let i = 0; i < node.children.length; i++) {
+            let c = node.children[i];
             if (c.getValue) {
                 result.push(c.getValue());
+            } else if (c.value) {
+                result.push({ [c.name]: c.value });
             } else {
-                if (c.value) {
-                    result.push({ [c.name]: c.value });
-                }
+                this.getChildrenValues(c, result);
             }
         }
         return result;
@@ -1756,7 +2212,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
     getValue() {
         let __meta = {
-            attachedTimestamp: this.attachedTimestamp,
+            attachedTimestamp: this._attachedTimestamp,
             submitTimestamp: new Date().getTime()
         };
         let result = this.getChildrenValues(this);
@@ -1973,6 +2429,7 @@ class AASequence extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
 
         return new Promise((resolve, reject) => {
 
+
             if (this.stopped) { return; }
             if (this.sIndex >= this.innerFragment.childNodes.length) return null;
 
@@ -1986,6 +2443,8 @@ class AASequence extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
             }
 
             let fragmentChild = this.innerFragment.childNodes[this.sIndex];
+
+            if(fragmentChild.nodeName=="aa-screen") debugger;
             //  if the child is not an element just add it immediately 
             //  and move on to the next, there won't be a connectecCallback Function to execute anyway
             while (fragmentChild.nodeType != Node.ELEMENT_NODE) {
@@ -2168,6 +2627,7 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
         return this._mem.getData(name);
     }
     setData(name, value){
+        debugger;
         return this._mem.setData(name, value);
     }
 
@@ -2250,35 +2710,7 @@ class AASlider extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     }
 
 
-    changeInputItem(type) {
-        if (type === 'long') {
-            let value = this.value;
-            let label = this.label;
-            this.inputItem = customElements.get('paper-textarea') ?
-                document.createElement('paper-textarea') : document.createElement('textarea');
-            this.inputItem.value = value;
-            this.inputItem.label = label;
-            this.inputItem.classList.add('inputItem');
-            this.fixBugInPaperTextarea(this.inputItem);
-            this.inputItem.addEventListener('change', (e) => {
-                this.value = e.target.value;
-            })
-            this.root.querySelector('.inputItem').replaceWith(this.inputItem);
-        } else {
-            let value = this.value;
-            let label = this.label;
-            this.inputItem = customElements.get('paper-input') ?
-                document.createElement('paper-input') : document.createElement('input');
-            this.inputItem.value = value;
-            this.inputItem.label = label;
-            this.inputItem.classList.add('inputItem');
-            this.inputItem.addEventListener('change', (e) => {
-                this.value = e.target.value;
-            })
-            this.root.querySelector('.inputItem').replaceWith(this.inputItem);
-        }
-    }
-
+ 
 
     get value() {
         if (!this.inputItem) {
@@ -2431,6 +2863,12 @@ class AATextAnswer extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
                 type: String,
                 userDefined: false
             },
+            'type':{
+                type: String,
+                userDefined: true,
+                value:"text",
+                valuesAllowed: ["date", "datetime", "datetime-local", "email", "number", "password", "tel", "text", "time" ]
+            }
 
         }
     }
@@ -2579,8 +3017,8 @@ class AATextAnswer extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
 
     get html() {
         let inputElement = customElements.get('paper-input')
-            ? `<paper-input class='inputItem'></paper-input>`
-            : `<input class='inputItem'>`;
+            ? `<paper-input type='${this.type}' class='inputItem'></paper-input>`
+            : `<input type='${this.type}' class='inputItem'>`;
         return html`${inputElement}`
     }
     get longHtml() {
@@ -2659,7 +3097,7 @@ _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerA
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! exports provided: BaseElement, AAVariable, AAFunctionRandom, AAChoose, AAWhen, AAOtherwise, AAMemory, AAScreen, AASequence, AASession, AATextAnswer, AAChoiceItem, AAMultipleChoice, AACheckboxes, AALikertScale, AASlider */
+/*! exports provided: BaseElement, AAVariable, AAFunctionRandom, AAChoose, AAWhen, AAOtherwise, AAMemory, AAScreen, AASequence, AASession, AATextAnswer, AAChoiceItem, AAMultipleChoice, AACheckboxes, AALikertScale, AASlider, AAAffectGrid */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2712,7 +3150,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _customElements_aa_slider_aa_slider_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./customElements/aa-slider/aa-slider.js */ "./src/customElements/aa-slider/aa-slider.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AASlider", function() { return _customElements_aa_slider_aa_slider_js__WEBPACK_IMPORTED_MODULE_15__["default"]; });
 
+/* harmony import */ var _customElements_aa_affect_grid_aa_affect_grid_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./customElements/aa-affect-grid/aa-affect-grid.js */ "./src/customElements/aa-affect-grid/aa-affect-grid.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAAffectGrid", function() { return _customElements_aa_affect_grid_aa_affect_grid_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
+
 // import '../dist/paper-polymer.js';
+
 
 
 
@@ -2808,12 +3250,12 @@ function formatJSLResult(tagName, attrObj, argsStrings) {
     let attrs = getAttrsAsString(attrObj);
     let args = getArgsString(argsStrings);
     let isArgsMultiline = /\n/.test(args);
-    debugger;
+
     //decide if newline for attributes:
     let attrParam;
     let newLineForAttrs = false;
     //do they exist
-    let attrsExist = attrs != '{}';
+    let attrsExist = attrs !== '{}';
     if (attrsExist) {
         //do they contain newlines
         if (attrs.indexOf('\n') != -1) {
@@ -2825,10 +3267,10 @@ function formatJSLResult(tagName, attrObj, argsStrings) {
             }
         }
         if (newLineForAttrs) {
-            attrParam = `\n${tab(attrs)}${argsStrings.length ? ',' : ''}`
+            attrParam = `\n${tab(attrs)}${argsStrings.length ? ',' : ''}`;
         }
         else {
-            attrParam = `${attrs}${argsStrings.length ? ',' : ''}`
+            attrParam = `${attrs}${argsStrings.length ? ',' : ''}`;
         }
 
     } else {
@@ -2837,7 +3279,7 @@ function formatJSLResult(tagName, attrObj, argsStrings) {
     }
     // let argsParam;
     // let newLineForArgs = false;
-    let result = `${tagName}( ${attrParam}${isArgsMultiline ? `\n${tab(args)}\n` : `${attrsExist ? ' ' : ''}${args}`} )`
+    let result = `${tagName}( ${attrParam}${isArgsMultiline ? `\n${tab(args)}\n` : `${attrsExist ? ' ' : ''}${args}`} )`;
     return result;
 }
 
