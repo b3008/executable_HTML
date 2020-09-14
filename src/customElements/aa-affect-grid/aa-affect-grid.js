@@ -377,13 +377,13 @@ export default class AAAffectGrid extends BaseElement {
                 
                 </div>
 
-                <div class="leftLabels" style="position:absolute; bottom:30px; left:10px;  display:flex; flex-direction:row; justify-content:space-between; transform:rotate(-90deg); transform-origin:top left;">
+                <div class="leftLabels" style="position:absolute; bottom:30px; left:0px;  display:flex; flex-direction:row; justify-content:space-between; transform:rotate(-90deg); transform-origin:top left;">
                     <div style="width:33.3%; text-align:left; ">${this.leftBottomLabel}</div>    
                     <div style="width:33.3%; text-align:center; flex-grow:2">${this.leftLabel}</div>    
                     <div style="width:33.3%;text-align:right">${this.leftTopLabel}</div>    
                 </div>
 
-                <div class="rightLabels" style="position:absolute; bottom:50px; right:30px; display:flex; flex-direction:row; justify-content:space-between; transform:rotate(90deg); transform-origin:bottom right;">
+                <div class="rightLabels" style="position:absolute; bottom:50px; right:20px; display:flex; flex-direction:row; justify-content:space-between; transform:rotate(90deg); transform-origin:bottom right;">
                     <div style="width:33.3%; text-align:left">${this.rightTopLabel}</div>    
                     <div style="width:33.3%; text-align:center; flex-grow:2">${this.rightLabel}</div>    
                     <div style="width:33.3%; text-align:right">${this.rightBottomLabel}</div>    
