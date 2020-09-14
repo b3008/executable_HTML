@@ -176,6 +176,441 @@ module.exports = function(originalModule) {
 
 /***/ }),
 
+/***/ "./src/customElements/aa-affect-grid/aa-affect-grid.js":
+/*!*************************************************************!*\
+  !*** ./src/customElements/aa-affect-grid/aa-affect-grid.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AAAffectGrid; });
+/* harmony import */ var _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../aa-baseElement/baseElement.js */ "./src/customElements/aa-baseElement/baseElement.js");
+
+class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+
+
+
+    static get properties() {
+        return {
+
+            'top-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'bottom-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'left-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'center-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'right-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'top-left-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'top-right-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'bottom-left-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'bottom-right-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'left-top-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'left-bottom-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'right-top-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            'right-bottom-label': {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            rows: {
+                type: Number,
+                userDefined: true,
+                value: 11
+            },
+
+            columns: {
+                type: Number,
+                userDefined: true,
+                value: 11
+            },
+
+            value:{
+                type: Array,
+
+            }
+
+        }
+    }
+
+    static get acceptsElements() {
+        return null
+    }
+
+    static get observedAttributes() {
+        return Object.keys(AAAffectGrid.properties);
+    }
+
+
+
+
+    get value() {
+        if (!this.inputItem) {
+            return this.getAttribute('value');
+        }
+        return this.inputItem.value;
+    }
+    set value(val) {
+        this.setAttribute('value', val);
+        if (this.inputItem) {
+            this.inputItem.value = val;
+        }
+
+    }
+
+    get minLabel() {
+        return this.getAttribute('min-label');
+    }
+
+    get maxLabel() {
+        return this.getAttribute('max-label');
+    }
+
+    set minLabel(val) {
+        this.setAttribute('min-label', val);
+        if (this.inputItem) {
+            this.inputItem.minLabel = val;
+        }
+    }
+
+    set maxLabel(val) {
+        this.setAttribute('max-label', val);
+        if (this.inputItem) {
+            this.inputItem.maxLabel = val;
+        }
+    }
+
+    set min(val) {
+        this.setAttribute('min', val);
+        if (this.inputItem) {
+            this.inputItem.min = val;
+        }
+    }
+
+    set max(val) {
+        this.setAttribute('max', val);
+        if (this.inputItem) {
+            this.inputItem.max = val;
+        }
+    }
+
+
+    constructor() {
+        super();
+
+        this.root = this.attachShadow({ mode: 'open' });
+
+        
+        
+    }
+
+
+
+    connectedCallback() {
+        super.connectedCallback();
+
+
+        this.root.innerHTML = this.css + this.html;
+
+        // this.topLeft = this.root.querySelector('.top-left');
+       
+        // this.topRight = this.root.querySelector('.top-right');
+        // this.leftMargin =  this.root.querySelector('.left-margin');
+        // this.rightMargin = this.root.querySelector('.right-margin');
+        
+
+        
+
+        this.grid = this.root.querySelector('.grid');
+        this.grid.addEventListener("click", (e)=>{
+            let cell = e.path[0];
+            this.value = [cell.dataset.x, cell.dataset.y];
+            
+            
+            if(this.selectedCell){
+                this.selectedCell.classList.remove("selected");
+            }
+            this.selectedCell = cell;
+            this.selectedCell.classList.add("selected");
+
+
+            console.log(this.value);
+            console.log(typeof this.value)
+        })
+
+        this.totalContainer = this.root.querySelector('.total-container');
+
+        this.totalContainer.style.height = window.getComputedStyle(this.totalContainer).width;
+        this.root.querySelector(".leftLabels").style.width = window.getComputedStyle(this.grid).height;
+        this.root.querySelector(".rightLabels").style.width = window.getComputedStyle(this.grid).height;
+        
+        //register a resize observer for top container
+        let gridResizeObserver = new ResizeObserver( ()=>{
+            console.log("resize");
+            this.totalContainer.style.height = window.getComputedStyle(this.totalContainer).width;
+            this.root.querySelector(".leftLabels").style.width = window.getComputedStyle(this.grid).height;
+            this.root.querySelector(".rightLabels").style.width = window.getComputedStyle(this.grid).height;
+
+        }).observe(this.root.querySelector('.top-label'));
+
+
+       
+
+
+        
+    }
+
+    get css() {
+        return `<style>
+
+        
+        :host{
+            display:block;
+            font-family: Roboto, Noto, sans-serif;
+            
+        }
+        .top-section{
+            height:40px;
+            width:100%;
+         
+        }
+
+        .top-left{
+            text-align:left;
+        }
+
+        .top-label{
+            text-align:center;
+        }
+        .top-right{
+            text-align:right;
+        }
+
+        .bottom-left{
+            text-align:left;
+        }
+        .bottom{
+            text-align:center;
+        }
+        .bottom-right{
+            text-align:right;
+        }
+
+
+        .top-left-corner{
+            width:40px;
+            height:40px;
+        }
+        .top-right-corner{
+            width:40px;
+            height:40px;
+        }
+
+        .bottom-left-corner{
+            width:40px;
+            height:40px;
+        }
+        .bottom-right-corner{
+            width:40px;
+            height:40px;
+        }
+
+
+        .middle-section{
+         
+            flex-grow:2;
+        }
+
+
+        
+        .bottom-section{
+           
+            height:40px;
+            width:100%;
+        }
+        .left-margin{
+            width:40px;
+            height:100%;
+        }
+        .right-margin{
+            width:40px;
+            height:100%;
+        }
+
+        .grid{
+            display:grid;
+            grid-template-columns: repeat(${this.columns}, ${100/this.columns}%);
+            
+            flex-grow:2;
+            width:100%;
+            height:100%;
+        }
+        .cell{
+            border:solid thin;
+            transition:background-color 0.2s;
+        }
+
+        .cell.top{
+            border-top:solid 2px;
+        }
+
+        .cell.bottom{
+            border-bottom:solid 2px;
+        }
+
+        .cell.left{
+            border-left:solid 2px;
+        }
+
+        .cell.right{
+            border-right: solid 2px;
+        }
+        .cell.selected{
+            background-color: #3367D6;
+            
+        }
+
+
+        .label{
+            flex-grow:1
+        }
+        </style>
+        `;
+    }
+
+    get html() {
+        
+
+        let grid ='';
+        for(let j=0; j<this.rows; j++){
+            for(let i=0; i<this.columns; i++){
+                grid+=html`<div class="cell  ${j==0?'top':''} ${j==this.rows-1?`bottom`:''}  ${i==0?`left`:''}  ${i==this.columns-1?`right`:''}" data-x="${ Math.round(this.columns/2) - i -1 }" data-y="${ j+1 - Math.round(this.rows/2)}">
+                <!-- ${ i+1 - Math.round(this.columns/2)  }, ${ Math.round(this.rows/2) - j-1} -->
+            </div>`;
+            }
+        }
+
+        let source = html`
+            <div class="total-container" style="position:relative; display:flex; flex-direction:column;">
+                
+                <div class="top-section" style="display:flex; flex-direction:row">
+                    <div class="top-left-corner"></div>    
+                    <div style="width:100%; display:flex; flex-direction:row; justify-content:space-between">
+                        <div class="top-left label" style="width:33.3%">${this.topLeftLabel}</div>
+                        <div class="top-label" style="width:33.3%; text-align:center">${this.topLabel}</div>
+                        <div class="top-right label" style="width:33.3%">${this.topRightLabel}</div>
+                    </div>
+                    <div class="top-right-corner"></div>    
+                </div>
+            
+                
+                <div class="middle-section" style="display:flex; flex-direction:row">
+                    <div class="left-margin" style="display:flex; flex-direction:column;"></div>
+                    <div class="grid" style="padding:0px">${grid}</div>
+                    <div class="right-margin" style="display:flex; flex-direction:column"></div>
+                </div>
+                
+
+                <div class="bottom-section" style="display:flex; flex-direction:row;margin-top:10px">
+                <div class="bottom-left-corner" ></div>    
+                <div style="width:100%; display:flex; flex-direction:row; justify-content:space-between">
+                    <div class="bottom-left label" style="width:33.3%">${this.bottomLeftLabel}</div>
+                    <div class="bottom label" style="width:33.3%">${this.bottomLabel}</div>
+                    <div class="bottom-right label" style="width:33.3%">${this.bottomRightLabel}</div>
+                
+                </div>
+                    <div class="bottom-right-corner"></div>    
+                
+                </div>
+
+                <div class="leftLabels" style="position:absolute; bottom:30px; left:0px;  display:flex; flex-direction:row; justify-content:space-between; transform:rotate(-90deg); transform-origin:top left;">
+                    <div style="width:33.3%; text-align:left; ">${this.leftBottomLabel}</div>    
+                    <div style="width:33.3%; text-align:center; flex-grow:2">${this.leftLabel}</div>    
+                    <div style="width:33.3%;text-align:right">${this.leftTopLabel}</div>    
+                </div>
+
+                <div class="rightLabels" style="position:absolute; bottom:50px; right:20px; display:flex; flex-direction:row; justify-content:space-between; transform:rotate(90deg); transform-origin:bottom right;">
+                    <div style="width:33.3%; text-align:left">${this.rightTopLabel}</div>    
+                    <div style="width:33.3%; text-align:center; flex-grow:2">${this.rightLabel}</div>    
+                    <div style="width:33.3%; text-align:right">${this.rightBottomLabel}</div>    
+                </div>
+
+            </div>
+        
+        `;
+       
+       console.log(source);
+        
+        return source;
+    }
+
+
+}
+
+_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerAAElement('aa-affect-grid', AAAffectGrid);
+
+/***/ }),
+
 /***/ "./src/customElements/aa-baseElement/baseElement.js":
 /*!**********************************************************!*\
   !*** ./src/customElements/aa-baseElement/baseElement.js ***!
@@ -245,7 +680,7 @@ class BaseElement extends HTMLElement {
             let holder = BaseElement.createHolderForNode(node);
             node.replaceWith(holder);
             node.innerFragment = holder.innerFragment;
-            debugger;
+
         } else
             for (let i = 0; i < node.childNodes.length; i++) {
                 BaseElement.scanAndReplace(node.childNodes[i]);
@@ -260,7 +695,7 @@ class BaseElement extends HTMLElement {
 
     connectedCallback() {
 
-        debugger;
+
         // console.log(this.id, " connected");
         this._attachedTimestamp = new Date().getTime();
         this._debug = (this.debug === true) || (this.debug === null);
@@ -378,6 +813,8 @@ class BaseElement extends HTMLElement {
                     // this[prop] = p[keys[i]].value ;
                     
                     let val = this.getAttribute(keys[i]) || (p[keys[i]].value||null);
+                    
+                   
                     
                     if(val) this.setAttribute(keys[i], val);
                     if(val===false) this.setAttribute(keys[i], val);
@@ -2657,7 +3094,7 @@ _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerA
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! exports provided: BaseElement, AAVariable, AAFunctionRandom, AAChoose, AAWhen, AAOtherwise, AAMemory, AAScreen, AASequence, AASession, AATextAnswer, AAChoiceItem, AAMultipleChoice, AACheckboxes, AALikertScale, AASlider */
+/*! exports provided: BaseElement, AAVariable, AAFunctionRandom, AAChoose, AAWhen, AAOtherwise, AAMemory, AAScreen, AASequence, AASession, AATextAnswer, AAChoiceItem, AAMultipleChoice, AACheckboxes, AALikertScale, AASlider, AAAffectGrid */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2710,7 +3147,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _customElements_aa_slider_aa_slider_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./customElements/aa-slider/aa-slider.js */ "./src/customElements/aa-slider/aa-slider.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AASlider", function() { return _customElements_aa_slider_aa_slider_js__WEBPACK_IMPORTED_MODULE_15__["default"]; });
 
+/* harmony import */ var _customElements_aa_affect_grid_aa_affect_grid_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./customElements/aa-affect-grid/aa-affect-grid.js */ "./src/customElements/aa-affect-grid/aa-affect-grid.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAAffectGrid", function() { return _customElements_aa_affect_grid_aa_affect_grid_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
+
 // import '../dist/paper-polymer.js';
+
 
 
 

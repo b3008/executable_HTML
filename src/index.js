@@ -24,5 +24,5 @@ export {
     AAChoose, AAWhen, AAOtherwise, AAMemory, AAScreen,
     AASequence, AASession, AATextAnswer,
     AAChoiceItem, AAMultipleChoice, AACheckboxes, AALikertScale,
-    AASlider
+    AASlider, AAAffectGrid
 }
