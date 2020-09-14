@@ -225,6 +225,7 @@ class BaseElement extends HTMLElement {
         let fragment = document.createDocumentFragment();
         for (let i = 0; i < node.childNodes.length; i++) {
             fragment.append(node.childNodes[i].cloneNode(true));
+            // fragment.append(BaseElement.copy(node.childNodes[i])
         }
         return fragment;
     }
@@ -240,8 +241,11 @@ class BaseElement extends HTMLElement {
             BaseElement.scanAndReplace(node.content);
         }
         else if (BaseElement.isAAElement(node)) {
+            // if(node.innerFragment) { return };
             let holder = BaseElement.createHolderForNode(node);
             node.replaceWith(holder);
+            node.innerFragment = holder.innerFragment;
+            debugger;
         } else
             for (let i = 0; i < node.childNodes.length; i++) {
                 BaseElement.scanAndReplace(node.childNodes[i]);
@@ -256,11 +260,16 @@ class BaseElement extends HTMLElement {
 
     connectedCallback() {
 
+        debugger;
         // console.log(this.id, " connected");
         this._attachedTimestamp = new Date().getTime();
         this._debug = (this.debug === true) || (this.debug === null);
         if (this.innerFragment) {
-            BaseElement.scanAndReplace(this.innerFragment);
+
+            // I have commented BaseElement.scanAndReplace out because a shallow copy and an innerFragment
+            // is already created by BaseElement.copy for childNodes of this.innerFrament
+            // as they are appended to this element.
+            // BaseElement.scanAndReplace(this.innerFragment);
             for (let i = 0; i < this.innerFragment.childNodes.length; i++) {
                 this.appendChild(BaseElement.copy(this.innerFragment.childNodes[i]));
             }
@@ -367,7 +376,11 @@ class BaseElement extends HTMLElement {
                 let prop = this.toCamelCase(keys[i]);
                 if ((typeof this[prop] === 'undefined') || (this[prop] === null)) {
                     // this[prop] = p[keys[i]].value ;
-                    this.setAttribute(keys[i], this.getAttribute(keys[i]) || p[keys[i]].value);
+                    
+                    let val = this.getAttribute(keys[i]) || (p[keys[i]].value||null);
+                    
+                    if(val) this.setAttribute(keys[i], val);
+                    if(val===false) this.setAttribute(keys[i], val);
                 }
 
             }
@@ -885,8 +898,11 @@ class AAChoose extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
                 return eval(expr);
             }
             else {
-                // there are still strings in the expression, which are unknown, an exception should be raised
-                throw 'unknown identifiers in expression : ' + expr;
+                // there are still strings in the expression, which are unknown
+                // evaluate with values that the parseTreeProvides
+                return  eval(`${parseTree.left.value}${parseTree.operator}${parseTree.right.value}`);
+                //an exception should be raised
+                // throw 'unknown identifiers in expression : ' + expr;
             }
         } catch (e) {
             console.error('parse error:', e);
@@ -899,7 +915,7 @@ class AAChoose extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
         let originalIdentifiers = Object.keys(session.getDataDump());
         let upperCaseIdentifiers = originalIdentifiers.map(s => s.toUpperCase());
-        for (let i in upperCaseIdentifiers) {
+        for (let i in originalIdentifiers) {
             let value = session.getData(originalIdentifiers[i]);
             let finalValue = parseInt(value);
             if (finalValue != value) {
@@ -1364,7 +1380,8 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
 
             value: {
                 type: String,
-                userDefined: true
+                userDefined: true,
+
             },
 
         }
@@ -1416,14 +1433,15 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
     }
 
     connectedCallback() {
+        debugger;
         super.connectedCallback();
-
+        debugger;
         this.choiceItems = [];
         for (let i = 0; i < this.childNodes.length; i++) {
             this.attachToShadowDomAccordingToKind(this.childNodes[i]);
         }
 
-        if (this.getAttribute('value')) {
+        if ((this.getAttribute('value'))&&(this.getAttribute('value')!=='undefined')) {
             this.radioGroup.setAttribute('selected', this.getAttribute('value'));
         }
 
@@ -1534,41 +1552,41 @@ __webpack_require__.r(__webpack_exports__);
 class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 
-   
-    static get properties(){
+
+    static get properties() {
         return {
-            name:{
-                type:String,
-                userDefined:true
+            name: {
+                type: String,
+                userDefined: true
             },
-            "submit-button-text":{
-                type:String,
-                value:"submit",
-                userDefined:true
-            },
-
-            "submit-button-hidden":{
-                type:Boolean,
-                value:false,
-                userDefined:true
+            "submit-button-text": {
+                type: String,
+                value: "submit",
+                userDefined: true
             },
 
-            'expect-wait':{
-                type:Boolean,
-                userDefined:false,
-                value:true
+            "submit-button-hidden": {
+                type: Boolean,
+                value: false,
+                userDefined: true
             },
 
-            'autohide':{
-                type:Boolean,
-                userDefined:false,
-                value:true
+            'expect-wait': {
+                type: Boolean,
+                userDefined: false,
+                value: true
+            },
+
+            'autohide': {
+                type: Boolean,
+                userDefined: false,
+                value: true
             }
-            
+
         }
     }
 
-    static get acceptsElements(){
+    static get acceptsElements() {
         return null;
     }
     static get observedAttributes() {
@@ -1582,7 +1600,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
                 if (this.submitButton) { this.submitButton.innerHTML = newValue; }
                 break;
             case 'submit-button-hidden':
-                if(this.submitButtonContainer){
+                if (this.submitButtonContainer) {
                     if ((newValue !== true) || (newValue !== 'true')) {
                         this.submitButtonContainer.style.display = 'block';
                     } else {
@@ -1601,10 +1619,9 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     }
 
     connectedCallback() {
-       
         debugger;
         super.connectedCallback();
-        
+
 
 
         this.root.innerHTML = this.css + this.html;
@@ -1615,7 +1632,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         this._started = true;
 
         if (this.submitButtonHidden) {
-            if(this.submitButtonContainer){
+            if (this.submitButtonContainer) {
                 this.submitButtonContainer.style.display = 'none';
             }
         }
@@ -1623,7 +1640,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
         this.root.querySelector('.submitButton').addEventListener('click', this.submitButtonClick.bind(this));
 
-        
+
     }
 
 
@@ -1675,7 +1692,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     }
 
     submitButtonClick(e) {
-        debugger;
+
         let userMessage = this.querySelector('#userMessage');
         if (this.hasChildrenThatDemandResponse()) {
 
@@ -1695,9 +1712,8 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         if (typeof e.detail.callback != 'undefined') {
             e.detail.callback(e);
         }
-        if (this.autohide) { 
-            debugger;
-            this.hide(); 
+        if (this.autohide) {
+            this.hide();
         }
 
     }
@@ -1734,17 +1750,17 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
 
 
-    getChildrenValues() {
-        let result = [];
-
-        for (let i = 0; i < this.children.length; i++) {
-            let c = this.children[i];
+    getChildrenValues(node, result) {
+        node = node || this;
+        result = result || [];
+        for (let i = 0; i < node.children.length; i++) {
+            let c = node.children[i];
             if (c.getValue) {
                 result.push(c.getValue());
+            } else if (c.value) {
+                result.push({ [c.name]: c.value });
             } else {
-                if (c.value) {
-                    result.push({ [c.name]: c.value });
-                }
+                this.getChildrenValues(c, result);
             }
         }
         return result;
@@ -1756,7 +1772,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
     getValue() {
         let __meta = {
-            attachedTimestamp: this.attachedTimestamp,
+            attachedTimestamp: this._attachedTimestamp,
             submitTimestamp: new Date().getTime()
         };
         let result = this.getChildrenValues(this);
@@ -1973,6 +1989,7 @@ class AASequence extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
 
         return new Promise((resolve, reject) => {
 
+
             if (this.stopped) { return; }
             if (this.sIndex >= this.innerFragment.childNodes.length) return null;
 
@@ -1986,6 +2003,8 @@ class AASequence extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
             }
 
             let fragmentChild = this.innerFragment.childNodes[this.sIndex];
+
+            if(fragmentChild.nodeName=="aa-screen") debugger;
             //  if the child is not an element just add it immediately 
             //  and move on to the next, there won't be a connectecCallback Function to execute anyway
             while (fragmentChild.nodeType != Node.ELEMENT_NODE) {
@@ -2168,6 +2187,7 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
         return this._mem.getData(name);
     }
     setData(name, value){
+        debugger;
         return this._mem.setData(name, value);
     }
 
@@ -2250,35 +2270,7 @@ class AASlider extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     }
 
 
-    changeInputItem(type) {
-        if (type === 'long') {
-            let value = this.value;
-            let label = this.label;
-            this.inputItem = customElements.get('paper-textarea') ?
-                document.createElement('paper-textarea') : document.createElement('textarea');
-            this.inputItem.value = value;
-            this.inputItem.label = label;
-            this.inputItem.classList.add('inputItem');
-            this.fixBugInPaperTextarea(this.inputItem);
-            this.inputItem.addEventListener('change', (e) => {
-                this.value = e.target.value;
-            })
-            this.root.querySelector('.inputItem').replaceWith(this.inputItem);
-        } else {
-            let value = this.value;
-            let label = this.label;
-            this.inputItem = customElements.get('paper-input') ?
-                document.createElement('paper-input') : document.createElement('input');
-            this.inputItem.value = value;
-            this.inputItem.label = label;
-            this.inputItem.classList.add('inputItem');
-            this.inputItem.addEventListener('change', (e) => {
-                this.value = e.target.value;
-            })
-            this.root.querySelector('.inputItem').replaceWith(this.inputItem);
-        }
-    }
-
+ 
 
     get value() {
         if (!this.inputItem) {
@@ -2431,6 +2423,12 @@ class AATextAnswer extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
                 type: String,
                 userDefined: false
             },
+            'type':{
+                type: String,
+                userDefined: true,
+                value:"text",
+                valuesAllowed: ["date", "datetime", "datetime-local", "email", "number", "password", "tel", "text", "time" ]
+            }
 
         }
     }
@@ -2579,8 +2577,8 @@ class AATextAnswer extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
 
     get html() {
         let inputElement = customElements.get('paper-input')
-            ? `<paper-input class='inputItem'></paper-input>`
-            : `<input class='inputItem'>`;
+            ? `<paper-input type='${this.type}' class='inputItem'></paper-input>`
+            : `<input type='${this.type}' class='inputItem'>`;
         return html`${inputElement}`
     }
     get longHtml() {
@@ -2808,12 +2806,12 @@ function formatJSLResult(tagName, attrObj, argsStrings) {
     let attrs = getAttrsAsString(attrObj);
     let args = getArgsString(argsStrings);
     let isArgsMultiline = /\n/.test(args);
-    debugger;
+
     //decide if newline for attributes:
     let attrParam;
     let newLineForAttrs = false;
     //do they exist
-    let attrsExist = attrs != '{}';
+    let attrsExist = attrs !== '{}';
     if (attrsExist) {
         //do they contain newlines
         if (attrs.indexOf('\n') != -1) {
@@ -2825,10 +2823,10 @@ function formatJSLResult(tagName, attrObj, argsStrings) {
             }
         }
         if (newLineForAttrs) {
-            attrParam = `\n${tab(attrs)}${argsStrings.length ? ',' : ''}`
+            attrParam = `\n${tab(attrs)}${argsStrings.length ? ',' : ''}`;
         }
         else {
-            attrParam = `${attrs}${argsStrings.length ? ',' : ''}`
+            attrParam = `${attrs}${argsStrings.length ? ',' : ''}`;
         }
 
     } else {
@@ -2837,7 +2835,7 @@ function formatJSLResult(tagName, attrObj, argsStrings) {
     }
     // let argsParam;
     // let newLineForArgs = false;
-    let result = `${tagName}( ${attrParam}${isArgsMultiline ? `\n${tab(args)}\n` : `${attrsExist ? ' ' : ''}${args}`} )`
+    let result = `${tagName}( ${attrParam}${isArgsMultiline ? `\n${tab(args)}\n` : `${attrsExist ? ' ' : ''}${args}`} )`;
     return result;
 }
 

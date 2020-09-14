@@ -55,7 +55,7 @@ export default class BaseElement extends HTMLElement {
             let holder = BaseElement.createHolderForNode(node);
             node.replaceWith(holder);
             node.innerFragment = holder.innerFragment;
-            debugger;
+
         } else
             for (let i = 0; i < node.childNodes.length; i++) {
                 BaseElement.scanAndReplace(node.childNodes[i]);
@@ -70,7 +70,7 @@ export default class BaseElement extends HTMLElement {
 
     connectedCallback() {
 
-        debugger;
+
         // console.log(this.id, " connected");
         this._attachedTimestamp = new Date().getTime();
         this._debug = (this.debug === true) || (this.debug === null);
@@ -188,6 +188,8 @@ export default class BaseElement extends HTMLElement {
                     // this[prop] = p[keys[i]].value ;
                     
                     let val = this.getAttribute(keys[i]) || (p[keys[i]].value||null);
+                    
+                   
                     
                     if(val) this.setAttribute(keys[i], val);
                     if(val===false) this.setAttribute(keys[i], val);

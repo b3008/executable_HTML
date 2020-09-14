@@ -15,6 +15,7 @@ import AAChoiceItem from './customElements/aa-choice-item/aa-choice-item.js';
 import AACheckboxes from './customElements/aa-checkboxes/aa-checkboxes.js';
 import AALikertScale from './customElements/aa-likert-scale/aa-likert-scale.js';
 import AASlider from './customElements/aa-slider/aa-slider.js';
+import AAAffectGrid from './customElements/aa-affect-grid/aa-affect-grid.js';
 // debugger;
 
 
