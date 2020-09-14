@@ -34,7 +34,7 @@ describe('aa-affect-grid', () => {
                 left-bottom-label="left-bottom"
     
                 right-top-label="right-top" 
-                right-label="right and then some" 
+                right-label="right" 
                 right-bottom-label="right-bottom"
     
 

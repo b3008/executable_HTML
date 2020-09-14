@@ -349,10 +349,11 @@ export default class AAAffectGrid extends BaseElement {
                 
                 <div class="top-section" style="display:flex; flex-direction:row">
                     <div class="top-left-corner"></div>    
-                    <div class="top-left label">${this.topLeftLabel}</div>
-                    <div class="top-label" style="flex-grow:1;  text-align:center">${this.topLabel} and then some</div>
-                    <div class="top-right label">${this.topRightLabel}</div>
-                    
+                    <div style="width:100%; display:flex; flex-direction:row; justify-content:space-between">
+                        <div class="top-left label" style="width:33.3%">${this.topLeftLabel}</div>
+                        <div class="top-label" style="width:33.3%; text-align:center">${this.topLabel}</div>
+                        <div class="top-right label" style="width:33.3%">${this.topRightLabel}</div>
+                    </div>
                     <div class="top-right-corner"></div>    
                 </div>
             
@@ -366,22 +367,26 @@ export default class AAAffectGrid extends BaseElement {
 
                 <div class="bottom-section" style="display:flex; flex-direction:row;margin-top:10px">
                 <div class="bottom-left-corner" ></div>    
-                    <div class="bottom-left label">${this.bottomLeftLabel}</div>
-                    <div class="bottom label">${this.bottomLabel}</div>
-                    <div class="bottom-right label">${this.bottomRightLabel}</div>
+                <div style="width:100%; display:flex; flex-direction:row; justify-content:space-between">
+                    <div class="bottom-left label" style="width:33.3%">${this.bottomLeftLabel}</div>
+                    <div class="bottom label" style="width:33.3%">${this.bottomLabel}</div>
+                    <div class="bottom-right label" style="width:33.3%">${this.bottomRightLabel}</div>
+                
+                </div>
                     <div class="bottom-right-corner"></div>    
+                
                 </div>
 
                 <div class="leftLabels" style="position:absolute; bottom:30px; left:10px;  display:flex; flex-direction:row; justify-content:space-between; transform:rotate(-90deg); transform-origin:top left;">
-                    <div style=" text-align:left; ">one</div>    
-                    <div style="width:100%; text-align:center; flex-grow:2">two</div>    
-                    <div style="text-align:right">three</div>    
+                    <div style="width:33.3%; text-align:left; ">${this.leftBottomLabel}</div>    
+                    <div style="width:33.3%; text-align:center; flex-grow:2">${this.leftLabel}</div>    
+                    <div style="width:33.3%;text-align:right">${this.leftTopLabel}</div>    
                 </div>
 
                 <div class="rightLabels" style="position:absolute; bottom:50px; right:30px; display:flex; flex-direction:row; justify-content:space-between; transform:rotate(90deg); transform-origin:bottom right;">
-                    <div style="text-align:left">seven</div>    
-                    <div style="text-align:center; flex-grow:2">eight</div>    
-                    <div style="text-align:right">nine</div>    
+                    <div style="width:33.3%; text-align:left">${this.rightTopLabel}</div>    
+                    <div style="width:33.3%; text-align:center; flex-grow:2">${this.rightLabel}</div>    
+                    <div style="width:33.3%; text-align:right">${this.rightBottomLabel}</div>    
                 </div>
 
             </div>
