@@ -183,11 +183,11 @@ export default class AAAffectGrid extends BaseElement {
 
         this.root.innerHTML = this.css + this.html;
 
-        this.topLeft = this.root.querySelector('.top-left');
-        this.top = this.root.querySelector('.top');
-        this.topRight = this.root.querySelector('.top-right');
-        this.leftMargin =  this.root.querySelector('.left-margin');
-        this.rightMargin = this.root.querySelector('.right-margin');
+        // this.topLeft = this.root.querySelector('.top-left');
+       
+        // this.topRight = this.root.querySelector('.top-right');
+        // this.leftMargin =  this.root.querySelector('.left-margin');
+        // this.rightMargin = this.root.querySelector('.right-margin');
         
 
         
@@ -199,7 +199,7 @@ export default class AAAffectGrid extends BaseElement {
             console.log(this.value);
             console.log(typeof this.value)
         })
-        
+
         this.totalContainer = this.root.querySelector('.total-container');
 
         this.totalContainer.style.height = window.getComputedStyle(this.totalContainer).width;
@@ -213,7 +213,7 @@ export default class AAAffectGrid extends BaseElement {
             this.root.querySelector(".leftLabels").style.width = window.getComputedStyle(this.grid).height;
             this.root.querySelector(".rightLabels").style.width = window.getComputedStyle(this.grid).height;
 
-        }).observe(this.top);
+        }).observe(this.root.querySelector('.top-label'));
 
 
        
@@ -238,7 +238,8 @@ export default class AAAffectGrid extends BaseElement {
         .top-left{
             text-align:left;
         }
-        .top{
+
+        .top-label{
             text-align:center;
         }
         .top-right{
@@ -281,29 +282,7 @@ export default class AAAffectGrid extends BaseElement {
         }
 
 
-        .vertical-left{
-            
-            // transform:rotate(-90deg);
-            // transform-origin: right bottom;
-            white-space:pre;
-        }
-
-        .vertical-right{
-            
-            // transform: rotate(90deg) translate(0,-30px);
-            // transform-origin: 0px 0px;
-            // white-space:pre;
-            border:solid thin;
-        }
-
-        .vertical-right-center{
-            
-            // transform: rotate(90deg) translate(0,-30px);;
-            // transform-origin: 50% -50%;
-            // white-space:pre;
-            border:solid thin;
-        }
-
+        
         .bottom-section{
            
             height:40px;
@@ -321,13 +300,29 @@ export default class AAAffectGrid extends BaseElement {
         .grid{
             display:grid;
             grid-template-columns: repeat(${this.columns}, ${100/this.columns}%);
-            border:solid thin;
+            
             flex-grow:2;
             width:100%;
             height:100%;
         }
         .cell{
             border:solid thin;
+        }
+
+        .cell.top{
+            border-top:solid 2px;
+        }
+
+        .cell.bottom{
+            border-bottom:solid 2px;
+        }
+
+        .cell.left{
+            border-left:solid 2px;
+        }
+
+        .cell.right{
+            border-right: solid 2px;
         }
 
         .label{
@@ -343,32 +338,33 @@ export default class AAAffectGrid extends BaseElement {
         let grid ='';
         for(let j=0; j<this.rows; j++){
             for(let i=0; i<this.columns; i++){
-                grid+=html`<div class="cell" data-x="${ Math.round(this.columns/2) - i -1 }" data-y="${ j+1 - Math.round(this.rows/2)}">
-                ${ i+1 - Math.round(this.columns/2)  }, ${ Math.round(this.rows/2) - j-1}
+                grid+=html`<div class="cell  ${j==0?'top':''} ${j==this.rows-1?`bottom`:''}  ${i==0?`left`:''}  ${i==this.columns-1?`right`:''}" data-x="${ Math.round(this.columns/2) - i -1 }" data-y="${ j+1 - Math.round(this.rows/2)}">
+                <!-- ${ i+1 - Math.round(this.columns/2)  }, ${ Math.round(this.rows/2) - j-1} -->
             </div>`;
             }
         }
 
         let source = html`
-            <div class="total-container" style="position:relative; display:flex; flex-direction:column; border:solid">
+            <div class="total-container" style="position:relative; display:flex; flex-direction:column;">
                 
                 <div class="top-section" style="display:flex; flex-direction:row">
-                <div class="top-left-corner"></div>    
-                <div class="top-left label">${this.topLeftLabel}</div>
-                    <div class="top label">${this.topLabel}</div>
+                    <div class="top-left-corner"></div>    
+                    <div class="top-left label">${this.topLeftLabel}</div>
+                    <div class="top-label" style="flex-grow:1;  text-align:center">${this.topLabel} and then some</div>
                     <div class="top-right label">${this.topRightLabel}</div>
+                    
                     <div class="top-right-corner"></div>    
                 </div>
             
                 
                 <div class="middle-section" style="display:flex; flex-direction:row">
-                    <div class="left-margin" style="display:flex; flex-direction:column; border:solid thick red"></div>
-                    <div class="grid">${grid}</div>
+                    <div class="left-margin" style="display:flex; flex-direction:column;"></div>
+                    <div class="grid" style="padding:0px">${grid}</div>
                     <div class="right-margin" style="display:flex; flex-direction:column"></div>
                 </div>
                 
 
-                <div class="bottom-section" style="display:flex; flex-direction:row">
+                <div class="bottom-section" style="display:flex; flex-direction:row;margin-top:10px">
                 <div class="bottom-left-corner" ></div>    
                     <div class="bottom-left label">${this.bottomLeftLabel}</div>
                     <div class="bottom label">${this.bottomLabel}</div>
@@ -376,16 +372,16 @@ export default class AAAffectGrid extends BaseElement {
                     <div class="bottom-right-corner"></div>    
                 </div>
 
-                <div class="leftLabels" style="position:absolute; bottom:20px; left:10px;  display:flex; flex-direction:row; transform:rotate(-90deg); transform-origin:top left;">
-                    <div style="width:100% text-align:left; ">one</div>    
+                <div class="leftLabels" style="position:absolute; bottom:30px; left:10px;  display:flex; flex-direction:row; justify-content:space-between; transform:rotate(-90deg); transform-origin:top left;">
+                    <div style=" text-align:left; ">one</div>    
                     <div style="width:100%; text-align:center; flex-grow:2">two</div>    
-                    <div style="width:100%l text-align:right">three</div>    
+                    <div style="text-align:right">three</div>    
                 </div>
 
-                <div class="rightLabels" style="position:absolute; bottom:40px; right:30px; display:flex; flex-direction:row; transform:rotate(90deg); transform-origin:bottom right;">
-                    <div style="width:100% text-align:left">seven</div>    
-                    <div style="width:100%; text-align:center; flex-grow:2">eight</div>    
-                    <div style="width:100%l text-align:right">nine</div>    
+                <div class="rightLabels" style="position:absolute; bottom:50px; right:30px; display:flex; flex-direction:row; justify-content:space-between; transform:rotate(90deg); transform-origin:bottom right;">
+                    <div style="text-align:left">seven</div>    
+                    <div style="text-align:center; flex-grow:2">eight</div>    
+                    <div style="text-align:right">nine</div>    
                 </div>
 
             </div>
