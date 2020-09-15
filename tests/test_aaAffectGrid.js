@@ -21,36 +21,36 @@ describe('aa-affect-grid', () => {
     });
 
     describe('functions', function () {
-        it('gets value', (done) => {
-            container.innerHTML = `
-            <aa-affect-grid style="width:50%" 
+        // it('gets value', (done) => {
+        //     container.innerHTML = `
+        //     <aa-affect-grid style="width:50%" 
 
-                columns = 5
-                rows = 5
-                top-left-label="top-left" 
-                top-label="top" 
-                top-right-label="top-right"
+        //         columns = 5
+        //         rows = 5
+        //         top-left-label="top-left" 
+        //         top-label="top" 
+        //         top-right-label="top-right"
 
 
-                left-top-label="left-top" 
-                left-label="left" 
-                left-bottom-label="left-bottom"
+        //         left-top-label="left-top" 
+        //         left-label="left" 
+        //         left-bottom-label="left-bottom"
     
-                right-top-label="right-top" 
-                right-label="right" 
-                right-bottom-label="right-bottom"
+        //         right-top-label="right-top" 
+        //         right-label="right" 
+        //         right-bottom-label="right-bottom"
     
 
-                bottom-left-label="bottom-left" 
-                bottom-label="bottom" 
-                bottom-right-label="bottom-right"
-                >
-            </aa-affect-grid>`;
-            let grid = document.querySelector('aa-affect-grid');
-            // assert(slider.value == '30', `value of element is passed into its inputItem`);
-            // assert(slider.inputItem.value == '30', `value of element is passed into its inputItem`);
-            done();
-        });
+        //         bottom-left-label="bottom-left" 
+        //         bottom-label="bottom" 
+        //         bottom-right-label="bottom-right"
+        //         >
+        //     </aa-affect-grid>`;
+        //     let grid = document.querySelector('aa-affect-grid');
+        //     // assert(slider.value == '30', `value of element is passed into its inputItem`);
+        //     // assert(slider.inputItem.value == '30', `value of element is passed into its inputItem`);
+        //     done();
+        // });
 
         // it('sets value', (done) => {
         //     container.innerHTML = '<aa-slider value="30"></aa-slider>';
