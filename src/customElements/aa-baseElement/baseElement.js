@@ -1,4 +1,4 @@
-import * as yaml from '../../lib/yaml/js-yaml.js';
+import  '../../lib/yaml/js-yaml.js';
 // import * as jsl from '../../lib/jsl/jsl2.1.js';
 import * as html2jsl from '../../lib/html2jsl/html2jsl.js';
 
@@ -181,7 +181,7 @@ export default class BaseElement extends HTMLElement {
         if (p) {
             let keys = Object.keys(p);
             for (let i = 0; i < keys.length; i++) {
-                console.log(keys[i], p[keys[i]].value)
+                // console.log(keys[i], p[keys[i]].value)
 
                 let prop = this.toCamelCase(keys[i]);
                 if ((typeof this[prop] === 'undefined') || (this[prop] === null)) {

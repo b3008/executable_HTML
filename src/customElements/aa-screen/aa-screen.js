@@ -71,7 +71,7 @@ export default class AAScreen extends BaseElement {
     }
 
     connectedCallback() {
-        debugger;
+
         super.connectedCallback();
 
 

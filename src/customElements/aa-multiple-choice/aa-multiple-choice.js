@@ -79,9 +79,9 @@ export default class AAMultipleChoice extends BaseElement {
     }
 
     connectedCallback() {
-        debugger;
+
         super.connectedCallback();
-        debugger;
+
         this.choiceItems = [];
         for (let i = 0; i < this.childNodes.length; i++) {
             this.attachToShadowDomAccordingToKind(this.childNodes[i]);

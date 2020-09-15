@@ -10,14 +10,14 @@
 <body>
 
 
-
+<div style="width:50%; margin:0 auto">
     <aa-session><template>
             <aa-sequence>
                 <!--
                 first, check to see if 
                 the participantNumber variable 
                 already has a value-->
-                
+
                 <aa-choose>
                     <aa-when test="participantNumber==null">
                         <!--
@@ -360,9 +360,80 @@
 
                 </aa-choose>
 
+
+                <aa-screen name="feelings">
+
+                    <div>
+                        How did you feel?
+                        (0 = Not at all, 6 = Extremely)
+                    </div>
+
+
+                    Surprised
+                    <aa-likert-scale name="surprised" items="7" start-item="0"></aa-likert-scale>
+
+                    Worried/anxious
+                    <aa-likert-scale name="worried" items="7" start-item="0"></aa-likert-scale>
+
+                    Happy
+                    <aa-likert-scale name="happy" items="7" start-item="0"></aa-likert-scale>
+
+                    Frustrated
+                    <aa-likert-scale name="frustrated" items="7" start-item="0"></aa-likert-scale>
+
+                    Pleased
+                    <aa-likert-scale name="pleased" items="7" start-item="0"></aa-likert-scale>
+
+                    Angry/hostile
+                    <aa-likert-scale name="angry" items="7" start-item="0"></aa-likert-scale>
+
+                    Homesick
+                    <aa-likert-scale name="homesick" items="7" start-item="0"></aa-likert-scale>
+
+                    Enjoyment/fun
+                    <aa-likert-scale name="enjoyment" items="7" start-item="0"></aa-likert-scale>
+
+
+                    Joyful
+                    <aa-likert-scale name="joyful" items="7" start-item="0"></aa-likert-scale>
+
+                    Depressed/blue
+                    <aa-likert-scale name="depressed" items="7" start-item="0"></aa-likert-scale>
+
+                    Energized
+                    <aa-likert-scale name="energized" items="7" start-item="0"></aa-likert-scale>
+
+                    Ashamed
+                    <aa-likert-scale name="ashamed" items="7" start-item="0"></aa-likert-scale>
+
+                    Safe
+                    <aa-likert-scale name="Safe" items="7" start-item="0"></aa-likert-scale>
+
+                    Lonely
+                    <aa-likert-scale name="lonely" items="7" start-item="0"></aa-likert-scale>
+
+                    Disgusted by the other(s)
+                    <aa-likert-scale name="disgusted" items="7" start-item="0"></aa-likert-scale>
+
+                </aa-screen>
+
+                <aa-choose>
+                    <aa-when test="others_present!=3">
+                        <aa-screen>
+                            <div>Indicate how the (primary) other behaved towrads you in this interaction</div>
+                            <aa-affect-grid top-left-label="Critical" top-label="Assured/Dominant"
+                                top-right-label="Engaging" left-label="Cold/Quarrelsome" right-label="Warm/Aggreeable"
+                                bottom-left-label="Withdrawn" bottom-label="Unassured/Submissive"
+                                bottom-right-label="Deferring" rows=11 columns=11>
+                            </aa-affect-grid>
+                        </aa-screen>
+                    </aa-when>
+                </aa-choose>
+
+
             </aa-sequence>
 
-    </template></aa-session>
+        </template></aa-session>
 
-
+    </div>
 </body>

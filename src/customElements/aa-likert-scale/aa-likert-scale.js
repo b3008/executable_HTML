@@ -23,7 +23,7 @@ export default class AALikertScale extends BaseElement {
             },
 
             "items":{
-                type:Number,
+                type:String,
                 userDefined:true,
             },
 
@@ -44,6 +44,12 @@ export default class AALikertScale extends BaseElement {
                 userDefined:true,
                 value:''
             },
+
+            "start-item":{
+                type:Number,
+                userDefined:true,
+                value:1
+            }
             
             
 
@@ -70,8 +76,9 @@ export default class AALikertScale extends BaseElement {
     }
 
     connectedCallback() {
-        super.connectedCallback();
+        super.connectedCallback();;
 
+        
         this.root.innerHTML = this.html;
 
         this.mChoice = this.root.querySelector("aa-multiple-choice")
@@ -87,6 +94,7 @@ export default class AALikertScale extends BaseElement {
         let end = `<div style="width:100px; white-space:nowrap">${this.getAttribute("end-label") || ''}</div>`
         let placeholder = `<div style="width:50px"></div>`;
         
+
 
         let items = parseInt(this.items)
         for(let i=1; i<=items; i++){
@@ -116,9 +124,12 @@ export default class AALikertScale extends BaseElement {
     }
     get html(){
         let items = ``;
+
+        let startItem = parseFloat(this.startItem)
+
         if((!this.items)||(this.items==="undefined")) this.items = 5;
         for(let i=0; i<this.items; i++){
-            items += `<aa-choice-item name="${i+1}">${i+1}</aa-choice-item>`;
+            items += `<aa-choice-item name="${i+startItem}">${i+startItem}</aa-choice-item>`;
         }
         let result =  html`<div>
                                 <aa-multiple-choice horizontal="true" name="${this.name}">${items}</aa-multiple-choice>

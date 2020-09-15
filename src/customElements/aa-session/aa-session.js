@@ -126,7 +126,7 @@ export default class AASession extends BaseElement {
         return this._mem.getData(name);
     }
     setData(name, value){
-        debugger;
+
         return this._mem.setData(name, value);
     }
 
@@ -136,7 +136,8 @@ export default class AASession extends BaseElement {
 
 
     toJSON(){
-        let result  = super.toJSON();
+        return super.toJSON();
+        
    
     }
 
