@@ -27,7 +27,7 @@
 (function(exports){
 	var clientSide=!exports;
 	var refLastId=0;
-	var	refTable={};//named functions only
+
 	
 	if(clientSide){
 		exports=function(){
@@ -35,7 +35,7 @@
 				return exports[arguments[0]];
 			};
 			return exports;
-		}	
+		};
 	};
 	
 	var typeIsPrimitive={
@@ -44,10 +44,10 @@
 		"string"	:true,
 		"symbol"	:true,
 	};
-	var typeIsEnumerated={
-		"boolean"	:true,
-		"number"	:true,	
-	};
+	// var typeIsEnumerated={
+	// 	"boolean"	:true,
+	// 	"number"	:true,	
+	// };
 	var typeIsObjectOrFunction={
 		"object"	:true,		
 		"function"	:true		
@@ -181,7 +181,7 @@
 			}
 			if(Array.isArray(o)){
 				//o is an array, let's hope the combination of its items is valid CSS 
-				str="";
+				let str="";
 				for(i=0;i<o.length;i++){
 					str+=valueToCascadingStyleSheet(o[i]);
 				}
@@ -251,8 +251,7 @@
 					//	but it is faster, and seems proper to treat data-* properties with Boolean values as Boolean attributes
 					if(v){
 						v=jsl.options.producexml?m:"";
-					}else
-					if(!v){//don't add the value in the attribute-bag
+					}else {//don't add the value in the attribute-bag
 						continue;
 					}					
 				}else
@@ -630,13 +629,13 @@
 				f=f.toString();
 			}
 			var e=/\n(.*)\}$/g.exec(f);
-			return '\r\n'+(e?e[1]:'')+'('+f+').call(this'+s+');\r\n'		
+			return '\r\n'+(e?e[1]:'')+'('+f+').call(this'+s+');\r\n';		
 		}
 		
 
 		jslNs.choose=function(acase,cases){
 			if((typeIsPrimitive[typeof acase])&&(typeof cases == "object")){//treat cases as a hashmap of results
-				return (acase=cases[acase])||cases.default;	
+				return (cases[acase])||cases.default;	
 			};
 			//return the first non void argument
 			for(var i=0;i<arguments.length;i++){

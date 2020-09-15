@@ -9,7 +9,7 @@ export function nodeToJSL(node) {
 
     } else {
 
-        let result = {};
+        
         let attrNames = node.getAttributeNames();
         let attrObj = {};
         for (let i = 0; i < attrNames.length; i++) {

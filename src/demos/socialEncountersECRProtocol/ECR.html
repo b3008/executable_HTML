@@ -10,14 +10,14 @@
 <body>
 
 
-
+<div style="width:50%; margin:0 auto">
     <aa-session><template>
             <aa-sequence>
                 <!--
                 first, check to see if 
                 the participantNumber variable 
                 already has a value-->
-                
+
                 <aa-choose>
                     <aa-when test="participantNumber==null">
                         <!--
@@ -28,12 +28,12 @@
                                 Welcome!
                                 This is the first time you use
                                 this phone to log in.
-                                Please enter your participant number
+                                <aa-label>Please enter your participant number</aa-label>
                                 <aa-text-answer type="number" name="participantNumber" label="participant number">
                                 </aa-text-answer>
                             </p>
                             <p>
-                                Please indicate your gender:
+                                <aa-label>Please indicate your gender:</aa-label>
                                 <aa-multiple-choice name="gender">
                                     <aa-choice-item> Male
                                     </aa-choice-item>
@@ -56,19 +56,19 @@
                     <p>
                         Welcome back
                         to the social interactions study!
-                        Brief description of interaction:
+                        <aa-label>Brief description of interaction:</aa-label>
                         <aa-text-answer name="description" label="description of interaction">
                         </aa-text-answer>
                     </p>
                     <p>
-                        What time did the interaction start?
+                        <aa-label>What time did the interaction start?</aa-label>
                         (Report your interactions
                         as soon as possible!)
                         <aa-text-answer name="time_of_interaction" type="time" label="time of interaction">
                         </aa-text-answer>
                     </p>
                     <p>
-                        How long did the interaction last?
+                        <aa-label> How long did the interaction last?</aa-label>
                         (in minutes)
                         <aa-text-answer name="length_of_interaction" type="number"
                             label="length of interaction (minutes)">
@@ -76,7 +76,7 @@
                     </p>
 
                     <p>
-                        Where did the interaction occur?
+                        <aa-label> Where did the interaction occur?</aa-label>
                         <aa-multiple-choice name="place_of_interaction">
                             <aa-choice-item value="1">
                                 Student home/own home
@@ -96,7 +96,7 @@
                         </aa-multiple-choice>
                     </p>
                     <p>
-                        How?
+                        <aa-label> How?</aa-label>
                         <aa-multiple-choice name="how_of_interaction" single-value>
                             <aa-choice-item value="1">
                                 In person (face-to-face)
@@ -111,7 +111,7 @@
                     </p>
 
                     <p>
-                        Who was present?
+                        <aa-label> Who was present?</aa-label>
                         <aa-multiple-choice name="others_present" single-value>
                             <aa-choice-item value="1">One other
                             </aa-choice-item>
@@ -127,9 +127,9 @@
                     </p>
 
                     <p>
-                        How many alcoholic drinks were consumed?
+                        <aa-label> How many alcoholic drinks were consumed?</aa-label>
                         (within 3hrs before or during the interaction)
-                        <aa-text-answer type="number" name="drinks">
+                        <aa-text-answer type="number" name="drinks" label="number of drinks">
                         </aa-text-answer>
                     </p>
 
@@ -142,8 +142,7 @@
                 <aa-choose>
                     <aa-when test="others_present!=3">
                         <aa-screen name="partner" submit-button-text="Next">
-                            Who was the (primary) other?
-
+                            <aa-label> Who was the (primary) other?</aa-label>
                             <aa-multiple-choice name="partsex" single-value>
                                 <aa-choice-item>
                                     Male
@@ -202,7 +201,7 @@
                 <aa-choose>
                     <aa-when test="random_choice==1">
                         <aa-screen name="behaviours1_screen">
-                            Did you do any of the following?
+                            <aa-label> Did you do any of the following?</aa-label>
                             (Multiple answers are possible)
 
                             <aa-multiple-choice name="behaviours1">
@@ -259,7 +258,7 @@
 
                     <aa-when test="random_choice==2">
                         <aa-screen name="behaviours2_screen" submit-button-text="Next">
-                            Did you do any of the following?
+                            <aa-label> Did you do any of the following?</aa-label>
                             (Multiple answers are possible)
                             <aa-multiple-choice name="behaviours2">
                                 <aa-choice-item value="1">
@@ -360,9 +359,93 @@
 
                 </aa-choose>
 
+
+                <aa-screen name="feelings">
+
+                    <div>
+                        <aa-label>  How did you feel?</aa-label>
+                        (0 = Not at all, 6 = Extremely)
+                    </div>
+
+
+                    <aa-label> Surprised</aa-label>
+                    <aa-likert-scale name="surprised" items="7" start-item="0"></aa-likert-scale>
+
+                    <aa-label> Worried/anxious</aa-label>
+                    <aa-likert-scale name="worried" items="7" start-item="0"></aa-likert-scale>
+
+                    <aa-label> Happy</aa-label>
+                    <aa-likert-scale name="happy" items="7" start-item="0"></aa-likert-scale>
+
+                    <aa-label> Frustrated</aa-label>
+                    <aa-likert-scale name="frustrated" items="7" start-item="0"></aa-likert-scale>
+
+                    <aa-label> Pleased</aa-label>
+                    <aa-likert-scale name="pleased" items="7" start-item="0"></aa-likert-scale>
+
+                    <aa-label> Angry/hostile</aa-label>
+                    <aa-likert-scale name="angry" items="7" start-item="0"></aa-likert-scale>
+
+                    <aa-label> Homesick</aa-label>
+                    <aa-likert-scale name="homesick" items="7" start-item="0"></aa-likert-scale>
+
+                    <aa-label> Enjoyment/fun</aa-label>
+                    <aa-likert-scale name="enjoyment" items="7" start-item="0"></aa-likert-scale>
+
+
+                    <aa-label> Joyful</aa-label>
+                    <aa-likert-scale name="joyful" items="7" start-item="0"></aa-likert-scale>
+
+                    <aa-label> Depressed/blue</aa-label>
+                    <aa-likert-scale name="depressed" items="7" start-item="0"></aa-likert-scale>
+
+                    <aa-label> Energized </aa-label>
+                    <aa-likert-scale name="energized" items="7" start-item="0"></aa-likert-scale>
+
+                    <aa-label> Ashamed </aa-label>
+                    <aa-likert-scale name="ashamed" items="7" start-item="0"></aa-likert-scale>
+
+                    <aa-label> Safe</aa-label>
+                    <aa-likert-scale name="Safe" items="7" start-item="0"></aa-likert-scale>
+
+                    <aa-label> Lonely</aa-label>
+                    <aa-likert-scale name="lonely" items="7" start-item="0"></aa-likert-scale>
+
+                    <aa-label> Disgusted by the other(s)</aa-label>
+                    <aa-likert-scale name="disgusted" items="7" start-item="0"></aa-likert-scale>
+
+                </aa-screen>
+
+                <aa-choose>
+                    <aa-when test="others_present!=3">
+                        <aa-screen>
+                            <div>
+                                <aa-label> Indicate how the (primary) other behaved towards you in this interaction</aa-label>
+                            </div>
+                            <aa-affect-grid style="margin-top:40px" 
+                            top-left-label="Critical" 
+                            top-label="Assured/Dominant"
+                            top-right-label="Engaging" 
+                            left-label="Cold/Quarrelsome"
+                            right-label="Warm/Aggreeable"
+                            bottom-left-label="Withdrawn"
+                            bottom-label="Unassured/Submissive"
+                            bottom-right-label="Deferring" 
+                            rows=11 columns=11>
+                            </aa-affect-grid>
+                        </aa-screen>
+                    </aa-when>
+                </aa-choose>
+
+
+                <aa-screen submit-button-hidden="true">
+                    <h3>Thank you!</h3>
+                    You can now close this window.
+                </aa-screen>
+
             </aa-sequence>
 
-    </template></aa-session>
+        </template></aa-session>
 
-
+    </div>
 </body>

@@ -169,6 +169,18 @@ export default class AAAffectGrid extends BaseElement {
     constructor() {
         super();
 
+        if(this.topLeftLabel === null) this.topLeftLabel='';
+        if(this.topLabel === null) this.topLabel='';
+        if(this.topRightLabel === null) this.topLRightLabel='';
+        if(this.leftTopLabel === null) this.leftTopLabel='';
+        if(this.leftLabel === null) this.leftLabel='';
+        if(this.leftBottomLabel === null) this.leftBottomLabel='';
+        if(this.rightTopLabel === null) this.rightTopLabel='';
+        if(this.rightLabel === null) this.rightLabel='';
+        if(this.rightBottomLabel === null) this.rightBottomLabel='';
+        if(this.bottomLeftLabel === null) this.bottomLeftLabel='';
+        if(this.bottomLabel === null) this.bottomLabel='';
+        if(this.bottomRightLabel === null) this.bottomRightLabel='';
         this.root = this.attachShadow({ mode: 'open' });
 
         
@@ -199,15 +211,15 @@ export default class AAAffectGrid extends BaseElement {
             
             
             if(this.selectedCell){
-                this.selectedCell.classList.remove("selected");
+                this.selectedCell.classList.remove('selected');
             }
             this.selectedCell = cell;
-            this.selectedCell.classList.add("selected");
+            this.selectedCell.classList.add('selected');
 
 
-            console.log(this.value);
-            console.log(typeof this.value)
-        })
+            // console.log(this.value);
+            // console.log(typeof this.value);
+        });
 
         this.totalContainer = this.root.querySelector('.total-container');
 
@@ -217,7 +229,7 @@ export default class AAAffectGrid extends BaseElement {
         
         //register a resize observer for top container
         if(ResizeObserver){
-            let gridResizeObserver = new ResizeObserver( ()=>{
+            new ResizeObserver( ()=>{
                 console.log("resize");
                 this.totalContainer.style.height = window.getComputedStyle(this.totalContainer).width;
                 this.root.querySelector(".leftLabels").style.width = window.getComputedStyle(this.grid).height;
@@ -235,7 +247,7 @@ export default class AAAffectGrid extends BaseElement {
     }
 
     get css() {
-        return `<style>
+        return html`<style>
 
         
         :host{
@@ -358,7 +370,7 @@ export default class AAAffectGrid extends BaseElement {
         let grid ='';
         for(let j=0; j<this.rows; j++){
             for(let i=0; i<this.columns; i++){
-                grid+=html`<div class="cell  ${j==0?'top':''} ${j==this.rows-1?`bottom`:''}  ${i==0?`left`:''}  ${i==this.columns-1?`right`:''}" data-x="${ Math.round(this.columns/2) - i -1 }" data-y="${ j+1 - Math.round(this.rows/2)}">
+                grid+=html`<div class="cell  ${j==0?'top':''} ${j==this.rows-1?`bottom`:''}  ${i==0?`left`:''}  ${i==this.columns-1?`right`:''}" data-x="${Math.round(this.columns/2)-i-1 }" data-y="${j+1-Math.round(this.rows/2)}">
                 <!-- ${ i+1 - Math.round(this.columns/2)  }, ${ Math.round(this.rows/2) - j-1} -->
             </div>`;
             }
@@ -412,9 +424,7 @@ export default class AAAffectGrid extends BaseElement {
             </div>
         
         `;
-       
-       console.log(source);
-        
+               
         return source;
     }
 
