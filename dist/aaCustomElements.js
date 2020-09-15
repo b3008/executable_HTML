@@ -408,7 +408,7 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
 
             // console.log(this.value);
             // console.log(typeof this.value);
-        })
+        });
 
         this.totalContainer = this.root.querySelector('.total-container');
 
@@ -436,7 +436,7 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
     }
 
     get css() {
-        return `<style>
+        return html`<style>
 
         
         :host{
@@ -559,7 +559,7 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
         let grid ='';
         for(let j=0; j<this.rows; j++){
             for(let i=0; i<this.columns; i++){
-                grid+=html`<div class="cell  ${j==0?'top':''} ${j==this.rows-1?`bottom`:''}  ${i==0?`left`:''}  ${i==this.columns-1?`right`:''}" data-x="${ Math.round(this.columns/2) - i -1 }" data-y="${ j+1 - Math.round(this.rows/2)}">
+                grid+=html`<div class="cell  ${j==0?'top':''} ${j==this.rows-1?`bottom`:''}  ${i==0?`left`:''}  ${i==this.columns-1?`right`:''}" data-x="${Math.round(this.columns/2)-i-1 }" data-y="${j+1-Math.round(this.rows/2)}">
                 <!-- ${ i+1 - Math.round(this.columns/2)  }, ${ Math.round(this.rows/2) - j-1} -->
             </div>`;
             }
@@ -613,9 +613,7 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
             </div>
         
         `;
-       
-       console.log(source);
-        
+               
         return source;
     }
 
@@ -1579,6 +1577,55 @@ _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerA
 
 /***/ }),
 
+/***/ "./src/customElements/aa-label/aa-label.js":
+/*!*************************************************!*\
+  !*** ./src/customElements/aa-label/aa-label.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AALabel; });
+/* harmony import */ var _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../aa-baseElement/baseElement.js */ "./src/customElements/aa-baseElement/baseElement.js");
+
+class AALabel extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+
+    constructor() {
+        super();
+        this.root = this.attachShadow({ mode: 'open' });
+    }
+
+    connectedCallback() {
+        super.connectedCallback();
+        this.root.innerHTML = this.css + this.html;
+    }
+
+    get css(){
+        return html`
+            <style>
+                    :host{
+                        display:block;
+                        font-family: Roboto, Noto, sans-serif;
+                        font-weight:bold;
+                        margin-top:40px;
+                        margin-bottom:10px;
+                        
+                    }
+
+            </style>
+        `
+    }
+
+    get html(){
+        return `<slot></slot>`
+    }
+}
+
+_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerAAElement('aa-label', AALabel);
+
+/***/ }),
+
 /***/ "./src/customElements/aa-likert-scale/aa-likert-scale.js":
 /*!***************************************************************!*\
   !*** ./src/customElements/aa-likert-scale/aa-likert-scale.js ***!
@@ -1692,7 +1739,7 @@ class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
         let items = parseInt(this.items)
         for(let i=1; i<=items; i++){
             
-            console.log(Math.floor((items+1)/2));
+            
             
             if(i==1) {
                 c+=start;
@@ -1711,8 +1758,7 @@ class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
         }   
 
         let result = `<div style="font-family: Roboto, Noto, sans-serif; width:100%; display:flex; justify-content:space-evenly; text-align:center">${c}</div>`
-            console.log(result);
-            return result;
+        return result;
 
     }
     get html(){
@@ -1729,7 +1775,7 @@ class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
                                 ${this.getTags()}    
                             </div>
                                 `
-        console.log(result);
+        
         return result;
     }
 
@@ -2660,7 +2706,8 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
 
 
     toJSON(){
-        let result  = super.toJSON();
+        return super.toJSON();
+        
    
     }
 
@@ -3176,7 +3223,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _customElements_aa_affect_grid_aa_affect_grid_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./customElements/aa-affect-grid/aa-affect-grid.js */ "./src/customElements/aa-affect-grid/aa-affect-grid.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAAffectGrid", function() { return _customElements_aa_affect_grid_aa_affect_grid_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
 
+/* harmony import */ var _customElements_aa_label_aa_label_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./customElements/aa-label/aa-label.js */ "./src/customElements/aa-label/aa-label.js");
 // import '../dist/paper-polymer.js';
+
 
 
 
@@ -3222,7 +3271,7 @@ function nodeToJSL(node) {
 
     } else {
 
-        let result = {};
+        
         let attrNames = node.getAttributeNames();
         let attrObj = {};
         for (let i = 0; i < attrNames.length; i++) {
