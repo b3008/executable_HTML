@@ -247,7 +247,7 @@ export default class AAAffectGrid extends BaseElement {
     }
 
     get css() {
-        return `<style>
+        return html`<style>
 
         
         :host{
@@ -424,9 +424,7 @@ export default class AAAffectGrid extends BaseElement {
             </div>
         
         `;
-       
-       console.log(source);
-        
+               
         return source;
     }
 

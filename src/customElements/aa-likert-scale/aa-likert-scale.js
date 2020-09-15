@@ -99,7 +99,7 @@ export default class AALikertScale extends BaseElement {
         let items = parseInt(this.items)
         for(let i=1; i<=items; i++){
             
-            console.log(Math.floor((items+1)/2));
+            
             
             if(i==1) {
                 c+=start;
@@ -118,8 +118,7 @@ export default class AALikertScale extends BaseElement {
         }   
 
         let result = `<div style="font-family: Roboto, Noto, sans-serif; width:100%; display:flex; justify-content:space-evenly; text-align:center">${c}</div>`
-            console.log(result);
-            return result;
+        return result;
 
     }
     get html(){
@@ -136,7 +135,7 @@ export default class AALikertScale extends BaseElement {
                                 ${this.getTags()}    
                             </div>
                                 `
-        console.log(result);
+        
         return result;
     }
 
