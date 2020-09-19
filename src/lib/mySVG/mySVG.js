@@ -1,5 +1,5 @@
 import SVG from '../svg/svg.js';
-import * as spline from '../SVGCatmullRomSpline/bundle.js';
+
 
 
 var modellingFunctions = {
