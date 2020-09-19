@@ -371,7 +371,6 @@ export default class AAAffectGrid extends BaseElement {
         for(let j=0; j<this.rows; j++){
             for(let i=0; i<this.columns; i++){
                 grid+=html`<div class="cell  ${j==0?'top':''} ${j==this.rows-1?`bottom`:''}  ${i==0?`left`:''}  ${i==this.columns-1?`right`:''}" data-x="${Math.round(this.columns/2)-i-1 }" data-y="${j+1-Math.round(this.rows/2)}">
-                <!-- ${ i+1 - Math.round(this.columns/2)  }, ${ Math.round(this.rows/2) - j-1} -->
             </div>`;
             }
         }

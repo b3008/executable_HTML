@@ -1,4 +1,4 @@
-import  '../../lib/yaml/js-yaml.js';
+import '../../lib/yaml/js-yaml.js';
 // import * as jsl from '../../lib/jsl/jsl2.1.js';
 import * as html2jsl from '../../lib/html2jsl/html2jsl.js';
 
@@ -186,13 +186,13 @@ export default class BaseElement extends HTMLElement {
                 let prop = this.toCamelCase(keys[i]);
                 if ((typeof this[prop] === 'undefined') || (this[prop] === null)) {
                     // this[prop] = p[keys[i]].value ;
-                    
-                    let val = this.getAttribute(keys[i]) || (p[keys[i]].value||null);
-                    
-                   
-                    
-                    if(val) this.setAttribute(keys[i], val);
-                    if(val===false) this.setAttribute(keys[i], val);
+
+                    let val = this.getAttribute(keys[i]) || (p[keys[i]].value || null);
+
+
+
+                    if (val) this.setAttribute(keys[i], val);
+                    if (val === false) this.setAttribute(keys[i], val);
                 }
 
             }
@@ -247,32 +247,51 @@ export default class BaseElement extends HTMLElement {
     }
 
     static nodeToJSON(node) {
-        if (node.nodeType === document.TEXT_NODE) {
+
+        if ((node.nodeType === document.TEXT_NODE) || (node.nodeType === document.COMMENT_NODE)) {
             let result = {};
-            result[node.nodeName] = node.textContent;
-            return result;
+            let text = node.textContent.replace(/\n/g, ' ').replace(/\t/g, ' ').replace(/\s\s+/g, ' ').trim();
+            if (text !== '') {
+                result[node.nodeName] = text;
+                return result;
+            }
+            else { return null }
         }
         else if (node.toJSON) {
             return node.toJSON();
-        } else {
 
 
-            let result = {};
+        }
 
-            let attrs = node.getAttributeNames();
-            let attrObj = {};
-            for (let i = 0; i < attrs.length; i++) {
-                attrObj[attrs[i]] = node.getAttribute(attrs[i]);
+
+        else {
+
+
+            try {
+
+                let result = {};
+
+                let attrs = node.getAttributeNames();
+                let attrObj = {};
+                for (let i = 0; i < attrs.length; i++) {
+                    attrObj[attrs[i]] = node.getAttribute(attrs[i]);
+                }
+                let childNodes = [];
+                for (let i = 0; i < node.childNodes.length; i++) {
+                    let el = BaseElement.nodeToJSON(node.childNodes[i]);
+                    if (el) {
+                        childNodes.push(BaseElement.nodeToJSON(node.childNodes[i]));
+                    }
+                }
+
+                result[node.tagName] = attrObj;
+                result[node.tagName].childNodes = childNodes;
+
+                return result;
+            } catch (e) {
+                console.error(e);
+                debugger;
             }
-            let childNodes = [];
-            for (let i = 0; i < node.childNodes.length; i++) {
-                childNodes.push(BaseElement.nodeToJSON(node.childNodes[i]));
-            }
-
-            result[node.tagName.toLowerCase()] = attrObj;
-            result[node.tagName.toLowerCase()].childNodes = childNodes;
-
-            return result;
         }
     }
 
@@ -282,11 +301,13 @@ export default class BaseElement extends HTMLElement {
     }
 
 
-    toJSL(depth) {
+    toJSL() {
         return html2jsl.nodeToJSL(this);
     }
 
-
+    toSVG(){
+        
+    }
 
 
     _dispatchDebugEvent(detail) {
@@ -321,3 +342,6 @@ if (!customElements.get('aa-base-element')) {
     window.AANodeNames.push('AA-BASE-ELEMENT');
     customElements.define('aa-base-element', BaseElement);
 }
+
+
+window.nodeToJSON = BaseElement.nodeToJSON;

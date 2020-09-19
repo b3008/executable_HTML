@@ -128,7 +128,15 @@ export default class AACheckboxes extends BaseElement {
     }
 
     get css() {
-        return ``;
+        return html`
+        <style>
+            paper-checkbox{
+                padding:12px;
+            }
+        </style>
+        
+        
+        `;
     }
 
     toJSON(){

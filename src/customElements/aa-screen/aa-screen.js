@@ -1,6 +1,6 @@
 import BaseElement from './../aa-baseElement/baseElement.js';
 
-
+import SVG from '../../lib/svg/svg.js';
 export default class AAScreen extends BaseElement {
 
 
@@ -256,6 +256,23 @@ export default class AAScreen extends BaseElement {
     show() {
         this.style.display = 'block';
     }
+
+
+
+    static toSVG(){
+        let item = SVG().rect(30,50).attr({fill:"transparent"});
+        return {
+            node: item,
+            inputs:()=>{
+                return [ [item.x(), item.cy()] ]
+            },
+            outputs:()=>{
+                return [ [item.x() + item.width(), item.cy()] ]
+            },
+        }
+    }
+
+
 }
 
 BaseElement.registerAAElement('aa-screen', AAScreen);

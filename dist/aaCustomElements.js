@@ -560,7 +560,6 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
         for(let j=0; j<this.rows; j++){
             for(let i=0; i<this.columns; i++){
                 grid+=html`<div class="cell  ${j==0?'top':''} ${j==this.rows-1?`bottom`:''}  ${i==0?`left`:''}  ${i==this.columns-1?`right`:''}" data-x="${Math.round(this.columns/2)-i-1 }" data-y="${j+1-Math.round(this.rows/2)}">
-                <!-- ${ i+1 - Math.round(this.columns/2)  }, ${ Math.round(this.rows/2) - j-1} -->
             </div>`;
             }
         }
@@ -824,13 +823,13 @@ class BaseElement extends HTMLElement {
                 let prop = this.toCamelCase(keys[i]);
                 if ((typeof this[prop] === 'undefined') || (this[prop] === null)) {
                     // this[prop] = p[keys[i]].value ;
-                    
-                    let val = this.getAttribute(keys[i]) || (p[keys[i]].value||null);
-                    
-                   
-                    
-                    if(val) this.setAttribute(keys[i], val);
-                    if(val===false) this.setAttribute(keys[i], val);
+
+                    let val = this.getAttribute(keys[i]) || (p[keys[i]].value || null);
+
+
+
+                    if (val) this.setAttribute(keys[i], val);
+                    if (val === false) this.setAttribute(keys[i], val);
                 }
 
             }
@@ -885,32 +884,51 @@ class BaseElement extends HTMLElement {
     }
 
     static nodeToJSON(node) {
-        if (node.nodeType === document.TEXT_NODE) {
+
+        if ((node.nodeType === document.TEXT_NODE) || (node.nodeType === document.COMMENT_NODE)) {
             let result = {};
-            result[node.nodeName] = node.textContent;
-            return result;
+            let text = node.textContent.replace(/\n/g, ' ').replace(/\t/g, ' ').replace(/\s\s+/g, ' ').trim();
+            if (text !== '') {
+                result[node.nodeName] = text;
+                return result;
+            }
+            else { return null }
         }
         else if (node.toJSON) {
             return node.toJSON();
-        } else {
 
 
-            let result = {};
+        }
 
-            let attrs = node.getAttributeNames();
-            let attrObj = {};
-            for (let i = 0; i < attrs.length; i++) {
-                attrObj[attrs[i]] = node.getAttribute(attrs[i]);
+
+        else {
+
+
+            try {
+
+                let result = {};
+
+                let attrs = node.getAttributeNames();
+                let attrObj = {};
+                for (let i = 0; i < attrs.length; i++) {
+                    attrObj[attrs[i]] = node.getAttribute(attrs[i]);
+                }
+                let childNodes = [];
+                for (let i = 0; i < node.childNodes.length; i++) {
+                    let el = BaseElement.nodeToJSON(node.childNodes[i]);
+                    if (el) {
+                        childNodes.push(BaseElement.nodeToJSON(node.childNodes[i]));
+                    }
+                }
+
+                result[node.tagName] = attrObj;
+                result[node.tagName].childNodes = childNodes;
+
+                return result;
+            } catch (e) {
+                console.error(e);
+                debugger;
             }
-            let childNodes = [];
-            for (let i = 0; i < node.childNodes.length; i++) {
-                childNodes.push(BaseElement.nodeToJSON(node.childNodes[i]));
-            }
-
-            result[node.tagName.toLowerCase()] = attrObj;
-            result[node.tagName.toLowerCase()].childNodes = childNodes;
-
-            return result;
         }
     }
 
@@ -920,11 +938,12 @@ class BaseElement extends HTMLElement {
     }
 
 
-    toJSL(depth) {
+    toJSL() {
         return _lib_html2jsl_html2jsl_js__WEBPACK_IMPORTED_MODULE_1__["nodeToJSL"](this);
     }
 
 
+    
 
 
     _dispatchDebugEvent(detail) {
@@ -959,6 +978,9 @@ if (!customElements.get('aa-base-element')) {
     window.AANodeNames.push('AA-BASE-ELEMENT');
     customElements.define('aa-base-element', BaseElement);
 }
+
+
+window.nodeToJSON = BaseElement.nodeToJSON;
 
 
 /***/ }),
@@ -1105,7 +1127,15 @@ class AACheckboxes extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
     }
 
     get css() {
-        return ``;
+        return html`
+        <style>
+            paper-checkbox{
+                padding:12px;
+            }
+        </style>
+        
+        
+        `;
     }
 
     toJSON(){
@@ -2547,6 +2577,54 @@ class AASequence extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
             setTimeout(() => this.next(true))
         }
     }
+
+
+
+
+
+
+
+    toSVG(){
+
+        
+        debugger;
+        let drawing = '';
+        
+        let x = 0;
+        let width = 30;
+        let height = 50;
+        for(let i=0; i<this.children.length; i++){
+            
+            drawing += html`<rect x="${x}" y="0" width="${width}" height="${height}" stroke="black" fill="transparent" stroke-width="5"/>
+            <line x1="${x}" y1="${height/2}" x2="${x+20}" y2="${height/2}" stroke="#000" stroke-width="5 marker-end="url(#arrowhead)" />
+            
+            `
+            
+            
+
+        }
+        debugger;
+
+        let result = html`
+        <svg width="200" height="250" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    
+            <defs>
+                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" />
+                </marker>
+            </defs>
+
+            ${drawing}
+    </svg>`;
+
+        return result;
+    }
+
+
+
+
+
+
 }
 
 _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerAAElement('aa-sequence', AASequence);
@@ -2568,21 +2646,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AASession; });
 /* harmony import */ var _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../aa-baseElement/baseElement.js */ "./src/customElements/aa-baseElement/baseElement.js");
 /* harmony import */ var _aa_memory_aa_memory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../aa-memory/aa-memory.js */ "./src/customElements/aa-memory/aa-memory.js");
+/* harmony import */ var _lib_html2jsl_html2jsl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../lib/html2jsl/html2jsl.js */ "./src/lib/html2jsl/html2jsl.js");
+
 
 
 
 
 class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
-    static get properties(){
+    static get properties() {
         return {
-            name:{
-                type:String,
-                userDefined:true
+            name: {
+                type: String,
+                userDefined: true
             },
-            'should-run':{
-                type:Boolean,
-                userDefined:true
+            'should-run': {
+                type: Boolean,
+                userDefined: true
             },
 
             'debug': {
@@ -2594,19 +2674,19 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
         }
     }
 
-    static get acceptsElements(){
+    static get acceptsElements() {
         return null
     }
 
     static get observedAttributes() {
-      return Object.keys(AASession.properties);
+        return Object.keys(AASession.properties);
     }
 
 
 
     constructor() {
         super();
-        
+
 
         this.myTemplate = document.createElement('template');
         this.myTemplate.innerHTML = this.innerHTML;
@@ -2626,7 +2706,7 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
                 sessionName: this.name,
                 variables: Object.keys(e.detail.value),
             };
-           // TODO:  this._mem.saveReplyValue(e.detail.value, false);
+            // TODO:  this._mem.saveReplyValue(e.detail.value, false);
 
 
             let inputSubmitEvent = new CustomEvent('inputSubmit', { bubbles: true, detail: { input } });
@@ -2640,7 +2720,7 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
         })
 
         this.addEventListener('endEvent', (e) => {
-            if(!this.debug) e.stopPropagation();
+            if (!this.debug) e.stopPropagation();
             let sessionEndEvent = new CustomEvent('sessionEndEvent', { bubbles: true, detail: 'sessionEnd' });
             this.dispatchEvent(sessionEndEvent);
         })
@@ -2659,7 +2739,7 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
         this.sessionID = this.myIdGenerator();
         this.sessionTime = new Date().getTime();
         let sessionDatum = Object.keys(this.dataset);
-        for(let i in sessionDatum){
+        for (let i in sessionDatum) {
             this.setData(sessionDatum[i], this.dataset[sessionDatum[i]]);
         }
         if ((this.shouldRun === null) || (this.shouldRun === true)) {
@@ -2668,18 +2748,18 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
     }
 
 
-    attachTemplateChildNodesToMyself(templateClone){
-        
-        while(templateClone.content.childNodes.length){
+    attachTemplateChildNodesToMyself(templateClone) {
+
+        while (templateClone.content.childNodes.length) {
             //  if there's a direct template child, we want its children appended too
-            if(templateClone.content.childNodes[0].nodeName==="TEMPLATE"){
-                while(templateClone.content.childNodes[0].content.childNodes.length){
+            if (templateClone.content.childNodes[0].nodeName === "TEMPLATE") {
+                while (templateClone.content.childNodes[0].content.childNodes.length) {
                     this.appendChild(templateClone.content.childNodes[0].content.childNodes[0]);
                 }
                 //  we are not appending the template element elsewhere 
                 //  so throw it way so that the childnode count can be reduced
                 templateClone.content.childNodes[0].remove();
-            }else{
+            } else {
                 this.appendChild(templateClone.content.childNodes[0]);
             }
         }
@@ -2688,27 +2768,87 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
     run() {
 
         let myTemplateClone = this.myTemplate.cloneNode(true);
-        _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].scanAndReplace(myTemplateClone);   
+        _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].scanAndReplace(myTemplateClone);
         this.attachTemplateChildNodesToMyself(myTemplateClone);
     }
 
-    getData(name){
+    getData(name) {
         return this._mem.getData(name);
     }
-    setData(name, value){
+    setData(name, value) {
 
         return this._mem.setData(name, value);
     }
 
-    getDataDump(){
+    getDataDump() {
         return this._mem.dataset;
     }
 
 
-    toJSON(){
-        return super.toJSON();
-        
-   
+    toJSON() {
+        // return super.toJSON();
+
+        let result = {};
+        result[this.tagName] = this.getAttributes()
+
+        let childNodes = [];
+        for (let i = 0; i < this.myTemplate.content.childNodes[0].content.childNodes.length; i++) {
+            let child = this.myTemplate.content.childNodes[0].content.childNodes[i]
+            let el = _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].nodeToJSON(child);
+            if (el) {
+                childNodes.push(el);
+            }
+        }
+        result[this.tagName].childNodes = [{ "template": { childNodes: childNodes } }];
+        return result;
+
+    }
+
+    toJSL() {
+        let attrNames = this.getAttributeNames();
+        let attrObj = {};
+        for (let i = 0; i < attrNames.length; i++) {
+            if (this.getAttribute(attrNames[i]) !== 'undefined') {
+                attrObj[attrNames[i]] = this.getAttribute(attrNames[i]);
+            }
+        }
+
+        let argsStrings = [];
+        let childNodes = this.myTemplate.content.childNodes[0].content.childNodes;
+        for (let i = 0; i < childNodes.length; i++) {
+            let addition = _lib_html2jsl_html2jsl_js__WEBPACK_IMPORTED_MODULE_2__["nodeToJSL"](childNodes[i]);
+            if (addition) {
+                argsStrings.push(_lib_html2jsl_html2jsl_js__WEBPACK_IMPORTED_MODULE_2__["nodeToJSL"](childNodes[i]));
+
+            }
+        }
+
+        console.log(argsStrings);
+
+        let tagName = this.tagName;
+        let templateString = _lib_html2jsl_html2jsl_js__WEBPACK_IMPORTED_MODULE_2__["formatJSLResult"]("TEMPLATE", {}, argsStrings);
+        let final = _lib_html2jsl_html2jsl_js__WEBPACK_IMPORTED_MODULE_2__["formatJSLResult"]("AA_SESSION", attrObj, [templateString]);
+
+        return final;
+    }
+
+
+
+
+    toSVG() {
+
+        let childNodes = this.myTemplate.content.childNodes[0].content.childNodes;
+        for (let i = 0; i < childNodes.length; i++) {
+
+            console.log(childNodes[i].toSVG);
+
+            if (childNodes[i].toSVG) {
+                debugger;
+                return childNodes[i].toSVG();
+
+            }
+        }
+
     }
 
 }
@@ -3167,7 +3307,7 @@ _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerA
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! exports provided: BaseElement, AAVariable, AAFunctionRandom, AAChoose, AAWhen, AAOtherwise, AAMemory, AAScreen, AASequence, AASession, AATextAnswer, AAChoiceItem, AAMultipleChoice, AACheckboxes, AALikertScale, AASlider, AAAffectGrid */
+/*! exports provided: BaseElement, AAVariable, AAFunctionRandom, AAChoose, AAWhen, AAOtherwise, AAMemory, AAScreen, AASequence, AASession, AATextAnswer, AAChoiceItem, AAMultipleChoice, AACheckboxes, AALikertScale, AASlider, AAAffectGrid, AALabel */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3224,6 +3364,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAAffectGrid", function() { return _customElements_aa_affect_grid_aa_affect_grid_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
 
 /* harmony import */ var _customElements_aa_label_aa_label_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./customElements/aa-label/aa-label.js */ "./src/customElements/aa-label/aa-label.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AALabel", function() { return _customElements_aa_label_aa_label_js__WEBPACK_IMPORTED_MODULE_17__["default"]; });
+
 // import '../dist/paper-polymer.js';
 
 
@@ -3254,17 +3396,18 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************!*\
   !*** ./src/lib/html2jsl/html2jsl.js ***!
   \**************************************/
-/*! exports provided: nodeToJSL */
+/*! exports provided: nodeToJSL, formatJSLResult */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "nodeToJSL", function() { return nodeToJSL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatJSLResult", function() { return formatJSLResult; });
 
 function nodeToJSL(node) {
 
-    if (node.nodeType === document.TEXT_NODE) {
-        let result = node.textContent.trim();
+    if ((node.nodeType === document.TEXT_NODE)||(node.nodeType === document.COMMENT_NODE)) {
+        let result = node.textContent.replace(/\n/g, ' ').replace(/\t/g, ' ').replace(/\s\s+/g, ' ').trim();
         if (result === '') {
             return undefined;
         } else { return `"${result}"`; }
@@ -3289,7 +3432,7 @@ function nodeToJSL(node) {
             }
         }
 
-        let tagName = node.tagName;
+        let tagName = node.tagName.replace(/\-/g, '_');
         return formatJSLResult(tagName, attrObj, argsStrings);
 
     }
@@ -3306,7 +3449,13 @@ function tab(s) {
 
 
 function getAttrsAsString(attrObj) {
-    return JSON.stringify(attrObj);
+
+    let keys = Object.keys(attrObj);
+    if(keys.length>3){
+        return JSON.stringify(attrObj, null, 2)
+    }else {
+        return JSON.stringify(attrObj);
+    }
 }
 
 function getArgsString(argsStrings) {
