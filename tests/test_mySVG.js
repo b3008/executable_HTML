@@ -113,7 +113,7 @@ describe('aa-multiple-choice', () => {
             let choose = session.originalChildNodes[1].childNodes[1];
 
             let item = mySVG.model(choose);
-            var svgContainer = document.querySelector("#svgContainer");
+            var svgContainer = document.querySelector('#svgContainer');
 
 
             let m = mySVG.model(choose);

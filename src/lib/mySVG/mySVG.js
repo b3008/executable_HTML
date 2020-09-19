@@ -6,7 +6,7 @@ var modellingFunctions = {
 
 
     'AA-SESSION': (node) => {
-        let row = new Row("parallel", node);
+        let row = new Row('parallel', node);
         for (let i = 0; i < node.originalChildNodes.length; i++) {
 
             let m = mySVG.model(node.originalChildNodes[i])
@@ -20,9 +20,9 @@ var modellingFunctions = {
 
 
     'AA-SEQUENCE': (node) => {
-        // let svgItem = SVG().rect(30,50).attr({fill:"transparent"});
+        // let svgItem = SVG().rect(30,50).attr({fill:'transparent'});
 
-        let row = new Row("serial", node);
+        let row = new Row('serial', node);
         for (let i = 0; i < node.childNodes.length; i++) {
 
             let m = mySVG.model(node.childNodes[i])
@@ -35,7 +35,7 @@ var modellingFunctions = {
 
     'AA-SCREEN': (node) => {
 
-        let svgItem = SVG().rect(30, 50).attr({ fill: "transparent", stroke: "black", 'stroke-width': 5 });
+        let svgItem = SVG().rect(30, 50).attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 5 });
         svgItem.myNode = node;
         // return {
         //     node: item,
@@ -51,10 +51,10 @@ var modellingFunctions = {
 
     'AA-CHOOSE': (node) => {
 
-        let chooseRow = new Row("serial", node);
-        let chooseSVGItemStart = SVG().circle(50).attr({ fill: "transparent", stroke: "black", 'stroke-width': 5 });
-        let chooseSVGItemEnd = SVG().circle(10).attr({ fill: "black", stroke: "black", 'stroke-width': 5 });
-        let contentsRow = new Row("parallel", node);
+        let chooseRow = new Row('serial', node);
+        let chooseSVGItemStart = SVG().circle(50).attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 5 });
+        let chooseSVGItemEnd = SVG().circle(10).attr({ fill: 'black', stroke: 'black', 'stroke-width': 5 });
+        let contentsRow = new Row('parallel', node);
         for (let i = 0; i < node.childNodes.length; i++) {
             let m = mySVG.model(node.childNodes[i])
             if (m) contentsRow.push(m)
@@ -69,7 +69,7 @@ var modellingFunctions = {
     },
 
     'AA-FUNCTION-RANDOM': (node) => {
-        let item = SVG().rect(30, 50).attr({ fill: "transparent", stroke: "black" });
+        let item = SVG().rect(30, 50).attr({ fill: 'transparent', stroke: 'black' });
         item.myNode = node;
         return item;
         // return {
@@ -86,7 +86,7 @@ var modellingFunctions = {
 
 
     'AA-WHEN': (node) => {
-        let row = new Row("parallel", node);
+        let row = new Row('parallel', node);
         for (let i = 0; i < node.childNodes.length; i++) {
 
             let m = mySVG.model(node.childNodes[i])
@@ -99,7 +99,7 @@ var modellingFunctions = {
     },
 
     'AA-OTHERWISE': (node) => {
-        let row = new Row("parallel", node);
+        let row = new Row('parallel', node);
         for (let i = 0; i < node.childNodes.length; i++) {
 
             let m = mySVG.model(node.childNodes[i])
@@ -163,12 +163,12 @@ class Row {
     getStartPoints() {
 
         switch (this.type) {
-            case "serial":
+            case 'serial':
                 let firstItem = this.c[0];
                 return this.getItemStartPoints(firstItem);
                 break;
 
-            case "parallel": {
+            case 'parallel': {
 
                 let points = [];
                 for (let i = 0; i < this.c.length; i++) {
@@ -182,12 +182,12 @@ class Row {
 
     getEndPoints() {
         switch (this.type) {
-            case "serial":
+            case 'serial':
                 let lastItem = this.c[this.c.length - 1];
                 return this.getItemEndPoints(lastItem);
                 break;
 
-            case "parallel": {
+            case 'parallel': {
                 let points = [];
                 for (let i = 0; i < this.c.length; i++) {
                     points = points.concat(this.getItemEndPoints(this.c[i]));
@@ -236,7 +236,7 @@ class Row {
 
         switch (this.type) {
 
-            case "serial":
+            case 'serial':
                 if (this.c.length) {
                     item.x(this.c[this.c.length - 1].x() + this.c[this.c.length - 1].width() + this.gap)
                 } else {
@@ -256,7 +256,7 @@ class Row {
                 
 
                 break;
-            case "parallel":
+            case 'parallel':
                 if (this.c.length) {
 
                     let y = this.c[this.c.length - 1].y() + this.c[this.c.length - 1].height() + this.gap
@@ -309,7 +309,7 @@ class Row {
                 let l = this.c[i].renderLines();
                 l.addTo(lines);
             }
-            if (this.type === "serial") {
+            if (this.type === 'serial') {
                 let endPoints = this.getItemEndPoints(this.c[i]);
                 let startPoints = this.getItemStartPoints(this.c[i + 1])
 
@@ -331,7 +331,7 @@ class Row {
 
     breakLine() {
         switch (this.type) {
-            case "serial":
+            case 'serial':
 
                 for (let i = 0; i < c.length - 1; i++) {
                     w += c[i].width() + this.gap;
@@ -339,7 +339,7 @@ class Row {
                 w += c[c.length - 1].width();
                 return w;
 
-            case "parallel":
+            case 'parallel':
 
             //find the longest member amd break it, then break others progressively
         }
@@ -398,7 +398,7 @@ class mySVG {
         let curve = `M ${p1x},${p1y} C${c1x},${c1y} ${c2x},${c2y} ${p2x},${p2y}`;
         console.log(curve);
         let path = SVG().path(curve);
-        path.attr({ fill: "transparent", stroke: "black", 'stroke-width':3 });
+        path.attr({ fill: 'transparent', stroke: 'black', 'stroke-width':3 });
         return path;
     }
     static quadraticCurve(p1x, p1y, p2x, p2y, offs) {
@@ -426,10 +426,10 @@ class mySVG {
 
 
         // construct the command to draw a quadratic curve
-        let curve = "M" + p1x + " " + p1y + " Q " + c1x + " " + c1y + " " + p2x + " " + p2y;
+        let curve = 'M' + p1x + ' ' + p1y + ' Q ' + c1x + ' ' + c1y + ' ' + p2x + ' ' + p2y;
         console.log(curve);
         let path = SVG().path(curve);
-        path.attr({ fill: "transparent", stroke: "black" });
+        path.attr({ fill: 'transparent', stroke: 'black' });
         return path;
     }
 

@@ -144,8 +144,8 @@ export default class AASession extends BaseElement {
         result[this.tagName] = this.getAttributes()
 
         let childNodes = [];
-        for (let i = 0; i < this.myTemplate.content.childNodes[0].content.childNodes.length; i++) {
-            let child = this.myTemplate.content.childNodes[0].content.childNodes[i]
+        for (let i = 0; i < this.originalChildNodes.length; i++) {
+            let child = this.originalChildNodes[i]
             let el = BaseElement.nodeToJSON(child);
             if (el) {
                 childNodes.push(el);
@@ -187,6 +187,7 @@ export default class AASession extends BaseElement {
 
 
     get originalChildNodes(){
+        if(!this.myTemplate.content.childNodes[0].content) return this.childNodes;
         return this.myTemplate.content.childNodes[0].content.childNodes;
     }
 
