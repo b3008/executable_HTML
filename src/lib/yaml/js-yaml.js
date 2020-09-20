@@ -2173,7 +2173,7 @@ export default (function (f) { if (typeof exports === "object" && typeof module 
 
           if (state.position < state.length) {
             tagName = state.input.slice(_position, state.position);
-            ch = state.input.charCodeAt(++state.position);
+            state.input.charCodeAt(++state.position);
           } else {
             throwError(state, 'unexpected end of the stream within a verbatim tag');
           }

@@ -211,13 +211,13 @@
 			}
 			if(Array.isArray(o)){
 				//o is an array, let's hope it's items resolves to a valid style declaration, so that we can merge them 
-				str="";
+				let str="";
 				for(i=0;i<o.length;i++){
 					str+=valueToCSSstyle(o);
 				}
 				return str;
 			}
-			var str="";
+			let str="";
 			for(var m in o)if(o.hasOwnProperty(m)){
 				var v=o[m];
 				if(Array.isArray(v)){//maybe something like a font-family declaration ["arial","sans serif"]...
@@ -669,7 +669,8 @@
 					if(!e){
 						console.warn('extraction failed!',s.slice(0,40));
 					}else{
-						s=(e?e[1]:s);
+						// s=(e?e[1]:s);
+						s=e[1];
 						if(auto && (raw=(e=/^(\*+)/.exec(s))) ){
 							s=s.slice(e[1].length);
 						}
