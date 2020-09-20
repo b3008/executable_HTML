@@ -1,8 +1,8 @@
 
 export function nodeToJSL(node) {
 
-    if (node.nodeType === document.TEXT_NODE) {
-        let result = node.textContent.trim();
+    if ((node.nodeType === document.TEXT_NODE)||(node.nodeType === document.COMMENT_NODE)) {
+        let result = node.textContent.replace(/\n/g, ' ').replace(/\t/g, ' ').replace(/\s\s+/g, ' ').trim();
         if (result === '') {
             return undefined;
         } else { return `"${result}"`; }
@@ -27,7 +27,7 @@ export function nodeToJSL(node) {
             }
         }
 
-        let tagName = node.tagName;
+        let tagName = node.tagName.replace(/\-/g, '_');
         return formatJSLResult(tagName, attrObj, argsStrings);
 
     }
@@ -44,7 +44,13 @@ function tab(s) {
 
 
 function getAttrsAsString(attrObj) {
-    return JSON.stringify(attrObj);
+
+    let keys = Object.keys(attrObj);
+    if(keys.length>3){
+        return JSON.stringify(attrObj, null, 2)
+    }else {
+        return JSON.stringify(attrObj);
+    }
 }
 
 function getArgsString(argsStrings) {
@@ -56,7 +62,7 @@ function getArgsString(argsStrings) {
     return result;
 }
 
-function formatJSLResult(tagName, attrObj, argsStrings) {
+export function formatJSLResult(tagName, attrObj, argsStrings) {
     let attrs = getAttrsAsString(attrObj);
     let args = getArgsString(argsStrings);
     let isArgsMultiline = /\n/.test(args);

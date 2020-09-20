@@ -1,47 +1,132 @@
 <html>
+
 <head>
     <!-- <script type="module" src="../../../dist/aaCustomElements.js"></script> -->
     <script type="module" src="../../../dist/paper-polymer.js"></script>
     <script type="module" src="../../index.js"></script>
+    <script type="module" src="../../lib/mySVG/mySVG.js"></script>
+
 </head>
 
 
 <body>
 
-<aa-session><template>
-    <aa-sequence>
 
+    <aa-session><template>
+
+    <aa-sequence id="seq1">
+            
+   
+        <aa-screen id='scr1'>
+
+        </aa-screen>
+       
+
+
+        <aa-choose id="choice">
+            <aa-when test="participantNumber==null">
+                <!--
+if not, then present a screen 
+that asks for it-->
+                <aa-screen name="idScreen" submit-button-text="Next">
+                    <p>
+                        Welcome!
+                        This is the first time you use
+                        this phone to log in.
+                        <aa-label>Please enter your participant number</aa-label>
+                        <aa-text-answer type="number" name="participantNumber" label="participant number">
+                        </aa-text-answer>
+                    </p>
+                    <p>
+                        <aa-label>Please indicate your gender:</aa-label>
+                        <aa-multiple-choice name="gender">
+                            <aa-choice-item> Male
+                            </aa-choice-item>
+                            <aa-choice-item> Female
+                            </aa-choice-item>
+                        </aa-multiple-choice>
+                    </p>
+                </aa-screen>
+            </aa-when>
+
+            <aa-when test="participantNumber==null">
+                <!--
+if not, then present a screen 
+that asks for it-->
+                <aa-screen name="idScreen" submit-button-text="Next">
+                    <p>
+                        Welcome!
+                        This is the first time you use
+                        this phone to log in.
+                        <aa-label>Please enter your participant number</aa-label>
+                        <aa-text-answer type="number" name="participantNumber" label="participant number">
+                        </aa-text-answer>
+                    </p>
+                    <p>
+                        <aa-label>Please indicate your gender:</aa-label>
+                        <aa-multiple-choice name="gender">
+                            <aa-choice-item> Male
+                            </aa-choice-item>
+                            <aa-choice-item> Female
+                            </aa-choice-item>
+                        </aa-multiple-choice>
+                    </p>
+                </aa-screen>
+            </aa-when>
+            <!--
+        if participantNumber already had a value, 
+        aa-choose will quietly terminate.
+        -->
+        </aa-choose>
+
+       
+        <aa-screen id="scr2">
+
+        </aa-screen>
+
+            </template></aa-session>
+
+    <div id='svgContainer'>
+
+
+    </div>
+
+    <aa-sequence></aa-sequence>
+
+</body>
+
+
+
+<script>
+
+    window.onload = () => {
+
+
+
+        var session = document.querySelector("aa-session");
+
+        var svgContainer = document.querySelector("#svgContainer");
+
+
+
+       
+
+        mySVG.render(svgContainer, 500, session);
 
 
 
         
-    <aa-screen name="context" submit-button-text="Next">
-
-        yo
 
 
-    </aa-screen>
 
+    }
 
-    <aa-screen name="idScreen" submit-button-text="Next">
-
-        <p>
-            Please indicate your gender:
-            <aa-multiple-choice name="gender">
-                <aa-choice-item> Male
-                </aa-choice-item>
-                <aa-choice-item> Female
-                </aa-choice-item>
-            </aa-multiple-choice>
-        </p>
-    </aa-screen>
-
-
-</aa-sequence>
-
-</template></aa-session>
-
-
-</body>
+</script>
 
 </html>
+
+<!-- 
+JSL : https://pastebin.com/vk8Q6Ytm
+YAML:  https://pastebin.com/NHJVYfXd
+
+YAML2 https://pastebin.com/rs6KHifd -->

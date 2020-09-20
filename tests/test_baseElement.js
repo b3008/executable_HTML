@@ -163,7 +163,7 @@ describe('baseElement', () => {
                         </aa-checkboxes>`
 
                         j = html2jsl.nodeToJSL(div);
-            console.log(j);
+            // console.log(j);
             
             done();
         })
