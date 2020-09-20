@@ -1,5 +1,4 @@
 import BaseElement from './../aa-baseElement/baseElement.js';
-
 import SVG from '../../lib/svg/svg.js';
 export default class AAScreen extends BaseElement {
 
@@ -126,12 +125,12 @@ export default class AAScreen extends BaseElement {
         return html`
             <slot></slot>
             <div id='userMessage'>
-            <div class='submitButtonContainer'>
-                <div>
-                    ${this.getSubmitButton()}
-            </div>
-                <div id='userMessage'></div>
-            </div>`;
+                <div class='submitButtonContainer'>
+                    <div>
+                        ${this.getSubmitButton()}
+                    </div>
+                    <div id='userMessage'></div>
+                </div>`;
     }
 
     getSubmitButton() {
@@ -149,12 +148,13 @@ export default class AAScreen extends BaseElement {
         if (this.hasChildrenThatDemandResponse()) {
 
             userMessage.innerHTML = html`
-                    <div style='display:flex; align-items:center'> 
-                        <div>please fill out the required fields</div> 
-                            <div id='attention' style='color: red; font-size: 20px;  border: solid thin; border-radius: 50%; width: 20px;
-                                                margin-left:20px; height: 20px; 
-                                                text-align: center;
-                                                padding: 5px;'>!</div></div>`;
+                    <div style='display:flex; align-items:center'>
+                        <div>please fill out the required fields</div>
+                        <div id='attention' style='color: red; font-size: 20px;  border: solid thin; border-radius: 50%; width: 20px;
+                                                                    margin-left:20px; height: 20px; 
+                                                                    text-align: center;
+                                                                    padding: 5px;'>!</div>
+                    </div>`;
             return;
         }
 
@@ -259,18 +259,6 @@ export default class AAScreen extends BaseElement {
 
 
 
-    static toSVG(){
-        let item = SVG().rect(30,50).attr({fill:"transparent"});
-        return {
-            node: item,
-            inputs:()=>{
-                return [ [item.x(), item.cy()] ]
-            },
-            outputs:()=>{
-                return [ [item.x() + item.width(), item.cy()] ]
-            },
-        }
-    }
 
 
 }

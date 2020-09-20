@@ -150,7 +150,7 @@ describe('aa-session', () => {
 
             let s = document.querySelector('#session');
             let y = s.toYAML();
-            console.log(y);
+           
 
             done();
         })

@@ -37,313 +37,364 @@ var modellingFunctions = {
 
         let svgItem = SVG().rect(30, 50).attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 5 });
         svgItem.myNode = node;
-        // return {
-        //     node: item,
-        //     inputs:()=>{
-        //         return [ [item.x(), item.cy()] ]
-        //     },
-        //     outputs:()=>{
-        //         return [ [item.x() + item.width(), item.cy()] ]
-        //     },
-        // }
         return svgItem;
     },
 
     'AA-CHOOSE': (node) => {
 
         let chooseRow = new Row('serial', node);
-        let chooseSVGItemStart = SVG().circle(50).attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 5 });
-        let chooseSVGItemEnd = SVG().circle(10).attr({ fill: 'black', stroke: 'black', 'stroke-width': 5 });
+        chooseRow.strokeDashArray = '3';
+
+        let chooseSVGItemStart = SVG().circle(20).attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 5, 'stroke-dasharray': 0 });
+        let chooseSVGItemEnd = SVG().circle(10).attr({ fill: 'black', stroke: 'black', 'stroke-width': 5, 'stroke-dasharray': 3 });
         let contentsRow = new Row('parallel', node);
+
+
+
+        let hasOtherwiseNode = false;
         for (let i = 0; i < node.childNodes.length; i++) {
+            if (node.childNodes.nodeName === "AA-OTHERWISE") {
+                let hasOtherwiseNode = true;
+            }
             let m = mySVG.model(node.childNodes[i])
             if (m) contentsRow.push(m)
         }
+
+
+
+
         chooseRow.push(chooseSVGItemStart);
         chooseRow.push(contentsRow);
         chooseRow.push(chooseSVGItemEnd);
-        // chooseSVGItemStart.y(contentsRow.height() / 2) - chooseSVGItemStart.attr('r');
-        // chooseSVGItemEnd.y(contentsRow.height() / 2) - chooseSVGItemEnd.attr('r');
+
+        let w = contentsRow.width();
+
+
+
         return chooseRow;
 
     },
 
     'AA-FUNCTION-RANDOM': (node) => {
-        let item = SVG().rect(30, 50).attr({ fill: 'transparent', stroke: 'black' });
-        item.myNode = node;
-        return item;
-        // return {
-        //     node: item,
-        //     inputs:()=>{
-        //         return [ [item.x(), item.cy()] ]
-        //     },
-        //     outputs:()=>{
-        //         return [ [item.x() + item.width(), item.cy()] ]
-        //     },
-        // }
+        let item = new Row('serial', node);
 
-    },
+        let g = SVG().group();
+
+        // let rect = SVG().rect(30, 50).attr({ fill: 'transparent', stroke: 'red', 'stroke-width': 5 }).addTo(g);
+
+        let text = SVG().text(function (add) {
+            add.tspan('f').font({
+                family: 'serif',
+                style: 'italic',
+                size: '50px'
+            });
+            add.tspan('random ').font({
+                family: 'serif',
+                style: 'italic',
+                size: '15px'
+            })
+        })
+            text.addTo(g);
+            // text.font({
+            //     family: 'serif',
+            //     style: 'italic',
+            //     size: '50px'
+            // })
+            text.attr({ padding: 10 })
 
 
-    'AA-WHEN': (node) => {
-        let row = new Row('parallel', node);
-        for (let i = 0; i < node.childNodes.length; i++) {
 
-            let m = mySVG.model(node.childNodes[i])
-            if (m) row.push(m)
 
-        }
+            let pStart = SVG().circle(2).attr({ fill: 'black', stroke: 'black', 'stroke-width': 5, }).addTo(g);
+            let pEnd = SVG().circle(2).attr({ fill: 'black', stroke: 'black', 'stroke-width': 5, }).addTo(g);
 
-        return row;
 
-    },
+            item.push(g);
 
-    'AA-OTHERWISE': (node) => {
-        let row = new Row('parallel', node);
-        for (let i = 0; i < node.childNodes.length; i++) {
 
-            let m = mySVG.model(node.childNodes[i])
-            if (m) row.push(m)
 
-        }
 
-        return row;
+            pStart.x(0);
+            pEnd.x(item.width());
+            pStart.y(item.height() / 2 - pStart.height() / 2);
+            pEnd.y(item.height() / 2 - pStart.height() / 2)
 
-    }
+
+
+            return item;
+            // return {
+            //     node: item,
+            //     inputs:()=>{
+            //         return [ [item.x(), item.cy()] ]
+            //     },
+            //     outputs:()=>{
+            //         return [ [item.x() + item.width(), item.cy()] ]
+            //     },
+            // }
+
+        },
+
+
+            'AA-WHEN': (node) => {
+                let row = new Row('parallel', node);
+                for (let i = 0; i < node.childNodes.length; i++) {
+
+                    let m = mySVG.model(node.childNodes[i])
+                    if (m) row.push(m)
+
+                }
+
+                return row;
+
+            },
+
+            'AA-OTHERWISE': (node) => {
+                let row = new Row('parallel', node);
+                for (let i = 0; i < node.childNodes.length; i++) {
+
+                    let m = mySVG.model(node.childNodes[i])
+                    if (m) row.push(m)
+
+                }
+
+                return row;
+
+            }
 
 }
 
 
 class Row {
 
-    gap = 30;
-    type;
-    myNode;
-    group;
+        gap = 30;
+strokeDashArray;
+type;
+myNode;
+group;
 
-    _x; _y;
+_x; _y;
 
 
-    x(v) {
-        if (typeof v !== 'undefined') {
-            this._x = v;
-            this.group.x(v);
-        } else {
-            return this._x;
-        }
+x(v) {
+    if (typeof v !== 'undefined') {
+        this._x = v;
+        this.group.x(v);
+    } else {
+        return this._x;
     }
+}
 
-    y(v) {
-        if (typeof v !== 'undefined') {
-            this._y = v;
-            this.group.y(v);
-        } else {
-            return this._y;
-        }
+y(v) {
+    if (typeof v !== 'undefined') {
+        this._y = v;
+        this.group.y(v);
+    } else {
+        return this._y;
     }
+}
 
-    getItemStartPoints(item) {
-        if (item instanceof Row) {
-            return item.getStartPoints();
-        } else {
-            return [[item.x(), item.y() + item.height() / 2]];
-        }
+getItemStartPoints(item) {
+    if (item instanceof Row) {
+        return item.getStartPoints();
+    } else {
+        return [[item.x(), item.y() + item.height() / 2]];
     }
+}
 
 
-    getItemEndPoints(item) {
+getItemEndPoints(item) {
 
-        if (item instanceof Row) {
-            return item.getEndPoints();
-        } else {
-            return [[item.x() + item.width(), item.y() + item.height() / 2]];
-        }
+    if (item instanceof Row) {
+        return item.getEndPoints();
+    } else {
+        return [[item.x() + item.width(), item.y() + item.height() / 2]];
     }
+}
 
-    getStartPoints() {
+getStartPoints() {
 
-        switch (this.type) {
-            case 'serial':
-                let firstItem = this.c[0];
-                return this.getItemStartPoints(firstItem);
-                break;
+    switch (this.type) {
+        case 'serial':
+            let firstItem = this.c[0];
+            return this.getItemStartPoints(firstItem);
+            break;
 
-            case 'parallel': {
+        case 'parallel': {
 
-                let points = [];
-                for (let i = 0; i < this.c.length; i++) {
-                    points = points.concat(this.getItemStartPoints(this.c[i]));
-                }
-                return points;
+            let points = [];
+            for (let i = 0; i < this.c.length; i++) {
+                points = points.concat(this.getItemStartPoints(this.c[i]));
             }
-
+            return points;
         }
+
     }
+}
 
-    getEndPoints() {
-        switch (this.type) {
-            case 'serial':
-                let lastItem = this.c[this.c.length - 1];
-                return this.getItemEndPoints(lastItem);
-                break;
+getEndPoints() {
+    switch (this.type) {
+        case 'serial':
+            let lastItem = this.c[this.c.length - 1];
+            return this.getItemEndPoints(lastItem);
+            break;
 
-            case 'parallel': {
-                let points = [];
-                for (let i = 0; i < this.c.length; i++) {
-                    points = points.concat(this.getItemEndPoints(this.c[i]));
-                }
-                return points;
-                break;
+        case 'parallel': {
+            let points = [];
+            for (let i = 0; i < this.c.length; i++) {
+                points = points.concat(this.getItemEndPoints(this.c[i]));
             }
-
-        }
-    }
-
-
-
-
-
-
-    width(v) {
-
-
-        if (typeof v === 'undefined') {
-
-            return this.group.width();
-        }
-
-
-    }
-
-
-    height(v) {
-        if (typeof v === 'undefined') {
-            return this.group.height();
-
+            return points;
+            break;
         }
 
     }
-    c = [];
+}
 
-    constructor(type, node) {
 
-        this.type = type;
-        this.myNode = node;
-        this.group = SVG().group();
+
+
+
+
+width(v) {
+
+
+    if (typeof v === 'undefined') {
+
+        return this.group.width();
     }
 
-    push(item) {
 
-        switch (this.type) {
+}
 
-            case 'serial':
-                if (this.c.length) {
-                    item.x(this.c[this.c.length - 1].x() + this.c[this.c.length - 1].width() + this.gap)
-                } else {
-                    item.x(10);
-                }
-                item.y(10);
-                this.c.push(item);
 
-                //now ensure everything is centered on the x axis
-                let yCenter =0
-                for(let i=0; i<this.c.length; i++){
-                    yCenter = Math.max(yCenter, this.c[i].height()/2)
-                }
-                for(let i=0; i<this.c.length; i++){
-                    this.c[i].y(yCenter - this.c[i].height()/2)
-                }
-                
+height(v) {
+    if (typeof v === 'undefined') {
+        return this.group.height();
 
-                break;
-            case 'parallel':
-                if (this.c.length) {
+    }
 
-                    let y = this.c[this.c.length - 1].y() + this.c[this.c.length - 1].height() + this.gap
-                    item.y(y);
-                } else {
-                    item.y(10);
-                }
+}
+c = [];
+
+constructor(type, node) {
+
+    this.type = type;
+    this.myNode = node;
+    this.group = SVG().group();
+}
+
+push(item) {
+
+    switch (this.type) {
+
+        case 'serial':
+            if (this.c.length) {
+                item.x(this.c[this.c.length - 1].x() + this.c[this.c.length - 1].width() + this.gap)
+            } else {
                 item.x(10);
-                this.c.push(item);
-                break;
-        }
-        if (item instanceof Row) {
-            item.group.addTo(this.group)
-        } else {
-            item.addTo(this.group);
-        }
+            }
+            item.y(10);
+            this.c.push(item);
 
+            //now ensure everything is centered on the x axis
+            let yCenter = 0
+            for (let i = 0; i < this.c.length; i++) {
+                yCenter = Math.max(yCenter, this.c[i].height() / 2)
+            }
+            for (let i = 0; i < this.c.length; i++) {
+                this.c[i].y(yCenter - this.c[i].height() / 2)
+            }
+
+
+            break;
+        case 'parallel':
+            if (this.c.length) {
+
+                let y = this.c[this.c.length - 1].y() + this.c[this.c.length - 1].height() + this.gap
+                item.y(y);
+            } else {
+                item.y(10);
+            }
+            item.x(10);
+            this.c.push(item);
+            break;
+    }
+    if (item instanceof Row) {
+        item.group.addTo(this.group)
+    } else {
+        item.addTo(this.group);
     }
 
+}
 
 
-    makeLines(endPoints, startPoints) {
-        console.log(endPoints, startPoints);
-        let lines = SVG().group();
-        for (let i = 0; i < endPoints.length; i++) {
-            for (let j = 0; j < startPoints.length; j++) {
-                let p1 = endPoints[i];
-                let p2 = startPoints[j];
-                let offset = - 1;
 
-                // let path = mySVG.quadraticCurve(p1[0], p1[1], p2[0], p2[1], offset);
-                let path = mySVG.bezier(p1[0], p1[1], p2[0], p2[1], offset);
-                
-                // path.addTo(draw);
-                path.addTo(lines);
+makeLines(endPoints, startPoints) {
 
-            }
+    let lines = SVG().group();
+    for (let i = 0; i < endPoints.length; i++) {
+        for (let j = 0; j < startPoints.length; j++) {
+            let p1 = endPoints[i];
+            let p2 = startPoints[j];
+            let offset = - 1;
+
+            // let path = mySVG.quadraticCurve(p1[0], p1[1], p2[0], p2[1], offset);
+            let path = mySVG.bezier(p1[0], p1[1], p2[0], p2[1], offset);
+            if (this.strokeDashArray) path.attr({ 'stroke-dasharray': this.strokeDashArray });
+            // path.addTo(draw);
+            path.addTo(lines);
+
         }
-        return lines;
     }
+    return lines;
+}
 
-    renderLines() {
+renderLines() {
 
 
-        let lines = SVG().group();
+    let lines = SVG().group();
 
-        for (let i = 0; i < this.c.length - 1; i++) {
+    for (let i = 0; i < this.c.length - 1; i++) {
 
-            if (this.c[i] instanceof Row) {
-                let l = this.c[i].renderLines();
-                l.addTo(lines);
-            }
-            if (this.type === 'serial') {
-                let endPoints = this.getItemEndPoints(this.c[i]);
-                let startPoints = this.getItemStartPoints(this.c[i + 1])
-
-                let l = this.makeLines(endPoints, startPoints);
-                l.addTo(lines);
-
-            }
-        }
-        if (this.c[this.c.length - 1] instanceof Row) {
-            let l = this.c[this.c.length - 1].renderLines();
+        if (this.c[i] instanceof Row) {
+            let l = this.c[i].renderLines();
             l.addTo(lines);
         }
+        if (this.type === 'serial') {
+            let endPoints = this.getItemEndPoints(this.c[i]);
+            let startPoints = this.getItemStartPoints(this.c[i + 1])
 
+            let l = this.makeLines(endPoints, startPoints);
+            l.addTo(lines);
 
-        return lines;
-
-    }
-
-
-    breakLine() {
-        switch (this.type) {
-            case 'serial':
-
-                for (let i = 0; i < c.length - 1; i++) {
-                    w += c[i].width() + this.gap;
-                }
-                w += c[c.length - 1].width();
-                return w;
-
-            case 'parallel':
-
-            //find the longest member amd break it, then break others progressively
         }
     }
+    if (this.c[this.c.length - 1] instanceof Row) {
+        let l = this.c[this.c.length - 1].renderLines();
+        l.addTo(lines);
+    }
+
+
+    return lines;
+
+}
+
+
+breakLine() {
+    switch (this.type) {
+        case 'serial':
+
+            for (let i = 0; i < c.length - 1; i++) {
+                w += c[i].width() + this.gap;
+            }
+            w += c[c.length - 1].width();
+            return w;
+
+        case 'parallel':
+
+        //find the longest member amd break it, then break others progressively
+    }
+}
 
 
 
@@ -371,7 +422,7 @@ class mySVG {
 
         group.addTo(draw);
         group.x(200);
-        console.log(rect.x());
+
 
         let item = mySVG.model(node);
         item.group.addTo(draw);
@@ -388,17 +439,17 @@ class mySVG {
 
 
 
-    static bezier(p1x, p1y, p2x, p2y){
+    static bezier(p1x, p1y, p2x, p2y) {
 
-        let c1x = p1x+20;
+        let c1x = p1x + (p2x - p1x) / 1.5;
         let c1y = p1y;
-        let c2x = p2x-20;
+        let c2x = p2x - (p2x - p1x) / 1.5;
         let c2y = p2y;
 
         let curve = `M ${p1x},${p1y} C${c1x},${c1y} ${c2x},${c2y} ${p2x},${p2y}`;
-        console.log(curve);
+
         let path = SVG().path(curve);
-        path.attr({ fill: 'transparent', stroke: 'black', 'stroke-width':3 });
+        path.attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 3 });
         return path;
     }
     static quadraticCurve(p1x, p1y, p2x, p2y, offs) {
@@ -416,7 +467,7 @@ class mySVG {
         let theta = Math.atan2(p2y - p1y, p2x - p1x) - Math.PI / 2;
 
         // distance of control point from mid-point of line:
-        console.log(offs)
+
         let offset = offs * 10;
 
         // location of control point:
@@ -427,7 +478,7 @@ class mySVG {
 
         // construct the command to draw a quadratic curve
         let curve = 'M' + p1x + ' ' + p1y + ' Q ' + c1x + ' ' + c1y + ' ' + p2x + ' ' + p2y;
-        console.log(curve);
+
         let path = SVG().path(curve);
         path.attr({ fill: 'transparent', stroke: 'black' });
         return path;
@@ -473,7 +524,7 @@ class mySVG {
     //     - i (integer): index of 'point' in the array 'a'
     //     - a (array): complete array of points coordinates
     // O:  - (string) 'C x2,y2 x1,y1 x,y': SVG cubic bezier C command
-    static bezierCommand (point, i, a) {
+    static bezierCommand(point, i, a) {
         // start control point
         const [cpsX, cpsY] = controlPoint(a[i - 1], a[i - 2], point)
         // end control point

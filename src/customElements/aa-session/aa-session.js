@@ -1,8 +1,7 @@
-import BaseElement from './../aa-baseElement/baseElement.js'
-
-import './../aa-memory/aa-memory.js'
-import * as html2jsl from './../../lib/html2jsl/html2jsl.js'
-import { AASequence } from '../../index.js'
+import BaseElement from './../aa-baseElement/baseElement.js';
+import './../aa-memory/aa-memory.js';
+import * as html2jsl from './../../lib/html2jsl/html2jsl.js';
+import { AASequence } from '../../index.js';
 
 export default class AASession extends BaseElement {
 
@@ -141,11 +140,11 @@ export default class AASession extends BaseElement {
         // return super.toJSON();
 
         let result = {};
-        result[this.tagName] = this.getAttributes()
+        result[this.tagName] = this.getAttributes();
 
         let childNodes = [];
         for (let i = 0; i < this.originalChildNodes.length; i++) {
-            let child = this.originalChildNodes[i]
+            let child = this.originalChildNodes[i];
             let el = BaseElement.nodeToJSON(child);
             if (el) {
                 childNodes.push(el);
@@ -177,7 +176,7 @@ export default class AASession extends BaseElement {
 
         console.log(argsStrings);
 
-        let tagName = this.tagName;
+        
         let templateString = html2jsl.formatJSLResult("TEMPLATE", {}, argsStrings);
         let final = html2jsl.formatJSLResult("AA_SESSION", attrObj, [templateString]);
 

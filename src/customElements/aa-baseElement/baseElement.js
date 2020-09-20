@@ -255,7 +255,7 @@ export default class BaseElement extends HTMLElement {
                 result[node.nodeName] = text;
                 return result;
             }
-            else { return null }
+            else { return null; }
         }
         else if (node.toJSON) {
             return node.toJSON();
@@ -290,7 +290,7 @@ export default class BaseElement extends HTMLElement {
                 return result;
             } catch (e) {
                 console.error(e);
-                debugger;
+                
             }
         }
     }
@@ -306,7 +306,7 @@ export default class BaseElement extends HTMLElement {
     }
 
     toSVG(){
-        
+
     }
 
 

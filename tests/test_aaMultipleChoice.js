@@ -46,7 +46,7 @@ describe('aa-multiple-choice', () => {
             assert(mChoice.value === 'choice two', 'value should be text of aa-choice-item without value set');
             done();
 
-            console.log(mChoice.toYAML());
+            
         });
 
 
