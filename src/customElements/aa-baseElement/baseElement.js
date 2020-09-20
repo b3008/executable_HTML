@@ -305,9 +305,7 @@ export default class BaseElement extends HTMLElement {
         return html2jsl.nodeToJSL(this);
     }
 
-    toSVG(){
 
-    }
 
 
     _dispatchDebugEvent(detail) {

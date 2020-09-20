@@ -1,5 +1,4 @@
 import BaseElement from './../aa-baseElement/baseElement.js';
-import SVG from '../../lib/svg/svg.js';
 export default class AAScreen extends BaseElement {
 
 
