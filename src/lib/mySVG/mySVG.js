@@ -35,7 +35,7 @@ var modellingFunctions = {
 
     'AA-SCREEN': (node) => {
         let g = SVG().group();
-        let svgItem = SVG().rect(30, 50).attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 5 }).addTo(g);;
+        SVG().rect(30, 50).attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 5 }).addTo(g);
         if(node.getAttribute('name')){
 
         }
@@ -259,7 +259,7 @@ getEndPoints() {
         case 'serial':
             let lastItem = this.c[this.c.length - 1];
             return this.getItemEndPoints(lastItem);
-            break;
+
 
         case 'parallel': {
             let points = [];
@@ -267,7 +267,7 @@ getEndPoints() {
                 points = points.concat(this.getItemEndPoints(this.c[i]));
             }
             return points;
-            break;
+
         }
 
     }

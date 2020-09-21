@@ -174,7 +174,7 @@ export default class AASession extends BaseElement {
             }
         }
 
-        console.log(argsStrings);
+        
 
         
         let templateString = html2jsl.formatJSLResult("TEMPLATE", {}, argsStrings);

@@ -76,7 +76,7 @@ export default class AALikertScale extends BaseElement {
     }
 
     connectedCallback() {
-        super.connectedCallback();;
+        super.connectedCallback();
 
         
         this.root.innerHTML = this.html;

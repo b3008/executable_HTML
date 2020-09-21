@@ -56,7 +56,7 @@ describe('aa-sequence', () => {
             assert(sequence.currentNode.id != null, 'screen1 should not be null');
             assert(screen2 == null, 'screen2 should be null');
             sequence.next().then(() => {
-                ;
+
                 screen2 = document.querySelector('#screen2');
                 assert(screen2 != null, 'screen2 should not be null after calling next');
 

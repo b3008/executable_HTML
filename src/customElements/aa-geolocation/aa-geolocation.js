@@ -79,7 +79,7 @@ export default class AAGeolocation extends BaseElement {
                 this._dispatchEndEvent({value:this.value})
             });
         }
-    };
+    }
 
 
 }

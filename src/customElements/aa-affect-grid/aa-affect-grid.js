@@ -217,8 +217,6 @@ export default class AAAffectGrid extends BaseElement {
             this.selectedCell.classList.add('selected');
 
 
-            // console.log(this.value);
-            // console.log(typeof this.value);
         });
 
         this.totalContainer = this.root.querySelector('.total-container');
@@ -230,15 +228,16 @@ export default class AAAffectGrid extends BaseElement {
         //register a resize observer for top container
         if(ResizeObserver){
             new ResizeObserver( ()=>{
-                console.log("resize");
+
                 this.totalContainer.style.height = window.getComputedStyle(this.totalContainer).width;
                 this.root.querySelector(".leftLabels").style.width = window.getComputedStyle(this.grid).height;
                 this.root.querySelector(".rightLabels").style.width = window.getComputedStyle(this.grid).height;
 
             }).observe(this.root.querySelector('.top-label'));
-        }else{
-            console.warn("ResizeObserver is not defined here");
         }
+        // else{
+        //     console.warn("ResizeObserver is not defined here");
+        // }
 
        
 

@@ -35,7 +35,7 @@ export default class AAVariable extends BaseElement {
         session.setData(this.name, this.value);
         this._dispatchEndEvent({autoDispatch:true});
         if(!this.debug) {this.remove();}
-    };
+    }
 
 
 }

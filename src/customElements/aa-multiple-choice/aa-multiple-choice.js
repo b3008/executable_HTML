@@ -73,7 +73,7 @@ export default class AAMultipleChoice extends BaseElement {
         this.radioGroup = this.root.querySelector('#radioGroup');
         this.radioGroup.addEventListener('change', (e) => {
             this.value = e.target.name;
-            console.log(this.value);
+            // console.log(this.value);
         });
 
     }
@@ -143,9 +143,10 @@ export default class AAMultipleChoice extends BaseElement {
                     newDiv.appendChild(d2);
  
                 
-                } else {
+                } 
+                // else {
 
-                }
+                // }
 
             }
         }
