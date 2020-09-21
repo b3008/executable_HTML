@@ -34,10 +34,13 @@ var modellingFunctions = {
     },
 
     'AA-SCREEN': (node) => {
+        let g = SVG().group();
+        let svgItem = SVG().rect(30, 50).attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 5 }).addTo(g);;
+        if(node.getAttribute('name')){
 
-        let svgItem = SVG().rect(30, 50).attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 5 });
-        svgItem.myNode = node;
-        return svgItem;
+        }
+        g.myNode = node;
+        return g;
     },
 
     'AA-CHOOSE': (node) => {
@@ -45,7 +48,26 @@ var modellingFunctions = {
         let chooseRow = new Row('serial', node);
         chooseRow.strokeDashArray = '3';
 
-        let chooseSVGItemStart = SVG().circle(20).attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 5, 'stroke-dasharray': 0 });
+        // let chooseSVGItemStart = SVG().circle(20).attr({ fill: 'transparent', stroke: 'transparent', 'stroke-width': 5, 'stroke-dasharray': 0 });
+
+
+        let chooseSVGItemStart = SVG().group();
+        let pStart = SVG().circle(2).attr({ fill: 'black', stroke: 'black', 'stroke-width': 5, }).addTo(chooseSVGItemStart);
+        let text= SVG().text(function (add) {
+            add.tspan('?').font({
+                family: 'serif',
+                style: 'italic',
+                size: '50px',
+                weight:'bold'
+            });
+            
+        }).addTo(chooseSVGItemStart);
+        pStart.y(chooseSVGItemStart.y() + chooseSVGItemStart.height()/2 - pStart.height()/2 );
+        window.pStart = pStart;
+        window.text = text;
+        window.g = chooseSVGItemStart;
+        // debugger;
+
         let chooseSVGItemEnd = SVG().circle(10).attr({ fill: 'black', stroke: 'black', 'stroke-width': 5, 'stroke-dasharray': 3 });
         let contentsRow = new Row('parallel', node);
 
@@ -86,7 +108,8 @@ var modellingFunctions = {
             add.tspan('f').font({
                 family: 'serif',
                 style: 'italic',
-                size: '50px'
+                size: '50px',
+                weight:'bold'
             });
             add.tspan('random ').font({
                 family: 'serif',
@@ -217,7 +240,7 @@ getStartPoints() {
         case 'serial':
             let firstItem = this.c[0];
             return this.getItemStartPoints(firstItem);
-            break;
+            
 
         case 'parallel': {
 
@@ -338,7 +361,7 @@ makeLines(endPoints, startPoints) {
             let p2 = startPoints[j];
             let offset = - 1;
 
-            // let path = mySVG.quadraticCurve(p1[0], p1[1], p2[0], p2[1], offset);
+            
             let path = mySVG.bezier(p1[0], p1[1], p2[0], p2[1], offset);
             if (this.strokeDashArray) path.attr({ 'stroke-dasharray': this.strokeDashArray });
             // path.addTo(draw);
@@ -362,7 +385,7 @@ renderLines() {
         }
         if (this.type === 'serial') {
             let endPoints = this.getItemEndPoints(this.c[i]);
-            let startPoints = this.getItemStartPoints(this.c[i + 1])
+            let startPoints = this.getItemStartPoints(this.c[i + 1]);
 
             let l = this.makeLines(endPoints, startPoints);
             l.addTo(lines);
@@ -415,7 +438,7 @@ class mySVG {
 
     static render(container, width, node) {
         let draw = SVG().addTo(container).size(1000, 1300);
-        var rect = SVG().rect(100, 100).attr({ fill: '#f06' });
+        // var rect = SVG().rect(100, 100).attr({ fill: '#f06' });
         var group = SVG().group();
 
         window.draw = draw;
@@ -452,105 +475,40 @@ class mySVG {
         path.attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 3 });
         return path;
     }
-    static quadraticCurve(p1x, p1y, p2x, p2y, offs) {
+    // static quadraticCurve(p1x, p1y, p2x, p2y, offs) {
 
-        // see https://medium.com/@francoisromain/smooth-a-svg-path-with-cubic-bezier-curves-e37b49d46c74
-        // for bezier;
+    //     // see https://medium.com/@francoisromain/smooth-a-svg-path-with-cubic-bezier-curves-e37b49d46c74
+    //     // for bezier;
 
-        //for now this should be good enough;
+    //     //for now this should be good enough;
 
-        // mid-point of line:
-        let mpx = (p2x + p1x) * 0.5;
-        let mpy = (p2y + p1y) * 0.5;
+    //     // mid-point of line:
+    //     let mpx = (p2x + p1x) * 0.5;
+    //     let mpy = (p2y + p1y) * 0.5;
 
-        // angle of perpendicular to line:
-        let theta = Math.atan2(p2y - p1y, p2x - p1x) - Math.PI / 2;
+    //     // angle of perpendicular to line:
+    //     let theta = Math.atan2(p2y - p1y, p2x - p1x) - Math.PI / 2;
 
-        // distance of control point from mid-point of line:
+    //     // distance of control point from mid-point of line:
 
-        let offset = offs * 10;
+    //     let offset = offs * 10;
 
-        // location of control point:
-        let c1x = mpx + offset * Math.cos(theta);
-        let c1y = mpy + offset * Math.sin(theta);
-
-
-
-        // construct the command to draw a quadratic curve
-        let curve = 'M' + p1x + ' ' + p1y + ' Q ' + c1x + ' ' + c1y + ' ' + p2x + ' ' + p2y;
-
-        let path = SVG().path(curve);
-        path.attr({ fill: 'transparent', stroke: 'black' });
-        return path;
-    }
+    //     // location of control point:
+    //     let c1x = mpx + offset * Math.cos(theta);
+    //     let c1y = mpy + offset * Math.sin(theta);
 
 
-    static line(pointA, pointB) {
-        const lengthX = pointB[0] - pointA[0]
-        const lengthY = pointB[1] - pointA[1]
-        return {
-            length: Math.sqrt(Math.pow(lengthX, 2) + Math.pow(lengthY, 2)),
-            angle: Math.atan2(lengthY, lengthX)
-        }
-    }
 
-    // Position of a control point 
-    // I:  - current (array) [x, y]: current point coordinates
-    //     - previous (array) [x, y]: previous point coordinates
-    //     - next (array) [x, y]: next point coordinates
-    //     - reverse (boolean, optional): sets the direction
-    // O:  - (array) [x,y]: a tuple of coordinates
-    static controlPoint(current, previous, next, reverse) {
-        // When 'current' is the first or last point of the array
-        // 'previous' or 'next' don't exist.
-        // Replace with 'current'
-        const p = previous || current
-        const n = next || current
-        // The smoothing ratio
-        const smoothing = 0.2
-        // Properties of the opposed-line
-        const o = line(p, n)
-        // If is end-control-point, add PI to the angle to go backward
-        const angle = o.angle + (reverse ? Math.PI : 0)
-        const length = o.length * smoothing
-        // The control point position is relative to the current point
-        const x = current[0] + Math.cos(angle) * length
-        const y = current[1] + Math.sin(angle) * length
-        return [x, y]
-    }
+    //     // construct the command to draw a quadratic curve
+    //     let curve = 'M' + p1x + ' ' + p1y + ' Q ' + c1x + ' ' + c1y + ' ' + p2x + ' ' + p2y;
 
-    // Create the bezier curve command 
-    // I:  - point (array) [x,y]: current point coordinates
-    //     - i (integer): index of 'point' in the array 'a'
-    //     - a (array): complete array of points coordinates
-    // O:  - (string) 'C x2,y2 x1,y1 x,y': SVG cubic bezier C command
-    static bezierCommand(point, i, a) {
-        // start control point
-        const [cpsX, cpsY] = controlPoint(a[i - 1], a[i - 2], point)
-        // end control point
-        const [cpeX, cpeY] = controlPoint(point, a[i - 1], a[i + 1], true)
-        return `C ${cpsX},${cpsY} ${cpeX},${cpeY} ${point[0]},${point[1]}`
-    }
+    //     let path = SVG().path(curve);
+    //     path.attr({ fill: 'transparent', stroke: 'black' });
+    //     return path;
+    // }
 
-    // Render the svg <path> element 
-    // I:  - points (array): points coordinates
-    //     - command (function)
-    //       I:  - point (array) [x,y]: current point coordinates
-    //           - i (integer): index of 'point' in the array 'a'
-    //           - a (array): complete array of points coordinates
-    //       O:  - (string) a svg path command
-    // O:  - (string): a Svg <path> element
-    static svgPath(points, command) {
-        // build the d attributes by looping over the points
-        const d = points.reduce((acc, point, i, a) => i === 0
-            // if first point
-            ? `M ${point[0]},${point[1]}`
-            // else
-            : `${acc} ${command(point, i, a)}`
-            , '')
-        return `<path d="${d}" fill="none" stroke="grey" />`
-    }
 
+   
 
 
 }
