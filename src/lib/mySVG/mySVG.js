@@ -35,9 +35,20 @@ var modellingFunctions = {
 
     'AA-SCREEN': (node) => {
         let g = SVG().group();
-        SVG().rect(30, 50).attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 5 }).addTo(g);
+        let rect = SVG().rect(30, 50).attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 5, rx:3 }).addTo(g);
         if (node.getAttribute('name')) {
-
+            let name = node.getAttribute('name');
+            let text = SVG().text(function (add) {
+                add.tspan(name).font({
+                    family: 'serif',
+                    style: 'italic',
+                    size: '12px',
+                    // weight: 'bold'
+                });
+            })
+            text.addTo(g);
+            rect.x(g.x() + g.width()/2 -  rect.width()/2 );
+            text.y(rect.height() + 5);
         }
         g.myNode = node;
         return g;
