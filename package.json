@@ -38,7 +38,7 @@
     "webpack-cli": "^3.3.12"
   },
   "scripts": {
-    "test": "karma start --single-run --browsers ChromeHeadless,FirefoxHeadless karma.config.js --verbose",
+    "test": "karma start --single-run --browsers ChromeHeadless karma.config.js --verbose",
     "build": "node node_modules/webpack/bin/webpack.js"
   },
   "author": "",
