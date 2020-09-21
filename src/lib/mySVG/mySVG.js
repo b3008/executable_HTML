@@ -35,7 +35,7 @@ var modellingFunctions = {
 
     'AA-SCREEN': (node) => {
         let g = SVG().group();
-        let rect = SVG().rect(30, 50).attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 5, rx:3 }).addTo(g);
+        let rect = SVG().rect(30, 50).attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 5, rx: 3 }).addTo(g);
         if (node.getAttribute('name')) {
             let name = node.getAttribute('name');
             let text = SVG().text(function (add) {
@@ -47,7 +47,7 @@ var modellingFunctions = {
                 });
             })
             text.addTo(g);
-            rect.x(g.x() + g.width()/2 -  rect.width()/2 );
+            rect.x(g.x() + g.width() / 2 - rect.width() / 2);
             text.y(rect.height() + 5);
         }
         g.myNode = node;
@@ -84,13 +84,15 @@ var modellingFunctions = {
 
 
 
-        let hasOtherwiseNode = false;
+        // let hasOtherwiseNode = false;
         for (let i = 0; i < node.childNodes.length; i++) {
-            if (node.childNodes.nodeName === "AA-OTHERWISE") {
-                let hasOtherwiseNode = true;
+            // if (node.childNodes.nodeName === "AA-OTHERWISE") {
+            //     let hasOtherwiseNode = true;
+            // }
+            let m = mySVG.model(node.childNodes[i]);
+            if (m) {
+                contentsRow.push(m);
             }
-            let m = mySVG.model(node.childNodes[i])
-            if (m) contentsRow.push(m)
         }
 
 
@@ -100,7 +102,7 @@ var modellingFunctions = {
         chooseRow.push(contentsRow);
         chooseRow.push(chooseSVGItemEnd);
 
-        let w = contentsRow.width();
+        // let w = contentsRow.width();
 
 
 
@@ -375,7 +377,7 @@ class Row {
 
                 let path = mySVG.bezier(p1[0], p1[1], p2[0], p2[1], offset);
                 if (this.strokeDashArray) path.attr({ 'stroke-dasharray': this.strokeDashArray, });
-                if ((this.type == 'serial')&&!(this.strokeDashArray)) path.attr({ 'marker-end': 'url(#arrow)' });
+                if ((this.type == 'serial') && !(this.strokeDashArray)) path.attr({ 'marker-end': 'url(#arrow)' });
                 // path.addTo(draw);
                 path.addTo(lines);
 
