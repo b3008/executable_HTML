@@ -118,16 +118,10 @@ describe('aa-multiple-choice', () => {
 
             let m = mySVG.model(choose);
             m.getEndPoints();
-            debugger;
+
             mySVG.render(svgContainer, 500, session);
 
 
-
-
-
-
-            debugger;
-            console.log("test")
             done();
         });
 

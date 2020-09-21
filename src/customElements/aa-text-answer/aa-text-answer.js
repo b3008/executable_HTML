@@ -150,7 +150,7 @@ export default class AATextAnswer extends BaseElement {
                     }, 100);
 
                 })
-            };
+            }
         }, 0);
 
     }
