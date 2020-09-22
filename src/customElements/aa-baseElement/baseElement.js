@@ -1,5 +1,4 @@
 import '../../lib/yaml/js-yaml.js';
-// import * as jsl from '../../lib/jsl/jsl2.1.js';
 import * as html2jsl from '../../lib/html2jsl/html2jsl.js';
 
 var html = function (txt, ...val) {

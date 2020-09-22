@@ -240,8 +240,14 @@ export default class AASession extends BaseElement {
         div.appendChild(button);
         div.appendChild(diagram.renderKey());
 
+        let filename= '';  
+        if(this.name){
+            filename = this.name + "." + this.nodeName.toLowerCase() + ".svg";
+        } else{
+            filename = this.nodeName.toLowerCase() + ".svg";
+        }
         button.addEventListener("click", ()=>{
-            diagram.download();
+            diagram.download(filename);
         })
         
     }

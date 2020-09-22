@@ -353,12 +353,12 @@ class mySVG {
         return svg.node;
     }
 
-    download() {
+    download(filename) {
 
         let blob = new Blob([this.svg.outerHTML]);
 
         let element = document.createElement("a");
-        element.download = "w3c.svg";
+        element.download = filename;
         element.href = window.URL.createObjectURL(blob);
         element.click();
         element.remove();
