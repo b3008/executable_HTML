@@ -185,15 +185,32 @@ export default class BaseElement extends HTMLElement {
                 // console.log(keys[i], p[keys[i]].value)
 
                 let prop = this.toCamelCase(keys[i]);
-                if ((typeof this[prop] === 'undefined') || (this[prop] === null)) {
+
+                if ((typeof this[prop] === 'undefined') || (this[prop] === null) || (this[prop] === '')) {
                     // this[prop] = p[keys[i]].value ;
 
-                    let val = this.getAttribute(keys[i]) || (p[keys[i]].value || null);
 
+                    if (p[keys[i]].type === Boolean) {
+                        if (this.getAttribute(keys[i]) === '') {
+                            this.setAttribute(keys[i], true);
 
+                        } else if (this.getAttribute(keys[i]) === 'true') {
+                            this.setAttribute(keys[i], true);
 
-                    if (val) this.setAttribute(keys[i], val);
-                    if (val === false) this.setAttribute(keys[i], val);
+                        } else if (this.getAttribute(keys[i]) === 'false') {
+                            this.setAttribute(keys[i], false);
+
+                        } else if (this.getAttribute(keys[i]) === null) {
+                            this.setAttribute(keys[i], p[keys[i]].value);
+
+                        }
+                    }
+                    else {
+                        let val = this.getAttribute(keys[i]) || (p[keys[i]].value || null);
+
+                        if (val) this.setAttribute(keys[i], val);
+                        if (val === false) this.setAttribute(keys[i], val);
+                    }
                 }
 
             }
@@ -291,7 +308,7 @@ export default class BaseElement extends HTMLElement {
                 return result;
             } catch (e) {
                 console.error(e);
-                
+
             }
         }
     }

@@ -1,7 +1,5 @@
 import SVG from '../svg/svg.js';
 
-
-
 var modellingFunctions = {
 
 
@@ -46,11 +44,21 @@ var modellingFunctions = {
                     // weight: 'bold'
                 });
             })
+
+            // let transparentText = text.clone().attr({stroke:'transparent', fill:'transparent'});
+            //this is really cheap for now, but add a transparent rectangle on top to compensate for the
+            //existence of text at the bottom, for centering calculations
+            let transparentGap = SVG().rect(10, 12 ).attr({stroke:'transparent', fill:'transparent'});
+
             text.addTo(g);
+            transparentGap.addTo(g);
             rect.x(g.x() + g.width() / 2 - rect.width() / 2);
-            text.y(rect.height() + 5);
+            rect.y(g.height() / 2 - rect.height() / 2) + 10;
+            text.y(rect.y() +rect.height() + 5);
+            transparentGap.y(rect.y() - 5 -12);
         }
         g.myNode = node;
+        g.nocentering = true;
         return g;
     },
 
@@ -59,25 +67,25 @@ var modellingFunctions = {
         let chooseRow = new Row('serial', node);
         chooseRow.strokeDashArray = '3';
 
-        // let chooseSVGItemStart = SVG().circle(20).attr({ fill: 'transparent', stroke: 'transparent', 'stroke-width': 5, 'stroke-dasharray': 0 });
+        let chooseSVGItemStart = SVG().circle(20).attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 5, 'stroke-dasharray': 0 });
 
 
-        let chooseSVGItemStart = SVG().group();
-        let pStart = SVG().circle(2).attr({ fill: 'black', stroke: 'black', 'stroke-width': 5, }).addTo(chooseSVGItemStart);
-        let text = SVG().text(function (add) {
-            add.tspan('?').font({
-                family: 'serif',
-                style: 'italic',
-                size: '50px',
-                weight: 'bold'
-            });
+        // let chooseSVGItemStart = SVG().group();
+        // let pStart = SVG().circle(2).attr({ fill: 'black', stroke: 'black', 'stroke-width': 5, }).addTo(chooseSVGItemStart);
+        // let text = SVG().text(function (add) {
+        //     add.tspan('?').font({
+        //         family: 'serif',
+        //         style: 'italic',
+        //         size: '50px',
+        //         weight: 'bold'
+        //     });
 
-        }).addTo(chooseSVGItemStart);
-        pStart.y(chooseSVGItemStart.y() + chooseSVGItemStart.height() / 2 - pStart.height() / 2);
-        window.pStart = pStart;
-        window.text = text;
-        window.g = chooseSVGItemStart;
-        // debugger;
+        // }).addTo(chooseSVGItemStart);
+        // pStart.y(chooseSVGItemStart.y() + chooseSVGItemStart.height() / 2 - pStart.height() / 2);
+        // window.pStart = pStart;
+        // window.text = text;
+        // window.g = chooseSVGItemStart;
+        // // debugger;
 
         let chooseSVGItemEnd = SVG().circle(2).attr({ fill: 'black', stroke: 'black', 'stroke-width': 5 });
         let contentsRow = new Row('parallel', node);
@@ -332,6 +340,8 @@ class Row {
                 item.y(10);
                 this.c.push(item);
 
+              
+                
                 //now ensure everything is centered on the x axis
                 let yCenter = 0
                 for (let i = 0; i < this.c.length; i++) {
@@ -439,7 +449,8 @@ class Row {
 
 class mySVG {
 
-
+    static svg;
+    static name;
 
     static model(node) {
 
@@ -478,10 +489,25 @@ class mySVG {
 
         lines.addTo(draw);
 
-
+        draw.node.dataset.source = encodeURIComponent(node.outerHTML.replace(/\n/g, ' ').replace(/\t/g, ' ').replace(/\s\s+/g, ' ').trim());
+        mySVG.svg = draw.node;
+         
 
 
     }
+
+    static download() {
+        
+        let blob = new Blob([mySVG.svg.outerHTML]);
+
+        let element = document.createElement("a");
+        element.download = "w3c.svg";
+        element.href = window.URL.createObjectURL(blob);
+        element.click();
+        element.remove();
+      }
+
+
 
 
 

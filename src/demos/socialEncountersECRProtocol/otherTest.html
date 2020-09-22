@@ -1,0 +1,90 @@
+<html>
+
+<head>
+    <!-- <script type="module" src="../../../dist/aaCustomElements.js"></script> -->
+    <script type="module" src="../../../dist/paper-polymer.js"></script>
+    <script type="module" src="../../index.js"></script>
+    <script type="module" src="../../lib/mySVG/mySVG.js"></script>
+
+</head>
+
+
+<body>
+
+
+
+
+    <div style="width:50%; margin:0 auto">
+
+        <aa-screen test></aa-screen>
+
+        <!-- <aa-session diagram><template>
+
+            <aa-screen></aa-screen>
+            <aa-screen></aa-screen>
+
+                <aa-sequence>
+
+                    <aa-screen></aa-screen>
+                    <aa-screen></aa-screen>
+                    <aa-screen></aa-screen>
+                    <aa-screen></aa-screen>
+                
+                </aa-sequence>
+
+                <aa-screen></aa-screen>
+                <aa-screen></aa-screen>
+                <aa-screen></aa-screen>
+                <aa-screen></aa-screen>
+        
+
+
+
+
+            </template></aa-session> -->
+
+    </div>
+
+    <div id='svgContainer'>
+
+
+    </div>
+
+    <aa-sequence></aa-sequence>
+
+</body>
+
+
+
+<script>
+
+    window.onload = () => {
+
+
+
+        var session = document.querySelector("aa-session");
+
+        var svgContainer = document.querySelector("#svgContainer");
+
+
+
+        // let m = mySVG.model(session);
+
+        mySVG.render(svgContainer, 500, session);
+
+
+        // console.log(m)
+
+        // mySVG.download()
+
+    }
+
+</script>
+
+</html>
+
+<!-- 
+JSL : https://pastebin.com/vk8Q6Ytm
+YAML:  https://pastebin.com/NHJVYfXd
+
+YAML2 https://pastebin.com/rs6KHifd -->

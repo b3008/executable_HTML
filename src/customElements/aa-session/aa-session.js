@@ -22,6 +22,12 @@ export default class AASession extends BaseElement {
                 userDefined: false
             },
 
+            'diagram': {
+                type: Boolean,
+                value: false,
+                userDefined: true
+            },
+
         }
     }
 
@@ -41,6 +47,12 @@ export default class AASession extends BaseElement {
 
         this.myTemplate = document.createElement('template');
         this.myTemplate.innerHTML = this.innerHTML;
+
+        debugger;
+        if(this.getAttribute('diagram')!==null){
+            debugger;
+            return;
+        } 
         this.innerHTML = '';
 
         // this.root = this.attachShadow({ mode: 'closed' });
@@ -86,7 +98,10 @@ export default class AASession extends BaseElement {
 
     connectedCallback() {
         // console.log(this.tagName+"#"+this.id,"connected");
-
+        if(this.getAttribute('diagram')!==null){
+            debugger;
+            return;
+        } 
         this.sessionID = this.myIdGenerator();
         this.sessionTime = new Date().getTime();
         let sessionDatum = Object.keys(this.dataset);
