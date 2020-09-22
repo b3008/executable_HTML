@@ -2,6 +2,7 @@ import BaseElement from './../aa-baseElement/baseElement.js';
 import './../aa-memory/aa-memory.js';
 import * as html2jsl from './../../lib/html2jsl/html2jsl.js';
 import { AASequence } from '../../index.js';
+import { mySVG } from '../../lib/mySVG/mySVG.js';
 
 export default class AASession extends BaseElement {
 
@@ -13,7 +14,8 @@ export default class AASession extends BaseElement {
             },
             'should-run': {
                 type: Boolean,
-                userDefined: true
+                userDefined: true,
+                value:true
             },
 
             'debug': {
@@ -48,11 +50,7 @@ export default class AASession extends BaseElement {
         this.myTemplate = document.createElement('template');
         this.myTemplate.innerHTML = this.innerHTML;
 
-        debugger;
-        if(this.getAttribute('diagram')!==null){
-            debugger;
-            return;
-        } 
+
         this.innerHTML = '';
 
         // this.root = this.attachShadow({ mode: 'closed' });
@@ -83,6 +81,7 @@ export default class AASession extends BaseElement {
         })
 
         this.addEventListener('endEvent', (e) => {
+
             if (!this.debug) e.stopPropagation();
             let sessionEndEvent = new CustomEvent('sessionEndEvent', { bubbles: true, detail: 'sessionEnd' });
             this.dispatchEvent(sessionEndEvent);
@@ -97,9 +96,10 @@ export default class AASession extends BaseElement {
     }
 
     connectedCallback() {
+        this.setAttributeDefaultValues()
         // console.log(this.tagName+"#"+this.id,"connected");
-        if(this.getAttribute('diagram')!==null){
-            debugger;
+        if(this.diagram===true){
+            this.produceDiagram()
             return;
         } 
         this.sessionID = this.myIdGenerator();
@@ -201,6 +201,7 @@ export default class AASession extends BaseElement {
 
 
     get originalChildNodes(){
+        if(this.myTemplate.content.childNodes.length==0) return [];
         if(!this.myTemplate.content.childNodes[0].content) return this.childNodes;
         return this.myTemplate.content.childNodes[0].content.childNodes;
     }
@@ -219,6 +220,30 @@ export default class AASession extends BaseElement {
 
         }
 
+    }
+
+    produceDiagram(){
+        
+        this.root = this.attachShadow({ mode: 'open' });
+        this.root.innerHTML= '<div id="svgContainer" ></div>'
+        let div = this.root.childNodes[0];
+        let diagram = new mySVG();
+        let svg = diagram.render(this);
+        
+        let button = document.createElement('paper-button');
+        button.innerHTML= "download";
+        button.raised= true;
+        button.style.backgroundColor = "#0d47a1";
+        button.style.color = "white";
+        button.classList.add('indigo');
+        div.appendChild(svg);
+        div.appendChild(button);
+        div.appendChild(diagram.renderKey());
+
+        button.addEventListener("click", ()=>{
+            diagram.download();
+        })
+        
     }
 
 }

@@ -14,11 +14,11 @@
 
 
 
-    <div style="width:50%; margin:0 auto">
+    <div>
 
-        <aa-screen test></aa-screen>
 
-        <!-- <aa-session diagram><template>
+
+ <aa-session diagram><template>
 
             <aa-screen></aa-screen>
             <aa-screen></aa-screen>
@@ -41,7 +41,7 @@
 
 
 
-            </template></aa-session> -->
+            </template></aa-session> 
 
     </div>
 
@@ -51,6 +51,8 @@
     </div>
 
     <aa-sequence></aa-sequence>
+
+
 
 </body>
 
@@ -62,15 +64,16 @@
 
 
 
-        var session = document.querySelector("aa-session");
 
-        var svgContainer = document.querySelector("#svgContainer");
+         var session = document.querySelector("aa-session");
+
+         var svgContainer = document.querySelector("#svgContainer");
 
 
 
-        // let m = mySVG.model(session);
+        // // let m = mySVG.model(session);
 
-        mySVG.render(svgContainer, 500, session);
+        // mySVG.render(svgContainer, 500, session);
 
 
         // console.log(m)

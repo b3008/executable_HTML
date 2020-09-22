@@ -26,7 +26,7 @@ describe('aa-multiple-choice', () => {
             container.innerHTML = html`
             
             
-    <aa-session><template>
+    <aa-session diagram><template>
     
             <aa-sequence id="seq1">
     
@@ -109,17 +109,17 @@ describe('aa-multiple-choice', () => {
             
             `
 
-            let session = container.querySelector('aa-session');
-            let choose = session.originalChildNodes[1].childNodes[1];
+            // let session = container.querySelector('aa-session');
+            // let choose = session.originalChildNodes[1].childNodes[1];
 
-            let item = mySVG.model(choose);
-            var svgContainer = document.querySelector('#svgContainer');
+            // let item = mySVG.model(choose);
+            // var svgContainer = document.querySelector('#svgContainer');
 
 
-            let m = mySVG.model(choose);
-            m.getEndPoints();
+            // let m = mySVG.model(choose);
+            // m.getEndPoints();
 
-            mySVG.render(svgContainer, 500, session);
+            // mySVG.render(svgContainer, 500, session);
 
 
             done();

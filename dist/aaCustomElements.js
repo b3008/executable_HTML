@@ -406,8 +406,6 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
             this.selectedCell.classList.add('selected');
 
 
-            // console.log(this.value);
-            // console.log(typeof this.value);
         });
 
         this.totalContainer = this.root.querySelector('.total-container');
@@ -419,15 +417,16 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
         //register a resize observer for top container
         if(ResizeObserver){
             new ResizeObserver( ()=>{
-                console.log("resize");
+
                 this.totalContainer.style.height = window.getComputedStyle(this.totalContainer).width;
                 this.root.querySelector(".leftLabels").style.width = window.getComputedStyle(this.grid).height;
                 this.root.querySelector(".rightLabels").style.width = window.getComputedStyle(this.grid).height;
 
             }).observe(this.root.querySelector('.top-label'));
-        }else{
-            console.warn("ResizeObserver is not defined here");
         }
+        // else{
+        //     console.warn("ResizeObserver is not defined here");
+        // }
 
        
 
@@ -643,6 +642,7 @@ var html = function (txt, ...val) {
 
     let result = txt[0];
     for (let i = 0; i < val.length; i++) {
+
         result += val[i];
         result += txt[i + 1];
     }
@@ -703,6 +703,7 @@ class BaseElement extends HTMLElement {
         super();
         // console.log(this.nodeName+"#"+this.id, "created");
         this._props = this.makePropertiesFromAttributes();
+       
     }
 
     connectedCallback() {
@@ -821,15 +822,33 @@ class BaseElement extends HTMLElement {
                 // console.log(keys[i], p[keys[i]].value)
 
                 let prop = this.toCamelCase(keys[i]);
-                if ((typeof this[prop] === 'undefined') || (this[prop] === null)) {
+
+                if ((typeof this[prop] === 'undefined') || (this[prop] === null) || (this[prop] === '')) {
                     // this[prop] = p[keys[i]].value ;
 
-                    let val = this.getAttribute(keys[i]) || (p[keys[i]].value || null);
 
+                    if (p[keys[i]].type === Boolean) {
+                        if (this.getAttribute(keys[i]) === '') {
+                            this.setAttribute(keys[i], true);
 
+                        } else if (this.getAttribute(keys[i]) === 'true') {
+                            this.setAttribute(keys[i], true);
 
-                    if (val) this.setAttribute(keys[i], val);
-                    if (val === false) this.setAttribute(keys[i], val);
+                        } else if (this.getAttribute(keys[i]) === 'false') {
+                            this.setAttribute(keys[i], false);
+
+                        } else if (this.getAttribute(keys[i]) === null) {
+                            this.setAttribute(keys[i], p[keys[i]].value);
+
+                        }
+                    }
+                    else 
+                    {
+                        let val = this.getAttribute(keys[i]) || (p[keys[i]].value || null);
+
+                        if (val) this.setAttribute(keys[i], val);
+                        if (val === false) this.setAttribute(keys[i], val);
+                    }
                 }
 
             }
@@ -927,7 +946,7 @@ class BaseElement extends HTMLElement {
                 return result;
             } catch (e) {
                 console.error(e);
-                
+
             }
         }
     }
@@ -942,9 +961,7 @@ class BaseElement extends HTMLElement {
         return _lib_html2jsl_html2jsl_js__WEBPACK_IMPORTED_MODULE_1__["nodeToJSL"](this);
     }
 
-    toSVG(){
 
-    }
 
 
     _dispatchDebugEvent(detail) {
@@ -1265,6 +1282,7 @@ class AAChoose extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     }
 
     constructor() {
+        debugger;
         super();
         this.root = this.attachShadow({ mode: 'open' });
         this.root.innerHTML = '<slot></slot>';
@@ -1276,7 +1294,7 @@ class AAChoose extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         this._shouldRun = (this.shouldRun === null) || (this.shouldRun === true);
         this.sessionElement = this._getParentSession();
 
-        
+
         if (this._shouldRun) {
             if (typeof this.innerFragment !== 'undefined') {
                 _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].scanAndReplace(this.innerFragment);
@@ -1747,7 +1765,7 @@ class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
     }
 
     connectedCallback() {
-        super.connectedCallback();;
+        super.connectedCallback();
 
         
         this.root.innerHTML = this.html;
@@ -1967,7 +1985,7 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
         this.radioGroup = this.root.querySelector('#radioGroup');
         this.radioGroup.addEventListener('change', (e) => {
             this.value = e.target.name;
-            console.log(this.value);
+            // console.log(this.value);
         });
 
     }
@@ -2037,9 +2055,10 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
                     newDiv.appendChild(d2);
  
                 
-                } else {
+                } 
+                // else {
 
-                }
+                // }
 
             }
         }
@@ -2086,8 +2105,6 @@ _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerA
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AAScreen; });
 /* harmony import */ var _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../aa-baseElement/baseElement.js */ "./src/customElements/aa-baseElement/baseElement.js");
-/* harmony import */ var _lib_svg_svg_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/svg/svg.js */ "./src/lib/svg/svg.js");
-
 
 class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
@@ -2122,6 +2139,8 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
                 userDefined: false,
                 value: true
             }
+
+           
 
         }
     }
@@ -2477,7 +2496,7 @@ class AASequence extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
         this.addEventListener('endEvent', this.endEventListener.bind(this));
         if ((this.shouldRun === null) || (this.shouldRun === true)) {
             this.init()
-        };
+        }
     }
 
 
@@ -2550,7 +2569,7 @@ class AASequence extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
 
             let fragmentChild = this.innerFragment.childNodes[this.sIndex];
 
-            if (fragmentChild.nodeName == "aa-screen") debugger;
+            // if (fragmentChild.nodeName == "aa-screen") debugger;
             //  if the child is not an element just add it immediately 
             //  and move on to the next, there won't be a connectecCallback Function to execute anyway
             while (fragmentChild.nodeType != Node.ELEMENT_NODE) {
@@ -2714,6 +2733,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _aa_memory_aa_memory_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../aa-memory/aa-memory.js */ "./src/customElements/aa-memory/aa-memory.js");
 /* harmony import */ var _lib_html2jsl_html2jsl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../lib/html2jsl/html2jsl.js */ "./src/lib/html2jsl/html2jsl.js");
 /* harmony import */ var _index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../index.js */ "./src/index.js");
+/* harmony import */ var _lib_mySVG_mySVG_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/mySVG/mySVG.js */ "./src/lib/mySVG/mySVG.js");
+
 
 
 
@@ -2729,13 +2750,20 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
             },
             'should-run': {
                 type: Boolean,
-                userDefined: true
+                userDefined: true,
+                value:true
             },
 
             'debug': {
                 type: Boolean,
                 value: false,
                 userDefined: false
+            },
+
+            'diagram': {
+                type: Boolean,
+                value: false,
+                userDefined: true
             },
 
         }
@@ -2757,6 +2785,8 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
 
         this.myTemplate = document.createElement('template');
         this.myTemplate.innerHTML = this.innerHTML;
+
+
         this.innerHTML = '';
 
         // this.root = this.attachShadow({ mode: 'closed' });
@@ -2787,6 +2817,7 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
         })
 
         this.addEventListener('endEvent', (e) => {
+
             if (!this.debug) e.stopPropagation();
             let sessionEndEvent = new CustomEvent('sessionEndEvent', { bubbles: true, detail: 'sessionEnd' });
             this.dispatchEvent(sessionEndEvent);
@@ -2801,8 +2832,12 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
     }
 
     connectedCallback() {
+        this.setAttributeDefaultValues()
         // console.log(this.tagName+"#"+this.id,"connected");
-
+        if(this.diagram===true){
+            this.produceDiagram()
+            return;
+        } 
         this.sessionID = this.myIdGenerator();
         this.sessionTime = new Date().getTime();
         let sessionDatum = Object.keys(this.dataset);
@@ -2890,7 +2925,7 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
             }
         }
 
-        console.log(argsStrings);
+        
 
         
         let templateString = _lib_html2jsl_html2jsl_js__WEBPACK_IMPORTED_MODULE_2__["formatJSLResult"]("TEMPLATE", {}, argsStrings);
@@ -2902,6 +2937,7 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
 
 
     get originalChildNodes(){
+        if(this.myTemplate.content.childNodes.length==0) return [];
         if(!this.myTemplate.content.childNodes[0].content) return this.childNodes;
         return this.myTemplate.content.childNodes[0].content.childNodes;
     }
@@ -2920,6 +2956,30 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
 
         }
 
+    }
+
+    produceDiagram(){
+        
+        this.root = this.attachShadow({ mode: 'open' });
+        this.root.innerHTML= '<div id="svgContainer" ></div>'
+        let div = this.root.childNodes[0];
+        let diagram = new _lib_mySVG_mySVG_js__WEBPACK_IMPORTED_MODULE_4__["mySVG"]();
+        let svg = diagram.render(this);
+        
+        let button = document.createElement('paper-button');
+        button.innerHTML= "download";
+        button.raised= true;
+        button.style.backgroundColor = "#0d47a1";
+        button.style.color = "white";
+        button.classList.add('indigo');
+        div.appendChild(svg);
+        div.appendChild(button);
+        div.appendChild(diagram.renderKey());
+
+        button.addEventListener("click", ()=>{
+            diagram.download();
+        })
+        
     }
 
 }
@@ -3273,7 +3333,7 @@ class AATextAnswer extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
                     }, 100);
 
                 })
-            };
+            }
         }, 0);
 
     }
@@ -3363,7 +3423,7 @@ class AAVariable extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
         session.setData(this.name, this.value);
         this._dispatchEndEvent({autoDispatch:true});
         if(!this.debug) {this.remove();}
-    };
+    }
 
 
 }
@@ -4293,6 +4353,687 @@ __webpack_require__.r(__webpack_exports__);
 }(undefined));
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/webpack/buildin/harmony-module.js */ "./node_modules/webpack/buildin/harmony-module.js")(module)))
+
+/***/ }),
+
+/***/ "./src/lib/mySVG/mySVG.js":
+/*!********************************!*\
+  !*** ./src/lib/mySVG/mySVG.js ***!
+  \********************************/
+/*! exports provided: mySVG */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mySVG", function() { return mySVG; });
+/* harmony import */ var _svg_svg_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../svg/svg.js */ "./src/lib/svg/svg.js");
+
+
+
+
+
+class Row {
+
+
+
+    // let strokeDashArray;
+    // var type;
+    // myNode;
+    // group;
+
+    // _x; _y;
+
+
+    x(v) {
+        if (typeof v !== 'undefined') {
+            this._x = v;
+            this.group.x(v);
+        } else {
+            return this._x;
+        }
+    }
+
+    y(v) {
+        if (typeof v !== 'undefined') {
+            this._y = v;
+            this.group.y(v);
+        } else {
+            return this._y;
+        }
+    }
+
+    getItemStartPoints(item) {
+        if (item instanceof Row) {
+            return item.getStartPoints();
+        } else {
+            return [[item.x(), item.y() + item.height() / 2]];
+        }
+    }
+
+
+    getItemEndPoints(item) {
+
+        if (item instanceof Row) {
+            return item.getEndPoints();
+        } else {
+            return [[item.x() + item.width(), item.y() + item.height() / 2]];
+        }
+    }
+
+    getStartPoints() {
+
+        switch (this.type) {
+            case 'serial':
+                if (this.c.length) {
+                    let firstItem = this.c[0];
+                    return this.getItemStartPoints(firstItem);
+                } else {
+                    return [];
+                }
+
+
+            case 'parallel': {
+
+                let points = [];
+                for (let i = 0; i < this.c.length; i++) {
+                    points = points.concat(this.getItemStartPoints(this.c[i]));
+                }
+                return points;
+            }
+
+        }
+    }
+
+    getEndPoints() {
+        switch (this.type) {
+            case 'serial':
+                if (this.c.length) {
+                    let lastItem = this.c[this.c.length - 1];
+                    return this.getItemEndPoints(lastItem);
+                } else {
+                    return [];
+                }
+
+
+            case 'parallel': {
+                let points = [];
+                for (let i = 0; i < this.c.length; i++) {
+                    points = points.concat(this.getItemEndPoints(this.c[i]));
+                }
+                return points;
+
+            }
+
+        }
+    }
+
+
+
+
+
+
+    width(v) {
+
+
+        if (typeof v === 'undefined') {
+
+            return this.group.width();
+        }
+
+
+    }
+
+
+    height(v) {
+        if (typeof v === 'undefined') {
+            return this.group.height();
+
+        }
+
+    }
+
+
+    addTo(svgjs) {
+        this.group.addTo(svgjs);
+        return this;
+    }
+
+
+
+
+    constructor(type, node) {
+        this.gap = 30;
+        this.c = [];
+
+        this.type = type;
+        this.myNode = node;
+        this.group = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])().group();
+    }
+
+    push(item) {
+
+        switch (this.type) {
+
+            case 'serial':
+                if (this.c.length) {
+                    item.x(this.c[this.c.length - 1].x() + this.c[this.c.length - 1].width() + this.gap)
+                } else {
+                    item.x(10);
+                }
+                item.y(10);
+                this.c.push(item);
+
+
+
+                //now ensure everything is centered on the x axis
+                let yCenter = 0
+                for (let i = 0; i < this.c.length; i++) {
+                    yCenter = Math.max(yCenter, this.c[i].height() / 2)
+                }
+                for (let i = 0; i < this.c.length; i++) {
+                    this.c[i].y(yCenter - this.c[i].height() / 2)
+                }
+
+
+                break;
+            case 'parallel':
+                if (this.c.length) {
+
+                    let y = this.c[this.c.length - 1].y() + this.c[this.c.length - 1].height() + this.gap
+                    item.y(y);
+                } else {
+                    item.y(10);
+                }
+                item.x(10);
+                this.c.push(item);
+                break;
+        }
+        if (item instanceof Row) {
+            item.group.addTo(this.group)
+        } else {
+            item.addTo(this.group);
+        }
+
+    }
+
+
+
+    makeLines(endPoints, startPoints) {
+
+        let lines = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])().group();
+        for (let i = 0; i < endPoints.length; i++) {
+            for (let j = 0; j < startPoints.length; j++) {
+                let p1 = endPoints[i];
+                let p2 = startPoints[j];
+                let offset = - 1;
+
+
+                let path = mySVG.bezier(p1[0], p1[1], p2[0], p2[1], offset);
+                if (this.strokeDashArray) path.attr({ 'stroke-dasharray': this.strokeDashArray, });
+                if ((this.type == 'serial') && !(this.strokeDashArray)) path.attr({ 'marker-end': 'url(#arrow)' });
+                // path.addTo(draw);
+                path.addTo(lines);
+
+            }
+        }
+        return lines;
+    }
+
+    renderLines() {
+
+
+        let lines = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])().group();
+
+        for (let i = 0; i < this.c.length - 1; i++) {
+
+            if (this.c[i] instanceof Row) {
+                let l = this.c[i].renderLines();
+                l.addTo(lines);
+            }
+            if (this.type === 'serial') {
+                let endPoints = this.getItemEndPoints(this.c[i]);
+                let startPoints = this.getItemStartPoints(this.c[i + 1]);
+
+                let l = this.makeLines(endPoints, startPoints);
+                l.addTo(lines);
+
+            }
+        }
+        if (this.c[this.c.length - 1] instanceof Row) {
+            let l = this.c[this.c.length - 1].renderLines();
+            l.addTo(lines);
+        }
+
+
+        return lines;
+
+    }
+
+
+    breakLine() {
+        switch (this.type) {
+            case 'serial':
+
+                for (let i = 0; i < c.length - 1; i++) {
+                    w += c[i].width() + this.gap;
+                }
+                w += c[c.length - 1].width();
+                return w;
+
+            case 'parallel':
+
+            //find the longest member amd break it, then break others progressively
+        }
+    }
+
+
+
+}
+
+class mySVG {
+
+
+
+
+    model(node) {
+
+        if (!node) return;
+
+
+        if (Object.keys(this.modellingFunctions).indexOf(node.nodeName) === -1) {
+            return;
+        }
+        if (this.elementsFound.indexOf(node.nodeName) == -1) {
+            this.elementsFound.push(node.nodeName);
+        }
+        return this.modellingFunctions[node.nodeName](node);
+    }
+
+    constructor() {
+
+        this.elementsFound = [];
+
+
+    }
+    render(node) {
+        if (!node) return;
+
+        let draw = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
+        let defs = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
+            `<defs>
+            <marker id="arrow" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,4 L5,2 z" fill="#000" />
+            </marker>
+          </defs>`
+        );
+        defs.addTo(draw);
+
+
+        let item = this.model(node);
+        console.log(this.elementsFound);
+
+        item.group.addTo(draw);
+
+
+        let lines = item.renderLines();
+        lines.addTo(item.group);
+
+        draw.node.dataset.source = encodeURIComponent(node.outerHTML.replace(/\n/g, ' ').replace(/\t/g, ' ').replace(/\s\s+/g, ' ').trim());
+        // mySVG.svg = draw.node;
+
+
+        draw.size(item.group.width() + 100, item.group.height() + 100);
+        this.svg = draw.node;
+        return draw.node;
+
+    }
+
+    renderKey() {
+
+        let group = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])().group();
+        for (let i = 0; i < this.elementsFound.length; i++) {
+
+            let example = this.examples[this.elementsFound[i]];
+            if (!example) {
+                continue;
+            }
+
+            let el = document.createElement('div');
+            debugger;
+            el.innerHTML = example.html;
+
+            let m = this.model(el);
+
+
+            // console.log(m);
+            m.addTo(group);
+            m.y(group.height() + 25);
+            if (m.renderLines) {
+
+                let lines = m.renderLines();
+                lines.addTo(m.group);
+            }
+
+        }
+        let svg = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])().size(group.width() + 50, group.height() + 50);
+        group.x(10);
+        group.y(10);
+        group.addTo(svg);
+        return svg.node;
+    }
+
+    download() {
+
+        let blob = new Blob([this.svg.outerHTML]);
+
+        let element = document.createElement("a");
+        element.download = "w3c.svg";
+        element.href = window.URL.createObjectURL(blob);
+        element.click();
+        element.remove();
+    }
+
+
+
+
+
+    static bezier(p1x, p1y, p2x, p2y) {
+
+        let c1x = p1x + (p2x - p1x) / 1.5;
+        let c1y = p1y;
+        let c2x = p2x - (p2x - p1x) / 1.5;
+        let c2y = p2y;
+
+        let curve = `M ${p1x},${p1y} C${c1x},${c1y} ${c2x},${c2y} ${p2x},${p2y}`;
+
+        let path = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])().path(curve);
+        path.attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 3 });
+        return path;
+    }
+
+
+    get modellingFunctions() {
+        return {
+
+
+            'AA-SESSION': (node) => {
+                let row = new Row('parallel', node);
+                for (let i = 0; i < node.originalChildNodes.length; i++) {
+
+                    let m = this.model(node.originalChildNodes[i])
+                    if (m) row.push(m);
+
+                }
+
+                return row;
+
+            },
+
+
+            'AA-SEQUENCE': (node) => {
+                // let svgItem = SVG().rect(30,50).attr({fill:'transparent'});
+
+                let row = new Row('serial', node);
+                for (let i = 0; i < node.childNodes.length; i++) {
+
+                    let m = this.model(node.childNodes[i])
+                    if (m) row.push(m)
+                }
+
+                return row;
+
+            },
+
+            'AA-SCREEN': (node) => {
+                let g = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])().group();
+                let rect = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])().rect(30, 50).attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 5, rx: 3 }).addTo(g);
+                if (node.getAttribute('name')) {
+                    let name = node.getAttribute('name');
+                    let text = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])().text(function (add) {
+                        add.tspan(name).font({
+                            family: 'serif',
+                            style: 'italic',
+                            size: '12px',
+                            // weight: 'bold'
+                        });
+                    })
+
+                    // let transparentText = text.clone().attr({stroke:'transparent', fill:'transparent'});
+                    //this is really cheap for now, but add a transparent rectangle on top to compensate for the
+                    //existence of text at the bottom, for centering calculations
+                    let transparentGap = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])().rect(10, 12).attr({ stroke: 'transparent', fill: 'transparent' });
+
+                    text.addTo(g);
+                    transparentGap.addTo(g);
+                    rect.x(g.x() + g.width() / 2 - rect.width() / 2);
+                    rect.y(g.height() / 2 - rect.height() / 2) + 10;
+                    text.y(rect.y() + rect.height() + 5);
+                    transparentGap.y(rect.y() - 5 - 12);
+                }
+                g.myNode = node;
+                g.nocentering = true;
+                return g;
+            },
+
+            'AA-CHOOSE': (node) => {
+
+                let chooseRow = new Row('serial', node);
+                chooseRow.strokeDashArray = '3';
+
+                let chooseSVGItemStart = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])().circle(20).attr({ fill: 'transparent', stroke: 'black', 'stroke-width': 5, 'stroke-dasharray': 0 });
+
+
+                // let chooseSVGItemStart = SVG().group();
+                // let pStart = SVG().circle(2).attr({ fill: 'black', stroke: 'black', 'stroke-width': 5, }).addTo(chooseSVGItemStart);
+                // let text = SVG().text(function (add) {
+                //     add.tspan('?').font({
+                //         family: 'serif',
+                //         style: 'italic',
+                //         size: '50px',
+                //         weight: 'bold'
+                //     });
+
+                // }).addTo(chooseSVGItemStart);
+                // pStart.y(chooseSVGItemStart.y() + chooseSVGItemStart.height() / 2 - pStart.height() / 2);
+                // window.pStart = pStart;
+                // window.text = text;
+                // window.g = chooseSVGItemStart;
+                // // debugger;
+
+                let chooseSVGItemEnd = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])().circle(2).attr({ fill: 'black', stroke: 'black', 'stroke-width': 5 });
+                let contentsRow = new Row('parallel', node);
+
+
+
+                // let hasOtherwiseNode = false;
+                for (let i = 0; i < node.childNodes.length; i++) {
+                    // if (node.childNodes.nodeName === "AA-OTHERWISE") {
+                    //     let hasOtherwiseNode = true;
+                    // }
+                    let m = this.model(node.childNodes[i]);
+                    if (m) {
+                        contentsRow.push(m);
+                    }
+                }
+
+
+
+
+                chooseRow.push(chooseSVGItemStart);
+                chooseRow.push(contentsRow);
+                chooseRow.push(chooseSVGItemEnd);
+
+                // let w = contentsRow.width();
+
+
+
+                return chooseRow;
+
+            },
+
+            'AA-FUNCTION-RANDOM': (node) => {
+                let item = new Row('serial', node);
+
+                let g = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])().group();
+
+                // let rect = SVG().rect(30, 50).attr({ fill: 'transparent', stroke: 'red', 'stroke-width': 5 }).addTo(g);
+
+                let text = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])().text(function (add) {
+                    add.tspan('f').font({
+                        family: 'serif',
+                        style: 'italic',
+                        size: '50px',
+                        weight: 'bold'
+                    });
+                    add.tspan('random ').font({
+                        family: 'serif',
+                        style: 'italic',
+                        size: '15px'
+                    })
+                })
+                text.addTo(g);
+                // text.font({
+                //     family: 'serif',
+                //     style: 'italic',
+                //     size: '50px'
+                // })
+                text.attr({ padding: 10 })
+
+
+
+
+                let pStart = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])().circle(2).attr({ fill: 'black', stroke: 'black', 'stroke-width': 5, }).addTo(g);
+                let pEnd = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])().circle(2).attr({ fill: 'black', stroke: 'black', 'stroke-width': 5, }).addTo(g);
+
+
+                item.push(g);
+
+
+
+
+                pStart.x(0);
+                pEnd.x(item.width());
+                pStart.y(item.height() / 2 - pStart.height() / 2);
+                pEnd.y(item.height() / 2 - pStart.height() / 2)
+
+
+
+                return item;
+                // return {
+                //     node: item,
+                //     inputs:()=>{
+                //         return [ [item.x(), item.cy()] ]
+                //     },
+                //     outputs:()=>{
+                //         return [ [item.x() + item.width(), item.cy()] ]
+                //     },
+                // }
+
+            },
+
+
+            'AA-WHEN': (node) => {
+                let row = new Row('serial', node);
+
+                // let text = SVG().text(function (add) {
+                //     add.tspan('when').font({
+                //         family: 'serif',
+                //         style: 'italic',
+                //         size: '50px',
+                //         weight: 'bold'
+                //     });
+                // })
+                // row.push(text);
+
+
+                let contentsRow = new Row('parallel');
+                for (let i = 0; i < node.childNodes.length; i++) {
+
+                    let m = this.model(node.childNodes[i])
+                    if (m) contentsRow.push(m)
+
+                }
+
+                row.push(contentsRow);
+                // contentsRow.x(row.width());
+                return row;
+
+            },
+
+            'AA-OTHERWISE': (node) => {
+                let row = new Row('parallel', node);
+                for (let i = 0; i < node.childNodes.length; i++) {
+
+                    let m = this.model(node.childNodes[i])
+                    if (m) row.push(m)
+
+                }
+
+                return row;
+
+            },
+
+            'DIV': (node) => {
+                // let svgItem = SVG().rect(30,50).attr({fill:'transparent'});
+                debugger;
+                let row = new Row('parallel', node);
+                for (let i = 0; i < node.childNodes.length; i++) {
+
+                    let m = this.model(node.childNodes[i])
+                    if (m) row.push(m)
+                }
+
+                return row;
+
+            },
+
+        }
+    }
+
+    get examples() {
+        return {
+
+            'AA-SEQUENCE': {
+
+                html: '<aa-sequence><aa-screen name="first screen"></aa-screen><aa-screen name="second screen"></aa-screen></aa-sequence>',
+                comment: "sequence",
+
+            },
+
+
+            'AA-SCREEN': {
+
+                html: '<aa-screen name="<name>"></aa-screen>',
+                comment: "screen",
+
+            },
+
+            'AA-FUNCTION-RANDOM': {
+
+                html: '<aa-function-random></aa-function-random>',
+                comment: "random number generator",
+
+            },
+
+            'AA-CHOOSE': {
+
+                html: '<aa-choose><aa-when><aa-screen></aa-screen></aa-when></aa-choose>',
+                comment: "random number generator",
+
+            }
+        }
+    }
+
+
+}
+
+
+// if (window) {
+//     window.mySVG = mySVG;
+//     window.Row = Row;
+//     window.modellingFunctions = modellingFunctions;
+// }
+
 
 /***/ }),
 
@@ -17711,7 +18452,7 @@ __webpack_require__.r(__webpack_exports__);
 
           if (state.position < state.length) {
             tagName = state.input.slice(_position, state.position);
-            ch = state.input.charCodeAt(++state.position);
+            state.input.charCodeAt(++state.position);
           } else {
             throwError(state, 'unexpected end of the stream within a verbatim tag');
           }

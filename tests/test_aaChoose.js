@@ -27,6 +27,7 @@ describe('aa-choose', () => {
             let outsideSessionTest = false;
             let div = document.createElement('div');
             div.addEventListener('endEvent', (e)=>{
+                debugger;
                 outsideSessionTest = true;
          
             });
@@ -97,7 +98,7 @@ describe('aa-choose', () => {
 
         it('parses nested expressions', (done)=>{
             
-
+          
             let div = document.createElement('div');
             div.addEventListener('endEvent', (e)=>{
             });

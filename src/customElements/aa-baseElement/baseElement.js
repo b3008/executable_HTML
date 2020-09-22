@@ -67,6 +67,7 @@ export default class BaseElement extends HTMLElement {
         super();
         // console.log(this.nodeName+"#"+this.id, "created");
         this._props = this.makePropertiesFromAttributes();
+       
     }
 
     connectedCallback() {
@@ -205,7 +206,8 @@ export default class BaseElement extends HTMLElement {
 
                         }
                     }
-                    else {
+                    else 
+                    {
                         let val = this.getAttribute(keys[i]) || (p[keys[i]].value || null);
 
                         if (val) this.setAttribute(keys[i], val);

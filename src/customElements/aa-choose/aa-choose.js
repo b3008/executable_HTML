@@ -37,6 +37,7 @@ export default class AAChoose extends BaseElement {
     }
 
     constructor() {
+        debugger;
         super();
         this.root = this.attachShadow({ mode: 'open' });
         this.root.innerHTML = '<slot></slot>';
@@ -48,7 +49,7 @@ export default class AAChoose extends BaseElement {
         this._shouldRun = (this.shouldRun === null) || (this.shouldRun === true);
         this.sessionElement = this._getParentSession();
 
-        
+
         if (this._shouldRun) {
             if (typeof this.innerFragment !== 'undefined') {
                 BaseElement.scanAndReplace(this.innerFragment);
