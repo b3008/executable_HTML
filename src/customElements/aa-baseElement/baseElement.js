@@ -1,5 +1,6 @@
 import '../../lib/yaml/js-yaml.js';
 import * as html2jsl from '../../lib/html2jsl/html2jsl.js';
+import { mySVG } from '../../lib/mySVG/mySVG.js';
 
 var html = function (txt, ...val) {
 
@@ -16,6 +17,22 @@ if (window) window.html = html;
 
 export default class BaseElement extends HTMLElement {
 
+
+
+    static get properties() {
+        return {
+            name: {
+                type: String,
+                userDefined: true
+            },
+
+            'diagram': {
+                type: Boolean,
+                value: false,
+                userDefined: true
+            },
+        }
+    }
     static registerAAElement(name, elem) {
         if (!customElements.get(name)) {
             window.AANodeNames = window.AANodeNames || [];
@@ -66,7 +83,7 @@ export default class BaseElement extends HTMLElement {
         super();
         // console.log(this.nodeName+"#"+this.id, "created");
         this._props = this.makePropertiesFromAttributes();
-       
+
     }
 
     connectedCallback() {
@@ -205,8 +222,7 @@ export default class BaseElement extends HTMLElement {
 
                         }
                     }
-                    else 
-                    {
+                    else {
                         let val = this.getAttribute(keys[i]) || (p[keys[i]].value || null);
 
                         if (val) this.setAttribute(keys[i], val);
@@ -322,6 +338,40 @@ export default class BaseElement extends HTMLElement {
 
     toJSL() {
         return html2jsl.nodeToJSL(this);
+    }
+
+
+
+    produceDiagram() {
+        debugger;
+        if (!this.root) {
+            this.root = this.attachShadow({ mode: 'open' });
+        }
+        this.root.innerHTML = '<div id="svgContainer" ></div>'
+        let div = this.root.childNodes[0];
+        let diagram = new mySVG();
+        let svg = diagram.render(this);
+
+        let button = document.createElement('paper-button');
+        button.innerHTML = "download";
+        button.raised = true;
+        button.style.backgroundColor = "#0d47a1";
+        button.style.color = "white";
+        button.classList.add('indigo');
+        div.appendChild(svg);
+        div.appendChild(button);
+        div.appendChild(diagram.renderKey());
+
+        let filename = '';
+        if (this.name) {
+            filename = this.name + "." + this.nodeName.toLowerCase() + ".svg";
+        } else {
+            filename = this.nodeName.toLowerCase() + ".svg";
+        }
+        button.addEventListener("click", () => {
+            diagram.download(filename);
+        })
+
     }
 
 

@@ -2,16 +2,21 @@ import BaseElement from './../aa-baseElement/baseElement.js';
 import './../aa-memory/aa-memory.js';
 import * as html2jsl from './../../lib/html2jsl/html2jsl.js';
 import { AASequence } from '../../index.js';
-import { mySVG } from '../../lib/mySVG/mySVG.js';
+
 
 export default class AASession extends BaseElement {
 
     static get properties() {
+
         return {
+           
+            ...BaseElement.properties,
+
             name: {
                 type: String,
                 userDefined: true
             },
+
             'should-run': {
                 type: Boolean,
                 userDefined: true,
@@ -24,11 +29,9 @@ export default class AASession extends BaseElement {
                 userDefined: false
             },
 
-            'diagram': {
-                type: Boolean,
-                value: false,
-                userDefined: true
-            },
+          
+
+            
 
         }
     }
@@ -38,6 +41,7 @@ export default class AASession extends BaseElement {
     }
 
     static get observedAttributes() {
+
         return Object.keys(AASession.properties);
     }
 
@@ -206,51 +210,8 @@ export default class AASession extends BaseElement {
         return this.myTemplate.content.childNodes[0].content.childNodes;
     }
 
-    toSVG() {
 
-        let childNodes = this.originalChildNodes;
-        window.qqq = childNodes[1];
-        
-        for (let i = 0; i < childNodes.length; i++) {
 
-            console.log(childNodes[i], childNodes[i].toSVG);
-            if(childNodes[i].tagName==="AA-SEQUENCE" ){
-                return AASequence.toSVG(childNodes[i]);
-            }
-
-        }
-
-    }
-
-    produceDiagram(){
-        
-        this.root = this.attachShadow({ mode: 'open' });
-        this.root.innerHTML= '<div id="svgContainer" ></div>'
-        let div = this.root.childNodes[0];
-        let diagram = new mySVG();
-        let svg = diagram.render(this);
-        
-        let button = document.createElement('paper-button');
-        button.innerHTML= "download";
-        button.raised= true;
-        button.style.backgroundColor = "#0d47a1";
-        button.style.color = "white";
-        button.classList.add('indigo');
-        div.appendChild(svg);
-        div.appendChild(button);
-        div.appendChild(diagram.renderKey());
-
-        let filename= '';  
-        if(this.name){
-            filename = this.name + "." + this.nodeName.toLowerCase() + ".svg";
-        } else{
-            filename = this.nodeName.toLowerCase() + ".svg";
-        }
-        button.addEventListener("click", ()=>{
-            diagram.download(filename);
-        })
-        
-    }
 
 }
 

@@ -9,6 +9,9 @@ export default class AAChoose extends BaseElement {
 
     static get properties(){
         return {
+
+            ...BaseElement.properties,
+
             name:{
                 type:String,
                 userDefined:true
@@ -37,7 +40,7 @@ export default class AAChoose extends BaseElement {
     }
 
     constructor() {
-        debugger;
+
         super();
         this.root = this.attachShadow({ mode: 'open' });
         this.root.innerHTML = '<slot></slot>';
@@ -46,6 +49,14 @@ export default class AAChoose extends BaseElement {
 
 
     connectedCallback() {
+        this.setAttributeDefaultValues();
+        debugger;
+        if(this.diagram){
+            debugger;
+            this.produceDiagram();
+            return;
+        }
+
         this._shouldRun = (this.shouldRun === null) || (this.shouldRun === true);
         this.sessionElement = this._getParentSession();
 

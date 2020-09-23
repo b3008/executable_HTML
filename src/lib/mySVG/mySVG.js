@@ -330,7 +330,7 @@ class mySVG {
             }
 
             let el = document.createElement('div');
-            debugger;
+
             el.innerHTML = example.html;
 
             let m = this.model(el);
@@ -606,7 +606,7 @@ class mySVG {
 
             'DIV': (node) => {
                 // let svgItem = SVG().rect(30,50).attr({fill:'transparent'});
-                debugger;
+
                 let row = new Row('parallel', node);
                 for (let i = 0; i < node.childNodes.length; i++) {
 
