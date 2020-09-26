@@ -5,6 +5,9 @@ export default class AAScreen extends BaseElement {
 
     static get properties() {
         return {
+
+            ...BaseElement.properties,
+
             name: {
                 type: String,
                 userDefined: true
@@ -66,20 +69,17 @@ export default class AAScreen extends BaseElement {
     constructor() {
         super();
         this.root = this.attachShadow({ mode: 'open' });
-        // this.expectWait = true;
-
     }
 
     connectedCallback() {
-
         super.connectedCallback();
-
-
-
+        if(this.diagram){
+            this.produceDiagram();
+            return;
+        }
         this.root.innerHTML = this.css + this.html;
-        this.submitButton = this.root.querySelector('.submitButton');
+        // this.submitButton = this.root.querySelector('.submitButton');
         this.submitButtonContainer = this.root.querySelector('.submitButtonContainer');
-
         if (this._started) { return; }
         this._started = true;
 

@@ -7,6 +7,9 @@ export default class AASequence extends BaseElement {
 
     static get properties() {
         return {
+
+            ...BaseElement.properties,
+
             name: {
                 type: String,
                 userDefined: true
@@ -49,10 +52,13 @@ export default class AASequence extends BaseElement {
 
     constructor() {
         super();
-        // this.root = this.attachShadow({ mode: 'open' });
-        // this.root.innerHTML = '<slot></slot>';
     }
     connectedCallback() {
+        this.setAttributeDefaultValues();
+        if(this.diagram){
+            this.produceDiagram();
+            return;
+        }
         this.addEventListener('endEvent', this.endEventListener.bind(this));
         if ((this.shouldRun === null) || (this.shouldRun === true)) {
             this.init()

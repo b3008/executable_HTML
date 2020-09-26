@@ -40,7 +40,6 @@ export default class AAChoose extends BaseElement {
     }
 
     constructor() {
-
         super();
         this.root = this.attachShadow({ mode: 'open' });
         this.root.innerHTML = '<slot></slot>';
@@ -50,9 +49,9 @@ export default class AAChoose extends BaseElement {
 
     connectedCallback() {
         this.setAttributeDefaultValues();
-        debugger;
+
         if(this.diagram){
-            debugger;
+
             this.produceDiagram();
             return;
         }

@@ -14,73 +14,7 @@
 
 
 
-<div>
-
-
-
- <aa-session diagram><template>
-
-            <aa-screen></aa-screen>
-            <aa-screen></aa-screen>
-
-                <aa-sequence>
-
-                    <aa-screen></aa-screen>
-                    <aa-screen></aa-screen>
-                    <aa-screen></aa-screen>
-                    <aa-screen></aa-screen>
-                
-                </aa-sequence>
-
-                <aa-screen></aa-screen>
-                <aa-screen></aa-screen>
-                <aa-screen></aa-screen>
-                <aa-screen></aa-screen>
-        
-
-
-
-
-            </template></aa-session> 
-
-    </div>
-
-    <div id='svgContainer'>
-
-
-    </div>
-
-    <aa-sequence></aa-sequence>
-
-
-
-
-
-    <aa-choose name="chooseTest" diagram>
-        <aa-when test="participantNumber==null">
-
-            <aa-screen name="idScreen" submit-button-text="Next">
-                <p>
-                    Welcome!
-                    This is the first time you use
-                    this phone to log in.
-                    <aa-label>Please enter your participant number</aa-label>
-                    <aa-text-answer type="number" name="participantNumber" label="participant number">
-                    </aa-text-answer>
-                </p>
-                <p>
-                    <aa-label>Please indicate your gender:</aa-label>
-                    <aa-multiple-choice name="gender">
-                        <aa-choice-item> Male
-                        </aa-choice-item>
-                        <aa-choice-item> Female
-                        </aa-choice-item>
-                    </aa-multiple-choice>
-                </p>
-            </aa-screen>
-        </aa-when>
-    </aa-choose> 
-
+   <aa-screen diagram name="myscreen"></aa-screen>
 
 </body>
 
@@ -88,27 +22,6 @@
 
 <script>
 
-    window.onload = () => {
-
-
-
-
-         var session = document.querySelector("aa-session");
-
-         var svgContainer = document.querySelector("#svgContainer");
-
-
-
-        // // let m = mySVG.model(session);
-
-        // mySVG.render(svgContainer, 500, session);
-
-
-        // console.log(m)
-
-        // mySVG.download()
-
-    }
 
 </script>
 

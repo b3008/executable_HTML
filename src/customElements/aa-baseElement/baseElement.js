@@ -178,7 +178,6 @@ export default class BaseElement extends HTMLElement {
         }
         return result;
     }
-
     toHyphenated(str) {
         let result = '';
         for (let i = 0; i < str.length; i++) {
@@ -194,19 +193,12 @@ export default class BaseElement extends HTMLElement {
     }
 
     setAttributeDefaultValues() {
-
         let p = this.constructor.properties;
         if (p) {
             let keys = Object.keys(p);
             for (let i = 0; i < keys.length; i++) {
-                // console.log(keys[i], p[keys[i]].value)
-
                 let prop = this.toCamelCase(keys[i]);
-
                 if ((typeof this[prop] === 'undefined') || (this[prop] === null) || (this[prop] === '')) {
-                    // this[prop] = p[keys[i]].value ;
-
-
                     if (p[keys[i]].type === Boolean) {
                         if (this.getAttribute(keys[i]) === '') {
                             this.setAttribute(keys[i], true);
@@ -219,7 +211,6 @@ export default class BaseElement extends HTMLElement {
 
                         } else if (this.getAttribute(keys[i]) === null) {
                             this.setAttribute(keys[i], p[keys[i]].value);
-
                         }
                     }
                     else {
@@ -229,7 +220,6 @@ export default class BaseElement extends HTMLElement {
                         if (val === false) this.setAttribute(keys[i], val);
                     }
                 }
-
             }
         }
 
@@ -261,18 +251,15 @@ export default class BaseElement extends HTMLElement {
                 // users should need not be concerned
                 continue;
             }
-
             if ((typeof this.getAttribute(attributes[i]) !== 'undefined') && (this.getAttribute(attributes[i]) !== 'undefined')) {
                 if (this.constructor.properties[attributes[i]].value == this.getAttribute(attributes[i])) {
                     // value is default value, no need to be part of specification
                     continue;
                 }
-
                 result[attributes[i]] = this.getAttribute(attributes[i]);
             }
         }
         return result;
-
     }
 
     toJSON() {
@@ -294,44 +281,33 @@ export default class BaseElement extends HTMLElement {
         }
         else if (node.toJSON) {
             return node.toJSON();
-
-
         }
+        else try {
 
+            let result = {};
 
-        else {
-
-
-            try {
-
-                let result = {};
-
-                let attrs = node.getAttributeNames();
-                let attrObj = {};
-                for (let i = 0; i < attrs.length; i++) {
-                    attrObj[attrs[i]] = node.getAttribute(attrs[i]);
-                }
-                let childNodes = [];
-                for (let i = 0; i < node.childNodes.length; i++) {
-                    let el = BaseElement.nodeToJSON(node.childNodes[i]);
-                    if (el) {
-                        childNodes.push(BaseElement.nodeToJSON(node.childNodes[i]));
-                    }
-                }
-
-                result[node.tagName] = attrObj;
-                result[node.tagName].childNodes = childNodes;
-
-                return result;
-            } catch (e) {
-                console.error(e);
-
+            let attrs = node.getAttributeNames();
+            let attrObj = {};
+            for (let i = 0; i < attrs.length; i++) {
+                attrObj[attrs[i]] = node.getAttribute(attrs[i]);
             }
+            let childNodes = [];
+            for (let i = 0; i < node.childNodes.length; i++) {
+                let el = BaseElement.nodeToJSON(node.childNodes[i]);
+                if (el) {
+                    childNodes.push(BaseElement.nodeToJSON(node.childNodes[i]));
+                }
+            }
+            result[node.tagName] = attrObj;
+            result[node.tagName].childNodes = childNodes;
+
+            return result;
+        } catch (e) {
+            console.error(e);
         }
     }
 
     toYAML() {
-        // return YAML.stringify(this.toJSON(), 4);
         return jsyaml.dump(this.toJSON())
     }
 
@@ -343,7 +319,6 @@ export default class BaseElement extends HTMLElement {
 
 
     produceDiagram() {
-        debugger;
         if (!this.root) {
             this.root = this.attachShadow({ mode: 'open' });
         }
@@ -360,7 +335,7 @@ export default class BaseElement extends HTMLElement {
         button.classList.add('indigo');
         div.appendChild(svg);
         div.appendChild(button);
-        div.appendChild(diagram.renderKey());
+        // div.appendChild(diagram.renderKey());
 
         let filename = '';
         if (this.name) {
