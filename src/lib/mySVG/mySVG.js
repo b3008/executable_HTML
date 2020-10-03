@@ -3,16 +3,7 @@ import SVG from '../svg/svg.js';
 
 
 
-class Row {
-
-
-
-    // let strokeDashArray;
-    // var type;
-    // myNode;
-    // group;
-
-    // _x; _y;
+class Container {
 
 
     x(v) {
@@ -20,7 +11,7 @@ class Row {
             this._x = v;
             this.group.x(v);
         } else {
-            return this._x;
+            return this.group.x();
         }
     }
 
@@ -29,29 +20,37 @@ class Row {
             this._y = v;
             this.group.y(v);
         } else {
+            return this.group.y();
+        }
+    }
+
+    dy(v) {
+        if (typeof v !== 'undefined') {
+            this._y += v;
+            this.group.dy(v);
+        } else {
             return this._y;
         }
     }
 
     getItemStartPoints(item) {
-        if(item.getStartPointsFrom){
-            item = item.getStartPointsFrom;
-        }
-        if(item.noStartPoints) return [];
-        if (item instanceof Row) {
+
+        if (item.noStartPoints) return [];
+        if (item.getStartPoints) {
             return item.getStartPoints();
         } else {
+
             return [[item.x(), item.y() + item.height() / 2]];
         }
     }
 
 
     getItemEndPoints(item) {
-        if(item.getEndPointsFrom){
+        if (item.getEndPointsFrom) {
             item = item.getEndPointsFrom;
         }
-        if(item.noEndPoints) return [];
-        if (item instanceof Row) {
+        if (item.noEndPoints) return [];
+        if (item.getEndPoints) {
             return item.getEndPoints();
         } else {
             return [[item.x() + item.width(), item.y() + item.height() / 2]];
@@ -59,7 +58,7 @@ class Row {
     }
 
     getStartPoints() {
-        if(this.noStartPoints) return [];
+        if (this.noStartPoints) return [];
         switch (this.type) {
             case 'serial':
                 if (this.c.length) {
@@ -83,7 +82,7 @@ class Row {
     }
 
     getEndPoints() {
-        if(this.noEndPoints) return [];
+        if (this.noEndPoints) return [];
         switch (this.type) {
             case 'serial':
                 if (this.c.length) {
@@ -107,28 +106,18 @@ class Row {
     }
 
 
-
-
-
-
     width(v) {
-
-
         if (typeof v === 'undefined') {
 
             return this.group.width();
         }
-
-
     }
 
 
     height(v) {
         if (typeof v === 'undefined') {
             return this.group.height();
-
         }
-
     }
 
 
@@ -143,8 +132,7 @@ class Row {
     constructor(type, node) {
         this.gap = 30;
         this.c = [];
-        // this.getEndPointsFrom = this;
-        // this.getStartPointsFrom = this;
+
 
         this.type = type;
         this.myNode = node;
@@ -189,7 +177,7 @@ class Row {
                 this.c.push(item);
                 break;
         }
-        if (item instanceof Row) {
+        if (item instanceof Container) {
             item.group.addTo(this.group)
         } else {
             item.addTo(this.group);
@@ -200,15 +188,13 @@ class Row {
 
 
     makeLines(endPoints, startPoints) {
-        
+
         let lines = SVG().group();
         for (let i = 0; i < endPoints.length; i++) {
             for (let j = 0; j < startPoints.length; j++) {
                 let p1 = endPoints[i];
                 let p2 = startPoints[j];
                 let offset = - 1;
-
-
                 let path = mySVG.bezier(p1[0], p1[1], p2[0], p2[1], offset);
                 if (this.strokeDashArray) path.attr({ 'stroke-dasharray': this.strokeDashArray, });
                 if ((this.type == 'serial') && !(this.strokeDashArray)) path.attr({ 'marker-end': 'url(#arrow)' });
@@ -227,7 +213,7 @@ class Row {
 
         for (let i = 0; i < this.c.length - 1; i++) {
 
-            if (this.c[i] instanceof Row) {
+            if (this.c[i] instanceof Container) {
                 let l = this.c[i].renderLines();
                 l.addTo(lines);
             }
@@ -236,11 +222,11 @@ class Row {
                 let startPoints = this.getItemStartPoints(this.c[i + 1]);
 
                 let l = this.makeLines(endPoints, startPoints);
-                if(l) { l.addTo(lines); }
+                if (l) { l.addTo(lines); }
 
             }
         }
-        if (this.c[this.c.length - 1] instanceof Row) {
+        if (this.c[this.c.length - 1] instanceof Container) {
             let l = this.c[this.c.length - 1].renderLines();
             l.addTo(lines);
         }
@@ -250,24 +236,23 @@ class Row {
 
     }
 
-    applyItemsAfterwards(){
-        console.log("entering applyItems")
-        
+    applyItemsAfterwards() {
+
+
         // if(this.applyItemsAfterwards){
         //     this.applyItemsAfterwards();
         // }
 
-        if(this.group.applyItemsAfterwards){
-            
+        if (this.group.applyItemsAfterwards) {
+
             this.group.applyItemsAfterwards();
-            
+
         }
 
         //check also the children
-        for(let i=0; i<this.c.length; i++){
-            console.log(this.c[i]);
+        for (let i = 0; i < this.c.length; i++) {
 
-            if(this.c[i].applyItemsAfterwards){
+            if (this.c[i].applyItemsAfterwards) {
 
                 this.c[i].applyItemsAfterwards();
             }
@@ -340,14 +325,14 @@ class mySVG {
 
         item.addTo(draw);
 
-        if(item.renderLines){
+        if (item.renderLines) {
             let lines = item.renderLines();
             lines.addTo(item.group);
         }
         item.x(10);
         item.y(10);
 
-        if(item.applyItemsAfterwards){
+        if (item.applyItemsAfterwards) {
             item.applyItemsAfterwards();
         };
 
@@ -420,6 +405,7 @@ class mySVG {
 
         let curve = `M ${p1x},${p1y} C${c1x},${c1y} ${c2x},${c2y} ${p2x},${p2y}`;
 
+
         let path = SVG().path(curve);
         path.attr({ fill: 'none', stroke: 'black', 'stroke-width': 3 });
         return path;
@@ -431,7 +417,7 @@ class mySVG {
 
 
             'AA-SESSION': (node) => {
-                let row = new Row('parallel', node);
+                let row = new Container('parallel', node);
                 for (let i = 0; i < node.originalChildNodes.length; i++) {
 
                     let m = this.model(node.originalChildNodes[i])
@@ -439,7 +425,7 @@ class mySVG {
 
                 }
 
-                row.myNode =node;
+                row.myNode = node;
                 return row;
 
             },
@@ -448,7 +434,7 @@ class mySVG {
             'AA-SEQUENCE': (node) => {
                 // let svgItem = SVG().rect(30,50).attr({fill:'none'});
 
-                let row = new Row('serial', node);
+                let row = new Container('serial', node);
                 for (let i = 0; i < node.childNodes.length; i++) {
 
                     let m = this.model(node.childNodes[i])
@@ -466,9 +452,9 @@ class mySVG {
                 let text;
                 if (node.getAttribute('name')) {
                     let name = node.getAttribute('name');
-                    
-                    if(name.length>14){
-                        name = name.substr(0,11) + "...";
+
+                    if (name.length > 14) {
+                        name = name.substr(0, 11) + "...";
 
                     }
                     text = SVG().text(function (add) {
@@ -486,36 +472,33 @@ class mySVG {
                     rect.x(g.x() + g.width() / 2 - rect.width() / 2);
                     rect.y(g.height() / 2 - rect.height() / 2) + 10;
                     text.y(rect.y() + rect.height() + 5);
-                    
-                    
+
+
 
                 }
                 g.myNode = node;
                 g.nocentering = true;
-                g.getEndPoints = ()=>{
-                    return [rect.x() + rect.width(), rect.y() + rect.height()/2]
-                } 
-                g.getStartPoints = ()=>{
-                    return [rect.x(), rect.y() + rect.height()/2]
-                } 
+                g.getEndPoints = () => {
+                    return [[rect.x() + rect.width(), rect.y() + rect.height() / 2]]
+                }
+                g.getStartPoints = () => {
+                    return [[rect.x(), rect.y() + rect.height() / 2]]
+                }
 
-                if(text){
-                    g.applyItemsAfterwards = ()=>{
-                           text.addTo(g);
-                           text.x(rect.x() + rect.width()/2 - text.bbox().width/2 );
-                           text.y(rect.y() + rect.height()+7);
+                if (text) {
+                    g.applyItemsAfterwards = () => {
+                        text.addTo(g);
+                        text.x(rect.x() + rect.width() / 2 - text.bbox().width / 2);
+                        text.y(rect.y() + rect.height() + 7);
                     }
                 }
 
-
-
-                // debugger;
                 return g;
             },
 
             'AA-CHOOSE': (node) => {
 
-                let chooseRow = new Row('serial', node);
+                let chooseRow = new Container('serial', node);
                 chooseRow.strokeDashArray = '3';
 
                 let chooseSVGItemStart = SVG().circle(20).attr({ fill: 'none', stroke: 'black', 'stroke-width': 5, 'stroke-dasharray': 0 });
@@ -539,38 +522,53 @@ class mySVG {
                 // // debugger;
 
                 let chooseSVGItemEnd = SVG().circle(2).attr({ fill: 'black', stroke: 'black', 'stroke-width': 5 });
-                let contentsRow = new Row('parallel', node);
+                let contentsRow = new Container('parallel', node);
 
 
 
                 // let hasOtherwiseNode = false;
                 let maxContentWidth = 0;
+                let hasOtherwiseNode = false;
+                let lastChild;
                 for (let i = 0; i < node.childNodes.length; i++) {
-                    // if (node.childNodes.nodeName === "AA-OTHERWISE") {
-                    //     let hasOtherwiseNode = true;
-                    // }
+                    console.log(node.childNodes[i].nodeName);
+                    if (node.childNodes[i].nodeName === "AA-OTHERWISE") {
+                        hasOtherwiseNode = true;
+                    }
+
                     let m = this.model(node.childNodes[i]);
                     if (m) {
                         contentsRow.push(m);
                         maxContentWidth = Math.max(m.width(), maxContentWidth);
+                        lastChild = m
                     }
                 }
+
+                console.log(maxContentWidth);
+                if (!hasOtherwiseNode) {
+
+                    let defaultPath = new Container('serial');
+                    let line = SVG().line();
+                    
+                    // line.addTo(defaultPath);
+                    defaultPath.push(line);
+                    line.plot(10, 100, maxContentWidth, 100);
+                    line.attr({ fill: 'black', stroke: 'black', 'stroke-dasharray': 3, 'stroke-width':3 });
+                    contentsRow.push(defaultPath);
+                    
+                    
+                }
+
+
                 //center along y axis
                 for (let i = 0; i < contentsRow.c.length; i++) {
                     let c = contentsRow.c[i];
-                    c.x(maxContentWidth/2-c.width()/2);
+                    c.x(maxContentWidth / 2 - c.width() / 2);
                 }
-
-
-
-
 
                 chooseRow.push(chooseSVGItemStart);
                 chooseRow.push(contentsRow);
                 chooseRow.push(chooseSVGItemEnd);
-
-                // let w = contentsRow.width();
-
 
                 chooseRow.myNode = node;
                 return chooseRow;
@@ -578,7 +576,7 @@ class mySVG {
             },
 
             'AA-FUNCTION-RANDOM': (node) => {
-                let item = new Row('serial', node);
+                let item = new Container('serial', node);
 
                 let g = SVG().group();
 
@@ -599,7 +597,7 @@ class mySVG {
                 });
                 text.addTo(g);
                 let varName = SVG().text(function (add) {
-                     add.tspan(node.getAttribute("name")).font({
+                    add.tspan(node.getAttribute("name")).font({
                         family: 'monospace',
                         // style: 'italic',
                         size: '12px',
@@ -628,7 +626,7 @@ class mySVG {
                 // pEnd.y(item.height() / 2 - pStart.height() / 2)
 
 
-                item.myNode= node;
+                item.myNode = node;
                 return item;
                 // return {
                 //     node: item,
@@ -643,61 +641,128 @@ class mySVG {
             },
 
 
-            'AA-WHEN': (node) => {
-                let row = new Row('serial', node);
+            // 'AA-WHEN': (node) => {
+            //     let row = new Container('serial', node);
 
-                let group = SVG().group();
-                let rect = SVG().rect(1, 1).attr({stroke:"none", fill:"red"});
-                
-                rect.addTo(group);
-                let text = SVG().text(function (add) {
-                    let w = add.tspan('when').font({
+            //     let group = SVG().group();
+            //     let rect = SVG().rect(1, 1).attr({stroke:"none", fill:"red"});
+
+            //     rect.addTo(group);
+            //     let text = SVG().text(function (add) {
+            //         let w = add.tspan('when').font({
+            //             family: 'serif',
+            //             style: 'italic',
+            //             size: '50px',
+            //             weight: 'bold'
+            //         });
+            //         let t= add.tspan(node.getAttribute("test")).font({
+            //             family: 'monospace',
+            //             // style: 'italic',
+            //             size: '12px',
+            //             weight: 'bold'
+            //         });
+            //         t.dy(20);
+            //         t.dx(-110);
+            //     })
+            //     text.addTo(group);
+
+            //     // group.noEndPoints = true;
+            //     row.push(group);
+
+
+            //     let contentsRow = new Container('parallel');
+            //     for (let i = 0; i < node.childNodes.length; i++) {
+
+            //         let m = this.model(node.childNodes[i])
+            //         if (m) contentsRow.push(m)
+
+            //     }
+
+            //     row.push(contentsRow);
+            //     // contentsRow.x(row.width());
+            //     row.strokeDashArray = '3';
+
+            //     row.myNode = node;
+            //     return row;
+
+            // },
+
+            'AA-WHEN': (node) => {
+                let container = SVG().group();
+
+                let contentsRow = new Container('parallel');
+                for (let i = 0; i < node.childNodes.length; i++) {
+                    let m = this.model(node.childNodes[i])
+                    if (m) contentsRow.push(m)
+                }
+
+                let when = SVG().text(function (add) {
+                    add.tspan('when').font({
                         family: 'serif',
                         style: 'italic',
-                        size: '50px',
+                        size: '30px',
                         weight: 'bold'
                     });
-                    let t= add.tspan(node.getAttribute("test")).font({
+                });
+
+                let condition = SVG().text(function (add) {
+                    add.tspan(node.getAttribute("test")).font({
                         family: 'monospace',
                         // style: 'italic',
                         size: '12px',
                         weight: 'bold'
                     });
-                    t.dy(20);
-                    t.dx(-110);
+
                 })
-                text.addTo(group);
-                
-                // group.noEndPoints = true;
-                row.push(group);
 
 
-                let contentsRow = new Row('parallel');
-                for (let i = 0; i < node.childNodes.length; i++) {
 
-                    let m = this.model(node.childNodes[i])
-                    if (m) contentsRow.push(m)
 
+
+                contentsRow.addTo(container);
+                when.addTo(container);
+                condition.addTo(container);
+                // when.y(contentsRow.y() + contentsRow.height());
+                condition.y(when.y() + when.bbox().height);
+                contentsRow.x(when.x() + when.bbox().width + 20);
+                contentsRow.y(when.y() + when.bbox().height / 1.5 - contentsRow.height());
+
+                container.strokeDashArray = '3';
+
+                container.myNode = node;
+
+                container.getEndPoints = () => {
+
+                    let result = [[contentsRow.x() + contentsRow.width(), contentsRow.y() + contentsRow.height() / 2]];
+                    // if(container.renderDefaultPath){
+                    //     debugger;
+                    //     result.push([container.x()  + container.width()/2, contentsRow.y() + contentsRow.height()*2.5])
+                    // }
+                    return result;
                 }
+                container.getStartPoints = () => {
 
-                row.push(contentsRow);
-                // contentsRow.x(row.width());
-                row.strokeDashArray = '3';
-                
-                row.myNode = node;
-                return row;
+                    // console.log("returning",  [text.bbox().x + text.bbox().width, text.bbox().y + text.bbox().height/2]);
+                    let result = [[when.bbox().x, when.bbox().y + when.bbox().height / 2]];
+                    // if(container.renderDefaultPath){
+                    //     result.push([container.x()  + container.width()/2, contentsRow.y() + contentsRow.height()*2.5])
+                    // }
+
+                    return result;
+                }
+                return container;
 
             },
 
             'AA-OTHERWISE': (node) => {
-                let row = new Row('serial', node);
+                let row = new Container('serial', node);
 
                 let group = SVG().group();
-                let rect = SVG().rect(1, 1).attr({stroke:"none", fill:"red"});
-                
+                let rect = SVG().rect(1, 1).attr({ stroke: "none", fill: "red" });
+
                 rect.addTo(group);
                 let text = SVG().text(function (add) {
-                    let w = add.tspan('otherwise').font({
+                    let w = add.tspan('otrwz').font({
                         family: 'serif',
                         style: 'italic',
                         size: '30px',
@@ -713,12 +778,12 @@ class mySVG {
                     // t.dx(-110);
                 })
                 text.addTo(group);
-                
+
                 // group.noEndPoints = true;
                 row.push(group);
 
 
-                let contentsRow = new Row('parallel');
+                let contentsRow = new Container('parallel');
                 for (let i = 0; i < node.childNodes.length; i++) {
 
                     let m = this.model(node.childNodes[i])
@@ -736,7 +801,7 @@ class mySVG {
             'DIV': (node) => {
                 // let svgItem = SVG().rect(30,50).attr({fill:'none'});
 
-                let row = new Row('parallel', node);
+                let row = new Container('parallel', node);
                 for (let i = 0; i < node.childNodes.length; i++) {
 
                     let m = this.model(node.childNodes[i])
@@ -748,46 +813,50 @@ class mySVG {
 
             },
 
+
+
+
         }
     }
 
-    get examples() {
-        return {
 
-            'AA-SEQUENCE': {
+            get examples() {
+                return {
 
-                html: '<aa-sequence><aa-screen name="first screen"></aa-screen><aa-screen name="second screen"></aa-screen></aa-sequence>',
-                comment: "sequence",
+                    'AA-SEQUENCE': {
 
-            },
+                        html: '<aa-sequence><aa-screen name="first screen"></aa-screen><aa-screen name="second screen"></aa-screen></aa-sequence>',
+                        comment: "sequence",
+
+                    },
 
 
-            'AA-SCREEN': {
+                    'AA-SCREEN': {
 
-                html: '<aa-screen name="<name>"></aa-screen>',
-                comment: "screen",
+                        html: '<aa-screen name="<name>"></aa-screen>',
+                        comment: "screen",
 
-            },
+                    },
 
-            'AA-FUNCTION-RANDOM': {
+                    'AA-FUNCTION-RANDOM': {
 
-                html: '<aa-function-random></aa-function-random>',
-                comment: "random number generator",
+                        html: '<aa-function-random></aa-function-random>',
+                        comment: "random number generator",
 
-            },
+                    },
 
-            'AA-CHOOSE': {
+                    'AA-CHOOSE': {
 
-                html: '<aa-choose><aa-when><aa-screen></aa-screen></aa-when></aa-choose>',
-                comment: "random number generator",
+                        html: '<aa-choose><aa-when><aa-screen></aa-screen></aa-when></aa-choose>',
+                        comment: "random number generator",
 
+                    }
+                }
             }
+
+
         }
-    }
-
-
-}
 
 
 
-export { mySVG }
+        export { mySVG }
