@@ -1,0 +1,73 @@
+<html>
+
+<head>
+    <script type="module" src="../../src/index.js"></script>
+
+
+
+</head>
+
+
+<body>
+
+
+
+    test
+    <div style="width:50%; margin:0 auto">
+        <aa-session>
+
+            <template>
+                <aa-sequence id="s">
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                </aa-sequence>
+
+             
+
+
+            </template>
+        </aa-session>
+    </div>
+
+    <button id="b">next</button>
+
+
+
+
+    <div style="width:50%; margin:0 auto">
+        <aa-session>
+
+            <template>
+                <aa-sequence>
+                  <aa-screen>1</aa-screen>
+                  <aa-screen>2</aa-screen>
+                  <aa-screen>3</aa-screen>
+                </aa-sequence>
+
+             
+
+
+            </template>
+        </aa-session>
+    </div>
+
+    <script>
+
+
+       
+        let b = document.getElementById("b");
+
+        b.addEventListener("click", () => {
+            let s = document.getElementById("s");
+            s.next();
+        })
+
+    </script>
+
+
+</body>
+
+
+
+</html>

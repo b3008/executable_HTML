@@ -13,7 +13,8 @@ export default class AAJump extends BaseElement {
             "goto":{
                 type:String,
                 userDefined:true
-            }
+            },
+
         }
     }
 

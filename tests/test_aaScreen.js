@@ -45,16 +45,18 @@ describe('aa-screen', () => {
             </div>`
 
             let screen1 = document.querySelector('#screen1');
+            let submitButton = screen1.root.querySelector(".submitButton");
+
             assert(screen1.name === 'first', 'screen1 shold have a name attribute');
-            assert(screen1.submitButton, 'submit button member does not exist');
-            assert(screen1.submitButton.click, 'submitButton.click method does not exist')
+            assert(submitButton, 'submit button member does not exist');
+            assert(submitButton.click, 'submitButton.click method does not exist')
 
             document.querySelector('#screenContainer').addEventListener('valueSubmit', (e) => {
                 assert(e.detail.value, 'should receive value after click')
                 
                 done();
             })
-            screen1.submitButton.click();
+            submitButton.click();
 
         });
 
@@ -68,9 +70,10 @@ describe('aa-screen', () => {
             </div>`
 
             let screen1 = document.querySelector('#screen1');
+            let submitButton = screen1.root.querySelector(".submitButton");
             assert(screen1.name === 'first', 'screen1 shold have a name attribute');
-            assert(screen1.submitButton, 'submit button member does not exist');
-            assert(screen1.submitButton.click, 'submitButton.click method does not exist')
+            assert(submitButton, 'submit button member does not exist');
+            assert(submitButton.click, 'submitButton.click method does not exist')
 
 
 
@@ -80,7 +83,7 @@ describe('aa-screen', () => {
                 
                 done();
             })
-            screen1.submitButton.click();
+            submitButton.click();
 
 
         });
@@ -95,14 +98,15 @@ describe('aa-screen', () => {
             </div>`
 
             let screen1 = document.querySelector('#screen1');
+            let submitButton = screen1.root.querySelector(".submitButton");
             assert(screen1.name === 'first', 'screen1 shold have a name attribute');
-            assert(screen1.submitButton, 'submit button member does not exist');
-            assert(screen1.submitButton.click, 'submitButton.click method does not exist')
+            assert(submitButton, 'submit button member does not exist');
+            assert(submitButton.click, 'submitButton.click method does not exist')
             if (customElements.get('paper-button')) {
                 
-                assert(screen1.submitButton.tagName == 'PAPER-BUTTON', 'submit button should be paper-button');
+                assert(submitButton.tagName == 'PAPER-BUTTON', 'submit button should be paper-button');
             } else {
-                assert(screen1.submitButton.tagName == 'BUTTON', 'submit button should be paper-button');
+                assert(submitButton.tagName == 'BUTTON', 'submit button should be paper-button');
             }
             done()
 
@@ -128,9 +132,10 @@ describe('aa-screen', () => {
             </div>`
 
             let screen1 = document.querySelector('#screen1');
+            let submitButton = screen1.root.querySelector(".submitButton");
             assert(screen1.name === 'first', 'screen1 shold have a name attribute');
-            assert(screen1.submitButton, 'submit button member does not exist');
-            assert(screen1.submitButton.click, 'submitButton.click method does not exist');
+            assert(submitButton, 'submit button member does not exist');
+            assert(submitButton.click, 'submitButton.click method does not exist');
 
             let valWithKey = screen1.getValueWithKey();
            
@@ -142,7 +147,7 @@ describe('aa-screen', () => {
                 // console.log(e.detail)
                 done();
             })
-            screen1.submitButton.click();
+            submitButton.click();
 
         });
 

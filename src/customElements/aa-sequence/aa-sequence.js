@@ -150,12 +150,14 @@ export default class AASequence extends BaseElement {
             let fragmentChildCopy = BaseElement.copy(fragmentChild);
             this.currentNode = fragmentChildCopy;
             this.sIndex += 1;
-            if (!fragmentChildCopy._dispatchEndEvent) {
-                resolve(this.next());
-            } else {
+            // if (!fragmentChildCopy._dispatchEndEvent) {
+            //     this.target.appendChild(fragmentChildCopy);
+            //     // resolve(this.next());
+            //     resolve();
+            // } else {
                 this.target.appendChild(fragmentChildCopy);
                 setTimeout(() => resolve());
-            }
+            // }
         })
     }
 
