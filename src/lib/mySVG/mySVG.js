@@ -1,5 +1,5 @@
 import SVG from '../svg/svg.js';
-
+import jsep from '../../lib/jsep/jsep.js';
 
 
 
@@ -571,6 +571,18 @@ class mySVG {
                 chooseRow.push(chooseSVGItemEnd);
 
                 chooseRow.myNode = node;
+
+
+                chooseRow.applyItemsAfterwards = ()=>{
+                    for (let i = 0; i < contentsRow.c.length; i++) {
+                        console.log(contentsRow.c[i]);
+                        if(contentsRow.c[i].applyItemsAfterwards){
+                            
+                            contentsRow.c[i].applyItemsAfterwards();
+                        }
+                        
+                    }
+                }
                 return chooseRow;
 
             },
@@ -706,7 +718,17 @@ class mySVG {
                 });
 
                 let condition = SVG().text(function (add) {
-                    add.tspan(node.getAttribute("test")).font({
+                    let textToRender = node.getAttribute("test");
+                    if(textToRender){
+                        let j = jsep(textToRender);
+
+                        if(j.left) if(j.left.name) if(j.left.name.length>7){
+                            let newName = j.left.name.substr(0,5)+"...";
+                            debugger;
+                            textToRender = textToRender.replace(j.left.name, newName);
+                        }
+                    }
+                    add.tspan(textToRender).font({
                         family: 'monospace',
                         // style: 'italic',
                         size: '12px',
@@ -724,8 +746,8 @@ class mySVG {
                 condition.addTo(container);
                 // when.y(contentsRow.y() + contentsRow.height());
                 condition.y(when.y() + when.bbox().height);
-                contentsRow.x(when.x() + when.bbox().width + 20);
-                contentsRow.y(when.y() + when.bbox().height / 1.5 - contentsRow.height());
+                contentsRow.x(when.x() + when.bbox().width + 40);
+                contentsRow.y(when.y() + when.bbox().height / 1.5 - contentsRow.height()/2);
 
                 container.strokeDashArray = '3';
 
@@ -750,52 +772,162 @@ class mySVG {
 
                     return result;
                 }
+
+                container.applyItemsAfterwards = ()=>{
+                    for (let i = 0; i < contentsRow.c.length; i++) {
+                        console.log(contentsRow.c[i]);
+                        if(contentsRow.c[i].applyItemsAfterwards){
+                            
+                            contentsRow.c[i].applyItemsAfterwards();
+                        }
+                        
+                    }
+                }
                 return container;
 
             },
 
+            // 'AA-OTHERWISE': (node) => {
+            //     let row = new Container('serial', node);
+
+            //     let group = SVG().group();
+            //     let rect = SVG().rect(1, 1).attr({ stroke: "none", fill: "red" });
+
+            //     rect.addTo(group);
+            //     let text = SVG().text(function (add) {
+            //         let w = add.tspan('otrwz').font({
+            //             family: 'serif',
+            //             style: 'italic',
+            //             size: '30px',
+            //             weight: 'bold'
+            //         });
+            //         // let t= add.tspan(node.getAttribute("test")).font({
+            //         //     family: 'monospace',
+            //         //     // style: 'italic',
+            //         //     size: '12px',
+            //         //     weight: 'bold'
+            //         // });
+            //         // t.dy(20);
+            //         // t.dx(-110);
+            //     })
+            //     text.addTo(group);
+
+            //     // group.noEndPoints = true;
+            //     row.push(group);
+
+
+            //     let contentsRow = new Container('parallel');
+            //     for (let i = 0; i < node.childNodes.length; i++) {
+
+            //         let m = this.model(node.childNodes[i])
+            //         if (m) contentsRow.push(m)
+
+            //     }
+
+            //     row.push(contentsRow);
+            //     // contentsRow.x(row.width());
+            //     // row.strokeDashArray = '3';
+            //     row.myNode = node;
+
+            //     row.applyItemsAfterwards = ()=>{
+            //         for (let i = 0; i < contentsRow.c.length; i++) {
+            //             console.log(contentsRow.c[i]);
+            //             if(contentsRow.c[i].applyItemsAfterwards){
+                            
+            //                 contentsRow.c[i].applyItemsAfterwards();
+            //             }
+                        
+            //         }
+            //     }
+            //     return row;
+            // },
+
             'AA-OTHERWISE': (node) => {
-                let row = new Container('serial', node);
+                let container = SVG().group();
 
-                let group = SVG().group();
-                let rect = SVG().rect(1, 1).attr({ stroke: "none", fill: "red" });
+                let contentsRow = new Container('parallel');
+                for (let i = 0; i < node.childNodes.length; i++) {
+                    let m = this.model(node.childNodes[i])
+                    if (m) contentsRow.push(m)
+                }
 
-                rect.addTo(group);
-                let text = SVG().text(function (add) {
-                    let w = add.tspan('otrwz').font({
+                let otherwise = SVG().text(function (add) {
+                    add.tspan('otherwise').font({
                         family: 'serif',
                         style: 'italic',
                         size: '30px',
                         weight: 'bold'
                     });
-                    // let t= add.tspan(node.getAttribute("test")).font({
-                    //     family: 'monospace',
-                    //     // style: 'italic',
-                    //     size: '12px',
-                    //     weight: 'bold'
-                    // });
-                    // t.dy(20);
-                    // t.dx(-110);
-                })
-                text.addTo(group);
+                });
 
-                // group.noEndPoints = true;
-                row.push(group);
+                // let condition = SVG().text(function (add) {
+                //     let textToRender = node.getAttribute("test");
+                //     if(textToRender){
+                //         let j = jsep(textToRender);
+
+                //         if(j.left) if(j.left.name) if(j.left.name.length>7){
+                //             let newName = j.left.name.substr(0,5)+"...";
+                //             debugger;
+                //             textToRender = textToRender.replace(j.left.name, newName);
+                //         }
+                //     }
+                //     add.tspan(textToRender).font({
+                //         family: 'monospace',
+                //         // style: 'italic',
+                //         size: '12px',
+                //         weight: 'bold'
+                //     });
+
+                // })
 
 
-                let contentsRow = new Container('parallel');
-                for (let i = 0; i < node.childNodes.length; i++) {
 
-                    let m = this.model(node.childNodes[i])
-                    if (m) contentsRow.push(m)
 
+
+                contentsRow.addTo(container);
+                otherwise.addTo(container);
+                // condition.addTo(container);
+                // when.y(contentsRow.y() + contentsRow.height());
+                // condition.y(when.y() + when.bbox().height);
+                contentsRow.x(otherwise.x() + otherwise.bbox().width + 10);
+                contentsRow.y(otherwise.y() + otherwise.bbox().height / 1.5 - contentsRow.height()/2);
+
+                container.strokeDashArray = '3';
+
+                container.myNode = node;
+
+                container.getEndPoints = () => {
+
+                    let result = [[contentsRow.x() + contentsRow.width(), contentsRow.y() + contentsRow.height() / 2]];
+                    // if(container.renderDefaultPath){
+                    //     debugger;
+                    //     result.push([container.x()  + container.width()/2, contentsRow.y() + contentsRow.height()*2.5])
+                    // }
+                    return result;
+                }
+                container.getStartPoints = () => {
+
+                    // console.log("returning",  [text.bbox().x + text.bbox().width, text.bbox().y + text.bbox().height/2]);
+                    let result = [[otherwise.bbox().x, otherwise.bbox().y + otherwise.bbox().height / 2]];
+                    // if(container.renderDefaultPath){
+                    //     result.push([container.x()  + container.width()/2, contentsRow.y() + contentsRow.height()*2.5])
+                    // }
+
+                    return result;
                 }
 
-                row.push(contentsRow);
-                // contentsRow.x(row.width());
-                row.strokeDashArray = '3';
-                row.myNode = node;
-                return row;
+                container.applyItemsAfterwards = ()=>{
+                    for (let i = 0; i < contentsRow.c.length; i++) {
+                        console.log(contentsRow.c[i]);
+                        if(contentsRow.c[i].applyItemsAfterwards){
+                            
+                            contentsRow.c[i].applyItemsAfterwards();
+                        }
+                        
+                    }
+                }
+                return container;
+
             },
 
             'DIV': (node) => {
