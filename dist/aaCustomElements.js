@@ -744,6 +744,15 @@ class BaseElement extends HTMLElement {
         this.setAttributeDefaultValues();
     }
 
+    getMemory() {
+        let el = this;
+        while (el.parentNode != null) {
+            if (el._mem) return el._mem;
+            el = el.parentNode;
+        }
+        return null;
+    }
+
     /**
      * Properties are the member variables of the HTMLElement object.
      * Attributes are the html tag's attributes.
@@ -987,6 +996,69 @@ class BaseElement extends HTMLElement {
     }
 
 
+
+
+
+    static getDomPathAsName(el) {
+        var stack = [];
+       
+        while ((el.nodeName !== "AA-SESSION") && (el.parentNode != null)) {
+
+            var sibCount = 0;
+            var sibIndex = 0;
+            for (var i = 0; i < el.parentNode.childNodes.length; i++) {
+                var sib = el.parentNode.childNodes[i];
+                if (sib.nodeName == el.nodeName) {
+                    if (sib === el) {
+                        sibIndex = sibCount;
+                    }
+                    sibCount++;
+                }
+            }
+            if (!BaseElement.isAAElement(el)) {
+                el = el.parentNode;
+                continue;
+
+            }
+            if (el.hasAttribute('name') && el.name != '') {
+                stack.unshift(el.name);
+            } else if (el.hasAttribute('id') && el.id != '') {
+                stack.unshift(el.nodeName.toLowerCase() + '#' + el.id);
+            } else if (sibCount > 1) {
+                stack.unshift(el.nodeName.toLowerCase() + ':eq(' + sibIndex + ')');
+            } else {
+                stack.unshift(el.nodeName.toLowerCase());
+            }
+            el = el.parentNode;
+        }
+        if (el.nodeName === "AA-SESSION") {
+            if (el.hasAttribute('name') && el.name != '') {
+                stack.unshift(el.name);
+            } else if (el.hasAttribute('id') && el.id != '') {
+                stack.unshift(el.nodeName.toLowerCase() + '#' + el.id);
+            } else if (sibCount > 1) {
+                stack.unshift(el.nodeName.toLowerCase() + ':eq(' + sibIndex + ')');
+            } else {
+                stack.unshift(el.nodeName.toLowerCase());
+            }
+        }
+        let name = "";
+        for (let i = 0; i < stack.length - 1; i++) {
+            name += stack[i] + ".";
+        }
+        name += stack[stack.length - 1];
+
+        // console.log(stack, name)
+        return name; // removes the html element
+    }
+
+    static getVariableName(el) {
+        if (el.name) {
+            return el.name;
+        } else {
+            return BaseElement.getDomPathAsName(el);
+        }
+    }
 
 
     _dispatchDebugEvent(detail) {
@@ -1423,7 +1495,7 @@ class AAChoose extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     }
 
     evaluateTestExpression(test) {
-
+        console.log(test);
         let expr = this.replaceExpressionIdentifiersWithValues(test);
         // after replacing known variable names with their values in the string, test to see if the expression can be parsed
         try {
@@ -1444,13 +1516,15 @@ class AAChoose extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     }
 
     replaceExpressionIdentifiersWithValues(expression, sessionElement) {
-        let session = sessionElement || this._getParentSession();
+        let memory = this.getMemory();
         let result = expression.toUpperCase();
 
-        let originalIdentifiers = Object.keys(session.getDataDump());
+        let originalIdentifiers = Object.keys(memory.getDataDump());
+        debugger;
         let upperCaseIdentifiers = originalIdentifiers.map(s => s.toUpperCase());
+        debugger;
         for (let i in originalIdentifiers) {
-            let value = session.getData(originalIdentifiers[i]);
+            let value = memory.getData(originalIdentifiers[i]);
             let finalValue = parseInt(value);
             if (finalValue != value) {
                 if (value === 'null') { finalValue = 'null'; }
@@ -1633,17 +1707,20 @@ class AAFunctionRandom extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
 
     connectedCallback() {
 
-        let session = this._getParentSession();
-        this.value = this.getValue();
-        session.setData(this.name, this.value);
+        let memory = this.getMemory();
+        if(memory) memory.setData(this.name, this.value);
         this._dispatchEndEvent({ autoDispatch: true });
         if (!this.debug) { this.remove(); }
     }
 
-    getValue() {
+  
+    get value() {
         var parsedMin = parseFloat(this.min);
         var parsedMax = parseFloat(this.max);
-        return this.getRandomInt(parsedMin, parsedMax);
+        let val = this.getRandomInt(parsedMin, parsedMax);
+        let memory = this.getMemory();
+        if(memory) memory.setData(_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].getVariableName(this), val);
+        return  val;
     }
 
     getRandomInt(min, max) {
@@ -1919,12 +1996,19 @@ class AAMemory extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         
     }
 
+    
+    
     setData(name,value){
-        this.dataset[name] = value;
+        // this.dataset[name] = value;
+        localStorage[name] = value;
     }
 
     getData(name){
-        return this.dataset[this.toHyphenated(name)];
+        return localStorage[name];
+    }
+
+    getDataDump(){
+        return localStorage;
     }
 }
 
@@ -2178,7 +2262,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
                 value: true
             }
 
-           
+
 
         }
     }
@@ -2215,7 +2299,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
     connectedCallback() {
         super.connectedCallback();
-        if(this.diagram){
+        if (this.diagram) {
             this.produceDiagram();
             return;
         }
@@ -2294,16 +2378,16 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
                     <div style='display:flex; align-items:center'>
                         <div>please fill out the required fields</div>
                         <div id='attention' style='color: red; font-size: 20px;  border: solid thin; border-radius: 50%; width: 20px;
-                                                                    margin-left:20px; height: 20px; 
-                                                                    text-align: center;
-                                                                    padding: 5px;'>!</div>
+                                                                                        margin-left:20px; height: 20px; 
+                                                                                        text-align: center;
+                                                                                        padding: 5px;'>!</div>
                     </div>`;
             return;
         }
 
-        let valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: this.getValue() } });
+        let valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: this.value } });
         this.dispatchEvent(valueSubmitEvent);
-        this._dispatchEndEvent(this.getValue());
+        this._dispatchEndEvent(this.value);
         if (typeof e.detail.callback != 'undefined') {
             e.detail.callback(e);
         }
@@ -2324,7 +2408,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         let isMissingValues = false;
         for (let i = 0; i < aaChildren.length; i++) {
             if (aaChildren[i].mandatory) {
-                if (child.getValue() === null) {
+                if (child.value === null) {
                     // console.log(child, 'demands response');
                     // TODO : add a class to the child
                     isMissingValues = true;
@@ -2347,14 +2431,25 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
     getChildrenValues(node, result) {
         node = node || this;
-        result = result || [];
+        result = result || {};
         for (let i = 0; i < node.children.length; i++) {
             let c = node.children[i];
-            if (c.getValue) {
-                result.push(c.getValue());
-            } else if (c.value) {
-                result.push({ [c.name]: c.value });
-            } else {
+
+            if (c.nodeName != 'AA-LABEL') {
+
+                let name = _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].getVariableName(c);
+                console.log(c, name);
+                if (c.getValue) {
+                    result[name] = c.getValue();
+                } else if (c.value) {
+                    result[name] = c.value;
+                } else {
+                    result[name] = null;
+                }
+            }
+            else {
+
+
                 this.getChildrenValues(c, result);
             }
         }
@@ -2365,18 +2460,21 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
 
 
-    getValue() {
+    get value() {
         let __meta = {
             attachedTimestamp: this._attachedTimestamp,
             submitTimestamp: new Date().getTime()
         };
         let result = this.getChildrenValues(this);
+        result['__meta'] = __meta;
         return result;
     }
 
-    getValueWithKey() {
+    get valueWithKey() {
         let result = {};
-        result[this.name] = this.getValue();
+
+        result[this.name] = this.value;
+
         return result;
     }
 
@@ -2841,7 +2939,7 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
         this._mem = document.createElement('aa-memory');
         this.addEventListener('valueSubmit', (e) => {
 
-
+            debugger;
             // e.stopPropagation();
             let input = {
                 data: e.detail.value,
@@ -2851,7 +2949,8 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
                 variables: Object.keys(e.detail.value),
             };
             // TODO:  this._mem.saveReplyValue(e.detail.value, false);
-
+            
+        
 
             let inputSubmitEvent = new CustomEvent('inputSubmit', { bubbles: true, detail: { input } });
             this.dispatchEvent(inputSubmitEvent);
@@ -2894,6 +2993,10 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
         if ((this.shouldRun === null) || (this.shouldRun === true)) {
             this.run();
         }
+
+        setTimeout( ()=>{
+            this.dispatchEvent(new CustomEvent("sessionReady", {bubbles:true}));
+        },0);
     }
 
 
@@ -2924,6 +3027,7 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
     getData(name) {
         return this._mem.getData(name);
     }
+    
     setData(name, value) {
 
         return this._mem.setData(name, value);
@@ -3275,6 +3379,9 @@ class AATextAnswer extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
             this.inputItem.value = val;
         }
 
+        let memory = this.getMemory();
+        if(memory) memory.setData(_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].getVariableName(this), val);
+
     }
 
     get label() {
@@ -3382,6 +3489,8 @@ class AATextAnswer extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
 }
 
 _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerAAElement('aa-text-answer', AATextAnswer);
+
+
 
 /***/ }),
 

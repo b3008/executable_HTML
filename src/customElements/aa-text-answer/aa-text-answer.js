@@ -82,6 +82,9 @@ export default class AATextAnswer extends BaseElement {
             this.inputItem.value = val;
         }
 
+        let memory = this.getMemory();
+        if(memory) memory.setData(BaseElement.getVariableName(this), val);
+
     }
 
     get label() {
@@ -189,3 +192,4 @@ export default class AATextAnswer extends BaseElement {
 }
 
 BaseElement.registerAAElement('aa-text-answer', AATextAnswer);
+

@@ -107,6 +107,15 @@ export default class BaseElement extends HTMLElement {
         this.setAttributeDefaultValues();
     }
 
+    getMemory() {
+        let el = this;
+        while (el.parentNode != null) {
+            if (el._mem) return el._mem;
+            el = el.parentNode;
+        }
+        return null;
+    }
+
     /**
      * Properties are the member variables of the HTMLElement object.
      * Attributes are the html tag's attributes.
@@ -350,6 +359,69 @@ export default class BaseElement extends HTMLElement {
     }
 
 
+
+
+
+    static getDomPathAsName(el) {
+        var stack = [];
+       
+        while ((el.nodeName !== "AA-SESSION") && (el.parentNode != null)) {
+
+            var sibCount = 0;
+            var sibIndex = 0;
+            for (var i = 0; i < el.parentNode.childNodes.length; i++) {
+                var sib = el.parentNode.childNodes[i];
+                if (sib.nodeName == el.nodeName) {
+                    if (sib === el) {
+                        sibIndex = sibCount;
+                    }
+                    sibCount++;
+                }
+            }
+            if (!BaseElement.isAAElement(el)) {
+                el = el.parentNode;
+                continue;
+
+            }
+            if (el.hasAttribute('name') && el.name != '') {
+                stack.unshift(el.name);
+            } else if (el.hasAttribute('id') && el.id != '') {
+                stack.unshift(el.nodeName.toLowerCase() + '#' + el.id);
+            } else if (sibCount > 1) {
+                stack.unshift(el.nodeName.toLowerCase() + ':eq(' + sibIndex + ')');
+            } else {
+                stack.unshift(el.nodeName.toLowerCase());
+            }
+            el = el.parentNode;
+        }
+        if (el.nodeName === "AA-SESSION") {
+            if (el.hasAttribute('name') && el.name != '') {
+                stack.unshift(el.name);
+            } else if (el.hasAttribute('id') && el.id != '') {
+                stack.unshift(el.nodeName.toLowerCase() + '#' + el.id);
+            } else if (sibCount > 1) {
+                stack.unshift(el.nodeName.toLowerCase() + ':eq(' + sibIndex + ')');
+            } else {
+                stack.unshift(el.nodeName.toLowerCase());
+            }
+        }
+        let name = "";
+        for (let i = 0; i < stack.length - 1; i++) {
+            name += stack[i] + ".";
+        }
+        name += stack[stack.length - 1];
+
+        // console.log(stack, name)
+        return name; // removes the html element
+    }
+
+    static getVariableName(el) {
+        if (el.name) {
+            return el.name;
+        } else {
+            return BaseElement.getDomPathAsName(el);
+        }
+    }
 
 
     _dispatchDebugEvent(detail) {

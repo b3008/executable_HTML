@@ -62,7 +62,7 @@ export default class AASession extends BaseElement {
         this._mem = document.createElement('aa-memory');
         this.addEventListener('valueSubmit', (e) => {
 
-
+            debugger;
             // e.stopPropagation();
             let input = {
                 data: e.detail.value,
@@ -72,7 +72,8 @@ export default class AASession extends BaseElement {
                 variables: Object.keys(e.detail.value),
             };
             // TODO:  this._mem.saveReplyValue(e.detail.value, false);
-
+            
+        
 
             let inputSubmitEvent = new CustomEvent('inputSubmit', { bubbles: true, detail: { input } });
             this.dispatchEvent(inputSubmitEvent);
@@ -101,6 +102,8 @@ export default class AASession extends BaseElement {
 
     connectedCallback() {
         this.setAttributeDefaultValues()
+
+    
         // console.log(this.tagName+"#"+this.id,"connected");
         if(this.diagram===true){
             this.produceDiagram()
@@ -115,6 +118,10 @@ export default class AASession extends BaseElement {
         if ((this.shouldRun === null) || (this.shouldRun === true)) {
             this.run();
         }
+
+        setTimeout( ()=>{
+            this.dispatchEvent(new CustomEvent("sessionReady", {bubbles:true}));
+        },0);
     }
 
 
@@ -145,13 +152,14 @@ export default class AASession extends BaseElement {
     getData(name) {
         return this._mem.getData(name);
     }
+
     setData(name, value) {
 
         return this._mem.setData(name, value);
     }
 
     getDataDump() {
-        return this._mem.dataset;
+        return this._mem.getDataDump();
     }
 
 

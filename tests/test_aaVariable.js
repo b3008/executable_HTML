@@ -31,11 +31,11 @@ describe('aa-variable', () => {
                 </template>
             </aa-session>`;
 
-            let session = document.querySelector('#session');
+            let memory = document.querySelector('#session')._mem;
             
             
-            assert(session.getDataDump()['var1']==='val1', 'var1 should exist and have value val1');
-            assert(session.getData('var1')==='val1', 'var1 should exist and have value val1');
+            assert(memory.getDataDump()['var1']==='val1', 'var1 should exist and have value val1');
+            assert(memory.getData('var1')==='val1', 'var1 should exist and have value val1');
             
             
             done();            

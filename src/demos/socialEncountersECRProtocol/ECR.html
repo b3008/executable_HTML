@@ -15,7 +15,7 @@
 
 
     <div style="width:50%; margin:0 auto">
-        <aa-session diagram name="ecr"><template>
+        <aa-session  name="ecr"><template>
                 <aa-sequence>
                     <!--
                 first, check to see if 
@@ -29,6 +29,10 @@
       that asks for it-->
                             <aa-screen name="idScreen" submit-button-text="Next">
                                 <p>
+
+                                    <aa-text-answer  id="t1" type="number"  label="participant number">
+                                    </aa-text-answer>
+
                                     Welcome!
                                     This is the first time you use
                                     this phone to log in.
@@ -463,6 +467,19 @@
 
 
 <script>
+
+window.addEventListener("sessionReady", ()=>{
+
+    let t = document.getElementById("t1");
+    // t.getDomPathAsName();
+})
+
+
+
+
+
+
+
 
 
 </script>
