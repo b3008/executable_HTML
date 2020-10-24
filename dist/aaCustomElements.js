@@ -1515,14 +1515,13 @@ class AAChoose extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         }
     }
 
-    replaceExpressionIdentifiersWithValues(expression, sessionElement) {
-        let memory = this.getMemory();
+    replaceExpressionIdentifiersWithValues(expression, memoryElement) {
+
+        let memory = this.getMemory() || memoryElement;
         let result = expression.toUpperCase();
 
         let originalIdentifiers = Object.keys(memory.getDataDump());
-        debugger;
         let upperCaseIdentifiers = originalIdentifiers.map(s => s.toUpperCase());
-        debugger;
         for (let i in originalIdentifiers) {
             let value = memory.getData(originalIdentifiers[i]);
             let finalValue = parseInt(value);
@@ -2979,6 +2978,8 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
 
     connectedCallback() {
         this.setAttributeDefaultValues()
+
+    
         // console.log(this.tagName+"#"+this.id,"connected");
         if(this.diagram===true){
             this.produceDiagram()
@@ -3027,14 +3028,14 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
     getData(name) {
         return this._mem.getData(name);
     }
-    
+
     setData(name, value) {
 
         return this._mem.setData(name, value);
     }
 
     getDataDump() {
-        return this._mem.dataset;
+        return this._mem.getDataDump();
     }
 
 
@@ -3538,8 +3539,8 @@ class AAVariable extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
     }
 
     connectedCallback() {
-        let session = this._getParentSession();
-        session.setData(this.name, this.value);
+        let memory = this.getMemory();
+        if(memory) memory.setData(this.name, this.value);
         this._dispatchEndEvent({autoDispatch:true});
         if(!this.debug) {this.remove();}
     }
