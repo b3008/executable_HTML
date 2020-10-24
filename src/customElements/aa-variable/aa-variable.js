@@ -31,8 +31,8 @@ export default class AAVariable extends BaseElement {
     }
 
     connectedCallback() {
-        let session = this._getParentSession();
-        session.setData(this.name, this.value);
+        let memory = this.getMemory();
+        if(memory) memory.setData(this.name, this.value);
         this._dispatchEndEvent({autoDispatch:true});
         if(!this.debug) {this.remove();}
     }

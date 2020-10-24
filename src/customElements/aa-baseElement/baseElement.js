@@ -1,6 +1,6 @@
 import '../../lib/yaml/js-yaml.js';
-// import * as jsl from '../../lib/jsl/jsl2.1.js';
 import * as html2jsl from '../../lib/html2jsl/html2jsl.js';
+import { mySVG } from '../../lib/mySVG/mySVG.js';
 
 var html = function (txt, ...val) {
 
@@ -17,6 +17,22 @@ if (window) window.html = html;
 
 export default class BaseElement extends HTMLElement {
 
+
+
+    static get properties() {
+        return {
+            name: {
+                type: String,
+                userDefined: true
+            },
+
+            'diagram': {
+                type: Boolean,
+                value: false,
+                userDefined: true
+            },
+        }
+    }
     static registerAAElement(name, elem) {
         if (!customElements.get(name)) {
             window.AANodeNames = window.AANodeNames || [];
@@ -67,6 +83,7 @@ export default class BaseElement extends HTMLElement {
         super();
         // console.log(this.nodeName+"#"+this.id, "created");
         this._props = this.makePropertiesFromAttributes();
+
     }
 
     connectedCallback() {
@@ -88,6 +105,15 @@ export default class BaseElement extends HTMLElement {
         }
 
         this.setAttributeDefaultValues();
+    }
+
+    getMemory() {
+        let el = this;
+        while (el.parentNode != null) {
+            if (el._mem) return el._mem;
+            el = el.parentNode;
+        }
+        return null;
     }
 
     /**
@@ -161,7 +187,6 @@ export default class BaseElement extends HTMLElement {
         }
         return result;
     }
-
     toHyphenated(str) {
         let result = '';
         for (let i = 0; i < str.length; i++) {
@@ -177,25 +202,33 @@ export default class BaseElement extends HTMLElement {
     }
 
     setAttributeDefaultValues() {
-
         let p = this.constructor.properties;
         if (p) {
             let keys = Object.keys(p);
             for (let i = 0; i < keys.length; i++) {
-                // console.log(keys[i], p[keys[i]].value)
-
                 let prop = this.toCamelCase(keys[i]);
-                if ((typeof this[prop] === 'undefined') || (this[prop] === null)) {
-                    // this[prop] = p[keys[i]].value ;
+                if ((typeof this[prop] === 'undefined') || (this[prop] === null) || (this[prop] === '')) {
+                    if (p[keys[i]].type === Boolean) {
+                        if (this.getAttribute(keys[i]) === '') {
+                            this.setAttribute(keys[i], true);
 
-                    let val = this.getAttribute(keys[i]) || (p[keys[i]].value || null);
+                        } else if (this.getAttribute(keys[i]) === 'true') {
+                            this.setAttribute(keys[i], true);
 
+                        } else if (this.getAttribute(keys[i]) === 'false') {
+                            this.setAttribute(keys[i], false);
 
+                        } else if (this.getAttribute(keys[i]) === null) {
+                            this.setAttribute(keys[i], p[keys[i]].value);
+                        }
+                    }
+                    else {
+                        let val = this.getAttribute(keys[i]) || (p[keys[i]].value || null);
 
-                    if (val) this.setAttribute(keys[i], val);
-                    if (val === false) this.setAttribute(keys[i], val);
+                        if (val) this.setAttribute(keys[i], val);
+                        if (val === false) this.setAttribute(keys[i], val);
+                    }
                 }
-
             }
         }
 
@@ -227,18 +260,15 @@ export default class BaseElement extends HTMLElement {
                 // users should need not be concerned
                 continue;
             }
-
             if ((typeof this.getAttribute(attributes[i]) !== 'undefined') && (this.getAttribute(attributes[i]) !== 'undefined')) {
                 if (this.constructor.properties[attributes[i]].value == this.getAttribute(attributes[i])) {
                     // value is default value, no need to be part of specification
                     continue;
                 }
-
                 result[attributes[i]] = this.getAttribute(attributes[i]);
             }
         }
         return result;
-
     }
 
     toJSON() {
@@ -260,44 +290,33 @@ export default class BaseElement extends HTMLElement {
         }
         else if (node.toJSON) {
             return node.toJSON();
-
-
         }
+        else try {
 
+            let result = {};
 
-        else {
-
-
-            try {
-
-                let result = {};
-
-                let attrs = node.getAttributeNames();
-                let attrObj = {};
-                for (let i = 0; i < attrs.length; i++) {
-                    attrObj[attrs[i]] = node.getAttribute(attrs[i]);
-                }
-                let childNodes = [];
-                for (let i = 0; i < node.childNodes.length; i++) {
-                    let el = BaseElement.nodeToJSON(node.childNodes[i]);
-                    if (el) {
-                        childNodes.push(BaseElement.nodeToJSON(node.childNodes[i]));
-                    }
-                }
-
-                result[node.tagName] = attrObj;
-                result[node.tagName].childNodes = childNodes;
-
-                return result;
-            } catch (e) {
-                console.error(e);
-                
+            let attrs = node.getAttributeNames();
+            let attrObj = {};
+            for (let i = 0; i < attrs.length; i++) {
+                attrObj[attrs[i]] = node.getAttribute(attrs[i]);
             }
+            let childNodes = [];
+            for (let i = 0; i < node.childNodes.length; i++) {
+                let el = BaseElement.nodeToJSON(node.childNodes[i]);
+                if (el) {
+                    childNodes.push(BaseElement.nodeToJSON(node.childNodes[i]));
+                }
+            }
+            result[node.tagName] = attrObj;
+            result[node.tagName].childNodes = childNodes;
+
+            return result;
+        } catch (e) {
+            console.error(e);
         }
     }
 
     toYAML() {
-        // return YAML.stringify(this.toJSON(), 4);
         return jsyaml.dump(this.toJSON())
     }
 
@@ -307,6 +326,102 @@ export default class BaseElement extends HTMLElement {
     }
 
 
+
+    produceDiagram() {
+        if (!this.root) {
+            this.root = this.attachShadow({ mode: 'open' });
+        }
+        this.root.innerHTML = '<div id="svgContainer" ></div>'
+        let div = this.root.childNodes[0];
+        let diagram = new mySVG();
+        let svg = diagram.render(this);
+
+        let button = document.createElement('paper-button');
+        button.innerHTML = "download";
+        button.raised = true;
+        button.style.backgroundColor = "#0d47a1";
+        button.style.color = "white";
+        button.classList.add('indigo');
+        div.appendChild(svg);
+        div.appendChild(button);
+        // div.appendChild(diagram.renderKey());
+
+        let filename = '';
+        if (this.name) {
+            filename = this.name + "." + this.nodeName.toLowerCase() + ".svg";
+        } else {
+            filename = this.nodeName.toLowerCase() + ".svg";
+        }
+        button.addEventListener("click", () => {
+            diagram.download(filename);
+        })
+
+    }
+
+
+
+
+
+    static getDomPathAsName(el) {
+        var stack = [];
+       
+        while ((el.nodeName !== "AA-SESSION") && (el.parentNode != null)) {
+
+            var sibCount = 0;
+            var sibIndex = 0;
+            for (var i = 0; i < el.parentNode.childNodes.length; i++) {
+                var sib = el.parentNode.childNodes[i];
+                if (sib.nodeName == el.nodeName) {
+                    if (sib === el) {
+                        sibIndex = sibCount;
+                    }
+                    sibCount++;
+                }
+            }
+            if (!BaseElement.isAAElement(el)) {
+                el = el.parentNode;
+                continue;
+
+            }
+            if (el.hasAttribute('name') && el.name != '') {
+                stack.unshift(el.name);
+            } else if (el.hasAttribute('id') && el.id != '') {
+                stack.unshift(el.nodeName.toLowerCase() + '#' + el.id);
+            } else if (sibCount > 1) {
+                stack.unshift(el.nodeName.toLowerCase() + ':eq(' + sibIndex + ')');
+            } else {
+                stack.unshift(el.nodeName.toLowerCase());
+            }
+            el = el.parentNode;
+        }
+        if (el.nodeName === "AA-SESSION") {
+            if (el.hasAttribute('name') && el.name != '') {
+                stack.unshift(el.name);
+            } else if (el.hasAttribute('id') && el.id != '') {
+                stack.unshift(el.nodeName.toLowerCase() + '#' + el.id);
+            } else if (sibCount > 1) {
+                stack.unshift(el.nodeName.toLowerCase() + ':eq(' + sibIndex + ')');
+            } else {
+                stack.unshift(el.nodeName.toLowerCase());
+            }
+        }
+        let name = "";
+        for (let i = 0; i < stack.length - 1; i++) {
+            name += stack[i] + ".";
+        }
+        name += stack[stack.length - 1];
+
+        // console.log(stack, name)
+        return name; // removes the html element
+    }
+
+    static getVariableName(el) {
+        if (el.name) {
+            return el.name;
+        } else {
+            return BaseElement.getDomPathAsName(el);
+        }
+    }
 
 
     _dispatchDebugEvent(detail) {

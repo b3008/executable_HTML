@@ -52,17 +52,20 @@ export default class AAFunctionRandom extends BaseElement {
 
     connectedCallback() {
 
-        let session = this._getParentSession();
-        this.value = this.getValue();
-        session.setData(this.name, this.value);
+        let memory = this.getMemory();
+        if(memory) memory.setData(this.name, this.value);
         this._dispatchEndEvent({ autoDispatch: true });
         if (!this.debug) { this.remove(); }
     }
 
-    getValue() {
+  
+    get value() {
         var parsedMin = parseFloat(this.min);
         var parsedMax = parseFloat(this.max);
-        return this.getRandomInt(parsedMin, parsedMax);
+        let val = this.getRandomInt(parsedMin, parsedMax);
+        let memory = this.getMemory();
+        if(memory) memory.setData(BaseElement.getVariableName(this), val);
+        return  val;
     }
 
     getRandomInt(min, max) {

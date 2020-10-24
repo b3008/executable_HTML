@@ -3,17 +3,24 @@ import './../aa-memory/aa-memory.js';
 import * as html2jsl from './../../lib/html2jsl/html2jsl.js';
 import { AASequence } from '../../index.js';
 
+
 export default class AASession extends BaseElement {
 
     static get properties() {
+
         return {
+           
+            ...BaseElement.properties,
+
             name: {
                 type: String,
                 userDefined: true
             },
+
             'should-run': {
                 type: Boolean,
-                userDefined: true
+                userDefined: true,
+                value:true
             },
 
             'debug': {
@@ -21,6 +28,10 @@ export default class AASession extends BaseElement {
                 value: false,
                 userDefined: false
             },
+
+          
+
+            
 
         }
     }
@@ -30,6 +41,7 @@ export default class AASession extends BaseElement {
     }
 
     static get observedAttributes() {
+
         return Object.keys(AASession.properties);
     }
 
@@ -41,6 +53,8 @@ export default class AASession extends BaseElement {
 
         this.myTemplate = document.createElement('template');
         this.myTemplate.innerHTML = this.innerHTML;
+
+
         this.innerHTML = '';
 
         // this.root = this.attachShadow({ mode: 'closed' });
@@ -48,7 +62,7 @@ export default class AASession extends BaseElement {
         this._mem = document.createElement('aa-memory');
         this.addEventListener('valueSubmit', (e) => {
 
-
+            debugger;
             // e.stopPropagation();
             let input = {
                 data: e.detail.value,
@@ -58,7 +72,8 @@ export default class AASession extends BaseElement {
                 variables: Object.keys(e.detail.value),
             };
             // TODO:  this._mem.saveReplyValue(e.detail.value, false);
-
+            
+        
 
             let inputSubmitEvent = new CustomEvent('inputSubmit', { bubbles: true, detail: { input } });
             this.dispatchEvent(inputSubmitEvent);
@@ -71,6 +86,7 @@ export default class AASession extends BaseElement {
         })
 
         this.addEventListener('endEvent', (e) => {
+
             if (!this.debug) e.stopPropagation();
             let sessionEndEvent = new CustomEvent('sessionEndEvent', { bubbles: true, detail: 'sessionEnd' });
             this.dispatchEvent(sessionEndEvent);
@@ -85,8 +101,14 @@ export default class AASession extends BaseElement {
     }
 
     connectedCallback() {
-        // console.log(this.tagName+"#"+this.id,"connected");
+        this.setAttributeDefaultValues()
 
+    
+        // console.log(this.tagName+"#"+this.id,"connected");
+        if(this.diagram===true){
+            this.produceDiagram()
+            return;
+        } 
         this.sessionID = this.myIdGenerator();
         this.sessionTime = new Date().getTime();
         let sessionDatum = Object.keys(this.dataset);
@@ -96,6 +118,10 @@ export default class AASession extends BaseElement {
         if ((this.shouldRun === null) || (this.shouldRun === true)) {
             this.run();
         }
+
+        setTimeout( ()=>{
+            this.dispatchEvent(new CustomEvent("sessionReady", {bubbles:true}));
+        },0);
     }
 
 
@@ -126,13 +152,14 @@ export default class AASession extends BaseElement {
     getData(name) {
         return this._mem.getData(name);
     }
+
     setData(name, value) {
 
         return this._mem.setData(name, value);
     }
 
     getDataDump() {
-        return this._mem.dataset;
+        return this._mem.getDataDump();
     }
 
 
@@ -186,25 +213,13 @@ export default class AASession extends BaseElement {
 
 
     get originalChildNodes(){
+        if(this.myTemplate.content.childNodes.length==0) return [];
         if(!this.myTemplate.content.childNodes[0].content) return this.childNodes;
         return this.myTemplate.content.childNodes[0].content.childNodes;
     }
 
-    toSVG() {
 
-        let childNodes = this.originalChildNodes;
-        window.qqq = childNodes[1];
-        
-        for (let i = 0; i < childNodes.length; i++) {
 
-            console.log(childNodes[i], childNodes[i].toSVG);
-            if(childNodes[i].tagName==="AA-SEQUENCE" ){
-                return AASequence.toSVG(childNodes[i]);
-            }
-
-        }
-
-    }
 
 }
 

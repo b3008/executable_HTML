@@ -16,12 +16,19 @@ export default class AAMemory extends BaseElement {
         
     }
 
+    
+    
     setData(name,value){
-        this.dataset[name] = value;
+        // this.dataset[name] = value;
+        localStorage[name] = value;
     }
 
     getData(name){
-        return this.dataset[this.toHyphenated(name)];
+        return localStorage[name];
+    }
+
+    getDataDump(){
+        return localStorage;
     }
 }
 

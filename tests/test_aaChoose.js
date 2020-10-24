@@ -27,6 +27,7 @@ describe('aa-choose', () => {
             let outsideSessionTest = false;
             let div = document.createElement('div');
             div.addEventListener('endEvent', (e)=>{
+
                 outsideSessionTest = true;
          
             });
@@ -97,7 +98,7 @@ describe('aa-choose', () => {
 
         it('parses nested expressions', (done)=>{
             
-
+          
             let div = document.createElement('div');
             div.addEventListener('endEvent', (e)=>{
             });
@@ -110,11 +111,12 @@ describe('aa-choose', () => {
             </aa-session>
             `
             container.appendChild(div);
-            let session = document.querySelector('#session');
+            let mem = document.querySelector('#session')._mem;
+
             let choose = document.createElement('aa-choose');
 
 
-            let exp = choose.replaceExpressionIdentifiersWithValues('(myVar==1)||(yourVar==2)', session);
+            let exp = choose.replaceExpressionIdentifiersWithValues('(myVar==1)||(yourVar==2)', mem);
             assert( exp=='(1==1)||(2==2)', 'variable names should be replaced by their values: ' + exp);
             done();
         })

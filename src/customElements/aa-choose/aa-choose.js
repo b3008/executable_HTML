@@ -9,6 +9,9 @@ export default class AAChoose extends BaseElement {
 
     static get properties(){
         return {
+
+            ...BaseElement.properties,
+
             name:{
                 type:String,
                 userDefined:true
@@ -45,10 +48,18 @@ export default class AAChoose extends BaseElement {
 
 
     connectedCallback() {
+        this.setAttributeDefaultValues();
+
+        if(this.diagram){
+
+            this.produceDiagram();
+            return;
+        }
+
         this._shouldRun = (this.shouldRun === null) || (this.shouldRun === true);
         this.sessionElement = this._getParentSession();
 
-        
+
         if (this._shouldRun) {
             if (typeof this.innerFragment !== 'undefined') {
                 BaseElement.scanAndReplace(this.innerFragment);
@@ -142,7 +153,7 @@ export default class AAChoose extends BaseElement {
     }
 
     evaluateTestExpression(test) {
-
+        console.log(test);
         let expr = this.replaceExpressionIdentifiersWithValues(test);
         // after replacing known variable names with their values in the string, test to see if the expression can be parsed
         try {
@@ -162,14 +173,15 @@ export default class AAChoose extends BaseElement {
         }
     }
 
-    replaceExpressionIdentifiersWithValues(expression, sessionElement) {
-        let session = sessionElement || this._getParentSession();
+    replaceExpressionIdentifiersWithValues(expression, memoryElement) {
+
+        let memory = this.getMemory() || memoryElement;
         let result = expression.toUpperCase();
 
-        let originalIdentifiers = Object.keys(session.getDataDump());
+        let originalIdentifiers = Object.keys(memory.getDataDump());
         let upperCaseIdentifiers = originalIdentifiers.map(s => s.toUpperCase());
         for (let i in originalIdentifiers) {
-            let value = session.getData(originalIdentifiers[i]);
+            let value = memory.getData(originalIdentifiers[i]);
             let finalValue = parseInt(value);
             if (finalValue != value) {
                 if (value === 'null') { finalValue = 'null'; }
