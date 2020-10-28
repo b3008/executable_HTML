@@ -171,7 +171,7 @@ export default class AAAffectGrid extends BaseElement {
 
         if(this.topLeftLabel === null) this.topLeftLabel='';
         if(this.topLabel === null) this.topLabel='';
-        if(this.topRightLabel === null) this.topLRightLabel='';
+        if(this.topRightLabel === null) this.topRightLabel='';
         if(this.leftTopLabel === null) this.leftTopLabel='';
         if(this.leftLabel === null) this.leftLabel='';
         if(this.leftBottomLabel === null) this.leftBottomLabel='';
