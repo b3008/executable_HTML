@@ -120,7 +120,6 @@ export default class AASequence extends BaseElement {
 
         return new Promise((resolve, reject) => {
 
-
             if (this.stopped) { return; }
             if (this.sIndex >= this.innerFragment.childNodes.length) return null;
 
@@ -171,110 +170,6 @@ export default class AASequence extends BaseElement {
             setTimeout(() => this.next(true))
         }
     }
-
-
-
-
-
-
-    // static toSVG(node, width){
-    //     let drawing = []
-    //     let line = [];
-    //     drawing.push(line);
-    //     for (let i = 0; i < node.children.length; i++) {
-    //            if (node.children[i].tagName == "AA-SCREEN") {
-    //                line.push(AAScreen.toSVG)
-    //            }
-    //     }
-    // }
-
-
-//     static toSVG(node) {
-
-
-//         var draw = SVG().addTo('body').size(300, 300)
-// var rect = draw.rect(100, 100).attr({ fill: '#f06' })
-//         debugger; 
-
-//         let drawing = '';
-
-//         let x = 10;
-//         let y = 10;
-//         let artBoardWidth = 550;
-//         let aaScreenWidth = 30;
-//         let aaScreenHeight = 50;
-//         let gapWidth = 50;
-//         let gapHeight = 50;
-
-
-//         let lineStart = [0, 0];
-//         let lineEnd = [0,0];
-
-
-//         let markerWidth = 10;
-//         for (let i = 0; i < node.children.length; i++) {
-
-//             // if (node.children[i].tagName == "AA-SCREEN") {
-//                 drawing += html`<rect x="${x}" y="${y}" width="${aaScreenWidth}" height="${aaScreenHeight}" stroke="black" fill="transparent"
-//     stroke-width="3" />`;
-
-//                 lineStart = [x + aaScreenWidth, y + aaScreenHeight / 2]
-//                 x = x + aaScreenWidth + gapWidth;
-//                 if (x > artBoardWidth) {
-//                     x = 10;
-//                     y = aaScreenHeight + gapHeight;
-//                 }
-//                 lineEnd = [x - markerWidth, y+aaScreenHeight/2 ];
-
-
-//                 if (node.children[i + 1]) {
-//                     if (node.children[i + 1].tagName == "AA-SCREEN") {
-                        
-//                         drawing += `<line x1="${lineStart[0]}" y1="${lineStart[1]}" x2="${lineEnd[0]}" y2="${lineEnd[1]}" stroke="#000" stroke-width="3" marker-end="url(#arrowhead)" />`;
-//                     }
-
-//                     if (node.children[i + 1].tagName == "AA-CHOOSE") {
-//                         drawing += `<line x1="${lineStart[0]}" y1="${lineStart[1]}" x2="${lineEnd[0]}" y2="${lineEnd[1]}" stroke="#000" stroke-width="3" marker-end="url(#arrowhead)" />`;
-//                     }
-
-//                     if (node.children[i + 1].tagName == "AA-FUNCTION-RANDOM") {
-//                         drawing += `<line x1="${lineStart[0]}" y1="${lineStart[1]}" x2="${lineEnd[0]}" y2="${lineEnd[1]}" stroke="#000" stroke-width="3" marker-end="url(#arrowhead)" />`;
-//                     }
-//                 }
-    
-//             // }
-
-
-
-            
-
-
-
-
-
-//         }
-
-
-//         let result = html`
-//             <svg width="${artBoardWidth}" height="550" version="1.1" xmlns="http://www.w3.org/2000/svg">
-            
-//                 <defs>
-//                     <marker id="arrowhead" markerWidth="${markerWidth}" markerHeight="5" refX="0" refY="1.5" orient="auto">
-//                         <polygon points="0 0, 3 1.5, 0 3" />
-//                     </marker>
-//                 </defs>
-            
-//                 ${drawing}
-//             </svg>`;
-
-//         return result;
-
-//     }
-
-
-
-
-
 
 }
 

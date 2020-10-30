@@ -8,10 +8,7 @@ export default class AAScreen extends BaseElement {
 
             ...BaseElement.properties,
 
-            name: {
-                type: String,
-                userDefined: true
-            },
+    
             "submit-button-text": {
                 type: String,
                 value: "submit",

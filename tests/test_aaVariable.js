@@ -41,6 +41,30 @@ describe('aa-variable', () => {
             done();            
 
         });
+
+
+        it('should be able to parse expression with existing variable', function (done) {
+
+            container.innerHTML = html`
+            first session:
+            <aa-session debug="false" name="test" id="session"> 
+                <template>
+
+                <aa-variable id="v1" name="var1" value="val1" debug="true"></aa-variable>
+                    <aa-variable id="v2" name="var2" value="val1" debug="true"></aa-variable>
+                </template>
+            </aa-session>`;
+
+            let memory = document.querySelector('#session')._mem;
+            
+            
+            assert(memory.getDataDump()['var1']==='val1', 'var1 should exist and have value val1');
+            assert(memory.getData('var1')==='val1', 'var1 should exist and have value val1');
+            
+            
+            done();            
+
+        });
         
     })
 })
