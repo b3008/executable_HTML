@@ -4,7 +4,7 @@
     <!-- <script type="module" src="../../../dist/aaCustomElements.js"></script> -->
     <script type="module" src="../../../dist/paper-polymer.js"></script>
     <script type="module" src="../../index.js"></script>
-    <script type="module" src="../../lib/mySVG/mySVG.js"></script>
+
 
 </head>
 
@@ -14,7 +14,31 @@
 
 
 
-   <aa-screen diagram name="myscreen"></aa-screen>
+    <aa-session id="session1">
+        <template>
+          <aa-sequence id="sequence1">
+            <div> item 1 </div>
+            <div> item 2 </div>
+            <div> item 3 </div>
+          </aa-sequence>
+        
+          <paper-button id='button1' style="margin-top:20px"> next </paper-button>
+          </template>
+        </aa-session>
+        
+        <script> 
+          window.addEventListener("sessionReady", ()=>{
+            document.getElementById('button1')
+                    .addEventListener('click', ()=>{ document.getElementById('sequence1').next(); })
+          })
+        </script>
+        
+        
+
+
+    <aa-screen diagram name="myscreen"></aa-screen>
+
+
 
 </body>
 

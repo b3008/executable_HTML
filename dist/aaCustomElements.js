@@ -303,18 +303,27 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
 
 
 
+    get x(){
+        let val = this.getAttribute("value");
+        if(!val) return null;
+        return parseInt(val.split(",")[0]);
+    }
+
+    get y(){
+        let val = this.getAttribute("value");
+        if(!val) return null;
+        return parseInt(val.split(",")[1]);
+    }
 
     get value() {
-        if (!this.inputItem) {
-            return this.getAttribute('value');
-        }
-        return this.inputItem.value;
+        let val = this.getAttribute("value");
+        if(!val) return null
+
+        let s = val.split(",");
+        return [ parseInt(s[0]), parseInt(s[1])];
     }
     set value(val) {
         this.setAttribute('value', val);
-        if (this.inputItem) {
-            this.inputItem.value = val;
-        }
 
     }
 
@@ -328,30 +337,18 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
 
     set minLabel(val) {
         this.setAttribute('min-label', val);
-        if (this.inputItem) {
-            this.inputItem.minLabel = val;
-        }
     }
 
     set maxLabel(val) {
         this.setAttribute('max-label', val);
-        if (this.inputItem) {
-            this.inputItem.maxLabel = val;
-        }
     }
 
     set min(val) {
         this.setAttribute('min', val);
-        if (this.inputItem) {
-            this.inputItem.min = val;
-        }
     }
 
     set max(val) {
         this.setAttribute('max', val);
-        if (this.inputItem) {
-            this.inputItem.max = val;
-        }
     }
 
 
@@ -360,7 +357,7 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
 
         if(this.topLeftLabel === null) this.topLeftLabel='';
         if(this.topLabel === null) this.topLabel='';
-        if(this.topRightLabel === null) this.topLRightLabel='';
+        if(this.topRightLabel === null) this.topRightLabel='';
         if(this.leftTopLabel === null) this.leftTopLabel='';
         if(this.leftLabel === null) this.leftLabel='';
         if(this.leftBottomLabel === null) this.leftBottomLabel='';
@@ -394,7 +391,9 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
         
 
         this.grid = this.root.querySelector('.grid');
-        this.grid.addEventListener("click", (e)=>{
+        this.grid.addEventListener("mousedown", (e)=>{
+            let currentValue = this.value;
+
             let cell = e.path[0];
             this.value = [cell.dataset.x, cell.dataset.y];
             
@@ -405,6 +404,16 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
             this.selectedCell = cell;
             this.selectedCell.classList.add('selected');
 
+            let newValue = this.value;
+            console.log(currentValue, newValue);
+
+            if(!currentValue) this.dispatchEvent(new CustomEvent("change", {bubbles:true}))
+            else{
+                if((currentValue[0]!=newValue[0])||(currentValue[1]!=newValue[1])){
+                    this.dispatchEvent(new CustomEvent("change", {bubbles:true}));
+                }
+            }
+            
 
         });
 
@@ -521,7 +530,7 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
         }
         .cell{
             border:solid thin;
-            transition:background-color 0.2s;
+            /* transition:background-color 0.2s; */
         }
 
         .cell.top{
@@ -558,7 +567,7 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
         let grid ='';
         for(let j=0; j<this.rows; j++){
             for(let i=0; i<this.columns; i++){
-                grid+=html`<div class="cell  ${j==0?'top':''} ${j==this.rows-1?`bottom`:''}  ${i==0?`left`:''}  ${i==this.columns-1?`right`:''}" data-x="${Math.round(this.columns/2)-i-1 }" data-y="${j+1-Math.round(this.rows/2)}">
+                grid+=html`<div class="cell  ${j==0?'top':''} ${j==this.rows-1?`bottom`:''}  ${i==0?`left`:''}  ${i==this.columns-1?`right`:''}" data-x="${ i+1 - Math.round(this.columns/2) }" data-y="${Math.round(this.rows/2) - j - 1}">
             </div>`;
             }
         }
@@ -1345,7 +1354,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 class AAChoose extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 
@@ -1498,6 +1506,8 @@ class AAChoose extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         console.log(test);
         let expr = this.replaceExpressionIdentifiersWithValues(test);
         // after replacing known variable names with their values in the string, test to see if the expression can be parsed
+
+
         try {
             var parseTree = Object(_lib_jsep_jsep_js__WEBPACK_IMPORTED_MODULE_3__["default"])(expr);
             if ((parseTree.left.type === 'Literal') && (parseTree.right.type === 'Literal')) {
@@ -1732,6 +1742,112 @@ class AAFunctionRandom extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
 }
 
 _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerAAElement('aa-function-random', AAFunctionRandom);
+
+
+
+/***/ }),
+
+/***/ "./src/customElements/aa-geolocation/aa-geolocation.js":
+/*!*************************************************************!*\
+  !*** ./src/customElements/aa-geolocation/aa-geolocation.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AAGeolocation; });
+/* harmony import */ var _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../aa-baseElement/baseElement.js */ "./src/customElements/aa-baseElement/baseElement.js");
+
+class AAGeolocation extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+
+    static get properties() {
+        return {
+            name: {
+                type: String,
+                userDefined: true
+            },
+            'value': {
+                type: String,
+                userDefined: false
+            },
+
+            // 'lat': {
+            //     type: String,
+            //     userDefined: false
+            // },
+
+            // 'lon': {
+            //     type: String,
+            //     userDefined: false
+            // },
+
+            // 'timestamp':{
+            //     type: Date,
+            //     userDefined: false
+            // }
+
+        }
+    }
+
+    static get acceptsElements() {
+        return []
+    }
+
+    static get observedAttributes() {
+
+        return Object.keys(AAGeolocation.properties);
+
+    }
+
+    constructor() {
+        super();
+
+        this.root = this.attachShadow({ mode: 'open' });
+    }
+
+    connectedCallback() {
+
+
+        // let session = this._getParentSession();
+        // session.setData(this.name, this.value);
+        // this._dispatchEndEvent({autoDispatch:true});
+        // if(!this.debug) {this.remove();}
+
+        if ("geolocation" in navigator) {
+
+            navigator.geolocation.getCurrentPosition( (position)=> {
+
+                //  in this way it is synchronous, there will be no progression to the next
+                //  item in a sequence unless this callback function is called.
+
+                //  it could also be made asynchronous, where there will be a progression
+                //  regardless. Perhaps asynchronous components should notify parents
+                //  of their presence.
+
+                // do_something(position.coords.latitude, position.coords.longitude);
+
+                let lat = position.coords.latitude;
+                let lon = position.coords.longitude;
+                let timestamp = new Date();
+                this.value = { lat,  lon, timestamp}
+           
+                var valueSubmitEvent = new CustomEvent('valueSubmit', {bubbles:true, detail:{value:this.value}});
+                this.dispatchEvent(valueSubmitEvent);
+
+
+
+                // var assignableEndEvent = new CustomEvent("assignableEnd", {bubbles:true, detail:{value:this.value}});
+                // this.dispatchEvent(assignableEndEvent);
+                this._dispatchEndEvent({value:this.value})
+            });
+        }
+    }
+
+
+}
+
+_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerAAElement('aa-geolocation', AAGeolocation);
 
 
 
@@ -2233,10 +2349,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
             ..._aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].properties,
 
-            name: {
-                type: String,
-                userDefined: true
-            },
+    
             "submit-button-text": {
                 type: String,
                 value: "submit",
@@ -2693,7 +2806,6 @@ class AASequence extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
 
         return new Promise((resolve, reject) => {
 
-
             if (this.stopped) { return; }
             if (this.sIndex >= this.innerFragment.childNodes.length) return null;
 
@@ -2745,110 +2857,6 @@ class AASequence extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
         }
     }
 
-
-
-
-
-
-    // static toSVG(node, width){
-    //     let drawing = []
-    //     let line = [];
-    //     drawing.push(line);
-    //     for (let i = 0; i < node.children.length; i++) {
-    //            if (node.children[i].tagName == "AA-SCREEN") {
-    //                line.push(AAScreen.toSVG)
-    //            }
-    //     }
-    // }
-
-
-//     static toSVG(node) {
-
-
-//         var draw = SVG().addTo('body').size(300, 300)
-// var rect = draw.rect(100, 100).attr({ fill: '#f06' })
-//         debugger; 
-
-//         let drawing = '';
-
-//         let x = 10;
-//         let y = 10;
-//         let artBoardWidth = 550;
-//         let aaScreenWidth = 30;
-//         let aaScreenHeight = 50;
-//         let gapWidth = 50;
-//         let gapHeight = 50;
-
-
-//         let lineStart = [0, 0];
-//         let lineEnd = [0,0];
-
-
-//         let markerWidth = 10;
-//         for (let i = 0; i < node.children.length; i++) {
-
-//             // if (node.children[i].tagName == "AA-SCREEN") {
-//                 drawing += html`<rect x="${x}" y="${y}" width="${aaScreenWidth}" height="${aaScreenHeight}" stroke="black" fill="transparent"
-//     stroke-width="3" />`;
-
-//                 lineStart = [x + aaScreenWidth, y + aaScreenHeight / 2]
-//                 x = x + aaScreenWidth + gapWidth;
-//                 if (x > artBoardWidth) {
-//                     x = 10;
-//                     y = aaScreenHeight + gapHeight;
-//                 }
-//                 lineEnd = [x - markerWidth, y+aaScreenHeight/2 ];
-
-
-//                 if (node.children[i + 1]) {
-//                     if (node.children[i + 1].tagName == "AA-SCREEN") {
-                        
-//                         drawing += `<line x1="${lineStart[0]}" y1="${lineStart[1]}" x2="${lineEnd[0]}" y2="${lineEnd[1]}" stroke="#000" stroke-width="3" marker-end="url(#arrowhead)" />`;
-//                     }
-
-//                     if (node.children[i + 1].tagName == "AA-CHOOSE") {
-//                         drawing += `<line x1="${lineStart[0]}" y1="${lineStart[1]}" x2="${lineEnd[0]}" y2="${lineEnd[1]}" stroke="#000" stroke-width="3" marker-end="url(#arrowhead)" />`;
-//                     }
-
-//                     if (node.children[i + 1].tagName == "AA-FUNCTION-RANDOM") {
-//                         drawing += `<line x1="${lineStart[0]}" y1="${lineStart[1]}" x2="${lineEnd[0]}" y2="${lineEnd[1]}" stroke="#000" stroke-width="3" marker-end="url(#arrowhead)" />`;
-//                     }
-//                 }
-    
-//             // }
-
-
-
-            
-
-
-
-
-
-//         }
-
-
-//         let result = html`
-//             <svg width="${artBoardWidth}" height="550" version="1.1" xmlns="http://www.w3.org/2000/svg">
-            
-//                 <defs>
-//                     <marker id="arrowhead" markerWidth="${markerWidth}" markerHeight="5" refX="0" refY="1.5" orient="auto">
-//                         <polygon points="0 0, 3 1.5, 0 3" />
-//                     </marker>
-//                 </defs>
-            
-//                 ${drawing}
-//             </svg>`;
-
-//         return result;
-
-//     }
-
-
-
-
-
-
 }
 
 
@@ -2888,10 +2896,6 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
            
             ..._aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].properties,
 
-            name: {
-                type: String,
-                userDefined: true
-            },
 
             'should-run': {
                 type: Boolean,
@@ -2938,7 +2942,6 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
         this._mem = document.createElement('aa-memory');
         this.addEventListener('valueSubmit', (e) => {
 
-            debugger;
             // e.stopPropagation();
             let input = {
                 data: e.detail.value,
@@ -3506,6 +3509,9 @@ _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerA
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AAVariable; });
 /* harmony import */ var _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../aa-baseElement/baseElement.js */ "./src/customElements/aa-baseElement/baseElement.js");
+/* harmony import */ var _lib_jsep_jsep_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/jsep/jsep.js */ "./src/lib/jsep/jsep.js");
+
+
 
 class AAVariable extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
@@ -3516,6 +3522,18 @@ class AAVariable extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
                 userDefined: true
             },
             'value': {
+
+                /**
+                 * string values should be given in quotes, e.g.,
+                 * <aa-variable name="myString" value="'myStringValue'"></aa-variable>
+                 * Here 'myStringValue' is passed to the value attribute in single quotes
+                 * 
+                 * otherwise it will try to find a named variable, e.g.,
+                 * <aa-variable name="myOtherSring" value="'myStringValue'"></aa-variable>
+                 * <aa-variable name="myString" value="myOtherString"></aa-variable>
+                 * Here the value will be the same value as a variable with name="myOtherString"
+                 * 
+                 */
                 type: String,
                 userDefined: true
             },
@@ -3540,9 +3558,72 @@ class AAVariable extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
 
     connectedCallback() {
         let memory = this.getMemory();
-        if(memory) memory.setData(this.name, this.value);
+
+        // TODO:
+        // let value = this.evaluateValueExpression(this.value);
+
+        // leave as is for now
+        let value = this.value;
+
+        // let _value = valueExpression;
+        if(memory) memory.setData(this.name, value);
         this._dispatchEndEvent({autoDispatch:true});
         if(!this.debug) {this.remove();}
+    }
+
+
+
+    evaluateValueExpression(test) {
+        console.log(test);
+        let expr = this.replaceExpressionIdentifiersWithValues(test);
+        // after replacing known variable names with their values in the string, test to see if the expression can be parsed
+
+        debugger;
+        try {
+            var parseTree = Object(_lib_jsep_jsep_js__WEBPACK_IMPORTED_MODULE_1__["default"])(expr);
+            if(parseTree.type==="Identifier"){
+                //Best be strict about it from the beginning an Identifier is always expected to be 
+                //a reference to another variable
+
+            } else
+            if(parseTree.type==="Literal"){
+                //there's only a string present, figure out if it's a reference to a variable or a string
+            } else 
+            if ((parseTree.left.type === 'Literal') && (parseTree.right.type === 'Literal')) {
+                return eval(expr);
+            }
+            else {
+                // there are still strings in the expression, which are unknown
+                // evaluate with values that the parseTreeProvides
+                return  eval(`${parseTree.left.value}${parseTree.operator}${parseTree.right.value}`);
+                //an exception should be raised
+                // throw 'unknown identifiers in expression : ' + expr;
+            }
+        } catch (e) {
+            console.error('parse error:', e);
+        }
+    }
+    replaceExpressionIdentifiersWithValues(expression, memoryElement) {
+
+
+        let memory = this.getMemory() || memoryElement;
+        let result = expression.toUpperCase();
+
+        let originalIdentifiers = Object.keys(memory.getDataDump());
+        let upperCaseIdentifiers = originalIdentifiers.map(s => s.toUpperCase());
+        for (let i in originalIdentifiers) {
+            let value = memory.getData(originalIdentifiers[i]);
+            let finalValue = parseInt(value);
+            if (finalValue != value) {
+                if (value === 'null') { finalValue = 'null'; }
+                else if (value === 'true') { finalValue = 'true'; }
+                else if (value === 'false') { finalValue = 'false'; }
+                else finalValue = `"${value}"`;
+            }
+            let r = new RegExp(upperCaseIdentifiers[i], 'g');
+            result = result.replace(r, finalValue);
+        }
+        return result;
     }
 
 
@@ -3558,7 +3639,7 @@ _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerA
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! exports provided: BaseElement, AAVariable, AAFunctionRandom, AAChoose, AAWhen, AAOtherwise, AAMemory, AAScreen, AASequence, AASession, AATextAnswer, AAChoiceItem, AAMultipleChoice, AACheckboxes, AALikertScale, AASlider, AAAffectGrid, AALabel */
+/*! exports provided: BaseElement, AAAffectGrid, AACheckboxes, AAChoose, AAChoiceItem, AAFunctionRandom, AAGeoLocation, AALabel, AALikertScale, AAMemory, AAMultipleChoice, AAOtherwise, AAScreen, AASession, AASequence, AASlider, AATextAnswer, AAVariable, AAWhen */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3566,56 +3647,59 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _customElements_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./customElements/aa-baseElement/baseElement.js */ "./src/customElements/aa-baseElement/baseElement.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "BaseElement", function() { return _customElements_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
-/* harmony import */ var _customElements_aa_variable_aa_variable_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./customElements/aa-variable/aa-variable.js */ "./src/customElements/aa-variable/aa-variable.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAVariable", function() { return _customElements_aa_variable_aa_variable_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+/* harmony import */ var _customElements_aa_affect_grid_aa_affect_grid_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./customElements/aa-affect-grid/aa-affect-grid.js */ "./src/customElements/aa-affect-grid/aa-affect-grid.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAAffectGrid", function() { return _customElements_aa_affect_grid_aa_affect_grid_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _customElements_aa_function_aa_function_random_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./customElements/aa-function/aa-function-random.js */ "./src/customElements/aa-function/aa-function-random.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAFunctionRandom", function() { return _customElements_aa_function_aa_function_random_js__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+/* harmony import */ var _customElements_aa_checkboxes_aa_checkboxes_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./customElements/aa-checkboxes/aa-checkboxes.js */ "./src/customElements/aa-checkboxes/aa-checkboxes.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AACheckboxes", function() { return _customElements_aa_checkboxes_aa_checkboxes_js__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
 /* harmony import */ var _customElements_aa_choose_aa_choose_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./customElements/aa-choose/aa-choose.js */ "./src/customElements/aa-choose/aa-choose.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAChoose", function() { return _customElements_aa_choose_aa_choose_js__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
-/* harmony import */ var _customElements_aa_choose_aa_when_aa_when_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./customElements/aa-choose/aa-when/aa-when.js */ "./src/customElements/aa-choose/aa-when/aa-when.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAWhen", function() { return _customElements_aa_choose_aa_when_aa_when_js__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+/* harmony import */ var _customElements_aa_choice_item_aa_choice_item_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./customElements/aa-choice-item/aa-choice-item.js */ "./src/customElements/aa-choice-item/aa-choice-item.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAChoiceItem", function() { return _customElements_aa_choice_item_aa_choice_item_js__WEBPACK_IMPORTED_MODULE_4__["default"]; });
 
-/* harmony import */ var _customElements_aa_choose_aa_otherwise_aa_otherwise_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./customElements/aa-choose/aa-otherwise/aa-otherwise.js */ "./src/customElements/aa-choose/aa-otherwise/aa-otherwise.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAOtherwise", function() { return _customElements_aa_choose_aa_otherwise_aa_otherwise_js__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+/* harmony import */ var _customElements_aa_function_aa_function_random_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./customElements/aa-function/aa-function-random.js */ "./src/customElements/aa-function/aa-function-random.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAFunctionRandom", function() { return _customElements_aa_function_aa_function_random_js__WEBPACK_IMPORTED_MODULE_5__["default"]; });
 
-/* harmony import */ var _customElements_aa_memory_aa_memory_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./customElements/aa-memory/aa-memory.js */ "./src/customElements/aa-memory/aa-memory.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAMemory", function() { return _customElements_aa_memory_aa_memory_js__WEBPACK_IMPORTED_MODULE_6__["default"]; });
+/* harmony import */ var _customElements_aa_geolocation_aa_geolocation_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./customElements/aa-geolocation/aa-geolocation.js */ "./src/customElements/aa-geolocation/aa-geolocation.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAGeoLocation", function() { return _customElements_aa_geolocation_aa_geolocation_js__WEBPACK_IMPORTED_MODULE_6__["default"]; });
 
-/* harmony import */ var _customElements_aa_screen_aa_screen_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./customElements/aa-screen/aa-screen.js */ "./src/customElements/aa-screen/aa-screen.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAScreen", function() { return _customElements_aa_screen_aa_screen_js__WEBPACK_IMPORTED_MODULE_7__["default"]; });
+/* harmony import */ var _customElements_aa_label_aa_label_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./customElements/aa-label/aa-label.js */ "./src/customElements/aa-label/aa-label.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AALabel", function() { return _customElements_aa_label_aa_label_js__WEBPACK_IMPORTED_MODULE_7__["default"]; });
 
-/* harmony import */ var _customElements_aa_sequence_aa_sequence_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./customElements/aa-sequence/aa-sequence.js */ "./src/customElements/aa-sequence/aa-sequence.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AASequence", function() { return _customElements_aa_sequence_aa_sequence_js__WEBPACK_IMPORTED_MODULE_8__["default"]; });
+/* harmony import */ var _customElements_aa_likert_scale_aa_likert_scale_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./customElements/aa-likert-scale/aa-likert-scale.js */ "./src/customElements/aa-likert-scale/aa-likert-scale.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AALikertScale", function() { return _customElements_aa_likert_scale_aa_likert_scale_js__WEBPACK_IMPORTED_MODULE_8__["default"]; });
 
-/* harmony import */ var _customElements_aa_session_aa_session_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./customElements/aa-session/aa-session.js */ "./src/customElements/aa-session/aa-session.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AASession", function() { return _customElements_aa_session_aa_session_js__WEBPACK_IMPORTED_MODULE_9__["default"]; });
+/* harmony import */ var _customElements_aa_memory_aa_memory_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./customElements/aa-memory/aa-memory.js */ "./src/customElements/aa-memory/aa-memory.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAMemory", function() { return _customElements_aa_memory_aa_memory_js__WEBPACK_IMPORTED_MODULE_9__["default"]; });
 
-/* harmony import */ var _customElements_aa_text_answer_aa_text_answer_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./customElements/aa-text-answer/aa-text-answer.js */ "./src/customElements/aa-text-answer/aa-text-answer.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AATextAnswer", function() { return _customElements_aa_text_answer_aa_text_answer_js__WEBPACK_IMPORTED_MODULE_10__["default"]; });
+/* harmony import */ var _customElements_aa_multiple_choice_aa_multiple_choice_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./customElements/aa-multiple-choice/aa-multiple-choice.js */ "./src/customElements/aa-multiple-choice/aa-multiple-choice.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAMultipleChoice", function() { return _customElements_aa_multiple_choice_aa_multiple_choice_js__WEBPACK_IMPORTED_MODULE_10__["default"]; });
 
-/* harmony import */ var _customElements_aa_multiple_choice_aa_multiple_choice_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./customElements/aa-multiple-choice/aa-multiple-choice.js */ "./src/customElements/aa-multiple-choice/aa-multiple-choice.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAMultipleChoice", function() { return _customElements_aa_multiple_choice_aa_multiple_choice_js__WEBPACK_IMPORTED_MODULE_11__["default"]; });
+/* harmony import */ var _customElements_aa_choose_aa_otherwise_aa_otherwise_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./customElements/aa-choose/aa-otherwise/aa-otherwise.js */ "./src/customElements/aa-choose/aa-otherwise/aa-otherwise.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAOtherwise", function() { return _customElements_aa_choose_aa_otherwise_aa_otherwise_js__WEBPACK_IMPORTED_MODULE_11__["default"]; });
 
-/* harmony import */ var _customElements_aa_choice_item_aa_choice_item_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./customElements/aa-choice-item/aa-choice-item.js */ "./src/customElements/aa-choice-item/aa-choice-item.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAChoiceItem", function() { return _customElements_aa_choice_item_aa_choice_item_js__WEBPACK_IMPORTED_MODULE_12__["default"]; });
+/* harmony import */ var _customElements_aa_screen_aa_screen_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./customElements/aa-screen/aa-screen.js */ "./src/customElements/aa-screen/aa-screen.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAScreen", function() { return _customElements_aa_screen_aa_screen_js__WEBPACK_IMPORTED_MODULE_12__["default"]; });
 
-/* harmony import */ var _customElements_aa_checkboxes_aa_checkboxes_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./customElements/aa-checkboxes/aa-checkboxes.js */ "./src/customElements/aa-checkboxes/aa-checkboxes.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AACheckboxes", function() { return _customElements_aa_checkboxes_aa_checkboxes_js__WEBPACK_IMPORTED_MODULE_13__["default"]; });
+/* harmony import */ var _customElements_aa_session_aa_session_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./customElements/aa-session/aa-session.js */ "./src/customElements/aa-session/aa-session.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AASession", function() { return _customElements_aa_session_aa_session_js__WEBPACK_IMPORTED_MODULE_13__["default"]; });
 
-/* harmony import */ var _customElements_aa_likert_scale_aa_likert_scale_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./customElements/aa-likert-scale/aa-likert-scale.js */ "./src/customElements/aa-likert-scale/aa-likert-scale.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AALikertScale", function() { return _customElements_aa_likert_scale_aa_likert_scale_js__WEBPACK_IMPORTED_MODULE_14__["default"]; });
+/* harmony import */ var _customElements_aa_sequence_aa_sequence_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./customElements/aa-sequence/aa-sequence.js */ "./src/customElements/aa-sequence/aa-sequence.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AASequence", function() { return _customElements_aa_sequence_aa_sequence_js__WEBPACK_IMPORTED_MODULE_14__["default"]; });
 
 /* harmony import */ var _customElements_aa_slider_aa_slider_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./customElements/aa-slider/aa-slider.js */ "./src/customElements/aa-slider/aa-slider.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AASlider", function() { return _customElements_aa_slider_aa_slider_js__WEBPACK_IMPORTED_MODULE_15__["default"]; });
 
-/* harmony import */ var _customElements_aa_affect_grid_aa_affect_grid_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./customElements/aa-affect-grid/aa-affect-grid.js */ "./src/customElements/aa-affect-grid/aa-affect-grid.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAAffectGrid", function() { return _customElements_aa_affect_grid_aa_affect_grid_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
+/* harmony import */ var _customElements_aa_text_answer_aa_text_answer_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./customElements/aa-text-answer/aa-text-answer.js */ "./src/customElements/aa-text-answer/aa-text-answer.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AATextAnswer", function() { return _customElements_aa_text_answer_aa_text_answer_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
 
-/* harmony import */ var _customElements_aa_label_aa_label_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./customElements/aa-label/aa-label.js */ "./src/customElements/aa-label/aa-label.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AALabel", function() { return _customElements_aa_label_aa_label_js__WEBPACK_IMPORTED_MODULE_17__["default"]; });
+/* harmony import */ var _customElements_aa_variable_aa_variable_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./customElements/aa-variable/aa-variable.js */ "./src/customElements/aa-variable/aa-variable.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAVariable", function() { return _customElements_aa_variable_aa_variable_js__WEBPACK_IMPORTED_MODULE_17__["default"]; });
+
+/* harmony import */ var _customElements_aa_choose_aa_when_aa_when_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./customElements/aa-choose/aa-when/aa-when.js */ "./src/customElements/aa-choose/aa-when/aa-when.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAWhen", function() { return _customElements_aa_choose_aa_when_aa_when_js__WEBPACK_IMPORTED_MODULE_18__["default"]; });
 
 // import '../dist/paper-polymer.js';
 
@@ -3636,7 +3720,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// debugger;
+
+
+
+
+
 
 
 

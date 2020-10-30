@@ -1,9 +1,8 @@
 import BaseElement from './../aa-baseElement/baseElement.js';
 import './aa-when/aa-when.js';
 import './aa-otherwise/aa-otherwise.js';
-
-
 import jsep from '../../lib/jsep/jsep.js';
+
 export default class AAChoose extends BaseElement {
 
 
@@ -156,6 +155,8 @@ export default class AAChoose extends BaseElement {
         console.log(test);
         let expr = this.replaceExpressionIdentifiersWithValues(test);
         // after replacing known variable names with their values in the string, test to see if the expression can be parsed
+
+
         try {
             var parseTree = jsep(expr);
             if ((parseTree.left.type === 'Literal') && (parseTree.right.type === 'Literal')) {

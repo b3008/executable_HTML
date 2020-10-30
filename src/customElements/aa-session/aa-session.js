@@ -12,10 +12,6 @@ export default class AASession extends BaseElement {
            
             ...BaseElement.properties,
 
-            name: {
-                type: String,
-                userDefined: true
-            },
 
             'should-run': {
                 type: Boolean,
@@ -62,7 +58,6 @@ export default class AASession extends BaseElement {
         this._mem = document.createElement('aa-memory');
         this.addEventListener('valueSubmit', (e) => {
 
-            debugger;
             // e.stopPropagation();
             let input = {
                 data: e.detail.value,

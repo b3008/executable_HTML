@@ -114,18 +114,27 @@ export default class AAAffectGrid extends BaseElement {
 
 
 
+    get x(){
+        let val = this.getAttribute("value");
+        if(!val) return null;
+        return parseInt(val.split(",")[0]);
+    }
+
+    get y(){
+        let val = this.getAttribute("value");
+        if(!val) return null;
+        return parseInt(val.split(",")[1]);
+    }
 
     get value() {
-        if (!this.inputItem) {
-            return this.getAttribute('value');
-        }
-        return this.inputItem.value;
+        let val = this.getAttribute("value");
+        if(!val) return null
+
+        let s = val.split(",");
+        return [ parseInt(s[0]), parseInt(s[1])];
     }
     set value(val) {
         this.setAttribute('value', val);
-        if (this.inputItem) {
-            this.inputItem.value = val;
-        }
 
     }
 
@@ -139,30 +148,18 @@ export default class AAAffectGrid extends BaseElement {
 
     set minLabel(val) {
         this.setAttribute('min-label', val);
-        if (this.inputItem) {
-            this.inputItem.minLabel = val;
-        }
     }
 
     set maxLabel(val) {
         this.setAttribute('max-label', val);
-        if (this.inputItem) {
-            this.inputItem.maxLabel = val;
-        }
     }
 
     set min(val) {
         this.setAttribute('min', val);
-        if (this.inputItem) {
-            this.inputItem.min = val;
-        }
     }
 
     set max(val) {
         this.setAttribute('max', val);
-        if (this.inputItem) {
-            this.inputItem.max = val;
-        }
     }
 
 
@@ -171,7 +168,7 @@ export default class AAAffectGrid extends BaseElement {
 
         if(this.topLeftLabel === null) this.topLeftLabel='';
         if(this.topLabel === null) this.topLabel='';
-        if(this.topRightLabel === null) this.topLRightLabel='';
+        if(this.topRightLabel === null) this.topRightLabel='';
         if(this.leftTopLabel === null) this.leftTopLabel='';
         if(this.leftLabel === null) this.leftLabel='';
         if(this.leftBottomLabel === null) this.leftBottomLabel='';
@@ -205,7 +202,9 @@ export default class AAAffectGrid extends BaseElement {
         
 
         this.grid = this.root.querySelector('.grid');
-        this.grid.addEventListener("click", (e)=>{
+        this.grid.addEventListener("mousedown", (e)=>{
+            let currentValue = this.value;
+
             let cell = e.path[0];
             this.value = [cell.dataset.x, cell.dataset.y];
             
@@ -216,6 +215,16 @@ export default class AAAffectGrid extends BaseElement {
             this.selectedCell = cell;
             this.selectedCell.classList.add('selected');
 
+            let newValue = this.value;
+            console.log(currentValue, newValue);
+
+            if(!currentValue) this.dispatchEvent(new CustomEvent("change", {bubbles:true}))
+            else{
+                if((currentValue[0]!=newValue[0])||(currentValue[1]!=newValue[1])){
+                    this.dispatchEvent(new CustomEvent("change", {bubbles:true}));
+                }
+            }
+            
 
         });
 
@@ -332,7 +341,7 @@ export default class AAAffectGrid extends BaseElement {
         }
         .cell{
             border:solid thin;
-            transition:background-color 0.2s;
+            /* transition:background-color 0.2s; */
         }
 
         .cell.top{
@@ -369,7 +378,7 @@ export default class AAAffectGrid extends BaseElement {
         let grid ='';
         for(let j=0; j<this.rows; j++){
             for(let i=0; i<this.columns; i++){
-                grid+=html`<div class="cell  ${j==0?'top':''} ${j==this.rows-1?`bottom`:''}  ${i==0?`left`:''}  ${i==this.columns-1?`right`:''}" data-x="${Math.round(this.columns/2)-i-1 }" data-y="${j+1-Math.round(this.rows/2)}">
+                grid+=html`<div class="cell  ${j==0?'top':''} ${j==this.rows-1?`bottom`:''}  ${i==0?`left`:''}  ${i==this.columns-1?`right`:''}" data-x="${ i+1 - Math.round(this.columns/2) }" data-y="${Math.round(this.rows/2) - j - 1}">
             </div>`;
             }
         }

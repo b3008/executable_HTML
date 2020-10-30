@@ -1,6 +1,6 @@
 {
-  "build": 228,
-  "date": "Sat Oct 24 2020 06:48:07 GMT+0300 (Eastern European Summer Time)",
+  "build": 230,
+  "date": "Fri Oct 30 2020 13:17:08 GMT+0200 (Eastern European Standard Time)",
   "version": "0.0.1",
-  "branch": "google_sheets_api"
+  "branch": "fix_details"
 }
