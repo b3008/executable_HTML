@@ -724,7 +724,6 @@ class mySVG {
 
                         if(j.left) if(j.left.name) if(j.left.name.length>7){
                             let newName = j.left.name.substr(0,5)+"...";
-                            debugger;
                             textToRender = textToRender.replace(j.left.name, newName);
                         }
                     }

@@ -445,30 +445,23 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
 
     get css() {
         return html`<style>
-
-        
         :host{
             display:block;
-            font-family: Roboto, Noto, sans-serif;
-            
+            font-family: Roboto, Noto, sans-serif;   
         }
         .top-section{
             height:40px;
             width:100%;
-         
         }
-
         .top-left{
             text-align:left;
         }
-
         .top-label{
             text-align:center;
         }
         .top-right{
             text-align:right;
         }
-
         .bottom-left{
             text-align:left;
         }
@@ -478,8 +471,6 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
         .bottom-right{
             text-align:right;
         }
-
-
         .top-left-corner{
             width:40px;
             height:40px;
@@ -488,7 +479,6 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
             width:40px;
             height:40px;
         }
-
         .bottom-left-corner{
             width:40px;
             height:40px;
@@ -497,15 +487,10 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
             width:40px;
             height:40px;
         }
-
-
         .middle-section{
          
             flex-grow:2;
         }
-
-
-        
         .bottom-section{
            
             height:40px;
@@ -519,7 +504,6 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
             width:40px;
             height:100%;
         }
-
         .grid{
             display:grid;
             grid-template-columns: repeat(${this.columns}, ${100/this.columns}%);
@@ -532,19 +516,15 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
             border:solid thin;
             /* transition:background-color 0.2s; */
         }
-
         .cell.top{
             border-top:solid 2px;
         }
-
         .cell.bottom{
             border-bottom:solid 2px;
         }
-
         .cell.left{
             border-left:solid 2px;
         }
-
         .cell.right{
             border-right: solid 2px;
         }
@@ -552,8 +532,6 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
             background-color: #3367D6;
             
         }
-
-
         .label{
             flex-grow:1
         }
@@ -680,6 +658,8 @@ class BaseElement extends HTMLElement {
         }
     }
     static registerAAElement(name, elem) {
+        console.log(name, elem);
+       
         if (!customElements.get(name)) {
             window.AANodeNames = window.AANodeNames || [];
             window.AANodeNames.push(name.toUpperCase());
@@ -710,14 +690,19 @@ class BaseElement extends HTMLElement {
     }
 
     static scanAndReplace(node) {
+        // console.log(node);
         if (node.nodeName === "TEMPLATE") {
             BaseElement.scanAndReplace(node.content);
         }
         else if (BaseElement.isAAElement(node)) {
-            // if(node.innerFragment) { return };
+            // console.log(node);
+            if(node.innerFragment) { return };
+            let d = document.createElement("div");
+            d.innerHTML="skata";
             let holder = BaseElement.createHolderForNode(node);
             node.replaceWith(holder);
-            node.innerFragment = holder.innerFragment;
+            // node.replaceWith(d);
+            // node.innerFragment = holder.innerFragment;
 
         } else
             for (let i = 0; i < node.childNodes.length; i++) {
@@ -1082,7 +1067,7 @@ class BaseElement extends HTMLElement {
         //  use setTimeout to allow aaSequence.next() to return,
         //  so that calls to aaSequence.next are not recursive
         // setTimeout(()=>{
-        // debugger;
+
         this.dispatchEvent(new CustomEvent('endEvent', { bubbles: true, detail }));
         // },0);
     }
@@ -2860,7 +2845,6 @@ class AASequence extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
 }
 
 
-
 _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerAAElement('aa-sequence', AASequence);
 
 
@@ -3578,7 +3562,7 @@ class AAVariable extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
         let expr = this.replaceExpressionIdentifiersWithValues(test);
         // after replacing known variable names with their values in the string, test to see if the expression can be parsed
 
-        debugger;
+
         try {
             var parseTree = Object(_lib_jsep_jsep_js__WEBPACK_IMPORTED_MODULE_1__["default"])(expr);
             if(parseTree.type==="Identifier"){
@@ -3683,23 +3667,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _customElements_aa_screen_aa_screen_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./customElements/aa-screen/aa-screen.js */ "./src/customElements/aa-screen/aa-screen.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAScreen", function() { return _customElements_aa_screen_aa_screen_js__WEBPACK_IMPORTED_MODULE_12__["default"]; });
 
-/* harmony import */ var _customElements_aa_session_aa_session_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./customElements/aa-session/aa-session.js */ "./src/customElements/aa-session/aa-session.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AASession", function() { return _customElements_aa_session_aa_session_js__WEBPACK_IMPORTED_MODULE_13__["default"]; });
+/* harmony import */ var _customElements_aa_sequence_aa_sequence_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./customElements/aa-sequence/aa-sequence.js */ "./src/customElements/aa-sequence/aa-sequence.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AASequence", function() { return _customElements_aa_sequence_aa_sequence_js__WEBPACK_IMPORTED_MODULE_13__["default"]; });
 
-/* harmony import */ var _customElements_aa_sequence_aa_sequence_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./customElements/aa-sequence/aa-sequence.js */ "./src/customElements/aa-sequence/aa-sequence.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AASequence", function() { return _customElements_aa_sequence_aa_sequence_js__WEBPACK_IMPORTED_MODULE_14__["default"]; });
+/* harmony import */ var _customElements_aa_slider_aa_slider_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./customElements/aa-slider/aa-slider.js */ "./src/customElements/aa-slider/aa-slider.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AASlider", function() { return _customElements_aa_slider_aa_slider_js__WEBPACK_IMPORTED_MODULE_14__["default"]; });
 
-/* harmony import */ var _customElements_aa_slider_aa_slider_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./customElements/aa-slider/aa-slider.js */ "./src/customElements/aa-slider/aa-slider.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AASlider", function() { return _customElements_aa_slider_aa_slider_js__WEBPACK_IMPORTED_MODULE_15__["default"]; });
+/* harmony import */ var _customElements_aa_text_answer_aa_text_answer_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./customElements/aa-text-answer/aa-text-answer.js */ "./src/customElements/aa-text-answer/aa-text-answer.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AATextAnswer", function() { return _customElements_aa_text_answer_aa_text_answer_js__WEBPACK_IMPORTED_MODULE_15__["default"]; });
 
-/* harmony import */ var _customElements_aa_text_answer_aa_text_answer_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./customElements/aa-text-answer/aa-text-answer.js */ "./src/customElements/aa-text-answer/aa-text-answer.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AATextAnswer", function() { return _customElements_aa_text_answer_aa_text_answer_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
+/* harmony import */ var _customElements_aa_variable_aa_variable_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./customElements/aa-variable/aa-variable.js */ "./src/customElements/aa-variable/aa-variable.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAVariable", function() { return _customElements_aa_variable_aa_variable_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
 
-/* harmony import */ var _customElements_aa_variable_aa_variable_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./customElements/aa-variable/aa-variable.js */ "./src/customElements/aa-variable/aa-variable.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAVariable", function() { return _customElements_aa_variable_aa_variable_js__WEBPACK_IMPORTED_MODULE_17__["default"]; });
+/* harmony import */ var _customElements_aa_choose_aa_when_aa_when_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./customElements/aa-choose/aa-when/aa-when.js */ "./src/customElements/aa-choose/aa-when/aa-when.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAWhen", function() { return _customElements_aa_choose_aa_when_aa_when_js__WEBPACK_IMPORTED_MODULE_17__["default"]; });
 
-/* harmony import */ var _customElements_aa_choose_aa_when_aa_when_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./customElements/aa-choose/aa-when/aa-when.js */ "./src/customElements/aa-choose/aa-when/aa-when.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAWhen", function() { return _customElements_aa_choose_aa_when_aa_when_js__WEBPACK_IMPORTED_MODULE_18__["default"]; });
+/* harmony import */ var _customElements_aa_session_aa_session_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./customElements/aa-session/aa-session.js */ "./src/customElements/aa-session/aa-session.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AASession", function() { return _customElements_aa_session_aa_session_js__WEBPACK_IMPORTED_MODULE_18__["default"]; });
 
 // import '../dist/paper-polymer.js';
 
@@ -3722,6 +3706,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/**
+ * it is important that aa-session is imported last. This way all other elements will
+ * have already been registered before a aa-session element gets
+ * initialized
+ */
 
 
 
@@ -5302,7 +5291,6 @@ class mySVG {
 
                         if(j.left) if(j.left.name) if(j.left.name.length>7){
                             let newName = j.left.name.substr(0,5)+"...";
-                            debugger;
                             textToRender = textToRender.replace(j.left.name, newName);
                         }
                     }

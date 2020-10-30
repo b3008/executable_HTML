@@ -174,7 +174,6 @@ export default class AASequence extends BaseElement {
 }
 
 
-
 BaseElement.registerAAElement('aa-sequence', AASequence);
 
 

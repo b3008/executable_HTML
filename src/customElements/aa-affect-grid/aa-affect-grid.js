@@ -256,30 +256,23 @@ export default class AAAffectGrid extends BaseElement {
 
     get css() {
         return html`<style>
-
-        
         :host{
             display:block;
-            font-family: Roboto, Noto, sans-serif;
-            
+            font-family: Roboto, Noto, sans-serif;   
         }
         .top-section{
             height:40px;
             width:100%;
-         
         }
-
         .top-left{
             text-align:left;
         }
-
         .top-label{
             text-align:center;
         }
         .top-right{
             text-align:right;
         }
-
         .bottom-left{
             text-align:left;
         }
@@ -289,8 +282,6 @@ export default class AAAffectGrid extends BaseElement {
         .bottom-right{
             text-align:right;
         }
-
-
         .top-left-corner{
             width:40px;
             height:40px;
@@ -299,7 +290,6 @@ export default class AAAffectGrid extends BaseElement {
             width:40px;
             height:40px;
         }
-
         .bottom-left-corner{
             width:40px;
             height:40px;
@@ -308,15 +298,10 @@ export default class AAAffectGrid extends BaseElement {
             width:40px;
             height:40px;
         }
-
-
         .middle-section{
          
             flex-grow:2;
         }
-
-
-        
         .bottom-section{
            
             height:40px;
@@ -330,7 +315,6 @@ export default class AAAffectGrid extends BaseElement {
             width:40px;
             height:100%;
         }
-
         .grid{
             display:grid;
             grid-template-columns: repeat(${this.columns}, ${100/this.columns}%);
@@ -343,19 +327,15 @@ export default class AAAffectGrid extends BaseElement {
             border:solid thin;
             /* transition:background-color 0.2s; */
         }
-
         .cell.top{
             border-top:solid 2px;
         }
-
         .cell.bottom{
             border-bottom:solid 2px;
         }
-
         .cell.left{
             border-left:solid 2px;
         }
-
         .cell.right{
             border-right: solid 2px;
         }
@@ -363,8 +343,6 @@ export default class AAAffectGrid extends BaseElement {
             background-color: #3367D6;
             
         }
-
-
         .label{
             flex-grow:1
         }
