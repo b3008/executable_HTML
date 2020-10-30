@@ -66,7 +66,7 @@ export default class AAVariable extends BaseElement {
         let expr = this.replaceExpressionIdentifiersWithValues(test);
         // after replacing known variable names with their values in the string, test to see if the expression can be parsed
 
-        debugger;
+
         try {
             var parseTree = jsep(expr);
             if(parseTree.type==="Identifier"){

@@ -34,6 +34,8 @@ export default class BaseElement extends HTMLElement {
         }
     }
     static registerAAElement(name, elem) {
+        console.log(name, elem);
+       
         if (!customElements.get(name)) {
             window.AANodeNames = window.AANodeNames || [];
             window.AANodeNames.push(name.toUpperCase());
@@ -64,14 +66,19 @@ export default class BaseElement extends HTMLElement {
     }
 
     static scanAndReplace(node) {
+        // console.log(node);
         if (node.nodeName === "TEMPLATE") {
             BaseElement.scanAndReplace(node.content);
         }
         else if (BaseElement.isAAElement(node)) {
-            // if(node.innerFragment) { return };
+            // console.log(node);
+            if(node.innerFragment) { return };
+            let d = document.createElement("div");
+            d.innerHTML="skata";
             let holder = BaseElement.createHolderForNode(node);
             node.replaceWith(holder);
-            node.innerFragment = holder.innerFragment;
+            // node.replaceWith(d);
+            // node.innerFragment = holder.innerFragment;
 
         } else
             for (let i = 0; i < node.childNodes.length; i++) {
@@ -436,7 +443,7 @@ export default class BaseElement extends HTMLElement {
         //  use setTimeout to allow aaSequence.next() to return,
         //  so that calls to aaSequence.next are not recursive
         // setTimeout(()=>{
-        // debugger;
+
         this.dispatchEvent(new CustomEvent('endEvent', { bubbles: true, detail }));
         // },0);
     }
