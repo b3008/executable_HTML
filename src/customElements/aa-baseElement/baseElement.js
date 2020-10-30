@@ -33,9 +33,7 @@ export default class BaseElement extends HTMLElement {
             },
         }
     }
-    static registerAAElement(name, elem) {
-        console.log(name, elem);
-       
+    static registerAAElement(name, elem) {       
         if (!customElements.get(name)) {
             window.AANodeNames = window.AANodeNames || [];
             window.AANodeNames.push(name.toUpperCase());
@@ -66,20 +64,14 @@ export default class BaseElement extends HTMLElement {
     }
 
     static scanAndReplace(node) {
-        // console.log(node);
+
         if (node.nodeName === "TEMPLATE") {
             BaseElement.scanAndReplace(node.content);
         }
         else if (BaseElement.isAAElement(node)) {
-            // console.log(node);
-            if(node.innerFragment) { return };
-            let d = document.createElement("div");
-            d.innerHTML="skata";
+            // if(node.innerFragment) { return };
             let holder = BaseElement.createHolderForNode(node);
             node.replaceWith(holder);
-            // node.replaceWith(d);
-            // node.innerFragment = holder.innerFragment;
-
         } else
             for (let i = 0; i < node.childNodes.length; i++) {
                 BaseElement.scanAndReplace(node.childNodes[i]);
