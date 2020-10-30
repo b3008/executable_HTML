@@ -202,7 +202,7 @@ export default class AAAffectGrid extends BaseElement {
         
 
         this.grid = this.root.querySelector('.grid');
-        this.grid.addEventListener("click", (e)=>{
+        this.grid.addEventListener("mousedown", (e)=>{
             let currentValue = this.value;
 
             let cell = e.path[0];
@@ -341,7 +341,7 @@ export default class AAAffectGrid extends BaseElement {
         }
         .cell{
             border:solid thin;
-            transition:background-color 0.2s;
+            /* transition:background-color 0.2s; */
         }
 
         .cell.top{
