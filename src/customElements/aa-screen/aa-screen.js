@@ -8,7 +8,7 @@ export default class AAScreen extends BaseElement {
 
             ...BaseElement.properties,
 
-    
+
             "submit-button-text": {
                 type: String,
                 value: "submit",
@@ -148,30 +148,64 @@ export default class AAScreen extends BaseElement {
             userMessage.innerHTML = html`
                     <div style='display:flex; align-items:center'>
                         <div>please fill out the required fields</div>
-                        <div id='attention' style='color: red; font-size: 20px;  border: solid thin; border-radius: 50%; width: 20px;
-                                                                                        margin-left:20px; height: 20px; 
-                                                                                        text-align: center;
-                                                                                        padding: 5px;'>!</div>
+                        <div id='attention'
+                            style='color: red; font-size: 20px;  border: solid thin; border-radius: 50%; width: 20px;
+                                                                                                                                margin-left:20px; height: 20px; 
+                                                                                                                                text-align: center;
+                                                                                                                                padding: 5px;'>!</div>
                     </div>`;
             return;
         }
 
-        let valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: this.value } });
-        this.dispatchEvent(valueSubmitEvent);
-        this._dispatchEndEvent(this.value);
-        if (typeof e.detail.callback != 'undefined') {
-            e.detail.callback(e);
-        }
-        if (this.autohide) {
-            this.hide();
-        }
+        this.collectValues().then(val => {
+            // debugger;
+            try {
+                let valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: val } });
+                this.dispatchEvent(valueSubmitEvent);
+                this._dispatchEndEvent(val);
+                if (typeof e.detail.callback != 'undefined') {
+                    e.detail.callback(e);
+                }
+                if (this.autohide) {
+                    this.hide();
+                }
+            } catch (e) {
+                console.error(e);
+                debugger;
+            }
+        })
 
     }
 
 
 
+    collectValues() {
+
+        return new Promise((resolve, reject) => {
+            let __meta = {
+                attachedTimestamp: this._attachedTimestamp,
+                submitTimestamp: new Date().getTime()
+            };
+            this.getChildrenValues(this).then(result => {
+                result['__meta'] = __meta;
+                resolve(result);
+            })
+
+        })
 
 
+    }
+
+
+    // get value() {
+    //     let __meta = {
+    //         attachedTimestamp: this._attachedTimestamp,
+    //         submitTimestamp: new Date().getTime()
+    //     };
+    //     let result = this.getChildrenValues(this);
+    //     result['__meta'] = __meta;
+    //     return result;
+    // }
 
     hasChildrenThatDemandResponse() {
 
@@ -200,9 +234,13 @@ export default class AAScreen extends BaseElement {
 
 
 
-    getChildrenValues(node, result) {
+    async getChildrenValues(node, result) {
+        // return new Promise((resolve, reject)=>{
+
+        
         node = node || this;
         result = result || {};
+        
         for (let i = 0; i < node.children.length; i++) {
             let c = node.children[i];
 
@@ -213,40 +251,77 @@ export default class AAScreen extends BaseElement {
                 if (c.getValue) {
                     result[name] = c.getValue();
                 } else if (c.value) {
-                    result[name] = c.value;
+                    if (c.value.then) {
+                        result[name] = await c.value;
+                    } else {
+                        result[name] = c.value;
+                    }
+
                 } else {
                     result[name] = null;
                 }
             }
             else {
-
-
-                this.getChildrenValues(c, result);
+                await this.getChildrenValues(c, result);
             }
         }
         return result;
+        // })
     }
 
+    // getChildrenValues(node, result) {
+    //     node = node || this;
+    //     result = result || {};
+    //     for (let i = 0; i < node.children.length; i++) {
+    //         let c = node.children[i];
+
+    //         if (c.nodeName != 'AA-LABEL') {
+
+    //             let name = BaseElement.getVariableName(c);
+    //             console.log(c, name);
+    //             if (c.getValue) {
+    //                 result[name] = c.getValue();
+    //             } else if (c.value) {
+    //                 if(c.value.then){
+    //                     c.value.then((val)=>{
+    //                         result[name] = c.value;    
+    //                     })
+    //                 }else{
+    //                     result[name] = c.value;
+    //                 }
+
+    //             } else {
+    //                 result[name] = null;
+    //             }
+    //         }
+    //         else {
+    //             this.getChildrenValues(c, result);
+    //         }
+    //     }
+    //     return result;
+    // }
 
 
 
 
-    get value() {
-        let __meta = {
-            attachedTimestamp: this._attachedTimestamp,
-            submitTimestamp: new Date().getTime()
-        };
-        let result = this.getChildrenValues(this);
-        result['__meta'] = __meta;
-        return result;
+
+    get value(){
+
+        return this.collectValues();
+        // new Promise(resolve,reject)=>{
+
+        // }
     }
 
-    get valueWithKey() {
-        let result = {};
-
-        result[this.name] = this.value;
-
-        return result;
+    valueWithKey() {
+        return new Promise((resolve, reject)=>{
+            this.value.then((val)=>{
+                let result = {};
+                result[this.name] =  val;
+                resolve(result);
+            })
+        })
+        
     }
 
 

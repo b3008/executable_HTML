@@ -60,7 +60,7 @@ export default class AACheckboxes extends BaseElement {
             }
 
         }
-        console.log(result);
+        // console.log(result);
         return result
     }
 

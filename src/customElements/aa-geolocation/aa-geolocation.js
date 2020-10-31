@@ -7,11 +7,19 @@ export default class AAGeolocation extends BaseElement {
                 type: String,
                 userDefined: true
             },
-            'value': {
-                type: String,
-                userDefined: false
+
+        
+            'get-on-request': {
+                type: Boolean,
+                userDefined: true,
+                value: false
             },
 
+            'ready': {
+                type: Boolean,
+                userDefined: false,
+                value: false
+            }
             // 'lat': {
             //     type: String,
             //     userDefined: false
@@ -46,42 +54,73 @@ export default class AAGeolocation extends BaseElement {
         this.root = this.attachShadow({ mode: 'open' });
     }
 
+
+
+    get value() {
+        return this._getLocation();
+    }
+
+    set value(val) {
+        this.setAttribute("value", val);
+    }
+
+    async _getValue() {
+        let location = await this._getLocation();
+
+        console.log(location);
+        return location;
+    }
+
+
+    async _getLocation() {
+
+        return new Promise((resolve, reject) => {
+            if ("geolocation" in navigator) {
+
+                navigator.geolocation.getCurrentPosition((position) => {
+
+                    //  in this way it is synchronous, there will be no progression to the next
+                    //  item in a sequence unless this callback function is called.
+
+                    //  it could also be made asynchronous, where there will be a progression
+                    //  regardless. Perhaps asynchronous components should notify parents
+                    //  of their presence.
+
+                    // do_something(position.coords.latitude, position.coords.longitude);
+
+                    let lat = position.coords.latitude;
+                    let lon = position.coords.longitude;
+                    let timestamp = new Date();
+                    debugger;
+                    this.value = { lat, lon, timestamp }
+
+                    resolve(this.value);
+                    // var valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: this.value } });
+                    // this.dispatchEvent(valueSubmitEvent);    
+                    // this._dispatchEndEvent({ value: this.value, autoDispatch: true })
+                });
+            } else {
+                reject();
+            }
+        })
+    }
     connectedCallback() {
 
 
+        super.connectedCallback();
         // let session = this._getParentSession();
         // session.setData(this.name, this.value);
         // this._dispatchEndEvent({autoDispatch:true});
         // if(!this.debug) {this.remove();}
 
-        if ("geolocation" in navigator) {
-
-            navigator.geolocation.getCurrentPosition( (position)=> {
-
-                //  in this way it is synchronous, there will be no progression to the next
-                //  item in a sequence unless this callback function is called.
-
-                //  it could also be made asynchronous, where there will be a progression
-                //  regardless. Perhaps asynchronous components should notify parents
-                //  of their presence.
-
-                // do_something(position.coords.latitude, position.coords.longitude);
-
-                let lat = position.coords.latitude;
-                let lon = position.coords.longitude;
-                let timestamp = new Date();
-                this.value = { lat,  lon, timestamp}
-           
-                var valueSubmitEvent = new CustomEvent('valueSubmit', {bubbles:true, detail:{value:this.value}});
-                this.dispatchEvent(valueSubmitEvent);
-
-
-
-                // var assignableEndEvent = new CustomEvent("assignableEnd", {bubbles:true, detail:{value:this.value}});
-                // this.dispatchEvent(assignableEndEvent);
-                this._dispatchEndEvent({value:this.value})
-            });
-        }
+        // if (!this.getOnRequest) {
+        //     this._getValue();
+        //     var valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: this.value } });
+        //     this.dispatchEvent(valueSubmitEvent);
+        //     this._dispatchEndEvent({ value: this.value, autoDispatch: true })
+        // }
+        debugger;
+        this.ready = true;
     }
 
 
