@@ -657,9 +657,7 @@ class BaseElement extends HTMLElement {
             },
         }
     }
-    static registerAAElement(name, elem) {
-        console.log(name, elem);
-       
+    static registerAAElement(name, elem) {       
         if (!customElements.get(name)) {
             window.AANodeNames = window.AANodeNames || [];
             window.AANodeNames.push(name.toUpperCase());
@@ -690,20 +688,14 @@ class BaseElement extends HTMLElement {
     }
 
     static scanAndReplace(node) {
-        // console.log(node);
+
         if (node.nodeName === "TEMPLATE") {
             BaseElement.scanAndReplace(node.content);
         }
         else if (BaseElement.isAAElement(node)) {
-            // console.log(node);
-            if(node.innerFragment) { return };
-            let d = document.createElement("div");
-            d.innerHTML="skata";
+            // if(node.innerFragment) { return };
             let holder = BaseElement.createHolderForNode(node);
             node.replaceWith(holder);
-            // node.replaceWith(d);
-            // node.innerFragment = holder.innerFragment;
-
         } else
             for (let i = 0; i < node.childNodes.length; i++) {
                 BaseElement.scanAndReplace(node.childNodes[i]);
@@ -712,15 +704,11 @@ class BaseElement extends HTMLElement {
 
     constructor() {
         super();
-        // console.log(this.nodeName+"#"+this.id, "created");
         this._props = this.makePropertiesFromAttributes();
 
     }
 
     connectedCallback() {
-
-
-        // console.log(this.id, " connected");
         this._attachedTimestamp = new Date().getTime();
         this._debug = (this.debug === true) || (this.debug === null);
         if (this.innerFragment) {
@@ -786,9 +774,7 @@ class BaseElement extends HTMLElement {
         let props = {};
         for (let i = 0; i < attr.length; i++) {
             let prop = this.toCamelCase(attr[i]);
-            props[prop] = attr[i];
-
-
+            props[prop] = attr[i];   
             if (typeof this[prop] != 'undefined') {
                 continue;
             } else {
@@ -855,7 +841,6 @@ class BaseElement extends HTMLElement {
                     }
                     else {
                         let val = this.getAttribute(keys[i]) || (p[keys[i]].value || null);
-
                         if (val) this.setAttribute(keys[i], val);
                         if (val === false) this.setAttribute(keys[i], val);
                     }
@@ -868,7 +853,6 @@ class BaseElement extends HTMLElement {
     static copy(node) {
         let nodeCopy;
         if (BaseElement.isAAElement(node)) {
-
             if (node.innerFragment) {
                 nodeCopy = node.cloneNode();
                 nodeCopy.innerFragment = BaseElement.createFragmentForNode(node.innerFragment);
@@ -1042,7 +1026,7 @@ class BaseElement extends HTMLElement {
         }
         name += stack[stack.length - 1];
 
-        // console.log(stack, name)
+       
         return name; // removes the html element
     }
 
@@ -1168,7 +1152,7 @@ class AACheckboxes extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
             }
 
         }
-        console.log(result);
+        // console.log(result);
         return result
     }
 
@@ -1752,11 +1736,19 @@ class AAGeolocation extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
                 type: String,
                 userDefined: true
             },
-            'value': {
-                type: String,
-                userDefined: false
+
+
+            'get-on-request': {
+                type: Boolean,
+                userDefined: true,
+                value: false
             },
 
+            'ready': {
+                type: Boolean,
+                userDefined: false,
+                value: false
+            }
             // 'lat': {
             //     type: String,
             //     userDefined: false
@@ -1791,40 +1783,80 @@ class AAGeolocation extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
         this.root = this.attachShadow({ mode: 'open' });
     }
 
+
+
+    get value() {
+        return this._getLocation();
+    }
+
+    set value(val) {
+        this.setAttribute("value", val);
+    }
+
+    async _getValue() {
+        let location = await this._getLocation();
+
+        console.log(location);
+        return location;
+    }
+
+
+    _getLocation() {
+
+        return new Promise((resolve, reject) => {
+            if ("geolocation" in navigator) {
+
+                // resolve("skata");
+                navigator.geolocation.getCurrentPosition((position) => {
+
+                    //  in this way it is synchronous, there will be no progression to the next
+                    //  item in a sequence unless this callback function is called.
+
+                    //  it could also be made asynchronous, where there will be a progression
+                    //  regardless. Perhaps asynchronous components should notify parents
+                    //  of their presence.
+
+                    // do_something(position.coords.latitude, position.coords.longitude);
+
+                    let lat = position.coords.latitude;
+                    let lon = position.coords.longitude;
+                    let timestamp = new Date();
+
+                    let val = { lat, lon, timestamp }
+
+                    resolve(val);
+                    // var valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: this.value } });
+                    // this.dispatchEvent(valueSubmitEvent);
+                    // this._dispatchEndEvent({ value: this.value, autoDispatch: true })
+                });
+            } else {
+                reject();
+            }
+        })
+    }
     connectedCallback() {
 
 
+        super.connectedCallback();
         // let session = this._getParentSession();
         // session.setData(this.name, this.value);
         // this._dispatchEndEvent({autoDispatch:true});
         // if(!this.debug) {this.remove();}
 
-        if ("geolocation" in navigator) {
+        // if (!this.getOnRequest) {
+        //     this._getValue();
+        //     var valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: this.value } });
+        //     this.dispatchEvent(valueSubmitEvent);
+        //     this._dispatchEndEvent({ value: this.value, autoDispatch: true })
+        // }
 
-            navigator.geolocation.getCurrentPosition( (position)=> {
-
-                //  in this way it is synchronous, there will be no progression to the next
-                //  item in a sequence unless this callback function is called.
-
-                //  it could also be made asynchronous, where there will be a progression
-                //  regardless. Perhaps asynchronous components should notify parents
-                //  of their presence.
-
-                // do_something(position.coords.latitude, position.coords.longitude);
-
-                let lat = position.coords.latitude;
-                let lon = position.coords.longitude;
-                let timestamp = new Date();
-                this.value = { lat,  lon, timestamp}
-           
-                var valueSubmitEvent = new CustomEvent('valueSubmit', {bubbles:true, detail:{value:this.value}});
+        this._ready = true;
+        
+        if (!this.getOnRequest) {
+            this._getLocation().then(val=>{
+                var valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value:val } });
                 this.dispatchEvent(valueSubmitEvent);
-
-
-
-                // var assignableEndEvent = new CustomEvent("assignableEnd", {bubbles:true, detail:{value:this.value}});
-                // this.dispatchEvent(assignableEndEvent);
-                this._dispatchEndEvent({value:this.value})
+                this._dispatchEndEvent({ value: val, autoDispatch: true })
             });
         }
     }
@@ -2254,7 +2286,7 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
                     this.radioGroup.style.display='flex';
                     this.radioGroup.style.justifyContent='space-evenly';
 
-                    // debugger;
+
                     let d1 = child.shadowRoot.querySelector('#radioContainer');
                     let d2 = child.shadowRoot.querySelector('#radioLabel');
                     d2.style.textAlign = 'center';
@@ -2334,7 +2366,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
             ..._aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].properties,
 
-    
+
             "submit-button-text": {
                 type: String,
                 value: "submit",
@@ -2474,30 +2506,64 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
             userMessage.innerHTML = html`
                     <div style='display:flex; align-items:center'>
                         <div>please fill out the required fields</div>
-                        <div id='attention' style='color: red; font-size: 20px;  border: solid thin; border-radius: 50%; width: 20px;
-                                                                                        margin-left:20px; height: 20px; 
-                                                                                        text-align: center;
-                                                                                        padding: 5px;'>!</div>
+                        <div id='attention'
+                            style='color: red; font-size: 20px;  border: solid thin; border-radius: 50%; width: 20px;
+                                                                                                                                margin-left:20px; height: 20px; 
+                                                                                                                                text-align: center;
+                                                                                                                                padding: 5px;'>!</div>
                     </div>`;
             return;
         }
 
-        let valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: this.value } });
-        this.dispatchEvent(valueSubmitEvent);
-        this._dispatchEndEvent(this.value);
-        if (typeof e.detail.callback != 'undefined') {
-            e.detail.callback(e);
-        }
-        if (this.autohide) {
-            this.hide();
-        }
+        this.collectValues().then(val => {
+            // debugger;
+            try {
+                let valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: val } });
+                this.dispatchEvent(valueSubmitEvent);
+                this._dispatchEndEvent(val);
+                if (typeof e.detail.callback != 'undefined') {
+                    e.detail.callback(e);
+                }
+                if (this.autohide) {
+                    this.hide();
+                }
+            } catch (e) {
+                console.error(e);
+                debugger;
+            }
+        })
 
     }
 
 
 
+    collectValues() {
+
+        return new Promise((resolve, reject) => {
+            let __meta = {
+                attachedTimestamp: this._attachedTimestamp,
+                submitTimestamp: new Date().getTime()
+            };
+            this.getChildrenValues(this).then(result => {
+                result['__meta'] = __meta;
+                resolve(result);
+            })
+
+        })
 
 
+    }
+
+
+    // get value() {
+    //     let __meta = {
+    //         attachedTimestamp: this._attachedTimestamp,
+    //         submitTimestamp: new Date().getTime()
+    //     };
+    //     let result = this.getChildrenValues(this);
+    //     result['__meta'] = __meta;
+    //     return result;
+    // }
 
     hasChildrenThatDemandResponse() {
 
@@ -2526,9 +2592,13 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
 
 
-    getChildrenValues(node, result) {
+    async getChildrenValues(node, result) {
+        // return new Promise((resolve, reject)=>{
+
+        
         node = node || this;
         result = result || {};
+        
         for (let i = 0; i < node.children.length; i++) {
             let c = node.children[i];
 
@@ -2539,40 +2609,77 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
                 if (c.getValue) {
                     result[name] = c.getValue();
                 } else if (c.value) {
-                    result[name] = c.value;
+                    if (c.value.then) {
+                        result[name] = await c.value;
+                    } else {
+                        result[name] = c.value;
+                    }
+
                 } else {
                     result[name] = null;
                 }
             }
             else {
-
-
-                this.getChildrenValues(c, result);
+                await this.getChildrenValues(c, result);
             }
         }
         return result;
+        // })
     }
 
+    // getChildrenValues(node, result) {
+    //     node = node || this;
+    //     result = result || {};
+    //     for (let i = 0; i < node.children.length; i++) {
+    //         let c = node.children[i];
+
+    //         if (c.nodeName != 'AA-LABEL') {
+
+    //             let name = BaseElement.getVariableName(c);
+    //             console.log(c, name);
+    //             if (c.getValue) {
+    //                 result[name] = c.getValue();
+    //             } else if (c.value) {
+    //                 if(c.value.then){
+    //                     c.value.then((val)=>{
+    //                         result[name] = c.value;    
+    //                     })
+    //                 }else{
+    //                     result[name] = c.value;
+    //                 }
+
+    //             } else {
+    //                 result[name] = null;
+    //             }
+    //         }
+    //         else {
+    //             this.getChildrenValues(c, result);
+    //         }
+    //     }
+    //     return result;
+    // }
 
 
 
 
-    get value() {
-        let __meta = {
-            attachedTimestamp: this._attachedTimestamp,
-            submitTimestamp: new Date().getTime()
-        };
-        let result = this.getChildrenValues(this);
-        result['__meta'] = __meta;
-        return result;
+
+    get value(){
+
+        return this.collectValues();
+        // new Promise(resolve,reject)=>{
+
+        // }
     }
 
-    get valueWithKey() {
-        let result = {};
-
-        result[this.name] = this.value;
-
-        return result;
+    valueWithKey() {
+        return new Promise((resolve, reject)=>{
+            this.value.then((val)=>{
+                let result = {};
+                result[this.name] =  val;
+                resolve(result);
+            })
+        })
+        
     }
 
 
