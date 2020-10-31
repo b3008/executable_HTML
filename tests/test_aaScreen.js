@@ -52,6 +52,7 @@ describe('aa-screen', () => {
             assert(submitButton.click, 'submitButton.click method does not exist')
 
             document.querySelector('#screenContainer').addEventListener('valueSubmit', (e) => {
+               
                 assert(e.detail.value, 'should receive value after click')
                 
                 done();
@@ -137,8 +138,9 @@ describe('aa-screen', () => {
             assert(submitButton, 'submit button member does not exist');
             assert(submitButton.click, 'submitButton.click method does not exist');
 
-            let valWithKey = screen1.valueWithKey;
-            console.log(valWithKey);
+            let valWithKey = screen1.valueWithKey().then(valWithKey=>{
+                console.log(valWithKey);
+
 
             assert(Object.keys(valWithKey)[0] == 'first');
             assert(valWithKey.first.myInput == 'myValue');
@@ -149,6 +151,8 @@ describe('aa-screen', () => {
                 done();
             })
             submitButton.click();
+            });
+            
 
         });
 

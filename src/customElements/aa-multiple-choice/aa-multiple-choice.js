@@ -123,7 +123,7 @@ export default class AAMultipleChoice extends BaseElement {
                     this.radioGroup.style.display='flex';
                     this.radioGroup.style.justifyContent='space-evenly';
 
-                    // debugger;
+
                     let d1 = child.shadowRoot.querySelector('#radioContainer');
                     let d2 = child.shadowRoot.querySelector('#radioLabel');
                     d2.style.textAlign = 'center';
