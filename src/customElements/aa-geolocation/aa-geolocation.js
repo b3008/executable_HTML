@@ -8,7 +8,7 @@ export default class AAGeolocation extends BaseElement {
                 userDefined: true
             },
 
-        
+
             'get-on-request': {
                 type: Boolean,
                 userDefined: true,
@@ -72,11 +72,12 @@ export default class AAGeolocation extends BaseElement {
     }
 
 
-    async _getLocation() {
+    _getLocation() {
 
         return new Promise((resolve, reject) => {
             if ("geolocation" in navigator) {
 
+                // resolve("skata");
                 navigator.geolocation.getCurrentPosition((position) => {
 
                     //  in this way it is synchronous, there will be no progression to the next
@@ -91,12 +92,12 @@ export default class AAGeolocation extends BaseElement {
                     let lat = position.coords.latitude;
                     let lon = position.coords.longitude;
                     let timestamp = new Date();
-                    debugger;
-                    this.value = { lat, lon, timestamp }
 
-                    resolve(this.value);
+                    let val = { lat, lon, timestamp }
+
+                    resolve(val);
                     // var valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: this.value } });
-                    // this.dispatchEvent(valueSubmitEvent);    
+                    // this.dispatchEvent(valueSubmitEvent);
                     // this._dispatchEndEvent({ value: this.value, autoDispatch: true })
                 });
             } else {
@@ -119,8 +120,16 @@ export default class AAGeolocation extends BaseElement {
         //     this.dispatchEvent(valueSubmitEvent);
         //     this._dispatchEndEvent({ value: this.value, autoDispatch: true })
         // }
-        debugger;
-        this.ready = true;
+
+        this._ready = true;
+        
+        if (!this.getOnRequest) {
+            this._getLocation().then(val=>{
+                var valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value:val } });
+                this.dispatchEvent(valueSubmitEvent);
+                this._dispatchEndEvent({ value: val, autoDispatch: true })
+            });
+        }
     }
 
 
