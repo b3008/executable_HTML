@@ -83,6 +83,23 @@ export default class AALikertScale extends BaseElement {
 
         this.mChoice = this.root.querySelector("aa-multiple-choice")
         this.choiceItems = this.mChoice.choiceItems
+
+
+        // this.root.addEventListener("change", ()=>{
+        //     debugger;
+        // })
+
+        this.addEventListener("click", ()=>{
+            if(!this.currentvalue){
+                this.dispatchEvent(new CustomEvent("change"))
+            }else
+            {
+                if(this.currentvalue!=this.value){
+                    this.dispatchEvent(new CustomEvent("change"))
+                }
+                this.currentvalue = this.value;
+            }
+        })
     }
 
 

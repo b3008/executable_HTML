@@ -116,8 +116,6 @@ export default class AACheckboxes extends BaseElement {
                 }
                 child.innerHTML = node.innerHTML;
                 this.root.appendChild(child);
-
-                // console.log('name: ', child.name);
                 this.boxes.push(child);
             }
         }
