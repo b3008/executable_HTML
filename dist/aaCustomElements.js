@@ -1208,8 +1208,6 @@ class AACheckboxes extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
                 }
                 child.innerHTML = node.innerHTML;
                 this.root.appendChild(child);
-
-                // console.log('name: ', child.name);
                 this.boxes.push(child);
             }
         }
@@ -2016,6 +2014,23 @@ class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
 
         this.mChoice = this.root.querySelector("aa-multiple-choice")
         this.choiceItems = this.mChoice.choiceItems
+
+
+        // this.root.addEventListener("change", ()=>{
+        //     debugger;
+        // })
+
+        this.addEventListener("click", ()=>{
+            if(!this.currentvalue){
+                this.dispatchEvent(new CustomEvent("change"))
+            }else
+            {
+                if(this.currentvalue!=this.value){
+                    this.dispatchEvent(new CustomEvent("change"))
+                }
+                this.currentvalue = this.value;
+            }
+        })
     }
 
 
@@ -2255,6 +2270,18 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
         }
 
         this.style.display = 'block';
+
+        // this.addEventListener("click", ()=>{
+        //     if(!this.currentvalue){
+        //         this.dispatchEvent(new CustomEvent("change"))
+        //     }else
+        //     {
+        //         if(this.currentvalue!=this.value){
+        //             this.dispatchEvent(new CustomEvent("change", {bubbles:true}))
+        //         }
+        //         this.currentvalue = this.value;
+        //     }
+        // })
     }
 
     attachToShadowDomAccordingToKind(node) {
@@ -2305,7 +2332,6 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
                     newDiv.appendChild(d1);
                     newDiv.appendChild(d2);
  
-                
                 } 
                 // else {
 

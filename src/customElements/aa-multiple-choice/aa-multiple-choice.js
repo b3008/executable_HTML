@@ -92,6 +92,18 @@ export default class AAMultipleChoice extends BaseElement {
         }
 
         this.style.display = 'block';
+
+        // this.addEventListener("click", ()=>{
+        //     if(!this.currentvalue){
+        //         this.dispatchEvent(new CustomEvent("change"))
+        //     }else
+        //     {
+        //         if(this.currentvalue!=this.value){
+        //             this.dispatchEvent(new CustomEvent("change", {bubbles:true}))
+        //         }
+        //         this.currentvalue = this.value;
+        //     }
+        // })
     }
 
     attachToShadowDomAccordingToKind(node) {
@@ -142,7 +154,6 @@ export default class AAMultipleChoice extends BaseElement {
                     newDiv.appendChild(d1);
                     newDiv.appendChild(d2);
  
-                
                 } 
                 // else {
 
