@@ -150,9 +150,10 @@ export default class AAScreen extends BaseElement {
                         <div>please fill out the required fields</div>
                         <div id='attention'
                             style='color: red; font-size: 20px;  border: solid thin; border-radius: 50%; width: 20px;
-                                                                                                                                margin-left:20px; height: 20px; 
-                                                                                                                                text-align: center;
-                                                                                                                                padding: 5px;'>!</div>
+                                                                                                                                                    margin-left:20px; height: 20px; 
+                                                                                                                                                    text-align: center;
+                                                                                                                                                    padding: 5px;'>
+                            !</div>
                     </div>`;
             return;
         }
@@ -224,10 +225,27 @@ export default class AAScreen extends BaseElement {
         return isMissingValues;
     }
 
-    getAAChildren() {
-        let result = [];
-        for (let i = 0; i < this.children.length; i++) {
-            if (BaseElement.isAAElement(this.children[i])) { result.push(this.children[i]); }
+
+
+    getAAChildren(node, result, nodeName) {
+
+        result = result || [];
+        node = node || this;
+        for (let i = 0; i < node.children.length; i++) {
+            if (BaseElement.isAAElement(node.children[i])) {
+                if (nodeName) {
+                    if (node.children[i].nodeName === nodeName) {
+                        result.push(node.children[i]);
+                    }
+                }
+                else {
+                    result.push(node.children[i]);
+                }
+            }
+            else {
+                debugger;
+                this.getAAChildren(node.children[i], result, nodeName)
+            }
         }
         return result;
     }
@@ -237,12 +255,13 @@ export default class AAScreen extends BaseElement {
     async getChildrenValues(node, result) {
         // return new Promise((resolve, reject)=>{
 
-        
+
         node = node || this;
         result = result || {};
-        
+
         for (let i = 0; i < node.children.length; i++) {
             let c = node.children[i];
+
 
             if (c.nodeName != 'AA-LABEL') {
 
@@ -305,7 +324,7 @@ export default class AAScreen extends BaseElement {
 
 
 
-    get value(){
+    get value() {
 
         return this.collectValues();
         // new Promise(resolve,reject)=>{
@@ -314,14 +333,14 @@ export default class AAScreen extends BaseElement {
     }
 
     valueWithKey() {
-        return new Promise((resolve, reject)=>{
-            this.value.then((val)=>{
+        return new Promise((resolve, reject) => {
+            this.value.then((val) => {
                 let result = {};
-                result[this.name] =  val;
+                result[this.name] = val;
                 resolve(result);
             })
         })
-        
+
     }
 
 
@@ -337,6 +356,13 @@ export default class AAScreen extends BaseElement {
     }
 
     hide() {
+        
+        let aaChildren = this.getAAChildren(this, []);
+        for(let i=0; i<aaChildren.length; i++){
+            if(aaChildren[i].stop){
+                aaChildren[i].stop();
+            }
+        }
         this.style.display = 'none';
     }
 
