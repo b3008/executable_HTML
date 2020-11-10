@@ -145,7 +145,7 @@ export default class AAMultipleChoice extends BaseElement {
                     // d2.style.minWidth = "50px";
                     // d2.style.maxWidth = "90px";
                     let newDiv = document.createElement('div');
-                    newDiv.style.marginLeft = 'var(--paper-radio-button-label-spacing,10px)';
+                    // newDiv.style.marginLeft = 'var(--paper-radio-button-label-spacing,10px)';
                     newDiv.style.display='flex';
                     newDiv.style.flexDirection='column';
                     newDiv.style.alignItems = 'center';
@@ -168,7 +168,11 @@ export default class AAMultipleChoice extends BaseElement {
     }
 
     get css() {
-        return ``;
+        return html`<style>
+        paper-radio-button {
+            padding: var(--paper-radio-group-item-padding, 6px);
+        }
+        </style>`;
     }
 
 
