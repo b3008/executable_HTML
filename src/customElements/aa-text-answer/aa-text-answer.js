@@ -126,7 +126,22 @@ export default class AATextAnswer extends BaseElement {
         this.fixBugInPaperTextarea(this.inputItem);
 
         this.inputItem.addEventListener('change', (e) => {
+
             this.value = e.target.value;
+            this.dispatchEvent(new CustomEvent("change"))
+        });
+
+        this.keyUpTimeout = null;
+        this.inputItem.addEventListener('keyup', (e) => {
+
+            this.value = e.target.value;
+            if(this.keyUpTimeout){
+                clearTimeout(this.keyUpTimeout);
+            }
+            setTimeout(()=>{
+                this.dispatchEvent(new CustomEvent("change"))
+            },1500)
+            
         });
     }
 

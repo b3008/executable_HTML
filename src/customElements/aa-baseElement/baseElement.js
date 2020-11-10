@@ -31,6 +31,12 @@ export default class BaseElement extends HTMLElement {
                 value: false,
                 userDefined: true
             },
+
+            'diagram-transparent': {
+                type: Boolean,
+                value: false,
+                userDefined: true
+            },
         }
     }
     static registerAAElement(name, elem) {       

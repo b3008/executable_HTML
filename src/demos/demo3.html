@@ -1,0 +1,113 @@
+<html>
+
+<head>
+
+    <!-- <script type="module" src="../../../dist/aaCustomElements.js"></script> -->
+    <!-- <script type="module" src="/dist/aaCustomElements.js"></script> -->
+    <script type="module" src="../index.js"></script>
+    <style>
+        @font-face {
+            font-family: 'commodoreserverregular';
+            src: url('commodoreserver-webfont.woff2') format('woff2'),
+                url('commodoreserver-webfont.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+
+        }
+
+
+        .democontainer {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .c64char {
+            font-family: 'commodoreserverregular';
+            padding: 0;
+            margin: -2px;
+
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <aa-session  id="printExampleSession">
+        <template>
+            <aa-sequence>
+                
+                <!-- present an initial screen that prompts starting the process -->
+                <aa-screen submit-button-text="next">
+                    Press next to run
+                </aa-screen>
+                
+                
+                <!-- the second screen contains the loop. Its button will allow us to stop it -->
+                <aa-screen submit-button-text="stop">
+                    <aa-sequence>
+
+                        <!-- generate an integer value between 1 and 2, storing it in the variable rnd -->
+                        <aa-function-random name="rnd" min="1" max="2"></aa-function-random>
+
+                        <!-- when rnd is 1 insert 0, otherwise insert 1 -->
+                        <aa-choose>
+                            <aa-when test="rnd==1">0​</aa-when>
+                            <aa-otherwise>1</aa-otherwise>
+                        </aa-choose>
+
+                        <!-- go back to the point in the inner sequence that generates rnd, 
+                        and the sequence will continue from there -->
+                        <aa-jump goto="rnd"></aa-jump>
+                        <aa-sequence>
+                </aa-screen>
+
+                <!-- the third and final screen confirms we are at the end of the outer sequence -->
+                <aa-screen submit-button-hidden> The end. Reload the page to restart </aa-screen>
+            </aa-sequence>
+
+        </template>
+    </aa-session>
+
+
+    <aa-session  diagram>
+        <template>
+            <aa-sequence>
+                
+                <!-- present an initial screen that prompts starting the process -->
+                <aa-screen submit-button-text="next">
+                    Press next to run
+                </aa-screen>
+                
+                
+                <!-- the second screen contains the loop. Its button will allow us to stop it -->
+                <aa-screen submit-button-text="stop">
+                    <aa-sequence>
+
+                        <!-- generate an integer value between 1 and 2, storing it in the variable rnd -->
+                        <aa-function-random name="rnd" min="1" max="2"></aa-function-random>
+
+                        <!-- when rnd is 1 insert 0, otherwise insert 1 -->
+                        <aa-choose>
+                            <aa-when test="rnd==1">0​</aa-when>
+                            <aa-otherwise>1</aa-otherwise>
+                        </aa-choose>
+
+                        <!-- go back to the point in the inner sequence that generates rnd, 
+                        and the sequence will continue from there -->
+                        <aa-jump goto="rnd"></aa-jump>
+                        <aa-sequence>
+                </aa-screen>
+
+                <!-- the third and final screen confirms we are at the end of the outer sequence -->
+                <aa-screen submit-button-hidden> The end. Reload the page to restart </aa-screen>
+            </aa-sequence>
+
+        </template>
+    </aa-session>
+
+
+</body>
+
+</html>
