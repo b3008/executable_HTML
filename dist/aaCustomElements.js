@@ -655,6 +655,12 @@ class BaseElement extends HTMLElement {
                 value: false,
                 userDefined: true
             },
+
+            'diagram-transparent': {
+                type: Boolean,
+                value: false,
+                userDefined: true
+            },
         }
     }
     static registerAAElement(name, elem) {       
@@ -2534,9 +2540,10 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
                         <div>please fill out the required fields</div>
                         <div id='attention'
                             style='color: red; font-size: 20px;  border: solid thin; border-radius: 50%; width: 20px;
-                                                                                                                                margin-left:20px; height: 20px; 
-                                                                                                                                text-align: center;
-                                                                                                                                padding: 5px;'>!</div>
+                                                                                                                                                    margin-left:20px; height: 20px; 
+                                                                                                                                                    text-align: center;
+                                                                                                                                                    padding: 5px;'>
+                            !</div>
                     </div>`;
             return;
         }
@@ -2608,10 +2615,27 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         return isMissingValues;
     }
 
-    getAAChildren() {
-        let result = [];
-        for (let i = 0; i < this.children.length; i++) {
-            if (_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].isAAElement(this.children[i])) { result.push(this.children[i]); }
+
+
+    getAAChildren(node, result, nodeName) {
+
+        result = result || [];
+        node = node || this;
+        for (let i = 0; i < node.children.length; i++) {
+            if (_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].isAAElement(node.children[i])) {
+                if (nodeName) {
+                    if (node.children[i].nodeName === nodeName) {
+                        result.push(node.children[i]);
+                    }
+                }
+                else {
+                    result.push(node.children[i]);
+                }
+            }
+            else {
+                debugger;
+                this.getAAChildren(node.children[i], result, nodeName)
+            }
         }
         return result;
     }
@@ -2621,12 +2645,13 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     async getChildrenValues(node, result) {
         // return new Promise((resolve, reject)=>{
 
-        
+
         node = node || this;
         result = result || {};
-        
+
         for (let i = 0; i < node.children.length; i++) {
             let c = node.children[i];
+
 
             if (c.nodeName != 'AA-LABEL') {
 
@@ -2689,7 +2714,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
 
 
-    get value(){
+    get value() {
 
         return this.collectValues();
         // new Promise(resolve,reject)=>{
@@ -2698,14 +2723,14 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     }
 
     valueWithKey() {
-        return new Promise((resolve, reject)=>{
-            this.value.then((val)=>{
+        return new Promise((resolve, reject) => {
+            this.value.then((val) => {
                 let result = {};
-                result[this.name] =  val;
+                result[this.name] = val;
                 resolve(result);
             })
         })
-        
+
     }
 
 
@@ -2721,6 +2746,13 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     }
 
     hide() {
+        
+        let aaChildren = this.getAAChildren(this, []);
+        for(let i=0; i<aaChildren.length; i++){
+            if(aaChildren[i].stop){
+                aaChildren[i].stop();
+            }
+        }
         this.style.display = 'none';
     }
 
@@ -3544,7 +3576,22 @@ class AATextAnswer extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
         this.fixBugInPaperTextarea(this.inputItem);
 
         this.inputItem.addEventListener('change', (e) => {
+
             this.value = e.target.value;
+            this.dispatchEvent(new CustomEvent("change"))
+        });
+
+        this.keyUpTimeout = null;
+        this.inputItem.addEventListener('keyup', (e) => {
+
+            this.value = e.target.value;
+            if(this.keyUpTimeout){
+                clearTimeout(this.keyUpTimeout);
+            }
+            setTimeout(()=>{
+                this.dispatchEvent(new CustomEvent("change"))
+            },1500)
+            
         });
     }
 
