@@ -199,7 +199,7 @@ export default class AATextAnswer extends BaseElement {
     }
     get longHtml() {
         let inputElement = customElements.get('paper-input')
-            ? `<paper-textarea class='inputItem'></paper-input>`
+            ? `<paper-textarea class='inputItem' style= "background: linear-gradient(180deg, rgba(0,0,0, 0.04) 25%, rgba(0,0,0,0) 75%);"></paper-input>`
             : `<textarea class='inputItem'></textarea`;
         return html`${inputElement}`
     }

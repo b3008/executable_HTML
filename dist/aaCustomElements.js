@@ -2318,7 +2318,7 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
 
                     this.radioGroup.style.display='flex';
                     this.radioGroup.style.justifyContent='space-evenly';
-
+                    this.radioGroup.classList.add("horizontal");
 
                     let d1 = child.shadowRoot.querySelector('#radioContainer');
                     let d2 = child.shadowRoot.querySelector('#radioLabel');
@@ -2329,7 +2329,7 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
                     // d2.style.minWidth = "50px";
                     // d2.style.maxWidth = "90px";
                     let newDiv = document.createElement('div');
-                    newDiv.style.marginLeft = 'var(--paper-radio-button-label-spacing,10px)';
+                    // newDiv.style.marginLeft = 'var(--paper-radio-button-label-spacing,10px)';
                     newDiv.style.display='flex';
                     newDiv.style.flexDirection='column';
                     newDiv.style.alignItems = 'center';
@@ -2352,7 +2352,17 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
     }
 
     get css() {
-        return ``;
+        return html`<style>
+            paper-radio-group{
+                user-select:none;
+            }
+
+        paper-radio-button {
+            padding: var(--paper-radio-group-item-padding, 10px);
+            user-select:none;
+            display: block;
+        }
+        </style>`;
     }
 
 
@@ -2477,7 +2487,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         }
 
 
-        this.root.querySelector('.submitButton').addEventListener('click', this.submitButtonClick.bind(this));
+        this.root.querySelector('.submitButton').addEventListener('tap', this.submitButtonClick.bind(this));
 
 
     }
@@ -3649,7 +3659,7 @@ class AATextAnswer extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
     }
     get longHtml() {
         let inputElement = customElements.get('paper-input')
-            ? `<paper-textarea class='inputItem'></paper-input>`
+            ? `<paper-textarea class='inputItem' style= "background: linear-gradient(180deg, rgba(0,0,0, 0.04) 25%, rgba(0,0,0,0) 75%);"></paper-input>`
             : `<textarea class='inputItem'></textarea`;
         return html`${inputElement}`
     }

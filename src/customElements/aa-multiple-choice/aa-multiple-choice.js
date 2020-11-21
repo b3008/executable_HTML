@@ -134,7 +134,7 @@ export default class AAMultipleChoice extends BaseElement {
 
                     this.radioGroup.style.display='flex';
                     this.radioGroup.style.justifyContent='space-evenly';
-
+                    this.radioGroup.classList.add("horizontal");
 
                     let d1 = child.shadowRoot.querySelector('#radioContainer');
                     let d2 = child.shadowRoot.querySelector('#radioLabel');
@@ -145,7 +145,7 @@ export default class AAMultipleChoice extends BaseElement {
                     // d2.style.minWidth = "50px";
                     // d2.style.maxWidth = "90px";
                     let newDiv = document.createElement('div');
-                    newDiv.style.marginLeft = 'var(--paper-radio-button-label-spacing,10px)';
+                    // newDiv.style.marginLeft = 'var(--paper-radio-button-label-spacing,10px)';
                     newDiv.style.display='flex';
                     newDiv.style.flexDirection='column';
                     newDiv.style.alignItems = 'center';
@@ -168,7 +168,17 @@ export default class AAMultipleChoice extends BaseElement {
     }
 
     get css() {
-        return ``;
+        return html`<style>
+            paper-radio-group{
+                user-select:none;
+            }
+
+        paper-radio-button {
+            padding: var(--paper-radio-group-item-padding, 10px);
+            user-select:none;
+            display: block;
+        }
+        </style>`;
     }
 
 
