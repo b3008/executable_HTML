@@ -2487,7 +2487,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         }
 
 
-        this.root.querySelector('.submitButton').addEventListener('click', this.submitButtonClick.bind(this));
+        this.root.querySelector('.submitButton').addEventListener('tap', this.submitButtonClick.bind(this));
 
 
     }
@@ -3659,7 +3659,7 @@ class AATextAnswer extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
     }
     get longHtml() {
         let inputElement = customElements.get('paper-input')
-            ? `<paper-textarea class='inputItem'></paper-input>`
+            ? `<paper-textarea class='inputItem' style= "background: linear-gradient(180deg, rgba(0,0,0, 0.04) 25%, rgba(0,0,0,0) 75%);"></paper-input>`
             : `<textarea class='inputItem'></textarea`;
         return html`${inputElement}`
     }

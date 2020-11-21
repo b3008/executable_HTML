@@ -87,7 +87,7 @@ export default class AAScreen extends BaseElement {
         }
 
 
-        this.root.querySelector('.submitButton').addEventListener('click', this.submitButtonClick.bind(this));
+        this.root.querySelector('.submitButton').addEventListener('tap', this.submitButtonClick.bind(this));
 
 
     }
