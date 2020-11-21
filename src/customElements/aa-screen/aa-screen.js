@@ -159,7 +159,7 @@ export default class AAScreen extends BaseElement {
         }
 
         this.collectValues().then(val => {
-            // debugger;
+
             try {
                 let valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: val } });
                 this.dispatchEvent(valueSubmitEvent);
@@ -172,7 +172,7 @@ export default class AAScreen extends BaseElement {
                 }
             } catch (e) {
                 console.error(e);
-                debugger;
+
             }
         })
 
@@ -243,7 +243,7 @@ export default class AAScreen extends BaseElement {
                 }
             }
             else {
-                debugger;
+
                 this.getAAChildren(node.children[i], result, nodeName)
             }
         }
