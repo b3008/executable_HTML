@@ -17,7 +17,7 @@ As Internet connectivity and smart devices have evolved, it has become increasin
 
 Authors will (directly or indirectly) write up their documents as HTML scripts and distribute them over the Web. Respondents will load these scripts in their browsers, interact with interfaces they render, and will submit requested information.
 
-Executable HTML is meant to increase the level of control afforded to the author of an HTML document, in defining the content that is presented to the respondent, and the information that will be collected, by allowing procedural logic to be defined at the level of the HTML document (as opposed to writing JavaScript application code)
+Executable HTML is meant to increase the level of control afforded to the author of an HTML document, in presenting  content to the respondent, and in requesting data, by allowing procedural logic to be defined at the level of the HTML document (as opposed to writing JavaScript application code)
 
 
 
