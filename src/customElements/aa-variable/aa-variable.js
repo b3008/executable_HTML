@@ -3,6 +3,10 @@ import jsep from '../../lib/jsep/jsep.js';
 
 export default class AAVariable extends BaseElement {
 
+    static get tag() { 
+        return 'aa-variable';
+    }
+    
     static get properties() {
         return {
             name: {

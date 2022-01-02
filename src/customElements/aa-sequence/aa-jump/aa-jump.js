@@ -2,7 +2,9 @@ import BaseElement from '../../aa-baseElement/baseElement.js';
 
 export default class AAJump extends BaseElement {
 
-
+    static get tag() { 
+        return 'aa-jump';
+    }
 
     static get properties(){
         return {

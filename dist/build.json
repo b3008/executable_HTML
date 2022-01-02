@@ -1,6 +1,6 @@
 {
-  "build": 239,
-  "date": "Wed Jul 14 2021 11:44:29 GMT+0300 (Eastern European Summer Time)",
+  "build": 247,
+  "date": "Sun Jan 02 2022 20:10:32 GMT+0200 (Eastern European Standard Time)",
   "version": "1.0.0",
-  "branch": "npm_release_try1"
+  "branch": "add-tagName-to-class"
 }

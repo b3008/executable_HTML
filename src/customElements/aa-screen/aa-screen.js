@@ -1,7 +1,9 @@
 import BaseElement from './../aa-baseElement/baseElement.js';
 export default class AAScreen extends BaseElement {
 
-
+    static get tag() { 
+        return 'aa-screen';
+    }
 
     static get properties() {
         return {

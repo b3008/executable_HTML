@@ -11,7 +11,7 @@ For a demo, see https://b3008.github.io/
 
 ## Overiew
 
-In everyday life, it is common for communication between a singular party (such as an organization e.g. a hospital, or an individual, e.g. a researcher) and a wider population (such as patients or study-participants) to take place via documents, which on one hand disperse information to the crowd (such as advice or instructions), and on the other hand request information and data to be submitted by each respondent back to the issuer. Most common examples are forsm and questionnaires.
+In everyday life, it is common for communication between a singular party (such as an organization e.g. a hospital, or an individual, e.g. a researcher) and a wider population (such as patients or study-participants) to take place via documents, which on one hand disperse information to the crowd (such as advice or instructions), and on the other hand request information and data to be submitted by each respondent back to the issuer. Most common examples are forms and questionnaires.
 
 As Internet connectivity and smart devices have evolved, it has become increasingly prefferable to conduct the distribution of these documents and the collection of data via the Web and its rich array of technologies, which are uniquitously available to every user.
 
@@ -19,12 +19,14 @@ Authors will (directly or indirectly) write up their documents as HTML scripts a
 
 Executable HTML is meant to increase the level of control afforded to the author of an HTML document, in presenting  content to the respondent, and in requesting data, by allowing procedural logic to be defined at the level of the HTML document (as opposed to writing JavaScript application code)
 
+Ulitimately, Executable HTML allows an author to write and share a document that 
 
 
 
 ## What is executable HTML
 
-executable HTML is a set of custom elements which help the author of HTML content determine the way pieces of HTML are inserted into the document, without necessitating the use of JavaScript by the author.
+Executable HTML is a set of [Custom Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements). They consist of two major types.
+
 
 
 
