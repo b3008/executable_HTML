@@ -3,7 +3,9 @@ import '../aa-choice-item/aa-choice-item.js';
 
 export default class AACheckboxes extends BaseElement {
 
-
+    static get tag() { 
+        return 'aa-checkboxes';
+    }
 
     static get properties() {
         return {

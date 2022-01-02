@@ -270,12 +270,21 @@ export default class BaseElement extends HTMLElement {
 
     toJSON() {
         let result = {};
-        result[this.tagName.toLowerCase()] = this.getAttributes()
+        let tagName = this.tagName.toLowerCase()
+        result[tagName] = this.getAttributes()
+        if(this.childNodes.length){
+            result[tagName].childNodes = [];
+        
+            this.childNodes.forEach(childNode=>{
+                result[tagName].childNodes.push(BaseElement.nodeToJSON(childNode))
+            });
+        }
         return result;
     }
 
     static nodeToJSON(node) {
 
+        debugger;
         if ((node.nodeType === document.TEXT_NODE) || (node.nodeType === document.COMMENT_NODE)) {
             let result = {};
             let text = node.textContent.replace(/\n/g, ' ').replace(/\t/g, ' ').replace(/\s\s+/g, ' ').trim();

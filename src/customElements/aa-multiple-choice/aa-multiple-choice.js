@@ -3,7 +3,9 @@ import '../aa-choice-item/aa-choice-item.js';
 
 export default class AAMultipleChoice extends BaseElement {
 
-
+    static get tag() { 
+        return 'aa-multiple-choice';
+    }
 
     static get properties() {
         return {
@@ -187,13 +189,6 @@ export default class AAMultipleChoice extends BaseElement {
         if((result.horizontal)){
             result.horizontal = true;
         }
-
-        let children = [];
-        for(let i=0; i<this.children.length; i++){
-            children.push(this.children[i].toJSON());
-        }
-        
-        result[this.tagName.toLowerCase()].items = children;
         return result; 
     }
 }

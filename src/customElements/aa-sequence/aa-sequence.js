@@ -5,6 +5,10 @@ import './aa-jump/aa-jump.js';
 
 export default class AASequence extends BaseElement {
 
+    static get tag() { 
+        return 'aa-sequence';
+    }
+
     static get properties() {
         return {
 
