@@ -1,5 +1,5 @@
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/b3008/executable_HTML.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/b3008/executable_HTML/context:javascript)
-[![Build Status](https://travis-ci.com/b3008/executable_HTML.svg?branch=master)](https://travis-ci.com/b3008/executable_HTML)
+<!-- [![Build Status](https://travis-ci.com/b3008/executable_HTML.svg?branch=master)](https://travis-ci.com/b3008/executable_HTML) -->
 
 # executable HTML
 
