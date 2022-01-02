@@ -2559,7 +2559,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         }
 
         this.collectValues().then(val => {
-            // debugger;
+
             try {
                 let valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: val } });
                 this.dispatchEvent(valueSubmitEvent);
@@ -2572,7 +2572,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
                 }
             } catch (e) {
                 console.error(e);
-                debugger;
+
             }
         })
 
@@ -2643,7 +2643,7 @@ class AAScreen extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
                 }
             }
             else {
-                debugger;
+
                 this.getAAChildren(node.children[i], result, nodeName)
             }
         }

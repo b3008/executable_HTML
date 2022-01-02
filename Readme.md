@@ -8,9 +8,33 @@ This is a set of custom elements to provide piecemeal insertion of HTML into the
 
 For a demo, see https://b3008.github.io/
 
+
+## Overiew
+
+In everyday life, it is common for communication between a singular party (such as an organization e.g. a hospital, or an individual, e.g. a researcher) and a wider population (such as patients or study-participants) to take place via documents, which on one hand disperse information to the crowd (such as advice or instructions), and on the other hand request information and data to be submitted by each respondent back to the issuer. Most common examples are forsm and questionnaires.
+
+As Internet connectivity and smart devices have evolved, it has become increasingly prefferable to conduct the distribution of these documents and the collection of data via the Web and its rich array of technologies, which are uniquitously available to every user.
+
+Authors will (directly or indirectly) write up their documents as HTML scripts and distribute them over the Web. Respondents will load these scripts in their browsers, interact with interfaces they render, and will submit requested information.
+
+Executable HTML is meant to increase the level of control afforded to the author of an HTML document, in presenting  content to the respondent, and in requesting data, by allowing procedural logic to be defined at the level of the HTML document (as opposed to writing JavaScript application code)
+
+
+
+
 ## What is executable HTML
 
 executable HTML is a set of custom elements which help the author of HTML content determine the way pieces of HTML are inserted into the document, without necessitating the use of JavaScript by the author.
+
+
+
+
+
+
+
+
+
+
 
 
 ## Why this was built
@@ -86,6 +110,7 @@ myAttribute:{
 
 To get the new component built into the release package, import it in to ./src/index.js
 
+``npm run build``
 
 ## External libraries
 
