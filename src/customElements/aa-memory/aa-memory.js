@@ -4,6 +4,10 @@ import BaseElement from './../aa-baseElement/baseElement.js'
 
 export default class AAMemory extends BaseElement {
 
+    static get tag() { 
+        return 'aa-memory';
+    }
+
     get observedAttributes(){
         return ["name"];
     }

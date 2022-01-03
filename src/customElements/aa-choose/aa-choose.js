@@ -5,6 +5,9 @@ import jsep from '../../lib/jsep/jsep.js';
 
 export default class AAChoose extends BaseElement {
 
+    static get tag() { 
+        return 'aa-choose';
+    }
 
     static get properties(){
         return {

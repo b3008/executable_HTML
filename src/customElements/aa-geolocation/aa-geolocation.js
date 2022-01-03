@@ -1,6 +1,10 @@
 import BaseElement from './../aa-baseElement/baseElement.js'
 export default class AAGeolocation extends BaseElement {
 
+    static get tag() { 
+        return 'aa-geolocation';
+    }
+
     static get properties() {
         return {
             name: {

@@ -2,6 +2,9 @@ import BaseElement from '../aa-baseElement/baseElement.js';
 export default class AAAffectGrid extends BaseElement {
 
 
+    static get tag() { 
+        return 'aa-affect-grid';
+    }
 
     static get properties() {
         return {

@@ -1,10 +1,14 @@
 import BaseElement from './../aa-baseElement/baseElement.js';
 import './../aa-memory/aa-memory.js';
 import * as html2jsl from './../../lib/html2jsl/html2jsl.js';
-import { AASequence } from '../../index.js';
+import * as AASequence  from '../aa-sequence/aa-sequence.js';
 
 
 export default class AASession extends BaseElement {
+
+    static get tag() { 
+        return 'aa-session'
+    }
 
     static get properties() {
 

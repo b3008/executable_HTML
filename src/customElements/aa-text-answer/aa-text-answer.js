@@ -1,7 +1,9 @@
 import BaseElement from '../aa-baseElement/baseElement.js';
 export default class AATextAnswer extends BaseElement {
 
-
+    static get tag() { 
+        return 'aa-text-answer';
+    }
 
     static get properties() {
         return {

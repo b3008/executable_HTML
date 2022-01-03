@@ -26,10 +26,7 @@ import AAWhen from './customElements/aa-choose/aa-when/aa-when.js';
  */
 import AASession from './customElements/aa-session/aa-session.js';
 
-
-
-
-export {
+export const AAElements = {
     BaseElement, AAAffectGrid, AACheckboxes, AAChoose, 
     AAChoiceItem, AAFunctionRandom, AAGeoLocation, AALabel, 
     AALikertScale, AAMemory, AAMultipleChoice, AAOtherwise, 

@@ -2,6 +2,9 @@ import BaseElement from '../aa-baseElement/baseElement.js';
 
 export default class AAFunctionRandom extends BaseElement {
 
+    static get tag() { 
+        return 'aa-function-random'
+    }
 
     static get properties(){
         return {

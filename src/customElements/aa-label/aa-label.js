@@ -1,6 +1,10 @@
 import BaseElement from '../aa-baseElement/baseElement.js';
 export default class AALabel extends BaseElement {
 
+    static get tag() { 
+        return 'aa-label';
+    }
+
     constructor() {
         super();
         this.root = this.attachShadow({ mode: 'open' });

@@ -1,6 +1,9 @@
 import BaseElement from '../aa-baseElement/baseElement.js';
 export default class AAChoiceItem extends BaseElement {
 
+    static get tag() { 
+        return 'aa-choice-item';
+    }
 
     static get properties(){
         return{
@@ -33,7 +36,6 @@ export default class AAChoiceItem extends BaseElement {
 
     toJSON(){
         let result= super.toJSON();
-        result[this.tagName.toLowerCase()].label = this.innerHTML.trim();
         return result;
     }
 }

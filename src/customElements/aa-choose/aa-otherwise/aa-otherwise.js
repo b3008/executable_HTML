@@ -2,6 +2,10 @@ import BaseElement from '../../aa-baseElement/baseElement.js';
 
 export default class AAOtherwise extends BaseElement {
 
+    static get tag() { 
+        return 'aa-otherwise';
+    }
+
     static get acceptsElements(){
         return null;
     }
