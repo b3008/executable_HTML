@@ -24,7 +24,7 @@
     "@adobe/es-modules-middleware": "^1.1.0",
     "@open-wc/karma-esm": "^2.16.18",
     "chai": "^4.2.0",
-    "karma": "^4.4.1",
+    "karma": "^6.3.14",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-coverage-istanbul-instrumenter": "^1.0.3",
