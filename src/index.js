@@ -19,6 +19,7 @@ import AATextAnswer from './customElements/aa-text-answer/aa-text-answer.js';
 import AAVariable from './customElements/aa-variable/aa-variable.js';
 import AAWhen from './customElements/aa-choose/aa-when/aa-when.js';
 
+export { AAClasses } from './customElements/aa-baseElement/baseElement.js';
 /**
  * it is important that aa-session is imported last. This way all other elements will
  * have already been registered before a aa-session element gets
@@ -33,3 +34,4 @@ export const AAElements = {
     AAScreen, AASession, AASequence, AASlider, AATextAnswer, 
     AAVariable, AAWhen
 }
+

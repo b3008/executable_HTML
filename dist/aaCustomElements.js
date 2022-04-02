@@ -616,11 +616,12 @@ _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerA
 /*!**********************************************************!*\
   !*** ./src/customElements/aa-baseElement/baseElement.js ***!
   \**********************************************************/
-/*! exports provided: default */
+/*! exports provided: AAClasses, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AAClasses", function() { return AAClasses; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BaseElement; });
 /* harmony import */ var _lib_yaml_js_yaml_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/yaml/js-yaml.js */ "./src/lib/yaml/js-yaml.js");
 /* harmony import */ var _lib_html2jsl_html2jsl_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/html2jsl/html2jsl.js */ "./src/lib/html2jsl/html2jsl.js");
@@ -641,6 +642,10 @@ var html = function (txt, ...val) {
 }
 
 if (window) window.html = html;
+
+
+const AAClasses = [];
+window.AAClasses = AAClasses;
 
 class BaseElement extends HTMLElement {
 
@@ -672,6 +677,7 @@ class BaseElement extends HTMLElement {
             window.AANodeNames.push(name.toUpperCase());
             customElements.define(name, elem);
         }
+        AAClasses[name.toUpperCase()] = elem;
     }
 
     static isAAElement(node) {
@@ -1092,6 +1098,8 @@ if (!customElements.get('aa-base-element')) {
 
 
 window.nodeToJSON = BaseElement.nodeToJSON;
+
+
 
 /***/ }),
 
@@ -3872,7 +3880,7 @@ _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerA
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! exports provided: AAElements */
+/*! exports provided: AAClasses, AAElements */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3896,8 +3904,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _customElements_aa_text_answer_aa_text_answer_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./customElements/aa-text-answer/aa-text-answer.js */ "./src/customElements/aa-text-answer/aa-text-answer.js");
 /* harmony import */ var _customElements_aa_variable_aa_variable_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./customElements/aa-variable/aa-variable.js */ "./src/customElements/aa-variable/aa-variable.js");
 /* harmony import */ var _customElements_aa_choose_aa_when_aa_when_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./customElements/aa-choose/aa-when/aa-when.js */ "./src/customElements/aa-choose/aa-when/aa-when.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AAClasses", function() { return _customElements_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["AAClasses"]; });
+
 /* harmony import */ var _customElements_aa_session_aa_session_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./customElements/aa-session/aa-session.js */ "./src/customElements/aa-session/aa-session.js");
 // import '../dist/paper-polymer.js';
+
 
 
 
@@ -3932,6 +3943,8 @@ const AAElements = {
     AAScreen: _customElements_aa_screen_aa_screen_js__WEBPACK_IMPORTED_MODULE_12__["default"], AASession: _customElements_aa_session_aa_session_js__WEBPACK_IMPORTED_MODULE_18__["default"], AASequence: _customElements_aa_sequence_aa_sequence_js__WEBPACK_IMPORTED_MODULE_13__["default"], AASlider: _customElements_aa_slider_aa_slider_js__WEBPACK_IMPORTED_MODULE_14__["default"], AATextAnswer: _customElements_aa_text_answer_aa_text_answer_js__WEBPACK_IMPORTED_MODULE_15__["default"], 
     AAVariable: _customElements_aa_variable_aa_variable_js__WEBPACK_IMPORTED_MODULE_16__["default"], AAWhen: _customElements_aa_choose_aa_when_aa_when_js__WEBPACK_IMPORTED_MODULE_17__["default"]
 }
+
+
 
 /***/ }),
 

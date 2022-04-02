@@ -15,6 +15,10 @@ var html = function (txt, ...val) {
 
 if (window) window.html = html;
 
+
+export const AAClasses = [];
+window.AAClasses = AAClasses;
+
 export default class BaseElement extends HTMLElement {
 
 
@@ -45,6 +49,7 @@ export default class BaseElement extends HTMLElement {
             window.AANodeNames.push(name.toUpperCase());
             customElements.define(name, elem);
         }
+        AAClasses[name.toUpperCase()] = elem;
     }
 
     static isAAElement(node) {
@@ -465,3 +470,4 @@ if (!customElements.get('aa-base-element')) {
 
 
 window.nodeToJSON = BaseElement.nodeToJSON;
+
