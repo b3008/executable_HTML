@@ -917,7 +917,6 @@ class BaseElement extends HTMLElement {
 
     static nodeToJSON(node) {
 
-        debugger;
         if ((node.nodeType === document.TEXT_NODE) || (node.nodeType === document.COMMENT_NODE)) {
             let result = {};
             let text = node.textContent.replace(/\n/g, ' ').replace(/\t/g, ' ').replace(/\s\s+/g, ' ').trim();
@@ -1107,170 +1106,10 @@ window.nodeToJSON = BaseElement.nodeToJSON;
 /*!***********************************************************!*\
   !*** ./src/customElements/aa-checkboxes/aa-checkboxes.js ***!
   \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AACheckboxes; });
-/* harmony import */ var _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../aa-baseElement/baseElement.js */ "./src/customElements/aa-baseElement/baseElement.js");
-/* harmony import */ var _aa_choice_item_aa_choice_item_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../aa-choice-item/aa-choice-item.js */ "./src/customElements/aa-choice-item/aa-choice-item.js");
-
-
-
-class AACheckboxes extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-
-    static get tag() { 
-        return 'aa-checkboxes';
-    }
-
-    static get properties() {
-        return {
-            horizontal: {
-                type: Boolean,
-                value: false,
-                userDefined: true
-            },
-
-            vertical: {
-                type: Boolean,
-                value: true,
-                userDefined: true
-            },
-
-            name: {
-                type: String,
-                userDefined: true
-            },
-
-            value: {
-                type: String,
-                userDefined: false
-            },
-            
-
-
-
-        }
-    }
-
-    static get acceptsElements() {
-        return [
-            'aa-choice-item'
-        ]
-    }
-
-    static get observedAttributes() {
-        return Object.keys(AACheckboxes.properties);
-    }
-
-
-    get value() {
-
-        let result = [];
-        if (this.boxes) {
-            for (let i = 0; i < this.boxes.length; i++) {
-                if (this.boxes[i].checked) {
-                    result.push(this.boxes[i].value);
-                }
-                else {
-                    result.push(null);
-                }
-            }
-
-        }
-        // console.log(result);
-        return result
-    }
-
-    set value(val) {
-        this.setAttribute('value', val);
-        this.boxGroup.selected = val;
-    }
-
-    constructor() {
-        super();
-        this.root = this.attachShadow({ mode: 'open' });
-    }
-
-    connectedCallback() {
-        super.connectedCallback();
-        this.root.innerHTML = this.css + this.html;
-        this.boxes = [];
-        for (let i = 0; i < this.childNodes.length; i++) {
-            this.attachToShadowDomAccordingToKind(this.childNodes[i]);
-        }
-
-        this.boxes = this.root.querySelectorAll('paper-checkbox')
-
-        let val = this.getAttribute('value');
-        if (this.boxes) {
-            for (let i = 0; i < this.boxes.length; i++) {
-                if (this.boxes[i].value == val) {
-                    this.boxes[i].checked = true
-                }
-            }
-        }
-
-
-    }
-
-    attachToShadowDomAccordingToKind(node) {
-
-
-        if (!_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].isAAElement(node)) {
-            this.root.appendChild(_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].copy(node));
-        } else {
-            if (node.tagName === 'AA-CHOICE-ITEM') {
-                let child = document.createElement('paper-checkbox');
-                if (node.getAttribute('value')) {
-                    child.setAttribute('name', node.getAttribute('value'));
-                    child.setAttribute('value', node.getAttribute('value'));
-                } else {
-                    child.setAttribute('name', node.innerText.trim());
-                    child.setAttribute('value', node.innerText.trim());
-                }
-                if (!((this.horizontal === '') || (this.horizontal))) {
-                    child.style.display = 'block';
-                }
-                child.innerHTML = node.innerHTML;
-                this.root.appendChild(child);
-                this.boxes.push(child);
-            }
-        }
-    }
-
-    get html() {
-        return html``;
-    }
-
-    get css() {
-        return html`
-        <style>
-            paper-checkbox{
-                padding:12px;
-            }
-        </style>
-        
-        
-        `;
-    }
-
-    toJSON(){
-        let result = super.toJSON();
-        let children = [];
-        for(let i=0; i<this.children.length; i++){
-            children.push(this.children[i].toJSON());
-        }
-        
-        result[this.tagName.toLowerCase()].items = children;
-        return result; 
-    }
-
-}
-
-
-_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerAAElement('aa-checkboxes', AACheckboxes);
+throw new Error("Module parse failed: Unexpected token (6:38)\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\n| export default class AACheckboxes extends BaseElement {\n| \n>     horizontal_wasChangedInternally__ = false;\n|     vertical_wasChangedInternally__ = false;\n|     choiceItems = [];");
 
 /***/ }),
 
@@ -1278,56 +1117,10 @@ _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerA
 /*!*************************************************************!*\
   !*** ./src/customElements/aa-choice-item/aa-choice-item.js ***!
   \*************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AAChoiceItem; });
-/* harmony import */ var _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../aa-baseElement/baseElement.js */ "./src/customElements/aa-baseElement/baseElement.js");
-
-class AAChoiceItem extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-
-    static get tag() { 
-        return 'aa-choice-item';
-    }
-
-    static get properties(){
-        return{
-            value:{
-                type:String,
-                userDefined:true
-            }           
-        }
-    }
-    static get observedAttributes() {
-        return [
-            'name',
-            'value'
-        ];
-    }
-
-    static get acceptsElements(){
-        return null;
-    }
-
-    constructor() {
-        super();
-
-    }
-
-    connectedCallback() {
-        super.connectedCallback();
-
-    }
-
-    toJSON(){
-        let result= super.toJSON();
-        return result;
-    }
-}
-
-_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerAAElement('aa-choice-item', AAChoiceItem);
+throw new Error("Module parse failed: Unexpected token (4:9)\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\n| export default class AAChoiceItem extends BaseElement {\n| \n>     kind = \"radioButton\";\n| \n|     item = null;");
 
 /***/ }),
 
@@ -1980,68 +1773,69 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AALikertScale; });
 /* harmony import */ var _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../aa-baseElement/baseElement.js */ "./src/customElements/aa-baseElement/baseElement.js");
 /* harmony import */ var _aa_multiple_choice_aa_multiple_choice_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../aa-multiple-choice/aa-multiple-choice.js */ "./src/customElements/aa-multiple-choice/aa-multiple-choice.js");
+/* harmony import */ var _aa_multiple_choice_aa_multiple_choice_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_aa_multiple_choice_aa_multiple_choice_js__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
 class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
-    static get tag() { 
+    static get tag() {
         return 'aa-likert-scale';
     }
 
-    static get properties(){
+    static get properties() {
         return {
-            name:{
-                type:String,
-                userDefined:true
-            },
-           
-            "debug":{
-                type:Boolean,
-                value:false,
-                userDefined:false
+            name: {
+                type: String,
+                userDefined: true
             },
 
-            "value":{
-                type:Number,
-                userDefined:false,
+            "debug": {
+                type: Boolean,
+                value: false,
+                userDefined: false
             },
 
-            "items":{
-                type:String,
-                userDefined:true,
+            "value": {
+                type: Number,
+                userDefined: false,
             },
 
-            "start-label":{
-                type:String,
-                userDefined:true,
-                value:''
+            "items": {
+                type: String,
+                userDefined: true,
             },
 
-            "middle-label":{
-                type:String,
-                userDefined:true,
-                value:''
+            "start-label": {
+                type: String,
+                userDefined: true,
+                value: ''
             },
 
-            "end-label":{
-                type:String,
-                userDefined:true,
-                value:''
+            "middle-label": {
+                type: String,
+                userDefined: true,
+                value: ''
             },
 
-            "start-item":{
-                type:Number,
-                userDefined:true,
-                value:1
+            "end-label": {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            "start-item": {
+                type: Number,
+                userDefined: true,
+                value: 1
             }
-            
-            
+
+
 
         }
     }
 
-    static get acceptsElements(){
+    static get acceptsElements() {
         return [];
     }
 
@@ -2051,7 +1845,7 @@ class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
 
 
 
-    constructor(){
+    constructor() {
 
         super();
 
@@ -2063,23 +1857,16 @@ class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
     connectedCallback() {
         super.connectedCallback();
 
-        
         this.root.innerHTML = this.html;
 
         this.mChoice = this.root.querySelector("aa-multiple-choice")
         this.choiceItems = this.mChoice.choiceItems
 
-
-        // this.root.addEventListener("change", ()=>{
-        //     debugger;
-        // })
-
-        this.addEventListener("click", ()=>{
-            if(!this.currentvalue){
+        this.addEventListener("click", () => {
+            if (!this.currentvalue) {
                 this.dispatchEvent(new CustomEvent("change"))
-            }else
-            {
-                if(this.currentvalue!=this.value){
+            } else {
+                if (this.currentvalue != this.value) {
                     this.dispatchEvent(new CustomEvent("change"))
                 }
                 this.currentvalue = this.value;
@@ -2088,76 +1875,75 @@ class AALikertScale extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MOD
     }
 
 
-    getTags(){
-        
+    getTags() {
+
         let c = '';
         let start = `<div style="width:100px; white-space:nowrap">${this.getAttribute("start-label") || ''}</div>`
         let middle = `<div style="width:100px; white-space:nowrap">${this.getAttribute("middle-label") || ''}</div>`
         let end = `<div style="width:100px; white-space:nowrap">${this.getAttribute("end-label") || ''}</div>`
         let placeholder = `<div style="width:50px"></div>`;
-        
+
 
 
         let items = parseInt(this.items)
-        for(let i=1; i<=items; i++){
-            
-            
-            
-            if(i==1) {
-                c+=start;
-            }
-            else if(i==Math.floor((items+1)/2)) {
+        for (let i = 1; i <= items; i++) {
 
-                c+=middle;
+
+
+            if (i == 1) {
+                c += start;
             }
-            else if(i==items) {
-                c+=end;
-            } else{
-                c+=placeholder;
+            else if (i == Math.floor((items + 1) / 2)) {
+
+                c += middle;
+            }
+            else if (i == items) {
+                c += end;
+            } else {
+                c += placeholder;
             }
 
-            
-        }   
+
+        }
 
         let result = `<div style="font-family: Roboto, Noto, sans-serif; width:100%; display:flex; justify-content:space-evenly; text-align:center">${c}</div>`
         return result;
 
     }
-    get html(){
+    get html() {
         let items = ``;
 
         let startItem = parseFloat(this.startItem)
 
-        if((!this.items)||(this.items==="undefined")) this.items = 5;
-        for(let i=0; i<this.items; i++){
-            items += `<aa-choice-item name="${i+startItem}">${i+startItem}</aa-choice-item>`;
+        if ((!this.items) || (this.items === "undefined")) this.items = 5;
+        for (let i = 0; i < this.items; i++) {
+            items += `<aa-choice-item name="${i + startItem}">${i + startItem}</aa-choice-item>`;
         }
-        let result =  html`<div>
+        let result = html`<div>
                                 <aa-multiple-choice horizontal="true" name="${this.name}">${items}</aa-multiple-choice>
                                 ${this.getTags()}    
                             </div>
                                 `
-        
+
         return result;
     }
 
 
-    get value(){
+    get value() {
 
-        if(this.mChoice)
-        {
+        if (this.mChoice) {
             return parseInt(this.mChoice.value);
-        } else{
+        } else {
             return parseInt(this.getAttribute('value'));
         }
     }
 
 
     getValue() {
-       return this.mChoice.value; 
+        return this.mChoice.value;
     }
 
- 
+
 
 
 }
@@ -2226,211 +2012,10 @@ _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerA
 /*!*********************************************************************!*\
   !*** ./src/customElements/aa-multiple-choice/aa-multiple-choice.js ***!
   \*********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AAMultipleChoice; });
-/* harmony import */ var _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../aa-baseElement/baseElement.js */ "./src/customElements/aa-baseElement/baseElement.js");
-/* harmony import */ var _aa_choice_item_aa_choice_item_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../aa-choice-item/aa-choice-item.js */ "./src/customElements/aa-choice-item/aa-choice-item.js");
-
-
-
-class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
-
-    static get tag() { 
-        return 'aa-multiple-choice';
-    }
-
-    static get properties() {
-        return {
-            horizontal: {
-                type: Boolean,
-                value: false,
-                userDefined: true
-            },
-
-            vertical: {
-                type: Boolean,
-                value: true,
-                userDefined: true
-            },
-
-            name: {
-                type: String,
-                userDefined: true
-            },
-
-            value: {
-                type: String,
-                userDefined: true,
-
-            },
-
-        }
-    }
-
-    static get acceptsElements() {
-        return [
-            'aa-choice-item'
-        ]
-    }
-
-    static get observedAttributes() {
-        return Object.keys(AAMultipleChoice.properties);
-    }
-
-    get staticObject(){
-        return AAMultipleChoice;
-    }
-
-    get value() {
-
-        if (this.radioGroup) {
-            return this.radioGroup.selected;
-        }
-        return this.getAttribute('value');
-    }
-
-    set value(val) {
-
-        this.setAttribute('value', val);
-        this.radioGroup.selected = val;
-    }
-
-    constructor() {
-        super();
-
-        if(this.horizontal===''){
-            this.horizontal = true;
-        }
-        this.root = this.attachShadow({ mode: 'open' });
-        this.root.innerHTML = this.css + this.html;
-
-        this.radioGroup = this.root.querySelector('#radioGroup');
-        this.radioGroup.addEventListener('change', (e) => {
-            this.value = e.target.name;
-            // console.log(this.value);
-        });
-
-    }
-
-    connectedCallback() {
-
-        super.connectedCallback();
-
-        this.choiceItems = [];
-        for (let i = 0; i < this.childNodes.length; i++) {
-            this.attachToShadowDomAccordingToKind(this.childNodes[i]);
-        }
-
-        if ((this.getAttribute('value'))&&(this.getAttribute('value')!=='undefined')) {
-            this.radioGroup.setAttribute('selected', this.getAttribute('value'));
-        }
-
-        this.style.display = 'block';
-
-        // this.addEventListener("click", ()=>{
-        //     if(!this.currentvalue){
-        //         this.dispatchEvent(new CustomEvent("change"))
-        //     }else
-        //     {
-        //         if(this.currentvalue!=this.value){
-        //             this.dispatchEvent(new CustomEvent("change", {bubbles:true}))
-        //         }
-        //         this.currentvalue = this.value;
-        //     }
-        // })
-    }
-
-    attachToShadowDomAccordingToKind(node) {
-
-        if (!_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].isAAElement(node)) {
-            this.root.appendChild(_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].copy(node));
-        } else {
-            if (node.tagName === 'AA-CHOICE-ITEM') {
-
-                let child = document.createElement('paper-radio-button');
-                if (node.getAttribute('value')) {
-                    child.setAttribute('name', node.getAttribute('value'));
-                } else {
-                    child.setAttribute('name', node.innerText.trim());
-                }
-                if (!((this.horizontal === '') || (this.horizontal))) {
-                    child.style.display = 'block';
-                }
-
-                child.innerHTML = node.innerHTML;
-                 
-                this.radioGroup.appendChild(child);
-                this.choiceItems.push(child);
-
-
-                if (((this.horizontal === '') || (this.horizontal))) {
-                    
-
-                    this.radioGroup.style.display='flex';
-                    this.radioGroup.style.justifyContent='space-evenly';
-                    this.radioGroup.classList.add("horizontal");
-
-                    let d1 = child.shadowRoot.querySelector('#radioContainer');
-                    let d2 = child.shadowRoot.querySelector('#radioLabel');
-                    d2.style.textAlign = 'center';
-                    d2.style.marginLeft = '0px';
-                    d2.style.padding = '5px';
-                    // d2.style.whiteSpace = "nowrap";
-                    // d2.style.minWidth = "50px";
-                    // d2.style.maxWidth = "90px";
-                    let newDiv = document.createElement('div');
-                    // newDiv.style.marginLeft = 'var(--paper-radio-button-label-spacing,10px)';
-                    newDiv.style.display='flex';
-                    newDiv.style.flexDirection='column';
-                    newDiv.style.alignItems = 'center';
-                    newDiv.style.textAlign = 'center';
-                    child.shadowRoot.appendChild(newDiv);
-                    newDiv.appendChild(d1);
-                    newDiv.appendChild(d2);
- 
-                } 
-                // else {
-
-                // }
-
-            }
-        }
-    }
-
-    get html() {
-        return html`<paper-radio-group id='radioGroup'></paper-radio-group>`;
-    }
-
-    get css() {
-        return html`<style>
-            paper-radio-group{
-                user-select:none;
-            }
-
-        paper-radio-button {
-            padding: var(--paper-radio-group-item-padding, 10px);
-            user-select:none;
-            display: block;
-        }
-        </style>`;
-    }
-
-
-    toJSON(){
-        let result = super.toJSON();
-        if((result.horizontal)){
-            result.horizontal = true;
-        }
-        return result; 
-    }
-}
-
-
-_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"].registerAAElement('aa-multiple-choice', AAMultipleChoice);
+throw new Error("Module parse failed: Unexpected token (6:38)\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\n| export default class AAMultipleChoice extends BaseElement {\n| \n>     horizontal_wasChangedInternally__ = false;\n|     vertical_wasChangedInternally__ = false;\n|     choiceItems = null");
 
 /***/ }),
 
@@ -3035,7 +2620,7 @@ class AASequence extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
 
             let fragmentChild = this.innerFragment.childNodes[this.sIndex];
 
-            // if (fragmentChild.nodeName == "aa-screen") debugger;
+
             //  if the child is not an element just add it immediately 
             //  and move on to the next, there won't be a connectecCallback Function to execute anyway
             while (fragmentChild.nodeType != Node.ELEMENT_NODE) {
@@ -3889,14 +3474,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _customElements_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./customElements/aa-baseElement/baseElement.js */ "./src/customElements/aa-baseElement/baseElement.js");
 /* harmony import */ var _customElements_aa_affect_grid_aa_affect_grid_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./customElements/aa-affect-grid/aa-affect-grid.js */ "./src/customElements/aa-affect-grid/aa-affect-grid.js");
 /* harmony import */ var _customElements_aa_checkboxes_aa_checkboxes_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./customElements/aa-checkboxes/aa-checkboxes.js */ "./src/customElements/aa-checkboxes/aa-checkboxes.js");
+/* harmony import */ var _customElements_aa_checkboxes_aa_checkboxes_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_customElements_aa_checkboxes_aa_checkboxes_js__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _customElements_aa_choose_aa_choose_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./customElements/aa-choose/aa-choose.js */ "./src/customElements/aa-choose/aa-choose.js");
 /* harmony import */ var _customElements_aa_choice_item_aa_choice_item_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./customElements/aa-choice-item/aa-choice-item.js */ "./src/customElements/aa-choice-item/aa-choice-item.js");
+/* harmony import */ var _customElements_aa_choice_item_aa_choice_item_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_customElements_aa_choice_item_aa_choice_item_js__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _customElements_aa_function_aa_function_random_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./customElements/aa-function/aa-function-random.js */ "./src/customElements/aa-function/aa-function-random.js");
 /* harmony import */ var _customElements_aa_geolocation_aa_geolocation_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./customElements/aa-geolocation/aa-geolocation.js */ "./src/customElements/aa-geolocation/aa-geolocation.js");
 /* harmony import */ var _customElements_aa_label_aa_label_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./customElements/aa-label/aa-label.js */ "./src/customElements/aa-label/aa-label.js");
 /* harmony import */ var _customElements_aa_likert_scale_aa_likert_scale_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./customElements/aa-likert-scale/aa-likert-scale.js */ "./src/customElements/aa-likert-scale/aa-likert-scale.js");
 /* harmony import */ var _customElements_aa_memory_aa_memory_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./customElements/aa-memory/aa-memory.js */ "./src/customElements/aa-memory/aa-memory.js");
 /* harmony import */ var _customElements_aa_multiple_choice_aa_multiple_choice_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./customElements/aa-multiple-choice/aa-multiple-choice.js */ "./src/customElements/aa-multiple-choice/aa-multiple-choice.js");
+/* harmony import */ var _customElements_aa_multiple_choice_aa_multiple_choice_js__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_customElements_aa_multiple_choice_aa_multiple_choice_js__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _customElements_aa_choose_aa_otherwise_aa_otherwise_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./customElements/aa-choose/aa-otherwise/aa-otherwise.js */ "./src/customElements/aa-choose/aa-otherwise/aa-otherwise.js");
 /* harmony import */ var _customElements_aa_screen_aa_screen_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./customElements/aa-screen/aa-screen.js */ "./src/customElements/aa-screen/aa-screen.js");
 /* harmony import */ var _customElements_aa_sequence_aa_sequence_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./customElements/aa-sequence/aa-sequence.js */ "./src/customElements/aa-sequence/aa-sequence.js");
@@ -3937,13 +3525,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const AAElements = {
-    BaseElement: _customElements_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"], AAAffectGrid: _customElements_aa_affect_grid_aa_affect_grid_js__WEBPACK_IMPORTED_MODULE_1__["default"], AACheckboxes: _customElements_aa_checkboxes_aa_checkboxes_js__WEBPACK_IMPORTED_MODULE_2__["default"], AAChoose: _customElements_aa_choose_aa_choose_js__WEBPACK_IMPORTED_MODULE_3__["default"], 
-    AAChoiceItem: _customElements_aa_choice_item_aa_choice_item_js__WEBPACK_IMPORTED_MODULE_4__["default"], AAFunctionRandom: _customElements_aa_function_aa_function_random_js__WEBPACK_IMPORTED_MODULE_5__["default"], AAGeoLocation: _customElements_aa_geolocation_aa_geolocation_js__WEBPACK_IMPORTED_MODULE_6__["default"], AALabel: _customElements_aa_label_aa_label_js__WEBPACK_IMPORTED_MODULE_7__["default"], 
-    AALikertScale: _customElements_aa_likert_scale_aa_likert_scale_js__WEBPACK_IMPORTED_MODULE_8__["default"], AAMemory: _customElements_aa_memory_aa_memory_js__WEBPACK_IMPORTED_MODULE_9__["default"], AAMultipleChoice: _customElements_aa_multiple_choice_aa_multiple_choice_js__WEBPACK_IMPORTED_MODULE_10__["default"], AAOtherwise: _customElements_aa_choose_aa_otherwise_aa_otherwise_js__WEBPACK_IMPORTED_MODULE_11__["default"], 
+    BaseElement: _customElements_aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"], AAAffectGrid: _customElements_aa_affect_grid_aa_affect_grid_js__WEBPACK_IMPORTED_MODULE_1__["default"], AACheckboxes: (_customElements_aa_checkboxes_aa_checkboxes_js__WEBPACK_IMPORTED_MODULE_2___default()), AAChoose: _customElements_aa_choose_aa_choose_js__WEBPACK_IMPORTED_MODULE_3__["default"], 
+    AAChoiceItem: (_customElements_aa_choice_item_aa_choice_item_js__WEBPACK_IMPORTED_MODULE_4___default()), AAFunctionRandom: _customElements_aa_function_aa_function_random_js__WEBPACK_IMPORTED_MODULE_5__["default"], AAGeoLocation: _customElements_aa_geolocation_aa_geolocation_js__WEBPACK_IMPORTED_MODULE_6__["default"], AALabel: _customElements_aa_label_aa_label_js__WEBPACK_IMPORTED_MODULE_7__["default"], 
+    AALikertScale: _customElements_aa_likert_scale_aa_likert_scale_js__WEBPACK_IMPORTED_MODULE_8__["default"], AAMemory: _customElements_aa_memory_aa_memory_js__WEBPACK_IMPORTED_MODULE_9__["default"], AAMultipleChoice: (_customElements_aa_multiple_choice_aa_multiple_choice_js__WEBPACK_IMPORTED_MODULE_10___default()), AAOtherwise: _customElements_aa_choose_aa_otherwise_aa_otherwise_js__WEBPACK_IMPORTED_MODULE_11__["default"], 
     AAScreen: _customElements_aa_screen_aa_screen_js__WEBPACK_IMPORTED_MODULE_12__["default"], AASession: _customElements_aa_session_aa_session_js__WEBPACK_IMPORTED_MODULE_18__["default"], AASequence: _customElements_aa_sequence_aa_sequence_js__WEBPACK_IMPORTED_MODULE_13__["default"], AASlider: _customElements_aa_slider_aa_slider_js__WEBPACK_IMPORTED_MODULE_14__["default"], AATextAnswer: _customElements_aa_text_answer_aa_text_answer_js__WEBPACK_IMPORTED_MODULE_15__["default"], 
     AAVariable: _customElements_aa_variable_aa_variable_js__WEBPACK_IMPORTED_MODULE_16__["default"], AAWhen: _customElements_aa_choose_aa_when_aa_when_js__WEBPACK_IMPORTED_MODULE_17__["default"]
 }
-
 
 
 /***/ }),
@@ -5314,7 +4901,7 @@ class mySVG {
                 // window.pStart = pStart;
                 // window.text = text;
                 // window.g = chooseSVGItemStart;
-                // // debugger;
+
 
                 let chooseSVGItemEnd = Object(_svg_svg_js__WEBPACK_IMPORTED_MODULE_0__["default"])().circle(2).attr({ fill: 'black', stroke: 'black', 'stroke-width': 5 });
                 let contentsRow = new Container('parallel', node);

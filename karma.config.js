@@ -13,7 +13,13 @@ module.exports = function (config) {
         port: 9876,  // karma web server port
         colors: true,
         logLevel: config.LOG_INFO,
-        browsers: ['ChromeHeadless'],
+        browsers: ['ChromeDebugging'],
+        customLaunchers: {
+            ChromeDebugging: {
+              base: 'Chrome',
+              flags: [ '--remote-debugging-port=9876' ]
+            }
+          },
         autoWatch: false,
         concurrency: Infinity,
         esm: {

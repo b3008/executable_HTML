@@ -3,7 +3,8 @@
 <head>
     <script type="module" src="./dist/paper-polymer.js"></script>
 
-    <script type="module" src="./dist/aaCustomElements.js"></script>
+    <!-- <script type="module" src="./dist/aaCustomElements.js"></script> -->
+    <script type="module" src="./src/index.js"></script>
     
     
 
@@ -20,10 +21,35 @@
 </head>
 <body>
 
-    
+  <div id="container">
+   
+
+  </div>
+
     <aa-session>
         <template>
       
+
+        
+          
+
+           <aa-checkboxes>
+            <aa-choice-item value="1">one</aa-choice-item>
+            <aa-choice-item value="2">two</aa-choice-item>
+            <aa-choice-item value="3">three</aa-choice-item>
+          </aa-checkboxes>
+
+          <aa-multiple-choice horizontal value="1" id="123">
+            <aa-choice-item  value="1">one</aa-choice-item>
+            <aa-choice-item>two</aa-choice-item>
+            <aa-choice-item value="3">three</aa-choice-item>
+          </aa-multiple-choice>
+
+yo
+     
+  <generic-editor for="123"></generic-editor>
+
+  hey
       <aa-sequence>
       
       <aa-screen submit-button-text="see an example">
@@ -109,4 +135,16 @@
 
     
 </body>
+
+
+<script>
+
+const container = document.getElementById('container');
+container.innerHTML =  ``;
+mChoice = document.querySelector('aa-multiple-choice');
+
+
+
+
+</script>
 </html>

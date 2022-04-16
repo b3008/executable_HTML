@@ -3,7 +3,12 @@ import '../aa-choice-item/aa-choice-item.js';
 
 export default class AACheckboxes extends BaseElement {
 
-    static get tag() { 
+    horizontal_wasChangedInternally__ = false;
+    vertical_wasChangedInternally__ = false;
+
+
+
+    static get tag() {
         return 'aa-checkboxes';
     }
 
@@ -30,10 +35,6 @@ export default class AACheckboxes extends BaseElement {
                 type: String,
                 userDefined: false
             },
-            
-
-
-
         }
     }
 
@@ -44,110 +45,101 @@ export default class AACheckboxes extends BaseElement {
     }
 
     static get observedAttributes() {
-        return Object.keys(AACheckboxes.properties);
+        return ['horizontal', 'vertical'];
     }
 
 
     get value() {
-
-        let result = [];
-        if (this.boxes) {
-            for (let i = 0; i < this.boxes.length; i++) {
-                if (this.boxes[i].checked) {
-                    result.push(this.boxes[i].value);
-                }
-                else {
+        const result = [];
+        for (let i = 0; i < this.children.length; i++) {
+            const node = this.children[i];
+            if (node.tagName === 'AA-CHOICE-ITEM') {
+                if (node.checked) {
+                    result.push(node.value);
+                }else
+                {
                     result.push(null);
                 }
             }
-
         }
-        // console.log(result);
-        return result
+        return result;
     }
 
     set value(val) {
-        this.setAttribute('value', val);
-        this.boxGroup.selected = val;
+        if(!Array.isArray(val)){
+            val= [va];
+        }
+
+
+        for (let i = 0; i < this.children.length; i++) {
+            const node = this.children[i];
+            if (node.tagName === 'AA-CHOICE-ITEM') {
+                if(val.includes(node.value)){
+                    node.checked=true;
+                }
+                else{
+                    node.checked=false;
+                }
+            }
+        }
     }
 
     constructor() {
         super();
-        this.root = this.attachShadow({ mode: 'open' });
     }
+
 
     connectedCallback() {
         super.connectedCallback();
-        this.root.innerHTML = this.css + this.html;
-        this.boxes = [];
-        for (let i = 0; i < this.childNodes.length; i++) {
-            this.attachToShadowDomAccordingToKind(this.childNodes[i]);
-        }
+       
 
-        this.boxes = this.root.querySelectorAll('paper-checkbox')
 
-        let val = this.getAttribute('value');
-        if (this.boxes) {
-            for (let i = 0; i < this.boxes.length; i++) {
-                if (this.boxes[i].value == val) {
-                    this.boxes[i].checked = true
-                }
-            }
-        }
+        this.addEventListener("change", (e) => {
+            e.stopPropagation();
+            this.parentElement.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }))
+        })
+
+
+
+        // let val = this.getAttribute('value');
+        // if (this.boxes) {
+        //     for (let i = 0; i < this.boxes.length; i++) {
+        //         if (this.boxes[i].value == val) {
+        //             this.boxes[i].checked = true
+        //         }
+        //     }
+        // }
 
 
     }
 
-    attachToShadowDomAccordingToKind(node) {
 
 
-        if (!BaseElement.isAAElement(node)) {
-            this.root.appendChild(BaseElement.copy(node));
-        } else {
-            if (node.tagName === 'AA-CHOICE-ITEM') {
-                let child = document.createElement('paper-checkbox');
-                if (node.getAttribute('value')) {
-                    child.setAttribute('name', node.getAttribute('value'));
-                    child.setAttribute('value', node.getAttribute('value'));
-                } else {
-                    child.setAttribute('name', node.innerText.trim());
-                    child.setAttribute('value', node.innerText.trim());
-                }
-                if (!((this.horizontal === '') || (this.horizontal))) {
-                    child.style.display = 'block';
-                }
-                child.innerHTML = node.innerHTML;
-                this.root.appendChild(child);
-                this.boxes.push(child);
-            }
-        }
-    }
+    // get html() {
+    //     return html``;
+    // }
 
-    get html() {
-        return html``;
-    }
+    // get css() {
+    //     return html`
+    //     <style>
+    //         paper-checkbox{
+    //             padding:12px;
+    //         }
+    //     </style>
 
-    get css() {
-        return html`
-        <style>
-            paper-checkbox{
-                padding:12px;
-            }
-        </style>
-        
-        
-        `;
-    }
 
-    toJSON(){
+    //     `;
+    // }
+
+    toJSON() {
         let result = super.toJSON();
         let children = [];
-        for(let i=0; i<this.children.length; i++){
+        for (let i = 0; i < this.children.length; i++) {
             children.push(this.children[i].toJSON());
         }
-        
+
         result[this.tagName.toLowerCase()].items = children;
-        return result; 
+        return result;
     }
 
 }

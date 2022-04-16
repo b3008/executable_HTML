@@ -53,7 +53,7 @@ export default class BaseElement extends HTMLElement {
     }
 
     static isAAElement(node) {
-        if (AANodeNames.indexOf(node.nodeName) != -1) {
+        if (AANodeNames.indexOf(node.nodeName.toUpperCase()) != -1) {
             return true;
         }
         return false;
@@ -289,7 +289,6 @@ export default class BaseElement extends HTMLElement {
 
     static nodeToJSON(node) {
 
-        debugger;
         if ((node.nodeType === document.TEXT_NODE) || (node.nodeType === document.COMMENT_NODE)) {
             let result = {};
             let text = node.textContent.replace(/\n/g, ' ').replace(/\t/g, ' ').replace(/\s\s+/g, ' ').trim();

@@ -41,7 +41,7 @@ export default class AAScreen extends BaseElement {
     }
 
     static get acceptsElements() {
-        return null;
+        return [];
     }
     static get observedAttributes() {
         return Object.keys(AAScreen.properties);

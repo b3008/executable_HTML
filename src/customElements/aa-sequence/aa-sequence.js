@@ -138,7 +138,7 @@ export default class AASequence extends BaseElement {
 
             let fragmentChild = this.innerFragment.childNodes[this.sIndex];
 
-            // if (fragmentChild.nodeName == "aa-screen") debugger;
+
             //  if the child is not an element just add it immediately 
             //  and move on to the next, there won't be a connectecCallback Function to execute anyway
             while (fragmentChild.nodeType != Node.ELEMENT_NODE) {

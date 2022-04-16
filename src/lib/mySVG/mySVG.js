@@ -519,7 +519,7 @@ class mySVG {
                 // window.pStart = pStart;
                 // window.text = text;
                 // window.g = chooseSVGItemStart;
-                // // debugger;
+
 
                 let chooseSVGItemEnd = SVG().circle(2).attr({ fill: 'black', stroke: 'black', 'stroke-width': 5 });
                 let contentsRow = new Container('parallel', node);

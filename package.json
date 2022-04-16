@@ -39,8 +39,9 @@
     "webpack-cli": "^3.3.12"
   },
   "scripts": {
-    "test": "karma start --single-run --browsers ChromeHeadless karma.config.js --verbose",
-    "build": "node node_modules/webpack/bin/webpack.js"
+    "test": "karma start --browsers ChromeHeadless karma.config.js --verbose",
+    "build": "node node_modules/webpack/bin/webpack.js",
+    "serve": "live-server  --port=8082 --cors"
   },
   "author": "Nikolaos Batalas",
   "license": "BSD-3-Clause-Clear"

@@ -27,11 +27,15 @@ export { AAClasses } from './customElements/aa-baseElement/baseElement.js';
  */
 import AASession from './customElements/aa-session/aa-session.js';
 
-export const AAElements = {
-    BaseElement, AAAffectGrid, AACheckboxes, AAChoose, 
-    AAChoiceItem, AAFunctionRandom, AAGeoLocation, AALabel, 
-    AALikertScale, AAMemory, AAMultipleChoice, AAOtherwise, 
-    AAScreen, AASession, AASequence, AASlider, AATextAnswer, 
-    AAVariable, AAWhen
-}
 
+import GenericEditor from './componentEditors/generic-editor/generic-editor.js';
+
+
+
+export const AAElements = {
+    BaseElement, AAAffectGrid, AACheckboxes, AAChoose,
+    AAChoiceItem, AAFunctionRandom, AAGeoLocation, AALabel,
+    AALikertScale, AAMemory, AAMultipleChoice, AAOtherwise,
+    AAScreen, AASession, AASequence, AASlider, AATextAnswer,
+    AAVariable, AAWhen, GenericEditor
+}
