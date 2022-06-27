@@ -1,5 +1,4 @@
-export default class AAMultipleChoice extends BaseElement {
-    static get category(): string;
+export default class AACheckboxes extends BaseElement {
     static get tag(): string;
     static get properties(): {
         horizontal: {
@@ -23,16 +22,12 @@ export default class AAMultipleChoice extends BaseElement {
     };
     static get acceptsElements(): string[];
     static get observedAttributes(): string[];
-    attributeChangedCallback(name: any, oldValue: any, newValue: any): void;
-    vertical_wasChangedInternally__: boolean;
-    vertical: boolean;
-    horizontal_wasChangedInternally__: boolean;
-    horizontal: boolean;
-    get staticObject(): typeof AAMultipleChoice;
-    set value(arg: any);
-    get value(): any;
-    updateState(checkedNode: any): void;
-    getValueOfSelectedItem(): any;
+    set value(arg: any[]);
+    get value(): any[];
+    boxes: any[] | NodeListOf<Element>;
+    attachToShadowDomAccordingToKind(node: any): void;
+    get html(): any;
+    get css(): any;
 }
 import BaseElement from "../aa-baseElement/baseElement.js";
-//# sourceMappingURL=aa-multiple-choice.d.ts.map
+//# sourceMappingURL=aa-checkboxes.backup.d.ts.map

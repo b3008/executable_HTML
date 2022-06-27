@@ -2,6 +2,9 @@ import BaseElement from './../../aa-baseElement/baseElement.js';
 
 export default class AAWhen extends BaseElement {
 
+    static get category(){
+        return "control";
+    }
 
     static get tag() { 
         return 'aa-when'

@@ -1,4 +1,5 @@
 export default class AAChoose extends BaseElement {
+    static get category(): string;
     static get tag(): string;
     static get properties(): {
         name: {

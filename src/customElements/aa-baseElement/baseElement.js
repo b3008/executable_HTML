@@ -1,4 +1,6 @@
-import '../../lib/yaml/js-yaml.js';
+// import '../../lib/yaml/js-yaml.js';
+import '../../lib/js-yaml-browserify.js';
+// import 'js-yaml';
 import * as html2jsl from '../../lib/html2jsl/html2jsl.js';
 import { mySVG } from '../../lib/mySVG/mySVG.js';
 

@@ -1,13 +1,10 @@
-import 'https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js'
+// import 'https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js'
 import BaseElement, { AAClasses } from '../../customElements/aa-baseElement/baseElement.js';
 import { AAElements } from '../../index.js';
 
 
 export default class GenericEditor extends BaseElement {
 
-
-
-    propInputsMap = {};
 
     static get tag() {
         return 'generic-editor';
@@ -25,12 +22,10 @@ export default class GenericEditor extends BaseElement {
     constructor() {
         super();
 
-
+        this.propInputsMap = {};
         this.root = this.attachShadow({ mode: 'open' });
 
     }
-
-
 
     set for(elementId) {
         // reset contents
@@ -39,6 +34,7 @@ export default class GenericEditor extends BaseElement {
         const container = this.buildInterfaceForElement(elementId);
         if(!container){
             console.warn(`could not find element with id ${elementId}`)
+            return;
         }
         container.style.width = "350px";
         this.root.appendChild(container);
@@ -343,7 +339,9 @@ export default class GenericEditor extends BaseElement {
                 inputElement.name = propertyName;
                 inputElement.value = propertyObject.value
                 inputElement.addEventListener("change", (e) => {
-                    element?.setAttribute(propertyName, e.target.value);
+                    if(element){
+                        element.setAttribute(propertyName, e.target.value);
+                    }
 
                 })
                 return inputElement;
@@ -355,7 +353,9 @@ export default class GenericEditor extends BaseElement {
                 checkbox.checked = ((propertyObject.value === "true") || (propertyObject.value === true)) ? true : false;
                 checkbox.addEventListener("change", (e) => {
                     const isChecked = e.target.checked;
-                    element?.setAttribute(propertyName, String(isChecked));
+                    if(element){
+                        element.setAttribute(propertyName, String(isChecked));
+                    }
 
                 })
                 return checkbox;

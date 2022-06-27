@@ -3,9 +3,10 @@ import '../aa-choice-item/aa-choice-item.js';
 
 export default class AAMultipleChoice extends BaseElement {
 
-    horizontal_wasChangedInternally__ = false;
-    vertical_wasChangedInternally__ = false;
 
+    static get category(){
+        return "response item";
+    }
 
 
 
@@ -139,6 +140,8 @@ export default class AAMultipleChoice extends BaseElement {
 
     constructor() {
         super();
+        this.horizontal_wasChangedInternally__ = false;
+        this.vertical_wasChangedInternally__ = false;
     }
 
     updateState(checkedNode) {

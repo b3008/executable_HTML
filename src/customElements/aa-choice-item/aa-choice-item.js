@@ -1,12 +1,7 @@
 import BaseElement from '../aa-baseElement/baseElement.js';
 export default class AAChoiceItem extends BaseElement {
 
-    kind = "radioButton";
-
-    item = null;
-    itemBlock = document.createElement('div');
-    label = document.createElement('div');
-
+  
 
     static get tag() {
         return 'aa-choice-item';
@@ -37,7 +32,7 @@ export default class AAChoiceItem extends BaseElement {
 
 
 
-    _orientation = "vertical"
+    
 
     set orientation(val) {
         this._orientation = val;
@@ -56,8 +51,6 @@ export default class AAChoiceItem extends BaseElement {
     get orientation() {
         return this._orientation;
     }
-
-
 
 
     get checked() {
@@ -84,6 +77,13 @@ export default class AAChoiceItem extends BaseElement {
 
     constructor() {
         super();
+
+        this.kind = "radioButton";
+        this.item = null;
+        this.itemBlock = document.createElement('div');
+        this.label = document.createElement('div');
+        this._orientation = "vertical"
+    
         this.root = this.attachShadow({ mode: 'open' });
         this.root.innerHTML = this.css;
 

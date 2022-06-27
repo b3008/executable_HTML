@@ -3,6 +3,10 @@ import '../aa-multiple-choice/aa-multiple-choice.js';
 
 export default class AALikertScale extends BaseElement {
 
+    static get category(){
+        return "response item";
+    }
+
     static get tag() {
         return 'aa-likert-scale';
     }

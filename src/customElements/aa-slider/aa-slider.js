@@ -1,6 +1,10 @@
 import BaseElement from '../aa-baseElement/baseElement.js';
 export default class AASlider extends BaseElement {
 
+    static get category(){
+        return"response item";
+    }
+
     static get tag() { 
         return 'aa-slider';
     }

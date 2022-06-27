@@ -1,4 +1,5 @@
 export default class AAWhen extends BaseElement {
+    static get category(): string;
     static get tag(): string;
     static get properties(): {
         name: {

@@ -1,4 +1,5 @@
 export default class AACheckboxes extends BaseElement {
+    static get category(): string;
     static get tag(): string;
     static get properties(): {
         horizontal: {
@@ -24,10 +25,8 @@ export default class AACheckboxes extends BaseElement {
     static get observedAttributes(): string[];
     set value(arg: any[]);
     get value(): any[];
-    boxes: any[] | NodeListOf<Element>;
-    attachToShadowDomAccordingToKind(node: any): void;
-    get html(): any;
-    get css(): any;
+    horizontal_wasChangedInternally__: boolean;
+    vertical_wasChangedInternally__: boolean;
 }
 import BaseElement from "../aa-baseElement/baseElement.js";
 //# sourceMappingURL=aa-checkboxes.d.ts.map

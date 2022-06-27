@@ -3,9 +3,11 @@ import '../aa-choice-item/aa-choice-item.js';
 
 export default class AACheckboxes extends BaseElement {
 
-    horizontal_wasChangedInternally__ = false;
-    vertical_wasChangedInternally__ = false;
+    static get category(){
+        return "response item";
+    }
 
+   
 
 
     static get tag() {
@@ -86,6 +88,9 @@ export default class AACheckboxes extends BaseElement {
 
     constructor() {
         super();
+        this.horizontal_wasChangedInternally__ = false;
+        this.vertical_wasChangedInternally__ = false;
+    
     }
 
 

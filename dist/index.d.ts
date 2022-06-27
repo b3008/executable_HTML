@@ -19,6 +19,7 @@ export namespace AAElements {
     export { AATextAnswer };
     export { AAVariable };
     export { AAWhen };
+    export { GenericEditor };
 }
 import BaseElement from "./customElements/aa-baseElement/baseElement.js";
 import AAAffectGrid from "./customElements/aa-affect-grid/aa-affect-grid.js";
@@ -39,4 +40,5 @@ import AASlider from "./customElements/aa-slider/aa-slider.js";
 import AATextAnswer from "./customElements/aa-text-answer/aa-text-answer.js";
 import AAVariable from "./customElements/aa-variable/aa-variable.js";
 import AAWhen from "./customElements/aa-choose/aa-when/aa-when.js";
+import GenericEditor from "./componentEditors/generic-editor/generic-editor.js";
 //# sourceMappingURL=index.d.ts.map

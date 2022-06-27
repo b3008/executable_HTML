@@ -1,4 +1,5 @@
 export default class AAScreen extends BaseElement {
+    static get category(): string;
     static get tag(): string;
     static get properties(): {
         "submit-button-text": {
@@ -36,7 +37,7 @@ export default class AAScreen extends BaseElement {
             userDefined: boolean;
         };
     };
-    static get acceptsElements(): any;
+    static get acceptsElements(): any[];
     static get observedAttributes(): string[];
     attributeChangedCallback(name: any, oldValue: any, newValue: any): void;
     submitButtonContainer: Element;

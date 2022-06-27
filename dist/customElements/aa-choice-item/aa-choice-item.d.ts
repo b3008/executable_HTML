@@ -5,9 +5,25 @@ export default class AAChoiceItem extends BaseElement {
             type: StringConstructor;
             userDefined: boolean;
         };
+        checked: {
+            type: BooleanConstructor;
+            value: boolean;
+        };
     };
     static get observedAttributes(): string[];
-    static get acceptsElements(): any;
+    static get acceptsElements(): string[];
+    set orientation(arg: string);
+    get orientation(): string;
+    _orientation: string;
+    set checked(arg: any);
+    get checked(): any;
+    set value(arg: string);
+    get value(): string;
+    kind: string;
+    item: HTMLElement;
+    itemBlock: HTMLDivElement;
+    label: HTMLDivElement;
+    get css(): any;
 }
 import BaseElement from "../aa-baseElement/baseElement.js";
 //# sourceMappingURL=aa-choice-item.d.ts.map
