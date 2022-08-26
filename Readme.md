@@ -8,7 +8,7 @@ This is a set of custom elements to provide piecemeal insertion of HTML into the
 
 For a demo, see https://b3008.github.io/
 
-## Overiew
+## Overview
 
 In everyday life, it is common for communication between a singular party (such as an organization e.g. a hospital, or an individual, e.g. a researcher) and a wider population (such as patients or study-participants) to take place via documents, which on one hand disperse information to the crowd (such as advice or instructions), and on the other hand request information and data to be submitted by each respondent back to the issuer. Most common examples are forms and questionnaires.
 
@@ -17,9 +17,6 @@ As Internet connectivity and smart devices have evolved, it has become increasin
 Authors will (directly or indirectly) write up their documents as HTML scripts and distribute them over the Web. Respondents will load these scripts in their browsers, interact with interfaces they render, and will submit requested information.
 
 Executable HTML is meant to increase the level of control afforded to the author of an HTML document, in presenting  content to the respondent, and in requesting data, by allowing procedural logic to be defined at the level of the HTML document (as opposed to writing JavaScript application code)
-
-Ulitimately, Executable HTML allows an author to write and share a document that 
-
 
 
 ## What is executable HTML
