@@ -3606,8 +3606,8 @@ class AASequence extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE
 
             let fragmentChild = this.innerFragment.childNodes[this.sIndex];
 
-            console.log(fragmentChild.textContent);
-            debugger;
+            // console.log(fragmentChild.textContent);
+
             //  if the child is not an element just add it immediately 
             //  and move on to the next, there won't be a connectecCallback Function to execute anyway
             while (fragmentChild.nodeType != Node.ELEMENT_NODE) {
@@ -3770,11 +3770,11 @@ class AASession extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_
     }
 
     connectedCallback() {
-        debugger;
+
         this.innerHTML='';
         this.setAttributeDefaultValues()
 
-        debugger;
+
         // console.log(this.tagName+"#"+this.id,"connected");
         if(this.diagram===true){
             this.produceDiagram()

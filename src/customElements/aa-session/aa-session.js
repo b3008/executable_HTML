@@ -100,11 +100,11 @@ export default class AASession extends BaseElement {
     }
 
     connectedCallback() {
-        debugger;
+
         this.innerHTML='';
         this.setAttributeDefaultValues()
 
-        debugger;
+
         // console.log(this.tagName+"#"+this.id,"connected");
         if(this.diagram===true){
             this.produceDiagram()

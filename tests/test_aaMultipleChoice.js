@@ -25,7 +25,6 @@ describe('aa-multiple-choice', () => {
     describe('functions', function () {
         xit('gets and sets value', async () => {
           
-            debugger;
             container.innerHTML =  `<aa-multiple-choice  value='h'>
                                         <aa-choice-item value='h'> choice one </aa-choice-item>
                                         <aa-choice-item> choice two </aa-choice-item>
