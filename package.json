@@ -4,9 +4,7 @@
   "version": "1.0.5",
   "description": "",
   "main": "index.js",
-  "directories": {
-    "lib": "lib"
-  },
+  "files": ["dist"],
   "dependencies": {
     "@polymer/paper-button": "^3.0.1",
     "@polymer/paper-checkbox": "^3.1.0",
