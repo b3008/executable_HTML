@@ -1,4 +1,4 @@
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/b3008/executable_HTML.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/b3008/executable_HTML/context:javascript)
+<!-- [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/b3008/executable_HTML.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/b3008/executable_HTML/context:javascript) -->
 <!-- [![Build Status](https://travis-ci.com/b3008/executable_HTML.svg?branch=master)](https://travis-ci.com/b3008/executable_HTML) -->
 
 # executable HTML
@@ -46,7 +46,7 @@ This collection of elements can be installed via `npm`, by
 npm install --save executable_html
 ```
 
-Then, inporting in sourcce,
+Then, importing in source,
 ```
 import { AAElements } from 'executable_html`
 // AAElements.AASequence, AAElemements.AASession, etc
