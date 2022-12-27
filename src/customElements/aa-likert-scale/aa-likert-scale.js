@@ -3,63 +3,67 @@ import '../aa-multiple-choice/aa-multiple-choice.js';
 
 export default class AALikertScale extends BaseElement {
 
-    static get tag() { 
+    static get category(){
+        return "response item";
+    }
+
+    static get tag() {
         return 'aa-likert-scale';
     }
 
-    static get properties(){
+    static get properties() {
         return {
-            name:{
-                type:String,
-                userDefined:true
-            },
-           
-            "debug":{
-                type:Boolean,
-                value:false,
-                userDefined:false
+            name: {
+                type: String,
+                userDefined: true
             },
 
-            "value":{
-                type:Number,
-                userDefined:false,
+            "debug": {
+                type: Boolean,
+                value: false,
+                userDefined: false
             },
 
-            "items":{
-                type:String,
-                userDefined:true,
+            "value": {
+                type: Number,
+                userDefined: false,
             },
 
-            "start-label":{
-                type:String,
-                userDefined:true,
-                value:''
+            "items": {
+                type: String,
+                userDefined: true,
             },
 
-            "middle-label":{
-                type:String,
-                userDefined:true,
-                value:''
+            "start-label": {
+                type: String,
+                userDefined: true,
+                value: ''
             },
 
-            "end-label":{
-                type:String,
-                userDefined:true,
-                value:''
+            "middle-label": {
+                type: String,
+                userDefined: true,
+                value: ''
             },
 
-            "start-item":{
-                type:Number,
-                userDefined:true,
-                value:1
+            "end-label": {
+                type: String,
+                userDefined: true,
+                value: ''
+            },
+
+            "start-item": {
+                type: Number,
+                userDefined: true,
+                value: 1
             }
-            
-            
+
+
 
         }
     }
 
-    static get acceptsElements(){
+    static get acceptsElements() {
         return [];
     }
 
@@ -69,7 +73,7 @@ export default class AALikertScale extends BaseElement {
 
 
 
-    constructor(){
+    constructor() {
 
         super();
 
@@ -81,23 +85,16 @@ export default class AALikertScale extends BaseElement {
     connectedCallback() {
         super.connectedCallback();
 
-        
         this.root.innerHTML = this.html;
 
         this.mChoice = this.root.querySelector("aa-multiple-choice")
         this.choiceItems = this.mChoice.choiceItems
 
-
-        // this.root.addEventListener("change", ()=>{
-        //     debugger;
-        // })
-
-        this.addEventListener("click", ()=>{
-            if(!this.currentvalue){
+        this.addEventListener("click", () => {
+            if (!this.currentvalue) {
                 this.dispatchEvent(new CustomEvent("change"))
-            }else
-            {
-                if(this.currentvalue!=this.value){
+            } else {
+                if (this.currentvalue != this.value) {
                     this.dispatchEvent(new CustomEvent("change"))
                 }
                 this.currentvalue = this.value;
@@ -106,76 +103,75 @@ export default class AALikertScale extends BaseElement {
     }
 
 
-    getTags(){
-        
+    getTags() {
+
         let c = '';
         let start = `<div style="width:100px; white-space:nowrap">${this.getAttribute("start-label") || ''}</div>`
         let middle = `<div style="width:100px; white-space:nowrap">${this.getAttribute("middle-label") || ''}</div>`
         let end = `<div style="width:100px; white-space:nowrap">${this.getAttribute("end-label") || ''}</div>`
         let placeholder = `<div style="width:50px"></div>`;
-        
+
 
 
         let items = parseInt(this.items)
-        for(let i=1; i<=items; i++){
-            
-            
-            
-            if(i==1) {
-                c+=start;
-            }
-            else if(i==Math.floor((items+1)/2)) {
+        for (let i = 1; i <= items; i++) {
 
-                c+=middle;
+
+
+            if (i == 1) {
+                c += start;
             }
-            else if(i==items) {
-                c+=end;
-            } else{
-                c+=placeholder;
+            else if (i == Math.floor((items + 1) / 2)) {
+
+                c += middle;
+            }
+            else if (i == items) {
+                c += end;
+            } else {
+                c += placeholder;
             }
 
-            
-        }   
+
+        }
 
         let result = `<div style="font-family: Roboto, Noto, sans-serif; width:100%; display:flex; justify-content:space-evenly; text-align:center">${c}</div>`
         return result;
 
     }
-    get html(){
+    get html() {
         let items = ``;
 
         let startItem = parseFloat(this.startItem)
 
-        if((!this.items)||(this.items==="undefined")) this.items = 5;
-        for(let i=0; i<this.items; i++){
-            items += `<aa-choice-item name="${i+startItem}">${i+startItem}</aa-choice-item>`;
+        if ((!this.items) || (this.items === "undefined")) this.items = 5;
+        for (let i = 0; i < this.items; i++) {
+            items += `<aa-choice-item name="${i + startItem}">${i + startItem}</aa-choice-item>`;
         }
-        let result =  html`<div>
+        let result = html`<div>
                                 <aa-multiple-choice horizontal="true" name="${this.name}">${items}</aa-multiple-choice>
                                 ${this.getTags()}    
                             </div>
                                 `
-        
+
         return result;
     }
 
 
-    get value(){
+    get value() {
 
-        if(this.mChoice)
-        {
+        if (this.mChoice) {
             return parseInt(this.mChoice.value);
-        } else{
+        } else {
             return parseInt(this.getAttribute('value'));
         }
     }
 
 
     getValue() {
-       return this.mChoice.value; 
+        return this.mChoice.value;
     }
 
- 
+
 
 
 }

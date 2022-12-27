@@ -10,15 +10,45 @@
 
 <body>
 
+<div id="tester">
+    <div id="1">1</div>
+    <div id="1">1</div>
+    <div id="3"></div>
+</div>
 
+<div id="tester2">
+    
+</div>
 
-    test
-    <div style="width:50%; margin:0 auto">
+<aa-session>
+    <template>
+      
+  <!-- program starts -->
+      <aa-sequence> 
+        <aa-function-random min="1" max="2" name="rnd"></aa-function-random> 
+        <aa-choose>
+          <aa-when test="rnd==1">m​</aa-when>
+          <aa-otherwise>n​</aa-otherwise>
+        </aa-choose>
+        <aa-jump goto="rnd"></aa-jump>
+      </aa-sequence>
+  <!-- program ends -->
+      
+     </template>
+  </aa-session>
+
+    <!-- <div style="width:50%; margin:0 auto">
         <aa-session>
-
+            hey I am in session.
             <template>
-                <aa-sequence id="s">
+
+                hey I am in template
+                <aa-sequence id="s">what is going on here
+                    hey I am in the sequence
+                    indeed
                     <div>1</div>
+
+                    hey I am also here
                     <div>2</div>
                     <div>3</div>
                 </aa-sequence>
@@ -28,14 +58,14 @@
 
             </template>
         </aa-session>
-    </div>
+    </div> -->
 
     <button id="b">next</button>
 
 
 
 
-    <div style="width:50%; margin:0 auto">
+    <!-- <div style="width:50%; margin:0 auto">
         <aa-session>
 
             <template>
@@ -50,7 +80,7 @@
 
             </template>
         </aa-session>
-    </div>
+    </div> -->
 
     <script>
 

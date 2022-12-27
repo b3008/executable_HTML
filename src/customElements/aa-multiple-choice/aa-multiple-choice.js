@@ -3,7 +3,14 @@ import '../aa-choice-item/aa-choice-item.js';
 
 export default class AAMultipleChoice extends BaseElement {
 
-    static get tag() { 
+
+    static get category(){
+        return "response item";
+    }
+
+
+
+    static get tag() {
         return 'aa-multiple-choice';
     }
 
@@ -42,154 +49,151 @@ export default class AAMultipleChoice extends BaseElement {
     }
 
     static get observedAttributes() {
-        return Object.keys(AAMultipleChoice.properties);
+        return ["horizontal", "vertical"];
     }
 
-    get staticObject(){
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        
+        
+        console.log("attributeChanged :", name, newValue )
+        switch (name) {
+            case "horizontal":
+
+                if (newValue == "true") {
+                    this.style.display = "flex";
+                    for (let i = 0; i < this.children.length; i++) {
+                        const node = this.children[i];
+                        if (node.tagName == 'AA-CHOICE-ITEM') {
+                            node.orientation = "vertical";
+                        }
+                    }
+                }
+                
+                if (this.vertical_wasChangedInternally__) {
+                    this.vertical_wasChangedInternally__ = false;
+                    return
+                }
+                this.vertical_wasChangedInternally__ = true;
+                if ((newValue === "false") || (!newValue)) {
+                    this.vertical = true;
+
+                } else {
+                    this.vertical = false;
+                }
+
+                // make a horizontal collection of items
+                // and set each item to be oriented vertically
+                
+                return;
+            case "vertical":
+
+                if (newValue == "true") {
+                    this.style.display = "block";
+                    for (let i = 0; i < this.children.length; i++) {
+                        const node = this.children[i];
+                        if (node.tagName == 'AA-CHOICE-ITEM') {
+                            node.orientation = "horizontal";
+                        }
+                    }
+                }
+
+                if (this.vertical_wasChangedInternally__) {
+                    this.vertical_wasChangedInternally__ = false;
+                    return
+                }
+                this.horizontal_wasChangedInternally__ = true;
+                if ((newValue === "false") || (!newValue)) {
+                    this.horizontal = true;
+                } else {
+                    this.horizontal = false;
+                }
+
+                // make a vertical collection of items
+                // and set each item to be oriented horizontally
+                
+                return;
+
+        }
+    }
+    get staticObject() {
         return AAMultipleChoice;
     }
 
     get value() {
-
-        if (this.radioGroup) {
-            return this.radioGroup.selected;
-        }
-        return this.getAttribute('value');
+        return this.getValueOfSelectedItem();
     }
 
     set value(val) {
+        for (let i = 0; i < this.children.length; i++) {
+            const node = this.children[i];
+            if (node.tagName === 'AA-CHOICE-ITEM') {
+                if (node.value !== val) {
+                    node.checked = false;
+                } else {
+                    node.checked = true
+                }
+            }
+        }
 
-        this.setAttribute('value', val);
-        this.radioGroup.selected = val;
     }
 
     constructor() {
         super();
+        this.horizontal_wasChangedInternally__ = false;
+        this.vertical_wasChangedInternally__ = false;
+    }
 
-        if(this.horizontal===''){
-            this.horizontal = true;
+    updateState(checkedNode) {
+        for (let i = 0; i < this.children.length; i++) {
+            const node = this.children[i];
+            if (node.tagName === 'AA-CHOICE-ITEM') {
+                if (node !== checkedNode) {
+                    node.checked = false;
+                } else {
+                    node.checked = true;
+                }
+            }
         }
-        this.root = this.attachShadow({ mode: 'open' });
-        this.root.innerHTML = this.css + this.html;
+    }
 
-        this.radioGroup = this.root.querySelector('#radioGroup');
-        this.radioGroup.addEventListener('change', (e) => {
-            this.value = e.target.name;
-            // console.log(this.value);
-        });
-
+    getValueOfSelectedItem() {
+        for (let i = 0; i < this.children.length; i++) {
+            const node = this.children[i];
+            if (node.tagName === 'AA-CHOICE-ITEM') {
+                if (node.checked) {
+                    return node.value;
+                }
+            }
+        }
     }
 
     connectedCallback() {
 
         super.connectedCallback();
 
-        this.choiceItems = [];
-        for (let i = 0; i < this.childNodes.length; i++) {
-            this.attachToShadowDomAccordingToKind(this.childNodes[i]);
-        }
-
-        if ((this.getAttribute('value'))&&(this.getAttribute('value')!=='undefined')) {
-            this.radioGroup.setAttribute('selected', this.getAttribute('value'));
-        }
-
-        this.style.display = 'block';
-
-        // this.addEventListener("click", ()=>{
-        //     if(!this.currentvalue){
-        //         this.dispatchEvent(new CustomEvent("change"))
-        //     }else
-        //     {
-        //         if(this.currentvalue!=this.value){
-        //             this.dispatchEvent(new CustomEvent("change", {bubbles:true}))
-        //         }
-        //         this.currentvalue = this.value;
-        //     }
-        // })
-    }
-
-    attachToShadowDomAccordingToKind(node) {
-
-        if (!BaseElement.isAAElement(node)) {
-            this.root.appendChild(BaseElement.copy(node));
-        } else {
-            if (node.tagName === 'AA-CHOICE-ITEM') {
-
-                let child = document.createElement('paper-radio-button');
-                if (node.getAttribute('value')) {
-                    child.setAttribute('name', node.getAttribute('value'));
-                } else {
-                    child.setAttribute('name', node.innerText.trim());
-                }
-                if (!((this.horizontal === '') || (this.horizontal))) {
-                    child.style.display = 'block';
-                }
-
-                child.innerHTML = node.innerHTML;
-                 
-                this.radioGroup.appendChild(child);
-                this.choiceItems.push(child);
 
 
-                if (((this.horizontal === '') || (this.horizontal))) {
-                    
 
-                    this.radioGroup.style.display='flex';
-                    this.radioGroup.style.justifyContent='space-evenly';
-                    this.radioGroup.classList.add("horizontal");
+        this.value = this.getAttribute("value");
 
-                    let d1 = child.shadowRoot.querySelector('#radioContainer');
-                    let d2 = child.shadowRoot.querySelector('#radioLabel');
-                    d2.style.textAlign = 'center';
-                    d2.style.marginLeft = '0px';
-                    d2.style.padding = '5px';
-                    // d2.style.whiteSpace = "nowrap";
-                    // d2.style.minWidth = "50px";
-                    // d2.style.maxWidth = "90px";
-                    let newDiv = document.createElement('div');
-                    // newDiv.style.marginLeft = 'var(--paper-radio-button-label-spacing,10px)';
-                    newDiv.style.display='flex';
-                    newDiv.style.flexDirection='column';
-                    newDiv.style.alignItems = 'center';
-                    newDiv.style.textAlign = 'center';
-                    child.shadowRoot.appendChild(newDiv);
-                    newDiv.appendChild(d1);
-                    newDiv.appendChild(d2);
- 
-                } 
-                // else {
+        this.addEventListener("change", (e) => {
+            e.stopPropagation();
+            this.updateState(e.target)
+            this.parentElement.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }))
+        })
 
-                // }
-
-            }
-        }
-    }
-
-    get html() {
-        return html`<paper-radio-group id='radioGroup'></paper-radio-group>`;
-    }
-
-    get css() {
-        return html`<style>
-            paper-radio-group{
-                user-select:none;
-            }
-
-        paper-radio-button {
-            padding: var(--paper-radio-group-item-padding, 10px);
-            user-select:none;
-            display: block;
-        }
-        </style>`;
     }
 
 
-    toJSON(){
+
+
+    toJSON() {
         let result = super.toJSON();
-        if((result.horizontal)){
+        if ((result.horizontal)) {
             result.horizontal = true;
         }
-        return result; 
+        return result;
     }
 }
 

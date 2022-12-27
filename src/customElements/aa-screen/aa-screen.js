@@ -1,6 +1,11 @@
 import BaseElement from './../aa-baseElement/baseElement.js';
 export default class AAScreen extends BaseElement {
 
+
+    static get category(){
+        return "UI";
+    };
+
     static get tag() { 
         return 'aa-screen';
     }
@@ -41,7 +46,7 @@ export default class AAScreen extends BaseElement {
     }
 
     static get acceptsElements() {
-        return null;
+        return [];
     }
     static get observedAttributes() {
         return Object.keys(AAScreen.properties);

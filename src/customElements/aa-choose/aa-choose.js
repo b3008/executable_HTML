@@ -5,6 +5,10 @@ import jsep from '../../lib/jsep/jsep.js';
 
 export default class AAChoose extends BaseElement {
 
+    static get category(){
+        return "control";
+    }
+
     static get tag() { 
         return 'aa-choose';
     }

@@ -1,4 +1,6 @@
-import '../../lib/yaml/js-yaml.js';
+// import '../../lib/yaml/js-yaml.js';
+import '../../lib/js-yaml-browserify.js';
+// import 'js-yaml';
 import * as html2jsl from '../../lib/html2jsl/html2jsl.js';
 import { mySVG } from '../../lib/mySVG/mySVG.js';
 
@@ -14,6 +16,10 @@ var html = function (txt, ...val) {
 }
 
 if (window) window.html = html;
+
+
+export const AAClasses = [];
+window.AAClasses = AAClasses;
 
 export default class BaseElement extends HTMLElement {
 
@@ -45,10 +51,11 @@ export default class BaseElement extends HTMLElement {
             window.AANodeNames.push(name.toUpperCase());
             customElements.define(name, elem);
         }
+        AAClasses[name.toUpperCase()] = elem;
     }
 
     static isAAElement(node) {
-        if (AANodeNames.indexOf(node.nodeName) != -1) {
+        if (AANodeNames.indexOf(node.nodeName.toUpperCase()) != -1) {
             return true;
         }
         return false;
@@ -284,7 +291,6 @@ export default class BaseElement extends HTMLElement {
 
     static nodeToJSON(node) {
 
-        debugger;
         if ((node.nodeType === document.TEXT_NODE) || (node.nodeType === document.COMMENT_NODE)) {
             let result = {};
             let text = node.textContent.replace(/\n/g, ' ').replace(/\t/g, ' ').replace(/\s\s+/g, ' ').trim();
@@ -465,3 +471,4 @@ if (!customElements.get('aa-base-element')) {
 
 
 window.nodeToJSON = BaseElement.nodeToJSON;
+

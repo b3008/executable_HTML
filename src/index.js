@@ -19,6 +19,7 @@ import AATextAnswer from './customElements/aa-text-answer/aa-text-answer.js';
 import AAVariable from './customElements/aa-variable/aa-variable.js';
 import AAWhen from './customElements/aa-choose/aa-when/aa-when.js';
 
+export { AAClasses } from './customElements/aa-baseElement/baseElement.js';
 /**
  * it is important that aa-session is imported last. This way all other elements will
  * have already been registered before a aa-session element gets
@@ -26,10 +27,15 @@ import AAWhen from './customElements/aa-choose/aa-when/aa-when.js';
  */
 import AASession from './customElements/aa-session/aa-session.js';
 
+
+import GenericEditor from './componentEditors/generic-editor/generic-editor.js';
+
+
+
 export const AAElements = {
-    BaseElement, AAAffectGrid, AACheckboxes, AAChoose, 
-    AAChoiceItem, AAFunctionRandom, AAGeoLocation, AALabel, 
-    AALikertScale, AAMemory, AAMultipleChoice, AAOtherwise, 
-    AAScreen, AASession, AASequence, AASlider, AATextAnswer, 
-    AAVariable, AAWhen
+    BaseElement, AAAffectGrid, AACheckboxes, AAChoose,
+    AAChoiceItem, AAFunctionRandom, AAGeoLocation, AALabel,
+    AALikertScale, AAMemory, AAMultipleChoice, AAOtherwise,
+    AAScreen, AASession, AASequence, AASlider, AATextAnswer,
+    AAVariable, AAWhen, GenericEditor
 }
