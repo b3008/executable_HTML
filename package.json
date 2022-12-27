@@ -5,7 +5,7 @@
   "description": "",
   "main": "./dist/index.js",
   "types":"./dist/index.d.ts",
-  "files": ["dist"],
+  "files": ["./dist"],
   "dependencies": {
     "@polymer/paper-button": "^3.0.1",
     "@polymer/paper-checkbox": "^3.1.0",

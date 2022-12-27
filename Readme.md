@@ -39,7 +39,22 @@ The ultimate aim is to produce a single representation of a data collection prot
 
 
 
-## Running
+## Usage
+
+This collection of elements can be installed via `npm`, by
+```
+npm install --save executable_html
+```
+
+Then, inporting in sourcce,
+```
+import { AAElements } from 'executable_html`
+// AAElements.AASequence, AAElemements.AASession, etc
+```
+will also register each element in `CustomElementsRegistry`
+
+For examples of use, please refer to [this page](https://executablehtmldocs.roboticbit.nl/)
+
 
 ### Tests
 
