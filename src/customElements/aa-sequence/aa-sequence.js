@@ -6,11 +6,11 @@ import './aa-jump/aa-jump.js';
 export default class AASequence extends BaseElement {
 
 
-    static get category(){
+    static get category() {
         return "control";
     }
 
-    static get tag() { 
+    static get tag() {
         return 'aa-sequence';
     }
 
@@ -64,7 +64,7 @@ export default class AASequence extends BaseElement {
     }
     connectedCallback() {
         this.setAttributeDefaultValues();
-        if(this.diagram){
+        if (this.diagram) {
             this.produceDiagram();
             return;
         }
@@ -128,7 +128,7 @@ export default class AASequence extends BaseElement {
     next(name) {
 
         return new Promise((resolve, reject) => {
-
+            console.log(this);
             if (this.stopped) { return; }
             if (this.sIndex >= this.innerFragment.childNodes.length) return null;
 
@@ -164,8 +164,8 @@ export default class AASequence extends BaseElement {
             //     // resolve(this.next());
             //     resolve();
             // } else {
-                this.target.appendChild(fragmentChildCopy);
-                setTimeout(() => resolve());
+            this.target.appendChild(fragmentChildCopy);
+            setTimeout(() => resolve());
             // }
         })
     }

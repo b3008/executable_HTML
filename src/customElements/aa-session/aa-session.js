@@ -1,26 +1,26 @@
 import BaseElement from './../aa-baseElement/baseElement.js';
 import './../aa-memory/aa-memory.js';
 import * as html2jsl from './../../lib/html2jsl/html2jsl.js';
-import * as AASequence  from '../aa-sequence/aa-sequence.js';
+import * as AASequence from '../aa-sequence/aa-sequence.js';
 
 
 export default class AASession extends BaseElement {
 
-    static get tag() { 
+    static get tag() {
         return 'aa-session'
     }
 
     static get properties() {
 
         return {
-           
+
             ...BaseElement.properties,
 
 
             'should-run': {
                 type: Boolean,
                 userDefined: true,
-                value:true
+                value: true
             },
 
             'debug': {
@@ -29,9 +29,9 @@ export default class AASession extends BaseElement {
                 userDefined: false
             },
 
-          
 
-            
+
+
 
         }
     }
@@ -61,7 +61,7 @@ export default class AASession extends BaseElement {
         // this.root.innerHTML = '<template><slot></slot></template>'
         this._mem = document.createElement('aa-memory');
         this.addEventListener('valueSubmit', (e) => {
-
+            console.log("valueSubmit!", e.detail)
             // e.stopPropagation();
             let input = {
                 data: e.detail.value,
@@ -69,10 +69,13 @@ export default class AASession extends BaseElement {
                 sessionTimestamp: this.sessionTime,
                 sessionName: this.name,
                 variables: Object.keys(e.detail.value),
+
             };
             // TODO:  this._mem.saveReplyValue(e.detail.value, false);
-            
-        
+            Object.keys(e.detail.value).forEach((key) => {
+                this._mem.setData(key, e.detail.value[key]);
+            });
+
 
             let inputSubmitEvent = new CustomEvent('inputSubmit', { bubbles: true, detail: { input } });
             this.dispatchEvent(inputSubmitEvent);
@@ -101,15 +104,15 @@ export default class AASession extends BaseElement {
 
     connectedCallback() {
 
-        this.innerHTML='';
+        this.innerHTML = '';
         this.setAttributeDefaultValues()
 
 
         // console.log(this.tagName+"#"+this.id,"connected");
-        if(this.diagram===true){
+        if (this.diagram === true) {
             this.produceDiagram()
             return;
-        } 
+        }
         this.sessionID = this.myIdGenerator();
         this.sessionTime = new Date().getTime();
         let sessionDatum = Object.keys(this.dataset);
@@ -120,9 +123,9 @@ export default class AASession extends BaseElement {
             this.run();
         }
 
-        setTimeout( ()=>{
-            this.dispatchEvent(new CustomEvent("sessionReady", {bubbles:true}));
-        },0);
+        setTimeout(() => {
+            this.dispatchEvent(new CustomEvent("sessionReady", { bubbles: true }));
+        }, 0);
     }
 
 
@@ -202,9 +205,9 @@ export default class AASession extends BaseElement {
             }
         }
 
-        
 
-        
+
+
         let templateString = html2jsl.formatJSLResult("TEMPLATE", {}, argsStrings);
         let final = html2jsl.formatJSLResult("AA_SESSION", attrObj, [templateString]);
 
@@ -213,9 +216,9 @@ export default class AASession extends BaseElement {
 
 
 
-    get originalChildNodes(){
-        if(this.myTemplate.content.childNodes.length==0) return [];
-        if(!this.myTemplate.content.childNodes[0].content) return this.childNodes;
+    get originalChildNodes() {
+        if (this.myTemplate.content.childNodes.length == 0) return [];
+        if (!this.myTemplate.content.childNodes[0].content) return this.childNodes;
         return this.myTemplate.content.childNodes[0].content.childNodes;
     }
 

@@ -45,7 +45,7 @@ export default class BaseElement extends HTMLElement {
             },
         }
     }
-    static registerAAElement(name, elem) {       
+    static registerAAElement(name, elem) {
         if (!customElements.get(name)) {
             window.AANodeNames = window.AANodeNames || [];
             window.AANodeNames.push(name.toUpperCase());
@@ -163,7 +163,7 @@ export default class BaseElement extends HTMLElement {
         let props = {};
         for (let i = 0; i < attr.length; i++) {
             let prop = this.toCamelCase(attr[i]);
-            props[prop] = attr[i];   
+            props[prop] = attr[i];
             if (typeof this[prop] != 'undefined') {
                 continue;
             } else {
@@ -279,10 +279,10 @@ export default class BaseElement extends HTMLElement {
         let result = {};
         let tagName = this.tagName.toLowerCase()
         result[tagName] = this.getAttributes()
-        if(this.childNodes.length){
+        if (this.childNodes.length) {
             result[tagName].childNodes = [];
-        
-            this.childNodes.forEach(childNode=>{
+
+            this.childNodes.forEach(childNode => {
                 result[tagName].childNodes.push(BaseElement.nodeToJSON(childNode))
             });
         }
@@ -376,7 +376,7 @@ export default class BaseElement extends HTMLElement {
 
     static getDomPathAsName(el) {
         var stack = [];
-       
+
         while ((el.nodeName !== "AA-SESSION") && (el.parentNode != null)) {
 
             var sibCount = 0;
@@ -423,13 +423,14 @@ export default class BaseElement extends HTMLElement {
         }
         name += stack[stack.length - 1];
 
-       
+
         return name; // removes the html element
     }
 
     static getVariableName(el) {
-        if (el.name) {
-            return el.name;
+        const name = el.getAttribute('name');
+        if (name) {
+            return name;
         } else {
             return BaseElement.getDomPathAsName(el);
         }

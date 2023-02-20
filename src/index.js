@@ -1,3 +1,7 @@
+
+import './lib/regenerator-runtime/runtime.js';
+
+
 // import '../dist/paper-polymer.js';
 import BaseElement from './customElements/aa-baseElement/baseElement.js';
 import AAAffectGrid from './customElements/aa-affect-grid/aa-affect-grid.js';
@@ -5,7 +9,7 @@ import AACheckboxes from './customElements/aa-checkboxes/aa-checkboxes.js';
 import AAChoose from './customElements/aa-choose/aa-choose.js';
 import AAChoiceItem from './customElements/aa-choice-item/aa-choice-item.js';
 import AAFunctionRandom from './customElements/aa-function/aa-function-random.js';
-import AAGeoLocation from './customElements/aa-geolocation/aa-geolocation.js';
+// import AAGeoLocation from './customElements/aa-geolocation/aa-geolocation.js';
 import AALabel from './customElements/aa-label/aa-label.js';
 import AALikertScale from './customElements/aa-likert-scale/aa-likert-scale.js';
 import AAMemory from './customElements/aa-memory/aa-memory.js';
@@ -34,7 +38,9 @@ import GenericEditor from './componentEditors/generic-editor/generic-editor.js';
 
 export const AAElements = {
     BaseElement, AAAffectGrid, AACheckboxes, AAChoose,
-    AAChoiceItem, AAFunctionRandom, AAGeoLocation, AALabel,
+    AAChoiceItem, AAFunctionRandom,
+    // AAGeoLocation, 
+    AALabel,
     AALikertScale, AAMemory, AAMultipleChoice, AAOtherwise,
     AAScreen, AASession, AASequence, AASlider, AATextAnswer,
     AAVariable, AAWhen, GenericEditor

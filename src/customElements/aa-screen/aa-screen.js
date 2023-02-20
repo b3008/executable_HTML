@@ -2,11 +2,11 @@ import BaseElement from './../aa-baseElement/baseElement.js';
 export default class AAScreen extends BaseElement {
 
 
-    static get category(){
+    static get category() {
         return "UI";
     };
 
-    static get tag() { 
+    static get tag() {
         return 'aa-screen';
     }
 
@@ -166,7 +166,7 @@ export default class AAScreen extends BaseElement {
         }
 
         this.collectValues().then(val => {
-
+            console.log("valueSubmit!, value", val);
             try {
                 let valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: val } });
                 this.dispatchEvent(valueSubmitEvent);
@@ -267,15 +267,19 @@ export default class AAScreen extends BaseElement {
         result = result || {};
 
         for (let i = 0; i < node.children.length; i++) {
-            let c = node.children[i];
 
+            let c = node.children[i];
+            console.log(c)
 
             if (c.nodeName != 'AA-LABEL') {
 
                 let name = BaseElement.getVariableName(c);
+                console.log(c.tagName, "has name", name);
                 console.log(c, name);
                 if (c.getValue) {
                     result[name] = c.getValue();
+                    console.log(result);
+                    debuggerl
                 } else if (c.value) {
                     if (c.value.then) {
                         result[name] = await c.value;
@@ -291,6 +295,7 @@ export default class AAScreen extends BaseElement {
                 await this.getChildrenValues(c, result);
             }
         }
+
         return result;
         // })
     }
@@ -363,10 +368,10 @@ export default class AAScreen extends BaseElement {
     }
 
     hide() {
-        
+
         let aaChildren = this.getAAChildren(this, []);
-        for(let i=0; i<aaChildren.length; i++){
-            if(aaChildren[i].stop){
+        for (let i = 0; i < aaChildren.length; i++) {
+            if (aaChildren[i].stop) {
                 aaChildren[i].stop();
             }
         }
