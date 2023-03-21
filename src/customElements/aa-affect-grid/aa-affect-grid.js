@@ -174,18 +174,7 @@ export default class AAAffectGrid extends BaseElement {
     constructor() {
         super();
 
-        // if (this.topLeftLabel === null) this.topLeftLabel = '';
-        // if (this.topLabel === null) this.topLabel = '';
-        // if (this.topRightLabel === null) this.topRightLabel = '';
-        // if (this.leftTopLabel === null) this.leftTopLabel = '';
-        // if (this.leftLabel === null) this.leftLabel = '';
-        // if (this.leftBottomLabel === null) this.leftBottomLabel = '';
-        // if (this.rightTopLabel === null) this.rightTopLabel = '';
-        // if (this.rightLabel === null) this.rightLabel = '';
-        // if (this.rightBottomLabel === null) this.rightBottomLabel = '';
-        // if (this.bottomLeftLabel === null) this.bottomLeftLabel = '';
-        // if (this.bottomLabel === null) this.bottomLabel = '';
-        // if (this.bottomRightLabel === null) this.bottomRightLabel = '';
+
         this.root = this.attachShadow({ mode: 'open' });
 
 
@@ -196,7 +185,18 @@ export default class AAAffectGrid extends BaseElement {
 
     connectedCallback() {
         super.connectedCallback();
-
+        if (this.topLeftLabel === null) this.topLeftLabel = '';
+        if (this.topLabel === null) this.topLabel = '';
+        if (this.topRightLabel === null) this.topRightLabel = '';
+        if (this.leftTopLabel === null) this.leftTopLabel = '';
+        if (this.leftLabel === null) this.leftLabel = '';
+        if (this.leftBottomLabel === null) this.leftBottomLabel = '';
+        if (this.rightTopLabel === null) this.rightTopLabel = '';
+        if (this.rightLabel === null) this.rightLabel = '';
+        if (this.rightBottomLabel === null) this.rightBottomLabel = '';
+        if (this.bottomLeftLabel === null) this.bottomLeftLabel = '';
+        if (this.bottomLabel === null) this.bottomLabel = '';
+        // if (this.bottomRightLabel === null) this.bottomRightLabel = '';
 
         this.root.innerHTML = this.css + this.html;
 
