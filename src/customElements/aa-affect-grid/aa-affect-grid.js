@@ -122,53 +122,53 @@ export default class AAAffectGrid extends BaseElement {
 
 
 
-    get x() {
-        let val = this.getAttribute("value");
-        if (!val) return null;
-        return parseInt(val.split(",")[0]);
-    }
+    // get x() {
+    //     let val = this.getAttribute("value");
+    //     if (!val) return null;
+    //     return parseInt(val.split(",")[0]);
+    // }
 
-    get y() {
-        let val = this.getAttribute("value");
-        if (!val) return null;
-        return parseInt(val.split(",")[1]);
-    }
+    // get y() {
+    //     let val = this.getAttribute("value");
+    //     if (!val) return null;
+    //     return parseInt(val.split(",")[1]);
+    // }
 
-    get value() {
-        let val = this.getAttribute("value");
-        if (!val) return null
+    // get value() {
+    //     let val = this.getAttribute("value");
+    //     if (!val) return null
 
-        let s = val.split(",");
-        return [parseInt(s[0]), parseInt(s[1])];
-    }
-    set value(val) {
-        this.setAttribute('value', val);
+    //     let s = val.split(",");
+    //     return [parseInt(s[0]), parseInt(s[1])];
+    // }
+    // set value(val) {
+    //     this.setAttribute('value', val);
 
-    }
+    // }
 
-    get minLabel() {
-        return this.getAttribute('min-label');
-    }
+    // get minLabel() {
+    //     return this.getAttribute('min-label');
+    // }
 
-    get maxLabel() {
-        return this.getAttribute('max-label');
-    }
+    // get maxLabel() {
+    //     return this.getAttribute('max-label');
+    // }
 
-    set minLabel(val) {
-        this.setAttribute('min-label', val);
-    }
+    // set minLabel(val) {
+    //     this.setAttribute('min-label', val);
+    // }
 
-    set maxLabel(val) {
-        this.setAttribute('max-label', val);
-    }
+    // set maxLabel(val) {
+    //     this.setAttribute('max-label', val);
+    // }
 
-    set min(val) {
-        this.setAttribute('min', val);
-    }
+    // set min(val) {
+    //     this.setAttribute('min', val);
+    // }
 
-    set max(val) {
-        this.setAttribute('max', val);
-    }
+    // set max(val) {
+    //     this.setAttribute('max', val);
+    // }
 
 
     constructor() {
