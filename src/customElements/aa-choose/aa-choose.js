@@ -5,38 +5,38 @@ import jsep from '../../lib/jsep/jsep.js';
 
 export default class AAChoose extends BaseElement {
 
-    static get category(){
+    static get category() {
         return "control";
     }
 
-    static get tag() { 
+    static get tag() {
         return 'aa-choose';
     }
 
-    static get properties(){
+    static get properties() {
         return {
 
             ...BaseElement.properties,
 
-            name:{
-                type:String,
-                userDefined:true
+            name: {
+                type: String,
+                userDefined: true
             },
-            "should-run":{
-                type:Boolean,
-                value:true,
-                userDefined:false
+            "should-run": {
+                type: Boolean,
+                value: true,
+                userDefined: false
             },
-            "debug":{
-                type:Boolean,
-                value:false,
-                userDefined:false
+            "debug": {
+                type: Boolean,
+                value: false,
+                userDefined: false
             }
         }
     }
 
-    static get acceptsElements(){
-        return[
+    static get acceptsElements() {
+        return [
             "aa-when", "aa-otherwise"
         ]
     }
@@ -56,7 +56,7 @@ export default class AAChoose extends BaseElement {
     connectedCallback() {
         this.setAttributeDefaultValues();
 
-        if(this.diagram){
+        if (this.diagram) {
 
             this.produceDiagram();
             return;
@@ -93,28 +93,28 @@ export default class AAChoose extends BaseElement {
                              * and have the sequence specifically extract newly
                              * produced nodes and insert them itself
                             **/
-                           
-                            for(let j=0; j<node.childNodes.length;j++){
-                                
+
+                            for (let j = 0; j < node.childNodes.length; j++) {
+
                                 // the element has not been attached
                                 // so we have to access the static properties getter
                                 // to get the default value for expectWait
-                                if(node.childNodes[j].constructor)
-                                if(node.childNodes[j].constructor.properties)
-                                if(node.childNodes[j].constructor.properties['expect-wait']){
-                                    doesAnyNodeExpectWait = true;
-                                }
+                                if (node.childNodes[j].constructor)
+                                    if (node.childNodes[j].constructor.properties)
+                                        if (node.childNodes[j].constructor.properties['expect-wait']) {
+                                            doesAnyNodeExpectWait = true;
+                                        }
                             }
 
                             this.parentNode.insertBefore(node, this.nextSibling);
                         }
                     }
-            
+
                     /** 
                      * so here dispatch evdEvent only if you haven't encountered
                      * something that has expectWait:true
                      */
-                    if(!doesAnyNodeExpectWait) {
+                    if (!doesAnyNodeExpectWait) {
                         this._dispatchEndEvent();
                     }
                 }
@@ -172,7 +172,7 @@ export default class AAChoose extends BaseElement {
             else {
                 // there are still strings in the expression, which are unknown
                 // evaluate with values that the parseTreeProvides
-                return  eval(`${parseTree.left.value}${parseTree.operator}${parseTree.right.value}`);
+                return eval(`${parseTree.left.value}${parseTree.operator}${parseTree.right.value}`);
                 //an exception should be raised
                 // throw 'unknown identifiers in expression : ' + expr;
             }
@@ -188,6 +188,9 @@ export default class AAChoose extends BaseElement {
 
         let originalIdentifiers = Object.keys(memory.getDataDump());
         let upperCaseIdentifiers = originalIdentifiers.map(s => s.toUpperCase());
+
+
+
         for (let i in originalIdentifiers) {
             let value = memory.getData(originalIdentifiers[i]);
             let finalValue = parseInt(value);

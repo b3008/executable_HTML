@@ -1,16 +1,18 @@
 import BaseElement from '../aa-baseElement/baseElement.js';
 export default class AAAffectGrid extends BaseElement {
 
-    static get category(){
+    static get category() {
         return "response item";
     }
 
-    static get tag() { 
+    static get tag() {
         return 'aa-affect-grid';
     }
 
     static get properties() {
         return {
+
+            ...super.properties,
 
             'top-label': {
                 type: String,
@@ -102,7 +104,7 @@ export default class AAAffectGrid extends BaseElement {
                 value: 11
             },
 
-            value:{
+            value: {
                 type: Array,
 
             }
@@ -120,24 +122,24 @@ export default class AAAffectGrid extends BaseElement {
 
 
 
-    get x(){
+    get x() {
         let val = this.getAttribute("value");
-        if(!val) return null;
+        if (!val) return null;
         return parseInt(val.split(",")[0]);
     }
 
-    get y(){
+    get y() {
         let val = this.getAttribute("value");
-        if(!val) return null;
+        if (!val) return null;
         return parseInt(val.split(",")[1]);
     }
 
     get value() {
         let val = this.getAttribute("value");
-        if(!val) return null
+        if (!val) return null
 
         let s = val.split(",");
-        return [ parseInt(s[0]), parseInt(s[1])];
+        return [parseInt(s[0]), parseInt(s[1])];
     }
     set value(val) {
         this.setAttribute('value', val);
@@ -172,22 +174,22 @@ export default class AAAffectGrid extends BaseElement {
     constructor() {
         super();
 
-        if(this.topLeftLabel === null) this.topLeftLabel='';
-        if(this.topLabel === null) this.topLabel='';
-        if(this.topRightLabel === null) this.topRightLabel='';
-        if(this.leftTopLabel === null) this.leftTopLabel='';
-        if(this.leftLabel === null) this.leftLabel='';
-        if(this.leftBottomLabel === null) this.leftBottomLabel='';
-        if(this.rightTopLabel === null) this.rightTopLabel='';
-        if(this.rightLabel === null) this.rightLabel='';
-        if(this.rightBottomLabel === null) this.rightBottomLabel='';
-        if(this.bottomLeftLabel === null) this.bottomLeftLabel='';
-        if(this.bottomLabel === null) this.bottomLabel='';
-        if(this.bottomRightLabel === null) this.bottomRightLabel='';
+        // if (this.topLeftLabel === null) this.topLeftLabel = '';
+        // if (this.topLabel === null) this.topLabel = '';
+        // if (this.topRightLabel === null) this.topRightLabel = '';
+        // if (this.leftTopLabel === null) this.leftTopLabel = '';
+        // if (this.leftLabel === null) this.leftLabel = '';
+        // if (this.leftBottomLabel === null) this.leftBottomLabel = '';
+        // if (this.rightTopLabel === null) this.rightTopLabel = '';
+        // if (this.rightLabel === null) this.rightLabel = '';
+        // if (this.rightBottomLabel === null) this.rightBottomLabel = '';
+        // if (this.bottomLeftLabel === null) this.bottomLeftLabel = '';
+        // if (this.bottomLabel === null) this.bottomLabel = '';
+        // if (this.bottomRightLabel === null) this.bottomRightLabel = '';
         this.root = this.attachShadow({ mode: 'open' });
 
-        
-        
+
+
     }
 
 
@@ -199,23 +201,23 @@ export default class AAAffectGrid extends BaseElement {
         this.root.innerHTML = this.css + this.html;
 
         // this.topLeft = this.root.querySelector('.top-left');
-       
+
         // this.topRight = this.root.querySelector('.top-right');
         // this.leftMargin =  this.root.querySelector('.left-margin');
         // this.rightMargin = this.root.querySelector('.right-margin');
-        
 
-        
+
+
 
         this.grid = this.root.querySelector('.grid');
-        this.grid.addEventListener("mousedown", (e)=>{
+        this.grid.addEventListener("mousedown", (e) => {
             let currentValue = this.value;
 
             let cell = e.path[0];
             this.value = [cell.dataset.x, cell.dataset.y];
-            
-            
-            if(this.selectedCell){
+
+
+            if (this.selectedCell) {
                 this.selectedCell.classList.remove('selected');
             }
             this.selectedCell = cell;
@@ -224,13 +226,13 @@ export default class AAAffectGrid extends BaseElement {
             let newValue = this.value;
             console.log(currentValue, newValue);
 
-            if(!currentValue) this.dispatchEvent(new CustomEvent("change", {bubbles:true}))
-            else{
-                if((currentValue[0]!=newValue[0])||(currentValue[1]!=newValue[1])){
-                    this.dispatchEvent(new CustomEvent("change", {bubbles:true}));
+            if (!currentValue) this.dispatchEvent(new CustomEvent("change", { bubbles: true }))
+            else {
+                if ((currentValue[0] != newValue[0]) || (currentValue[1] != newValue[1])) {
+                    this.dispatchEvent(new CustomEvent("change", { bubbles: true }));
                 }
             }
-            
+
 
         });
 
@@ -239,10 +241,10 @@ export default class AAAffectGrid extends BaseElement {
         this.totalContainer.style.height = window.getComputedStyle(this.totalContainer).width;
         this.root.querySelector(".leftLabels").style.width = window.getComputedStyle(this.grid).height;
         this.root.querySelector(".rightLabels").style.width = window.getComputedStyle(this.grid).height;
-        
+
         //register a resize observer for top container
-        if(ResizeObserver){
-            new ResizeObserver( ()=>{
+        if (ResizeObserver) {
+            new ResizeObserver(() => {
 
                 this.totalContainer.style.height = window.getComputedStyle(this.totalContainer).width;
                 this.root.querySelector(".leftLabels").style.width = window.getComputedStyle(this.grid).height;
@@ -254,10 +256,10 @@ export default class AAAffectGrid extends BaseElement {
         //     console.warn("ResizeObserver is not defined here");
         // }
 
-       
 
 
-        
+
+
     }
 
     get css() {
@@ -323,7 +325,7 @@ export default class AAAffectGrid extends BaseElement {
         }
         .grid{
             display:grid;
-            grid-template-columns: repeat(${this.columns}, ${100/this.columns}%);
+            grid-template-columns: repeat(${this.columns}, ${100 / this.columns}%);
             
             flex-grow:2;
             width:100%;
@@ -357,12 +359,12 @@ export default class AAAffectGrid extends BaseElement {
     }
 
     get html() {
-        
 
-        let grid ='';
-        for(let j=0; j<this.rows; j++){
-            for(let i=0; i<this.columns; i++){
-                grid+=html`<div class="cell  ${j==0?'top':''} ${j==this.rows-1?`bottom`:''}  ${i==0?`left`:''}  ${i==this.columns-1?`right`:''}" data-x="${ i+1 - Math.round(this.columns/2) }" data-y="${Math.round(this.rows/2) - j - 1}">
+
+        let grid = '';
+        for (let j = 0; j < this.rows; j++) {
+            for (let i = 0; i < this.columns; i++) {
+                grid += html`<div class="cell  ${j == 0 ? 'top' : ''} ${j == this.rows - 1 ? `bottom` : ''}  ${i == 0 ? `left` : ''}  ${i == this.columns - 1 ? `right` : ''}" data-x="${i + 1 - Math.round(this.columns / 2)}" data-y="${Math.round(this.rows / 2) - j - 1}">
             </div>`;
             }
         }
@@ -415,7 +417,7 @@ export default class AAAffectGrid extends BaseElement {
             </div>
         
         `;
-               
+
         return source;
     }
 

@@ -1,0 +1,117 @@
+<html>
+
+<head>
+
+    <!-- <script type="module" src="../../../dist/aaCustomElements.js"></script> -->
+    <!-- <script type="module" src="/dist/aaCustomElements.js"></script> -->
+    <!-- <script type="module" src="../../index.js"></script> -->
+    <script type="module" src="https://b3008.github.io/executable_HTML/dist/paper-polymer.js"></script>
+    <script type="module" src="../index.js"></script>
+    <style>
+        @font-face {
+            font-family: 'commodoreserverregular';
+            src: url('commodoreserver-webfont.woff2') format('woff2'),
+                url('commodoreserver-webfont.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+
+        }
+
+
+        .democontainer {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .c64char {
+            font-family: 'commodoreserverregular';
+            padding: 0;
+            margin: -2px;
+
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+
+    <aa-session>
+        <template>
+            <aa-sequence>
+                <aa-screen>
+                    <h3>This is a Tizen WebApp</h3>
+                    Can you see anything on the screen?
+
+                    <aa-multiple-choice name="visible" style="margin-top:20px; margin-bottom:20px">
+                        <aa-choice-item value="1">
+                            <div
+                                style=" display: flex; align-items: center; width: 100px; justify-content: space-between;">
+                                <div>I do!</div>
+                                <div style="font-size:2em;">👍</div>
+                            </div>
+                        </aa-choice-item>
+
+                        <aa-choice-item value="2">
+                            <div
+                                style=" display: flex;  align-items: center; width: 100px; justify-content: space-between;">
+                                <div>Nope</div>
+                                <div style="font-size:2em;">👎</div>
+                            </div>
+                        </aa-choice-item>
+
+                    </aa-multiple-choice>
+
+                </aa-screen>
+
+                <aa-choose>
+                    <aa-when id='condition1' test="visible=='1'">
+                        <div id='result1'> Great! </div>
+                    </aa-when>
+
+                    <aa-otherwise>
+                        otherwise
+                    </aa-otherwise>
+                </aa-choose>
+
+            </aa-sequence>
+        </template>
+    </aa-session>
+
+
+
+    <script>
+
+    // start = function () {
+    //     console.log("start");
+
+    //     s = document.querySelector("aa-sequence");
+    //     s.start();
+    // }
+
+    // stop = function () {
+    //     console.log("stop");
+
+    //     s = document.querySelector("aa-sequence");
+    //     s.stop();
+    // }
+
+
+    // r2 = document.querySelector("#result2");
+    // let counter = 0;
+    // insert = function () {
+    //     let rnd = Math.random()
+    //     let char = `<div class="c64char">${rnd > 0.5 ? 'm' : 'n'}</div>`;
+    //     r2.innerHTML += char;
+    //     counter++;
+    //     setTimeout(() => insert(), 0);
+    // }
+// insert();
+
+
+
+    </script>
+
+</html>
