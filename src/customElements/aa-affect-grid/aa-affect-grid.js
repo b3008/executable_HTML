@@ -122,70 +122,59 @@ export default class AAAffectGrid extends BaseElement {
 
 
 
-    // get x() {
-    //     let val = this.getAttribute("value");
-    //     if (!val) return null;
-    //     return parseInt(val.split(",")[0]);
-    // }
+    get x() {
+        let val = this.getAttribute("value");
+        if (!val) return null;
+        return parseInt(val.split(",")[0]);
+    }
 
-    // get y() {
-    //     let val = this.getAttribute("value");
-    //     if (!val) return null;
-    //     return parseInt(val.split(",")[1]);
-    // }
+    get y() {
+        let val = this.getAttribute("value");
+        if (!val) return null;
+        return parseInt(val.split(",")[1]);
+    }
 
-    // get value() {
-    //     let val = this.getAttribute("value");
-    //     if (!val) return null
+    get value() {
+        let val = this.getAttribute("value");
+        if (!val) return null
 
-    //     let s = val.split(",");
-    //     return [parseInt(s[0]), parseInt(s[1])];
-    // }
-    // set value(val) {
-    //     this.setAttribute('value', val);
+        let s = val.split(",");
+        return [parseInt(s[0]), parseInt(s[1])];
+    }
+    set value(val) {
+        this.setAttribute('value', val);
 
-    // }
+    }
 
-    // get minLabel() {
-    //     return this.getAttribute('min-label');
-    // }
+    get minLabel() {
+        return this.getAttribute('min-label');
+    }
 
-    // get maxLabel() {
-    //     return this.getAttribute('max-label');
-    // }
+    get maxLabel() {
+        return this.getAttribute('max-label');
+    }
 
-    // set minLabel(val) {
-    //     this.setAttribute('min-label', val);
-    // }
+    set minLabel(val) {
+        this.setAttribute('min-label', val);
+    }
 
-    // set maxLabel(val) {
-    //     this.setAttribute('max-label', val);
-    // }
+    set maxLabel(val) {
+        this.setAttribute('max-label', val);
+    }
 
-    // set min(val) {
-    //     this.setAttribute('min', val);
-    // }
+    set min(val) {
+        this.setAttribute('min', val);
+    }
 
-    // set max(val) {
-    //     this.setAttribute('max', val);
-    // }
+    set max(val) {
+        this.setAttribute('max', val);
+    }
 
 
     constructor() {
         super();
 
-        // if (this.topLeftLabel === null) this.topLeftLabel = '';
-        // if (this.topLabel === null) this.topLabel = '';
-        // if (this.topRightLabel === null) this.topRightLabel = '';
-        // if (this.leftTopLabel === null) this.leftTopLabel = '';
-        // if (this.leftLabel === null) this.leftLabel = '';
-        // if (this.leftBottomLabel === null) this.leftBottomLabel = '';
-        // if (this.rightTopLabel === null) this.rightTopLabel = '';
-        // if (this.rightLabel === null) this.rightLabel = '';
-        // if (this.rightBottomLabel === null) this.rightBottomLabel = '';
-        // if (this.bottomLeftLabel === null) this.bottomLeftLabel = '';
-        // if (this.bottomLabel === null) this.bottomLabel = '';
-        // if (this.bottomRightLabel === null) this.bottomRightLabel = '';
+
         this.root = this.attachShadow({ mode: 'open' });
 
 
@@ -196,7 +185,18 @@ export default class AAAffectGrid extends BaseElement {
 
     connectedCallback() {
         super.connectedCallback();
-
+        if (this.topLeftLabel === null) this.topLeftLabel = '';
+        if (this.topLabel === null) this.topLabel = '';
+        if (this.topRightLabel === null) this.topRightLabel = '';
+        if (this.leftTopLabel === null) this.leftTopLabel = '';
+        if (this.leftLabel === null) this.leftLabel = '';
+        if (this.leftBottomLabel === null) this.leftBottomLabel = '';
+        if (this.rightTopLabel === null) this.rightTopLabel = '';
+        if (this.rightLabel === null) this.rightLabel = '';
+        if (this.rightBottomLabel === null) this.rightBottomLabel = '';
+        if (this.bottomLeftLabel === null) this.bottomLeftLabel = '';
+        if (this.bottomLabel === null) this.bottomLabel = '';
+        // if (this.bottomRightLabel === null) this.bottomRightLabel = '';
 
         this.root.innerHTML = this.css + this.html;
 
