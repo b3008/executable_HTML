@@ -1,7 +1,7 @@
 import BaseElement from '../aa-baseElement/baseElement.js';
 export default class AAChoiceItem extends BaseElement {
 
-  
+
 
     static get tag() {
         return 'aa-choice-item';
@@ -30,9 +30,13 @@ export default class AAChoiceItem extends BaseElement {
         return ["#text"];
     }
 
+    // you can get the same effect by accessing the object's constructor, perhaps this should be phased out
+    get staticObject() {
+        return AAChoiceItem;
+    }
 
 
-    
+
 
     set orientation(val) {
         this._orientation = val;
@@ -83,7 +87,7 @@ export default class AAChoiceItem extends BaseElement {
         this.itemBlock = document.createElement('div');
         this.label = document.createElement('div');
         this._orientation = "vertical"
-    
+
         this.root = this.attachShadow({ mode: 'open' });
         this.root.innerHTML = this.css;
 
@@ -91,9 +95,9 @@ export default class AAChoiceItem extends BaseElement {
 
     connectedCallback() {
         super.connectedCallback();
-    
+
         this.slot = document.createElement('slot');
-        this.label.innerHTML= `<slot></slot>`;
+        this.label.innerHTML = `<slot></slot>`;
 
         if (this.parentElement.tagName === 'AA-CHECKBOXES') {
             this.kind = "checkBox"
@@ -105,7 +109,7 @@ export default class AAChoiceItem extends BaseElement {
 
 
         if (this.kind == "radioButton") {
-            if(this.item){
+            if (this.item) {
                 this.item.remove();
             }
             this.item = document.createElement('paper-radio-button');
@@ -121,11 +125,11 @@ export default class AAChoiceItem extends BaseElement {
             this.root.appendChild(this.itemBlock);
 
             this.item.shadowRoot.querySelector("#radioLabel").remove();
-       
+
 
 
         } else {
-            if(this.item){
+            if (this.item) {
                 this.item.remove();
             }
             this.item = document.createElement('paper-checkbox');
@@ -145,7 +149,7 @@ export default class AAChoiceItem extends BaseElement {
 
 
         this.label.classList.add("label-horizontal");
-        
+
 
         this.itemBlock.style.display = "flex";
         this.itemBlock.style.alignItems = "center";

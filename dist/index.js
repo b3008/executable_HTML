@@ -579,16 +579,18 @@ __webpack_require__.r(__webpack_exports__);
 
 class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
-    static get category(){
+    static get category() {
         return "response item";
     }
 
-    static get tag() { 
+    static get tag() {
         return 'aa-affect-grid';
     }
 
     static get properties() {
         return {
+
+            ...super.properties,
 
             'top-label': {
                 type: String,
@@ -680,7 +682,7 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
                 value: 11
             },
 
-            value:{
+            value: {
                 type: Array,
 
             }
@@ -698,24 +700,24 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
 
 
 
-    get x(){
+    get x() {
         let val = this.getAttribute("value");
-        if(!val) return null;
+        if (!val) return null;
         return parseInt(val.split(",")[0]);
     }
 
-    get y(){
+    get y() {
         let val = this.getAttribute("value");
-        if(!val) return null;
+        if (!val) return null;
         return parseInt(val.split(",")[1]);
     }
 
     get value() {
         let val = this.getAttribute("value");
-        if(!val) return null
+        if (!val) return null
 
         let s = val.split(",");
-        return [ parseInt(s[0]), parseInt(s[1])];
+        return [parseInt(s[0]), parseInt(s[1])];
     }
     set value(val) {
         this.setAttribute('value', val);
@@ -750,22 +752,22 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
     constructor() {
         super();
 
-        if(this.topLeftLabel === null) this.topLeftLabel='';
-        if(this.topLabel === null) this.topLabel='';
-        if(this.topRightLabel === null) this.topRightLabel='';
-        if(this.leftTopLabel === null) this.leftTopLabel='';
-        if(this.leftLabel === null) this.leftLabel='';
-        if(this.leftBottomLabel === null) this.leftBottomLabel='';
-        if(this.rightTopLabel === null) this.rightTopLabel='';
-        if(this.rightLabel === null) this.rightLabel='';
-        if(this.rightBottomLabel === null) this.rightBottomLabel='';
-        if(this.bottomLeftLabel === null) this.bottomLeftLabel='';
-        if(this.bottomLabel === null) this.bottomLabel='';
-        if(this.bottomRightLabel === null) this.bottomRightLabel='';
+        // if (this.topLeftLabel === null) this.topLeftLabel = '';
+        // if (this.topLabel === null) this.topLabel = '';
+        // if (this.topRightLabel === null) this.topRightLabel = '';
+        // if (this.leftTopLabel === null) this.leftTopLabel = '';
+        // if (this.leftLabel === null) this.leftLabel = '';
+        // if (this.leftBottomLabel === null) this.leftBottomLabel = '';
+        // if (this.rightTopLabel === null) this.rightTopLabel = '';
+        // if (this.rightLabel === null) this.rightLabel = '';
+        // if (this.rightBottomLabel === null) this.rightBottomLabel = '';
+        // if (this.bottomLeftLabel === null) this.bottomLeftLabel = '';
+        // if (this.bottomLabel === null) this.bottomLabel = '';
+        // if (this.bottomRightLabel === null) this.bottomRightLabel = '';
         this.root = this.attachShadow({ mode: 'open' });
 
-        
-        
+
+
     }
 
 
@@ -777,23 +779,23 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
         this.root.innerHTML = this.css + this.html;
 
         // this.topLeft = this.root.querySelector('.top-left');
-       
+
         // this.topRight = this.root.querySelector('.top-right');
         // this.leftMargin =  this.root.querySelector('.left-margin');
         // this.rightMargin = this.root.querySelector('.right-margin');
-        
 
-        
+
+
 
         this.grid = this.root.querySelector('.grid');
-        this.grid.addEventListener("mousedown", (e)=>{
+        this.grid.addEventListener("mousedown", (e) => {
             let currentValue = this.value;
 
             let cell = e.path[0];
             this.value = [cell.dataset.x, cell.dataset.y];
-            
-            
-            if(this.selectedCell){
+
+
+            if (this.selectedCell) {
                 this.selectedCell.classList.remove('selected');
             }
             this.selectedCell = cell;
@@ -802,13 +804,13 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
             let newValue = this.value;
             console.log(currentValue, newValue);
 
-            if(!currentValue) this.dispatchEvent(new CustomEvent("change", {bubbles:true}))
-            else{
-                if((currentValue[0]!=newValue[0])||(currentValue[1]!=newValue[1])){
-                    this.dispatchEvent(new CustomEvent("change", {bubbles:true}));
+            if (!currentValue) this.dispatchEvent(new CustomEvent("change", { bubbles: true }))
+            else {
+                if ((currentValue[0] != newValue[0]) || (currentValue[1] != newValue[1])) {
+                    this.dispatchEvent(new CustomEvent("change", { bubbles: true }));
                 }
             }
-            
+
 
         });
 
@@ -817,10 +819,10 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
         this.totalContainer.style.height = window.getComputedStyle(this.totalContainer).width;
         this.root.querySelector(".leftLabels").style.width = window.getComputedStyle(this.grid).height;
         this.root.querySelector(".rightLabels").style.width = window.getComputedStyle(this.grid).height;
-        
+
         //register a resize observer for top container
-        if(ResizeObserver){
-            new ResizeObserver( ()=>{
+        if (ResizeObserver) {
+            new ResizeObserver(() => {
 
                 this.totalContainer.style.height = window.getComputedStyle(this.totalContainer).width;
                 this.root.querySelector(".leftLabels").style.width = window.getComputedStyle(this.grid).height;
@@ -832,10 +834,10 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
         //     console.warn("ResizeObserver is not defined here");
         // }
 
-       
 
 
-        
+
+
     }
 
     get css() {
@@ -901,7 +903,7 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
         }
         .grid{
             display:grid;
-            grid-template-columns: repeat(${this.columns}, ${100/this.columns}%);
+            grid-template-columns: repeat(${this.columns}, ${100 / this.columns}%);
             
             flex-grow:2;
             width:100%;
@@ -935,12 +937,12 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
     }
 
     get html() {
-        
 
-        let grid ='';
-        for(let j=0; j<this.rows; j++){
-            for(let i=0; i<this.columns; i++){
-                grid+=html`<div class="cell  ${j==0?'top':''} ${j==this.rows-1?`bottom`:''}  ${i==0?`left`:''}  ${i==this.columns-1?`right`:''}" data-x="${ i+1 - Math.round(this.columns/2) }" data-y="${Math.round(this.rows/2) - j - 1}">
+
+        let grid = '';
+        for (let j = 0; j < this.rows; j++) {
+            for (let i = 0; i < this.columns; i++) {
+                grid += html`<div class="cell  ${j == 0 ? 'top' : ''} ${j == this.rows - 1 ? `bottom` : ''}  ${i == 0 ? `left` : ''}  ${i == this.columns - 1 ? `right` : ''}" data-x="${i + 1 - Math.round(this.columns / 2)}" data-y="${Math.round(this.rows / 2) - j - 1}">
             </div>`;
             }
         }
@@ -993,7 +995,7 @@ class AAAffectGrid extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
             </div>
         
         `;
-               
+
         return source;
     }
 
@@ -1680,7 +1682,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class AAChoiceItem extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
-  
+
 
     static get tag() {
         return 'aa-choice-item';
@@ -1709,9 +1711,13 @@ class AAChoiceItem extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
         return ["#text"];
     }
 
+    // you can get the same effect by accessing the object's constructor, perhaps this should be phased out
+    get staticObject() {
+        return AAChoiceItem;
+    }
 
 
-    
+
 
     set orientation(val) {
         this._orientation = val;
@@ -1762,7 +1768,7 @@ class AAChoiceItem extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
         this.itemBlock = document.createElement('div');
         this.label = document.createElement('div');
         this._orientation = "vertical"
-    
+
         this.root = this.attachShadow({ mode: 'open' });
         this.root.innerHTML = this.css;
 
@@ -1770,9 +1776,9 @@ class AAChoiceItem extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
 
     connectedCallback() {
         super.connectedCallback();
-    
+
         this.slot = document.createElement('slot');
-        this.label.innerHTML= `<slot></slot>`;
+        this.label.innerHTML = `<slot></slot>`;
 
         if (this.parentElement.tagName === 'AA-CHECKBOXES') {
             this.kind = "checkBox"
@@ -1784,7 +1790,7 @@ class AAChoiceItem extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
 
 
         if (this.kind == "radioButton") {
-            if(this.item){
+            if (this.item) {
                 this.item.remove();
             }
             this.item = document.createElement('paper-radio-button');
@@ -1800,11 +1806,11 @@ class AAChoiceItem extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
             this.root.appendChild(this.itemBlock);
 
             this.item.shadowRoot.querySelector("#radioLabel").remove();
-       
+
 
 
         } else {
-            if(this.item){
+            if (this.item) {
                 this.item.remove();
             }
             this.item = document.createElement('paper-checkbox');
@@ -1824,7 +1830,7 @@ class AAChoiceItem extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODU
 
 
         this.label.classList.add("label-horizontal");
-        
+
 
         this.itemBlock.style.display = "flex";
         this.itemBlock.style.alignItems = "center";
