@@ -2640,7 +2640,7 @@ __webpack_require__.r(__webpack_exports__);
 class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 
-    static get category(){
+    static get category() {
         return "response item";
     }
 
@@ -2690,9 +2690,7 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
 
 
     attributeChangedCallback(name, oldValue, newValue) {
-        
-        
-        console.log("attributeChanged :", name, newValue )
+
         switch (name) {
             case "horizontal":
 
@@ -2705,7 +2703,7 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
                         }
                     }
                 }
-                
+
                 if (this.vertical_wasChangedInternally__) {
                     this.vertical_wasChangedInternally__ = false;
                     return
@@ -2720,7 +2718,7 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
 
                 // make a horizontal collection of items
                 // and set each item to be oriented vertically
-                
+
                 return;
             case "vertical":
 
@@ -2747,7 +2745,7 @@ class AAMultipleChoice extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_
 
                 // make a vertical collection of items
                 // and set each item to be oriented horizontally
-                
+
                 return;
 
         }

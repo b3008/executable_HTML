@@ -4,7 +4,7 @@ import '../aa-choice-item/aa-choice-item.js';
 export default class AAMultipleChoice extends BaseElement {
 
 
-    static get category(){
+    static get category() {
         return "response item";
     }
 
@@ -54,9 +54,7 @@ export default class AAMultipleChoice extends BaseElement {
 
 
     attributeChangedCallback(name, oldValue, newValue) {
-        
-        
-        console.log("attributeChanged :", name, newValue )
+
         switch (name) {
             case "horizontal":
 
@@ -69,7 +67,7 @@ export default class AAMultipleChoice extends BaseElement {
                         }
                     }
                 }
-                
+
                 if (this.vertical_wasChangedInternally__) {
                     this.vertical_wasChangedInternally__ = false;
                     return
@@ -84,7 +82,7 @@ export default class AAMultipleChoice extends BaseElement {
 
                 // make a horizontal collection of items
                 // and set each item to be oriented vertically
-                
+
                 return;
             case "vertical":
 
@@ -111,7 +109,7 @@ export default class AAMultipleChoice extends BaseElement {
 
                 // make a vertical collection of items
                 // and set each item to be oriented horizontally
-                
+
                 return;
 
         }
