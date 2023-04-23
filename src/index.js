@@ -2,7 +2,7 @@
 import './lib/regenerator-runtime/runtime.js';
 
 
-// import '../dist/paper-polymer.js';
+import * as _PaperPolymer from './paper-polymer-imports.js';
 import BaseElement from './customElements/aa-baseElement/baseElement.js';
 import AAAffectGrid from './customElements/aa-affect-grid/aa-affect-grid.js';
 import AACheckboxes from './customElements/aa-checkboxes/aa-checkboxes.js';
@@ -34,6 +34,8 @@ import AASession from './customElements/aa-session/aa-session.js';
 import GenericEditor from './componentEditors/generic-editor/generic-editor.js';
 
 
+
+export const PaperPolymer = _PaperPolymer;
 
 export const AAElements = {
     BaseElement, AAAffectGrid, AACheckboxes, AAChoose,
