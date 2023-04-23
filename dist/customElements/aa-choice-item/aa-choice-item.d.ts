@@ -12,6 +12,7 @@ export default class AAChoiceItem extends BaseElement {
     };
     static get observedAttributes(): string[];
     static get acceptsElements(): string[];
+    get staticObject(): typeof AAChoiceItem;
     set orientation(arg: string);
     get orientation(): string;
     _orientation: string;

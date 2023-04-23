@@ -80,6 +80,20 @@ export default class AAAffectGrid extends BaseElement {
         value: {
             type: ArrayConstructor;
         };
+        name: {
+            type: StringConstructor;
+            userDefined: boolean;
+        };
+        diagram: {
+            type: BooleanConstructor;
+            value: boolean;
+            userDefined: boolean;
+        };
+        'diagram-transparent': {
+            type: BooleanConstructor;
+            value: boolean;
+            userDefined: boolean;
+        };
     };
     static get acceptsElements(): any;
     static get observedAttributes(): string[];
@@ -104,7 +118,6 @@ export default class AAAffectGrid extends BaseElement {
     rightBottomLabel: string;
     bottomLeftLabel: string;
     bottomLabel: string;
-    bottomRightLabel: string;
     grid: Element;
     selectedCell: any;
     totalContainer: Element;

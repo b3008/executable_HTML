@@ -1,4 +1,5 @@
 export { AAClasses } from "./customElements/aa-baseElement/baseElement.js";
+export const PaperPolymer: typeof _PaperPolymer;
 export namespace AAElements {
     export { BaseElement };
     export { AAAffectGrid };
@@ -6,7 +7,6 @@ export namespace AAElements {
     export { AAChoose };
     export { AAChoiceItem };
     export { AAFunctionRandom };
-    export { AAGeoLocation };
     export { AALabel };
     export { AALikertScale };
     export { AAMemory };
@@ -21,13 +21,13 @@ export namespace AAElements {
     export { AAWhen };
     export { GenericEditor };
 }
+import * as _PaperPolymer from "./paper-polymer-imports.js";
 import BaseElement from "./customElements/aa-baseElement/baseElement.js";
 import AAAffectGrid from "./customElements/aa-affect-grid/aa-affect-grid.js";
 import AACheckboxes from "./customElements/aa-checkboxes/aa-checkboxes.js";
 import AAChoose from "./customElements/aa-choose/aa-choose.js";
 import AAChoiceItem from "./customElements/aa-choice-item/aa-choice-item.js";
 import AAFunctionRandom from "./customElements/aa-function/aa-function-random.js";
-import AAGeoLocation from "./customElements/aa-geolocation/aa-geolocation.js";
 import AALabel from "./customElements/aa-label/aa-label.js";
 import AALikertScale from "./customElements/aa-likert-scale/aa-likert-scale.js";
 import AAMemory from "./customElements/aa-memory/aa-memory.js";
