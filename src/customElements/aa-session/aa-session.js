@@ -77,7 +77,7 @@ export default class AASession extends BaseElement {
             });
 
 
-            let inputSubmitEvent = new CustomEvent('inputSubmit', { bubbles: true, detail: { input } });
+            let inputSubmitEvent = new CustomEvent('inputSubmit', { bubbles: true, detail: { input }, composed: true });
             this.dispatchEvent(inputSubmitEvent);
             //  ema-participant-client needs to catch this and either send it to the server,
             //  or store it locally if we are offline
