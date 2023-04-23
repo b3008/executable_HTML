@@ -1,8 +1,8 @@
 import BaseElement from './../aa-baseElement/baseElement.js';
 import './aa-when/aa-when.js';
 import './aa-otherwise/aa-otherwise.js';
-import jsep from '../../lib/jsep/jsep.js';
-
+//import jsep from '../../lib/jsep/jsep.js';
+import jsep from 'jsep';
 export default class AAChoose extends BaseElement {
 
     static get category() {

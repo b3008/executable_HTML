@@ -22,7 +22,6 @@ import AASlider from './customElements/aa-slider/aa-slider.js';
 import AATextAnswer from './customElements/aa-text-answer/aa-text-answer.js';
 import AAVariable from './customElements/aa-variable/aa-variable.js';
 import AAWhen from './customElements/aa-choose/aa-when/aa-when.js';
-
 export { AAClasses } from './customElements/aa-baseElement/baseElement.js';
 /**
  * it is important that aa-session is imported last. This way all other elements will
