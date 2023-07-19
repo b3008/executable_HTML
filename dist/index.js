@@ -32802,11 +32802,11 @@ __webpack_require__.r(__webpack_exports__);
 
 class AASlider extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
-    static get category(){
-        return"response item";
+    static get category() {
+        return "response item";
     }
 
-    static get tag() { 
+    static get tag() {
         return 'aa-slider';
     }
 
@@ -32849,7 +32849,7 @@ class AASlider extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     }
 
 
- 
+
 
     get value() {
         if (!this.inputItem) {
@@ -32905,7 +32905,7 @@ class AASlider extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     constructor() {
         super();
         this.root = this.attachShadow({ mode: 'open' });
-        
+
         let innerHTML = this.css + `<div class='inputContainer'>${this.html}</div>`;
         this.root.innerHTML = innerHTML;
 
@@ -32913,24 +32913,36 @@ class AASlider extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         let maxLabel = this.maxLabel;
         // let min = this.min || 0;
         // let max = this.max || 100;
-        let value = this.value || (this.min + this.max)/2;
-        this.inputItem = this.root.querySelector('.inputItem');
-        this.minLabelItem = this.root.querySelector('.minLabel');
-        this.maxLabelItem = this.root.querySelector('.maxLabel');
-        
-        if (minLabel) { this.minLabelItem.innerHTML = minLabel;}
-        if (maxLabel) { this.maxLabelItem.innerHTML = maxLabel;}
-        if (value) { this.inputItem.value = value; }
-        
-        this.inputItem.addEventListener('change', (e) => {
-            this.value = e.target.value;
-        });
+        // let value = this.value || (this.min + this.max)/2;
+        // this.inputItem = this.root.querySelector('.inputItem');
+        // this.minLabelItem = this.root.querySelector('.minLabel');
+        // this.maxLabelItem = this.root.querySelector('.maxLabel');
+
+        // if (minLabel) { this.minLabelItem.innerHTML = minLabel;}
+        // if (maxLabel) { this.maxLabelItem.innerHTML = maxLabel;}
+        // if (value) { this.inputItem.value = value; }
+
+        // this.inputItem.addEventListener('change', (e) => {
+        //     this.value = e.target.value;
+        // });
     }
 
 
 
     connectedCallback() {
         super.connectedCallback();
+        let value = this.value || (this.min + this.max) / 2;
+        this.inputItem = this.root.querySelector('.inputItem');
+        this.minLabelItem = this.root.querySelector('.minLabel');
+        this.maxLabelItem = this.root.querySelector('.maxLabel');
+
+        if (minLabel) { this.minLabelItem.innerHTML = minLabel; }
+        if (maxLabel) { this.maxLabelItem.innerHTML = maxLabel; }
+        if (value) { this.inputItem.value = value; }
+
+        this.inputItem.addEventListener('change', (e) => {
+            this.value = e.target.value;
+        });
 
 
     }
@@ -32948,8 +32960,8 @@ class AASlider extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
     get html() {
         let inputElement = customElements.get('paper-slider')
             ? `<paper-slider style="width:100%" class='inputItem min=${this.min} max=${this.max}'></paper-slider>`
-            : `<input style="width:100%" type="range" class="inputItem" min="${this.min}" max="${this.max}" value="${(this.max+this.min)/2}">`;
-        
+            : `<input style="width:100%" type="range" class="inputItem" min="${this.min}" max="${this.max}" value="${(this.max + this.min) / 2}">`;
+
 
         let source = html`
         <div>${inputElement}</div>
@@ -32960,7 +32972,7 @@ class AASlider extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         `
         return source;
     }
-   
+
 
 }
 
