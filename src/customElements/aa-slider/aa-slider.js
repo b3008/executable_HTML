@@ -105,11 +105,11 @@ export default class AASlider extends BaseElement {
         super();
         this.root = this.attachShadow({ mode: 'open' });
 
-        let innerHTML = this.css + `<div class='inputContainer'>${this.html}</div>`;
-        this.root.innerHTML = innerHTML;
+        // let innerHTML = this.css + `<div class='inputContainer'>${this.html}</div>`;
+        // this.root.innerHTML = innerHTML;
 
-        let minLabel = this.minLabel;
-        let maxLabel = this.maxLabel;
+        // let minLabel = this.minLabel;
+        // let maxLabel = this.maxLabel;
         // let min = this.min || 0;
         // let max = this.max || 100;
         // let value = this.value || (this.min + this.max)/2;
@@ -130,6 +130,11 @@ export default class AASlider extends BaseElement {
 
     connectedCallback() {
         super.connectedCallback();
+        let innerHTML = this.css + `<div class='inputContainer'>${this.html}</div>`;
+        this.root.innerHTML = innerHTML;
+
+        let minLabel = this.minLabel;
+        let maxLabel = this.maxLabel;
         let value = this.value || (this.min + this.max) / 2;
         this.inputItem = this.root.querySelector('.inputItem');
         this.minLabelItem = this.root.querySelector('.minLabel');

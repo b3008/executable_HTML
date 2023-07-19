@@ -32906,11 +32906,11 @@ class AASlider extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
         super();
         this.root = this.attachShadow({ mode: 'open' });
 
-        let innerHTML = this.css + `<div class='inputContainer'>${this.html}</div>`;
-        this.root.innerHTML = innerHTML;
+        // let innerHTML = this.css + `<div class='inputContainer'>${this.html}</div>`;
+        // this.root.innerHTML = innerHTML;
 
-        let minLabel = this.minLabel;
-        let maxLabel = this.maxLabel;
+        // let minLabel = this.minLabel;
+        // let maxLabel = this.maxLabel;
         // let min = this.min || 0;
         // let max = this.max || 100;
         // let value = this.value || (this.min + this.max)/2;
@@ -32931,6 +32931,11 @@ class AASlider extends _aa_baseElement_baseElement_js__WEBPACK_IMPORTED_MODULE_0
 
     connectedCallback() {
         super.connectedCallback();
+        let innerHTML = this.css + `<div class='inputContainer'>${this.html}</div>`;
+        this.root.innerHTML = innerHTML;
+
+        let minLabel = this.minLabel;
+        let maxLabel = this.maxLabel;
         let value = this.value || (this.min + this.max) / 2;
         this.inputItem = this.root.querySelector('.inputItem');
         this.minLabelItem = this.root.querySelector('.minLabel');
