@@ -3,11 +3,45 @@
 
     <script type="module" >
 
-        import AAAffectGrid from './aa-affect-grid/aa-affect-grid.js';
+        import '../dist/paper-polymer.js';
+        import AAffectGrid from './customElements/aa-affect-grid/aa-affect-grid.js';
+        import AAScreen from './customElements/aa-screen/aa-screen.js';
+        import AASession from './customElements/aa-session/aa-session.js';
+        // import AAChoose from './customElements/aa-choose/aa-choose.js';
+        import AAChoiceItem from './customElements/aa-choice-item/aa-choice-item.js';
+        import AAMultipleChoice from './customElements/aa-multiple-choice/aa-multiple-choice.js';
+        // import {AAElements} from './index.js';
     </script>
 </head>
 <body>
-    hey
-    <aa-affect-grid></aa-affect-grid>
+    
+
+    <aa-session>
+        <template>
+
+        <aa-screen name="s1">
+           
+            <aa-multiple-choice name="c1">
+                <aa-choice-item>1</aa-choice-item>
+                <aa-choice-item>2</aa-choice-item>
+                <aa-choice-item>3</aa-choice-item>
+            </aa-multiple-choice>
+
+            <aa-multiple-choice name="c2">
+                <aa-choice-item>1</aa-choice-item>
+                <aa-choice-item>2</aa-choice-item>
+                <aa-choice-item>3</aa-choice-item>
+            </aa-multiple-choice>
+        </aa-screen>
+    </template>
+    </aa-session>
+
+    <!-- <aa-session> -->
+        <!-- <template> -->
+         
+        <!-- </template> -->
+    <!-- </aa-session> -->
+
+
 </body>
 </html>
