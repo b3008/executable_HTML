@@ -270,7 +270,7 @@ export default class AAScreen extends BaseElement {
 
             let c = node.children[i];
             console.log(c)
-
+            debugger;
             if (c.nodeName != 'AA-LABEL') {
 
                 let name = BaseElement.getVariableName(c);
@@ -288,7 +288,8 @@ export default class AAScreen extends BaseElement {
                     }
 
                 } else {
-                    result[name] = null;
+                    // result[name] = null;
+                    await this.getChildrenValues(c, result);
                 }
             }
             else {
