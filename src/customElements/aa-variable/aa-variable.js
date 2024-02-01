@@ -1,5 +1,5 @@
 import { AABaseElement } from '../aa-base-element/aa-base-element.js'
-import jsep from '../../lib/jsep/jsep.js';
+import jsep from 'jsep';
 
 export default class AAVariable extends AABaseElement {
 

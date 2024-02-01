@@ -2,7 +2,7 @@ import { AABaseElement } from '../aa-base-element/aa-base-element.js'
 
 
 
-export default class AAMemory extends AABaseElement {
+export class AAMemory extends AABaseElement {
 
     static get tag() {
         return 'aa-memory';

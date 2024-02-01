@@ -1,5 +1,5 @@
-import SVG from '../svg/svg.js';
-import jsep from '../../lib/jsep/jsep.js';
+import { SVG } from '@svgdotjs/svg.js';
+import jsep from 'jsep';
 
 
 
@@ -549,14 +549,14 @@ class mySVG {
 
                     let defaultPath = new Container('serial');
                     let line = SVG().line();
-                    
+
                     // line.addTo(defaultPath);
                     defaultPath.push(line);
                     line.plot(10, 100, maxContentWidth, 100);
-                    line.attr({ fill: 'black', stroke: 'black', 'stroke-dasharray': 3, 'stroke-width':3 });
+                    line.attr({ fill: 'black', stroke: 'black', 'stroke-dasharray': 3, 'stroke-width': 3 });
                     contentsRow.push(defaultPath);
-                    
-                    
+
+
                 }
 
 
@@ -573,14 +573,14 @@ class mySVG {
                 chooseRow.myNode = node;
 
 
-                chooseRow.applyItemsAfterwards = ()=>{
+                chooseRow.applyItemsAfterwards = () => {
                     for (let i = 0; i < contentsRow.c.length; i++) {
                         console.log(contentsRow.c[i]);
-                        if(contentsRow.c[i].applyItemsAfterwards){
-                            
+                        if (contentsRow.c[i].applyItemsAfterwards) {
+
                             contentsRow.c[i].applyItemsAfterwards();
                         }
-                        
+
                     }
                 }
                 return chooseRow;
@@ -719,11 +719,11 @@ class mySVG {
 
                 let condition = SVG().text(function (add) {
                     let textToRender = node.getAttribute("test");
-                    if(textToRender){
+                    if (textToRender) {
                         let j = jsep(textToRender);
 
-                        if(j.left) if(j.left.name) if(j.left.name.length>7){
-                            let newName = j.left.name.substr(0,5)+"...";
+                        if (j.left) if (j.left.name) if (j.left.name.length > 7) {
+                            let newName = j.left.name.substr(0, 5) + "...";
                             textToRender = textToRender.replace(j.left.name, newName);
                         }
                     }
@@ -746,7 +746,7 @@ class mySVG {
                 // when.y(contentsRow.y() + contentsRow.height());
                 condition.y(when.y() + when.bbox().height);
                 contentsRow.x(when.x() + when.bbox().width + 40);
-                contentsRow.y(when.y() + when.bbox().height / 1.5 - contentsRow.height()/2);
+                contentsRow.y(when.y() + when.bbox().height / 1.5 - contentsRow.height() / 2);
 
                 container.strokeDashArray = '3';
 
@@ -772,14 +772,14 @@ class mySVG {
                     return result;
                 }
 
-                container.applyItemsAfterwards = ()=>{
+                container.applyItemsAfterwards = () => {
                     for (let i = 0; i < contentsRow.c.length; i++) {
                         console.log(contentsRow.c[i]);
-                        if(contentsRow.c[i].applyItemsAfterwards){
-                            
+                        if (contentsRow.c[i].applyItemsAfterwards) {
+
                             contentsRow.c[i].applyItemsAfterwards();
                         }
-                        
+
                     }
                 }
                 return container;
@@ -832,10 +832,10 @@ class mySVG {
             //         for (let i = 0; i < contentsRow.c.length; i++) {
             //             console.log(contentsRow.c[i]);
             //             if(contentsRow.c[i].applyItemsAfterwards){
-                            
+
             //                 contentsRow.c[i].applyItemsAfterwards();
             //             }
-                        
+
             //         }
             //     }
             //     return row;
@@ -889,7 +889,7 @@ class mySVG {
                 // when.y(contentsRow.y() + contentsRow.height());
                 // condition.y(when.y() + when.bbox().height);
                 contentsRow.x(otherwise.x() + otherwise.bbox().width + 10);
-                contentsRow.y(otherwise.y() + otherwise.bbox().height / 1.5 - contentsRow.height()/2);
+                contentsRow.y(otherwise.y() + otherwise.bbox().height / 1.5 - contentsRow.height() / 2);
 
                 container.strokeDashArray = '3';
 
@@ -915,14 +915,14 @@ class mySVG {
                     return result;
                 }
 
-                container.applyItemsAfterwards = ()=>{
+                container.applyItemsAfterwards = () => {
                     for (let i = 0; i < contentsRow.c.length; i++) {
                         console.log(contentsRow.c[i]);
-                        if(contentsRow.c[i].applyItemsAfterwards){
-                            
+                        if (contentsRow.c[i].applyItemsAfterwards) {
+
                             contentsRow.c[i].applyItemsAfterwards();
                         }
-                        
+
                     }
                 }
                 return container;
@@ -951,43 +951,43 @@ class mySVG {
     }
 
 
-            get examples() {
-                return {
+    get examples() {
+        return {
 
-                    'AA-SEQUENCE': {
+            'AA-SEQUENCE': {
 
-                        html: '<aa-sequence><aa-screen name="first screen"></aa-screen><aa-screen name="second screen"></aa-screen></aa-sequence>',
-                        comment: "sequence",
+                html: '<aa-sequence><aa-screen name="first screen"></aa-screen><aa-screen name="second screen"></aa-screen></aa-sequence>',
+                comment: "sequence",
 
-                    },
+            },
 
 
-                    'AA-SCREEN': {
+            'AA-SCREEN': {
 
-                        html: '<aa-screen name="<name>"></aa-screen>',
-                        comment: "screen",
+                html: '<aa-screen name="<name>"></aa-screen>',
+                comment: "screen",
 
-                    },
+            },
 
-                    'AA-FUNCTION-RANDOM': {
+            'AA-FUNCTION-RANDOM': {
 
-                        html: '<aa-function-random></aa-function-random>',
-                        comment: "random number generator",
+                html: '<aa-function-random></aa-function-random>',
+                comment: "random number generator",
 
-                    },
+            },
 
-                    'AA-CHOOSE': {
+            'AA-CHOOSE': {
 
-                        html: '<aa-choose><aa-when><aa-screen></aa-screen></aa-when></aa-choose>',
-                        comment: "random number generator",
+                html: '<aa-choose><aa-when><aa-screen></aa-screen></aa-when></aa-choose>',
+                comment: "random number generator",
 
-                    }
-                }
             }
-
-
         }
+    }
+
+
+}
 
 
 
-        export { mySVG }
+export { mySVG }

@@ -1,5 +1,5 @@
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';
-export default class AALabel extends AABaseElement {
+export class AALabel extends AABaseElement {
 
     static get tag() {
         return 'aa-label';
@@ -20,7 +20,7 @@ export default class AALabel extends AABaseElement {
             <style>
                     :host{
                         display:block;
-                        font-family: Roboto, Noto, sans-serif;
+                        font-family: "Roboto Flex", Roboto, Noto, sans-serif;
                         font-weight:bold;
                         margin-top:40px;
                         margin-bottom:10px;

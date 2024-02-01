@@ -1,5 +1,5 @@
 import { AABaseElement } from '../aa-base-element/aa-base-element.js'
-export default class AAGeolocation extends AABaseElement {
+export class AAGeolocation extends AABaseElement {
 
 
     static get category() {

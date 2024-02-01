@@ -279,7 +279,7 @@ export class AAScreen extends AABaseElement {
 
             let c = node.children[i];
             console.log(c)
-            debugger;
+
             if (c.nodeName != 'AA-LABEL') {
 
                 let name = AABaseElement.getVariableName(c);

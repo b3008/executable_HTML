@@ -1,9 +1,8 @@
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';
 import './aa-when/aa-when.js';
 import './aa-otherwise/aa-otherwise.js';
-//import jsep from '../../lib/jsep/jsep.js';
 import jsep from 'jsep';
-export default class AAChoose extends AABaseElement {
+export class AAChoose extends AABaseElement {
 
     static get category() {
         return "control";

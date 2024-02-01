@@ -1,6 +1,6 @@
 import { AABaseElement } from '../../aa-base-element/aa-base-element.js';
 
-export default class AAOtherwise extends AABaseElement {
+export class AAOtherwise extends AABaseElement {
 
     static get category() {
         return "control";

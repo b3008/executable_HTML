@@ -14,3 +14,15 @@ export { AABaseElement } from './customElements/aa-base-element/aa-base-element'
 export { AACheckboxes } from './customElements/aa-checkboxes/aa-checkboxes';
 export { AAChoiceItem } from './customElements/aa-choice-item/aa-choice-item';
 export { AAMultipleChoice } from './customElements/aa-multiple-choice/aa-multiple-choice';
+export { AAChoose } from './customElements/aa-choose/aa-choose';
+export { AAWhen } from './customElements/aa-choose/aa-when/aa-when';
+export { AAOtherwise } from './customElements/aa-choose/aa-otherwise/aa-otherwise';
+export { AAFunctionRandom } from './customElements/aa-function/aa-function-random';
+export { AAGeolocation } from './customElements/aa-geolocation/aa-geolocation';
+export { AALabel } from './customElements/aa-label/aa-label';
+export { AALikertScale } from './customElements/aa-likert-scale/aa-likert-scale';
+export { AAMemory } from './customElements/aa-memory/aa-memory';
+
+
+
+

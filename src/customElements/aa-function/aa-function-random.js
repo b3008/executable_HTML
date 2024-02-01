@@ -1,6 +1,6 @@
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';
 
-export default class AAFunctionRandom extends AABaseElement {
+export class AAFunctionRandom extends AABaseElement {
 
     static get tag() {
         return 'aa-function-random'
