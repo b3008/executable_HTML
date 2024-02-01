@@ -1,4 +1,4 @@
-export default class AACheckboxes extends AABaseElement {
+export class AACheckboxes extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {
@@ -28,4 +28,4 @@ export default class AACheckboxes extends AABaseElement {
     horizontal_wasChangedInternally__: boolean;
     vertical_wasChangedInternally__: boolean;
 }
-import { AABaseElement } from '../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';

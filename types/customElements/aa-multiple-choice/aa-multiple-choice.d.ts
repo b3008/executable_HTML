@@ -34,4 +34,4 @@ export default class AAMultipleChoice extends AABaseElement {
     updateState(checkedNode: any): void;
     getValueOfSelectedItem(): any;
 }
-import { AABaseElement } from '../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';

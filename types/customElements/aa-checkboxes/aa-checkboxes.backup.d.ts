@@ -30,4 +30,4 @@ export default class AACheckboxes extends AABaseElement {
     get html(): any;
     get css(): any;
 }
-import { AABaseElement } from '../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';

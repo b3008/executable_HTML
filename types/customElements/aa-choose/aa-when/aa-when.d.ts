@@ -25,4 +25,4 @@ export default class AAWhen extends AABaseElement {
     static get observedAttributes(): string[];
     root: ShadowRoot;
 }
-import { AABaseElement } from './../../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../../aa-base-element/aa-base-element.js';

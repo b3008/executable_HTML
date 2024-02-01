@@ -27,4 +27,4 @@ export default class AAChoiceItem extends AABaseElement {
     root: ShadowRoot;
     get css(): any;
 }
-import { AABaseElement } from '../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';

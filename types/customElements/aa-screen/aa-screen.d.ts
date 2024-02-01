@@ -1,4 +1,4 @@
-export default class AAScreen extends AABaseElement {
+export class AAScreen extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {
@@ -57,4 +57,4 @@ export default class AAScreen extends AABaseElement {
     hide(): void;
     show(): void;
 }
-import { AABaseElement } from './../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';

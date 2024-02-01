@@ -26,4 +26,4 @@ export default class AAGeolocation extends AABaseElement {
     _getLocation(): Promise<any>;
     _ready: boolean | undefined;
 }
-import { AABaseElement } from './../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';

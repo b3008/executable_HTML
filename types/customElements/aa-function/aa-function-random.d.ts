@@ -28,4 +28,4 @@ export default class AAFunctionRandom extends AABaseElement {
     get value(): any;
     getRandomInt(min: any, max: any): any;
 }
-import { AABaseElement } from '../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';

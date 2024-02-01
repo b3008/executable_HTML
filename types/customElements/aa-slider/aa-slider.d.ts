@@ -44,4 +44,4 @@ export default class AASlider extends AABaseElement {
     get css(): string;
     get html(): any;
 }
-import { AABaseElement } from '../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';

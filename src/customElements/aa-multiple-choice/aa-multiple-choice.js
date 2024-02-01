@@ -1,7 +1,7 @@
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';
 import '../aa-choice-item/aa-choice-item.js';
 
-export default class AAMultipleChoice extends AABaseElement {
+export class AAMultipleChoice extends AABaseElement {
 
 
     static get category() {
@@ -143,13 +143,17 @@ export default class AAMultipleChoice extends AABaseElement {
     }
 
     updateState(checkedNode) {
+        debugger;
         for (let i = 0; i < this.children.length; i++) {
             const node = this.children[i];
+
             if (node.tagName === 'AA-CHOICE-ITEM') {
                 if (node !== checkedNode) {
                     node.checked = false;
+                    console.log("at child", i, "it is not the checked one, setting to false")
                 } else {
                     node.checked = true;
+                    console.log("at child", i, "it is the checked one, setting to true")
                 }
             }
         }
@@ -176,6 +180,7 @@ export default class AAMultipleChoice extends AABaseElement {
         this.value = this.getAttribute("value");
 
         this.addEventListener("change", (e) => {
+            console.log("change!");
             e.stopPropagation();
             this.updateState(e.target)
             this.parentElement.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }))

@@ -1,7 +1,7 @@
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';
 import '../aa-choice-item/aa-choice-item.js';
 
-export default class AACheckboxes extends AABaseElement {
+export class AACheckboxes extends AABaseElement {
 
     static get category() {
         return "response item";

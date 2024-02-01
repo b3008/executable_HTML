@@ -53,4 +53,4 @@ export default class AASequence extends AABaseElement {
     currentNode: any;
     endEventListener(e: any): void;
 }
-import { AABaseElement } from './../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';

@@ -14,4 +14,4 @@ export default class AAJump extends AABaseElement {
     static get acceptsElements(): never[];
     static get observedAttributes(): string[];
 }
-import { AABaseElement } from '../../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../../aa-base-element/aa-base-element.js';

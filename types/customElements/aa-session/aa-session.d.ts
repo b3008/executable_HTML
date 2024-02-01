@@ -41,4 +41,4 @@ export default class AASession extends AABaseElement {
     toJSL(): string;
     get originalChildNodes(): any;
 }
-import { AABaseElement } from './../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';

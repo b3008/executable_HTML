@@ -4,4 +4,4 @@ export default class AALabel extends AABaseElement {
     get css(): any;
     get html(): string;
 }
-import { AABaseElement } from '../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';

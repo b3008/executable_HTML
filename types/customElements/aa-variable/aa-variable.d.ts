@@ -27,4 +27,4 @@ export default class AAVariable extends AABaseElement {
     evaluateValueExpression(test: any): any;
     replaceExpressionIdentifiersWithValues(expression: any, memoryElement: any): any;
 }
-import { AABaseElement } from './../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';

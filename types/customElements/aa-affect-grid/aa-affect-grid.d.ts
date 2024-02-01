@@ -1,4 +1,4 @@
-export default class AAAffectGrid extends AABaseElement {
+export class AAAffectGrid extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {
@@ -125,4 +125,4 @@ export default class AAAffectGrid extends AABaseElement {
     get css(): any;
     get html(): any;
 }
-import { AABaseElement } from '../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';

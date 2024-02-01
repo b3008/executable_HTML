@@ -1,16 +1,8 @@
-// import definitions for custom element dependencies
 import '@fontsource/roboto-flex';
 import '@fontsource/roboto';
 import '@material/web/button/filled-button.js';
-import '@material/web/checkbox/checkbox.js';
-import '@material/web/radio/radio.js';
-
-
-
 export { MyElement } from './my-element';
 export { AAScreen } from './customElements/aa-screen/aa-screen';
 export { AAAffectGrid } from './customElements/aa-affect-grid/aa-affect-grid';
 export { AABaseElement } from './customElements/aa-base-element/aa-base-element';
 export { AACheckboxes } from './customElements/aa-checkboxes/aa-checkboxes';
-export { AAChoiceItem } from './customElements/aa-choice-item/aa-choice-item';
-export { AAMultipleChoice } from './customElements/aa-multiple-choice/aa-multiple-choice';

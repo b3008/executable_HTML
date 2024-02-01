@@ -52,4 +52,4 @@ export default class AALikertScale extends AABaseElement {
     get value(): number;
     getValue(): any;
 }
-import { AABaseElement } from '../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';

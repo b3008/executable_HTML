@@ -177,6 +177,7 @@ export class AABaseElement extends HTMLElement {
                         else { return result; }
                     },
                     set: (value) => {
+
                         this.setAttribute(attr[i], value);
                     }
                 });

@@ -1,7 +1,6 @@
+import { createElement } from 'react';
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';
-export default class AAChoiceItem extends AABaseElement {
-
-
+export class AAChoiceItem extends AABaseElement {
 
     static get tag() {
         return 'aa-choice-item';
@@ -23,6 +22,7 @@ export default class AAChoiceItem extends AABaseElement {
     static get observedAttributes() {
         return [
             'name',
+            // not listing checked because the getter and setter are defined here
         ];
     }
 
@@ -40,12 +40,15 @@ export default class AAChoiceItem extends AABaseElement {
 
     set orientation(val) {
         this._orientation = val;
+
         if (val == "vertical") {
             this.itemBlock.style.flexDirection = "column";
             this.label.classList.add("label-vertical");
             this.label.classList.remove("label-horizontal");
         } else if (val == "horizontal") {
             this.itemBlock.style.flexDirection = "row";
+            this.itemBlock.style.alignItems = "center";
+
             this.label.classList.remove("label-vertical");
             this.label.classList.add("label-horizontal");
         }
@@ -62,6 +65,7 @@ export default class AAChoiceItem extends AABaseElement {
     }
 
     set checked(val) {
+        debugger;
         if (this.item) this.item.checked = eval(val);
     }
 
@@ -93,7 +97,38 @@ export default class AAChoiceItem extends AABaseElement {
 
     }
 
+
+    getRadioButton() {
+        // if (customElements.get('paper-radio-button')) {
+        //     return document.createElement('paper-radio-button');
+        // }
+        if (customElements.get('md-radio')) {
+            return document.createElement('md-radio');
+        }
+
+        const defaultRadio = document.createElement('input');
+
+        defaultRadio.type = "radio"
+        return defaultRadio;
+    }
+
+    getCheckbox() {
+        // if (customElements.get('paper-checkbox')) {
+        //     return document.createElement('paper-radio-button');
+        // }
+
+        if (customElements.get('md-checkbox')) {
+            return document.createElement('md-checkbox');
+        }
+
+        const defaultCheckbox = document.createElement('input');
+        defaultCheckbox.type = "checkbox"
+        return defaultCheckbox;
+    }
+
+
     connectedCallback() {
+
         super.connectedCallback();
 
         this.slot = document.createElement('slot');
@@ -112,9 +147,18 @@ export default class AAChoiceItem extends AABaseElement {
             if (this.item) {
                 this.item.remove();
             }
-            this.item = document.createElement('paper-radio-button');
+
+            // this.item = document.createElement('paper-radio-button');
+            this.item = this.getRadioButton();
             this.item.style.display = "block"
             this.item.checked = this.checked;
+
+
+            this.item.addEventListener("click", () => {
+                this.item.checked = true;
+                this.dispatchEvent(new CustomEvent("change", { bubbles: true }))
+            })
+
             this.label.addEventListener("click", () => {
                 this.item.checked = true;
                 this.dispatchEvent(new CustomEvent("change", { bubbles: true }))
@@ -124,7 +168,8 @@ export default class AAChoiceItem extends AABaseElement {
             this.itemBlock.appendChild(this.label);
             this.root.appendChild(this.itemBlock);
 
-            this.item.shadowRoot.querySelector("#radioLabel").remove();
+            // TODO: what is this for? probably something internal to polymer?
+            // this.item.shadowRoot.querySelector("#radioLabel").remove();
 
 
 
@@ -132,9 +177,15 @@ export default class AAChoiceItem extends AABaseElement {
             if (this.item) {
                 this.item.remove();
             }
-            this.item = document.createElement('paper-checkbox');
+            this.item = this.getCheckbox();
             this.item.style.display = "block"
             this.item.checked = this.checked;
+
+            this.item.addEventListener("click", () => {
+                this.item.checked = !this.item.checked;
+                this.checked = this.item.checked;
+                this.dispatchEvent(new CustomEvent("change", { bubbles: true }))
+            })
             this.label.addEventListener("click", () => {
                 this.item.checked = !this.item.checked;
                 this.checked = this.item.checked;
@@ -170,21 +221,21 @@ export default class AAChoiceItem extends AABaseElement {
             }
 
             .label-horizontal{
-                padding-left:10px;
+                
+                padding-left:16px;
             }
             
             .label-vertical{
-                padding-top:10px;
+                padding-top:16px;
             }
             
             
 
             
-        paper-radio-button {
-            
+        {{/*  paper-radio-button {
             user-select:none;
             display: block;
-        }
+        }  */}}
         </style>`;
     }
 

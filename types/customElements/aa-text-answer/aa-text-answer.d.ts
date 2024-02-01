@@ -42,4 +42,4 @@ export default class AATextAnswer extends AABaseElement {
     get html(): any;
     get longHtml(): any;
 }
-import { AABaseElement } from '../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';

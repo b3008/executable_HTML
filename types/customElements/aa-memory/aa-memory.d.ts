@@ -5,4 +5,4 @@ export default class AAMemory extends AABaseElement {
     getData(name: any): any;
     getDataDump(): Storage;
 }
-import { AABaseElement } from './../aa-AABaseElement/AABaseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
