@@ -21,7 +21,7 @@ if (window) window.html = html;
 export const AAClasses = [];
 window.AAClasses = AAClasses;
 
-export default class BaseElement extends HTMLElement {
+export class AABaseElement extends HTMLElement {
 
 
 
@@ -65,29 +65,29 @@ export default class BaseElement extends HTMLElement {
         let fragment = document.createDocumentFragment();
         for (let i = 0; i < node.childNodes.length; i++) {
             fragment.append(node.childNodes[i].cloneNode(true));
-            // fragment.append(BaseElement.copy(node.childNodes[i])
+            // fragment.append(AABaseElement.copy(node.childNodes[i])
         }
         return fragment;
     }
 
     static createHolderForNode(o) {
         let node = o.cloneNode(false);
-        node.innerFragment = BaseElement.createFragmentForNode(o);
+        node.innerFragment = AABaseElement.createFragmentForNode(o);
         return node;
     }
 
     static scanAndReplace(node) {
 
         if (node.nodeName === "TEMPLATE") {
-            BaseElement.scanAndReplace(node.content);
+            AABaseElement.scanAndReplace(node.content);
         }
-        else if (BaseElement.isAAElement(node)) {
+        else if (AABaseElement.isAAElement(node)) {
             // if(node.innerFragment) { return };
-            let holder = BaseElement.createHolderForNode(node);
+            let holder = AABaseElement.createHolderForNode(node);
             node.replaceWith(holder);
         } else
             for (let i = 0; i < node.childNodes.length; i++) {
-                BaseElement.scanAndReplace(node.childNodes[i]);
+                AABaseElement.scanAndReplace(node.childNodes[i]);
             }
     }
 
@@ -102,12 +102,12 @@ export default class BaseElement extends HTMLElement {
         this._debug = (this.debug === true) || (this.debug === null);
         if (this.innerFragment) {
 
-            // I have commented BaseElement.scanAndReplace out because a shallow copy and an innerFragment
-            // is already created by BaseElement.copy for childNodes of this.innerFrament
+            // I have commented AABaseElement.scanAndReplace out because a shallow copy and an innerFragment
+            // is already created by AABaseElement.copy for childNodes of this.innerFrament
             // as they are appended to this element.
-            // BaseElement.scanAndReplace(this.innerFragment);
+            // AABaseElement.scanAndReplace(this.innerFragment);
             for (let i = 0; i < this.innerFragment.childNodes.length; i++) {
-                this.appendChild(BaseElement.copy(this.innerFragment.childNodes[i]));
+                this.appendChild(AABaseElement.copy(this.innerFragment.childNodes[i]));
             }
 
         }
@@ -133,7 +133,7 @@ export default class BaseElement extends HTMLElement {
      * of the element, to generate corresponding camelCase properties
      * 
      * Attribute names are provided by observedAttributes of the HTMLElement object,
-     * however objects that inherit from baseElement can also provide a more
+     * however objects that inherit from AABaseElement can also provide a more
      * meaningful declaration, including datatype and default value, in 
      * a static get properties function, like so:
      * 
@@ -241,13 +241,13 @@ export default class BaseElement extends HTMLElement {
 
     static copy(node) {
         let nodeCopy;
-        if (BaseElement.isAAElement(node)) {
+        if (AABaseElement.isAAElement(node)) {
             if (node.innerFragment) {
                 nodeCopy = node.cloneNode();
-                nodeCopy.innerFragment = BaseElement.createFragmentForNode(node.innerFragment);
+                nodeCopy.innerFragment = AABaseElement.createFragmentForNode(node.innerFragment);
             } else {
                 nodeCopy = node.cloneNode();
-                nodeCopy.innerFragment = BaseElement.createFragmentForNode(node);
+                nodeCopy.innerFragment = AABaseElement.createFragmentForNode(node);
             }
         }
         else {
@@ -283,7 +283,7 @@ export default class BaseElement extends HTMLElement {
             result[tagName].childNodes = [];
 
             this.childNodes.forEach(childNode => {
-                result[tagName].childNodes.push(BaseElement.nodeToJSON(childNode))
+                result[tagName].childNodes.push(AABaseElement.nodeToJSON(childNode))
             });
         }
         return result;
@@ -314,9 +314,9 @@ export default class BaseElement extends HTMLElement {
             }
             let childNodes = [];
             for (let i = 0; i < node.childNodes.length; i++) {
-                let el = BaseElement.nodeToJSON(node.childNodes[i]);
+                let el = AABaseElement.nodeToJSON(node.childNodes[i]);
                 if (el) {
-                    childNodes.push(BaseElement.nodeToJSON(node.childNodes[i]));
+                    childNodes.push(AABaseElement.nodeToJSON(node.childNodes[i]));
                 }
             }
             result[node.tagName] = attrObj;
@@ -390,7 +390,7 @@ export default class BaseElement extends HTMLElement {
                     sibCount++;
                 }
             }
-            if (!BaseElement.isAAElement(el)) {
+            if (!AABaseElement.isAAElement(el)) {
                 el = el.parentNode;
                 continue;
 
@@ -432,7 +432,7 @@ export default class BaseElement extends HTMLElement {
         if (name) {
             return name;
         } else {
-            return BaseElement.getDomPathAsName(el);
+            return AABaseElement.getDomPathAsName(el);
         }
     }
 
@@ -467,9 +467,9 @@ export default class BaseElement extends HTMLElement {
 if (!customElements.get('aa-base-element')) {
     window.AANodeNames = window.AANodeNames || [];
     window.AANodeNames.push('AA-BASE-ELEMENT');
-    customElements.define('aa-base-element', BaseElement);
+    customElements.define('aa-base-element', AABaseElement);
 }
 
 
-window.nodeToJSON = BaseElement.nodeToJSON;
+window.nodeToJSON = AABaseElement.nodeToJSON;
 

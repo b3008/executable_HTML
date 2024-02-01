@@ -1,12 +1,12 @@
-import BaseElement from './../aa-baseElement/baseElement.js'
-export default class AAGeolocation extends BaseElement {
+import { AABaseElement } from '../aa-base-element/aa-base-element.js'
+export default class AAGeolocation extends AABaseElement {
 
 
-    static get category(){
+    static get category() {
         return "response item";
     }
 
-    static get tag() { 
+    static get tag() {
         return 'aa-geolocation';
     }
 
@@ -131,10 +131,10 @@ export default class AAGeolocation extends BaseElement {
         // }
 
         this._ready = true;
-        
+
         if (!this.getOnRequest) {
-            this._getLocation().then(val=>{
-                var valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value:val } });
+            this._getLocation().then(val => {
+                var valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: val } });
                 this.dispatchEvent(valueSubmitEvent);
                 this._dispatchEndEvent({ value: val, autoDispatch: true })
             });
@@ -144,5 +144,5 @@ export default class AAGeolocation extends BaseElement {
 
 }
 
-BaseElement.registerAAElement('aa-geolocation', AAGeolocation);
+AABaseElement.registerAAElement('aa-geolocation', AAGeolocation);
 

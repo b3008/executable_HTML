@@ -1,4 +1,4 @@
-export default class AAJump extends BaseElement {
+export default class AAJump extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {
@@ -14,4 +14,4 @@ export default class AAJump extends BaseElement {
     static get acceptsElements(): never[];
     static get observedAttributes(): string[];
 }
-import BaseElement from '../../aa-baseElement/baseElement.js';
+import { AABaseElement } from '../../aa-AABaseElement/AABaseElement.js';

@@ -1,9 +1,9 @@
-import BaseElement from './../aa-baseElement/baseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
 import './aa-jump/aa-jump.js';
 
 
 
-export default class AASequence extends BaseElement {
+export default class AASequence extends AABaseElement {
 
 
     static get category() {
@@ -17,7 +17,7 @@ export default class AASequence extends BaseElement {
     static get properties() {
         return {
 
-            ...BaseElement.properties,
+            ...AABaseElement.properties,
 
             name: {
                 type: String,
@@ -149,14 +149,14 @@ export default class AASequence extends BaseElement {
             //  and move on to the next, there won't be a connectecCallback Function to execute anyway
             while (fragmentChild.nodeType != Node.ELEMENT_NODE) {
 
-                let fragmentChildCopy = BaseElement.copy(fragmentChild);
+                let fragmentChildCopy = AABaseElement.copy(fragmentChild);
                 this.target.appendChild(fragmentChildCopy);
                 this.currentNode = fragmentChildCopy;
                 this.sIndex++;
                 if (this.sIndex >= this.innerFragment.childNodes.length) { return; }
                 fragmentChild = this.innerFragment.childNodes[this.sIndex];
             }
-            let fragmentChildCopy = BaseElement.copy(fragmentChild);
+            let fragmentChildCopy = AABaseElement.copy(fragmentChild);
             this.currentNode = fragmentChildCopy;
             this.sIndex += 1;
             // if (!fragmentChildCopy._dispatchEndEvent) {
@@ -184,6 +184,6 @@ export default class AASequence extends BaseElement {
 }
 
 
-BaseElement.registerAAElement('aa-sequence', AASequence);
+AABaseElement.registerAAElement('aa-sequence', AASequence);
 
 

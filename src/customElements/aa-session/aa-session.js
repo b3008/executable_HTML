@@ -1,10 +1,10 @@
-import BaseElement from './../aa-baseElement/baseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
 import './../aa-memory/aa-memory.js';
 import * as html2jsl from './../../lib/html2jsl/html2jsl.js';
 import * as AASequence from '../aa-sequence/aa-sequence.js';
 
 
-export default class AASession extends BaseElement {
+export default class AASession extends AABaseElement {
 
     static get tag() {
         return 'aa-session'
@@ -14,7 +14,7 @@ export default class AASession extends BaseElement {
 
         return {
 
-            ...BaseElement.properties,
+            ...AABaseElement.properties,
 
 
             'should-run': {
@@ -149,7 +149,7 @@ export default class AASession extends BaseElement {
     run() {
 
         let myTemplateClone = this.myTemplate.cloneNode(true);
-        BaseElement.scanAndReplace(myTemplateClone);
+        AABaseElement.scanAndReplace(myTemplateClone);
         this.attachTemplateChildNodesToMyself(myTemplateClone);
     }
 
@@ -176,7 +176,7 @@ export default class AASession extends BaseElement {
         let childNodes = [];
         for (let i = 0; i < this.originalChildNodes.length; i++) {
             let child = this.originalChildNodes[i];
-            let el = BaseElement.nodeToJSON(child);
+            let el = AABaseElement.nodeToJSON(child);
             if (el) {
                 childNodes.push(el);
             }
@@ -227,7 +227,7 @@ export default class AASession extends BaseElement {
 
 }
 
-BaseElement.registerAAElement('aa-session', AASession);
+AABaseElement.registerAAElement('aa-session', AASession);
 
 
 

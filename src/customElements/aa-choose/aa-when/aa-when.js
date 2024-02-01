@@ -1,38 +1,38 @@
-import BaseElement from './../../aa-baseElement/baseElement.js';
+import { AABaseElement } from '../../aa-base-element/aa-base-element.js';
 
-export default class AAWhen extends BaseElement {
+export default class AAWhen extends AABaseElement {
 
-    static get category(){
+    static get category() {
         return "control";
     }
 
-    static get tag() { 
+    static get tag() {
         return 'aa-when'
     }
 
-    static get properties(){
+    static get properties() {
         return {
-            name:{
-                type:String,
-                userDefined:false
+            name: {
+                type: String,
+                userDefined: false
             },
-            "should-run":{
-                type:Boolean,
-                value:true,
-                userDefined:false
+            "should-run": {
+                type: Boolean,
+                value: true,
+                userDefined: false
             },
-            "debug":{
-                type:Boolean,
-                value:false,
-                userDefined:false
+            "debug": {
+                type: Boolean,
+                value: false,
+                userDefined: false
             },
-            "test":{
-                type:String,
-                userDefined:true
+            "test": {
+                type: String,
+                userDefined: true
             }
         }
     }
-    static get acceptsElements(){
+    static get acceptsElements() {
         return null;
     }
 
@@ -51,5 +51,5 @@ export default class AAWhen extends BaseElement {
     }
 }
 
-BaseElement.registerAAElement('aa-when', AAWhen);
+AABaseElement.registerAAElement('aa-when', AAWhen);
 

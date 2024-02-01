@@ -1,9 +1,9 @@
-import BaseElement from '../aa-baseElement/baseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
 import '../aa-multiple-choice/aa-multiple-choice.js';
 
-export default class AALikertScale extends BaseElement {
+export default class AALikertScale extends AABaseElement {
 
-    static get category(){
+    static get category() {
         return "response item";
     }
 
@@ -176,5 +176,5 @@ export default class AALikertScale extends BaseElement {
 
 }
 
-BaseElement.registerAAElement('aa-likert-scale', AALikertScale);
+AABaseElement.registerAAElement('aa-likert-scale', AALikertScale);
 

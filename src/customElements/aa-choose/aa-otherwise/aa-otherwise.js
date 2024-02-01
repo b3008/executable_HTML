@@ -1,19 +1,19 @@
-import BaseElement from '../../aa-baseElement/baseElement.js';
+import { AABaseElement } from '../../aa-base-element/aa-base-element.js';
 
-export default class AAOtherwise extends BaseElement {
+export default class AAOtherwise extends AABaseElement {
 
-    static get category(){
+    static get category() {
         return "control";
     }
 
-    static get tag() { 
+    static get tag() {
         return 'aa-otherwise';
     }
 
-    static get acceptsElements(){
+    static get acceptsElements() {
         return null;
     }
-    
+
     constructor() {
         super();
     }
@@ -24,4 +24,4 @@ export default class AAOtherwise extends BaseElement {
 }
 
 
-BaseElement.registerAAElement('aa-otherwise', AAOtherwise);
+AABaseElement.registerAAElement('aa-otherwise', AAOtherwise);

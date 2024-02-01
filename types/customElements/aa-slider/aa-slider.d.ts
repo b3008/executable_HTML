@@ -1,4 +1,4 @@
-export default class AASlider extends BaseElement {
+export default class AASlider extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {
@@ -44,4 +44,4 @@ export default class AASlider extends BaseElement {
     get css(): string;
     get html(): any;
 }
-import BaseElement from '../aa-baseElement/baseElement.js';
+import { AABaseElement } from '../aa-AABaseElement/AABaseElement.js';

@@ -1,4 +1,4 @@
-export default class AAVariable extends BaseElement {
+export default class AAVariable extends AABaseElement {
     static get tag(): string;
     static get properties(): {
         name: {
@@ -27,4 +27,4 @@ export default class AAVariable extends BaseElement {
     evaluateValueExpression(test: any): any;
     replaceExpressionIdentifiersWithValues(expression: any, memoryElement: any): any;
 }
-import BaseElement from './../aa-baseElement/baseElement.js';
+import { AABaseElement } from './../aa-AABaseElement/AABaseElement.js';

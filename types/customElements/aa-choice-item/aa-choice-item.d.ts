@@ -1,4 +1,4 @@
-export default class AAChoiceItem extends BaseElement {
+export default class AAChoiceItem extends AABaseElement {
     static get tag(): string;
     static get properties(): {
         value: {
@@ -27,4 +27,4 @@ export default class AAChoiceItem extends BaseElement {
     root: ShadowRoot;
     get css(): any;
 }
-import BaseElement from '../aa-baseElement/baseElement.js';
+import { AABaseElement } from '../aa-AABaseElement/AABaseElement.js';

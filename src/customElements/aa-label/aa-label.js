@@ -1,7 +1,7 @@
-import BaseElement from '../aa-baseElement/baseElement.js';
-export default class AALabel extends BaseElement {
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
+export default class AALabel extends AABaseElement {
 
-    static get tag() { 
+    static get tag() {
         return 'aa-label';
     }
 
@@ -15,7 +15,7 @@ export default class AALabel extends BaseElement {
         this.root.innerHTML = this.css + this.html;
     }
 
-    get css(){
+    get css() {
         return html`
             <style>
                     :host{
@@ -31,9 +31,9 @@ export default class AALabel extends BaseElement {
         `
     }
 
-    get html(){
+    get html() {
         return `<slot></slot>`
     }
 }
 
-BaseElement.registerAAElement('aa-label', AALabel);
+AABaseElement.registerAAElement('aa-label', AALabel);

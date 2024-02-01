@@ -1,4 +1,4 @@
-export default class AAMultipleChoice extends BaseElement {
+export default class AAMultipleChoice extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {
@@ -34,4 +34,4 @@ export default class AAMultipleChoice extends BaseElement {
     updateState(checkedNode: any): void;
     getValueOfSelectedItem(): any;
 }
-import BaseElement from '../aa-baseElement/baseElement.js';
+import { AABaseElement } from '../aa-AABaseElement/AABaseElement.js';

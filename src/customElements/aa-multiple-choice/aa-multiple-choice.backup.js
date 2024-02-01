@@ -1,9 +1,9 @@
-import BaseElement from '../aa-baseElement/baseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
 import '../aa-choice-item/aa-choice-item.js';
 
-export default class AAMultipleChoice extends BaseElement {
+export default class AAMultipleChoice extends AABaseElement {
 
-    static get tag() { 
+    static get tag() {
         return 'aa-multiple-choice';
     }
 
@@ -50,7 +50,7 @@ export default class AAMultipleChoice extends BaseElement {
     //     if (oldValue === newValue) {
     //         return;
     // }
-    get staticObject(){
+    get staticObject() {
         return AAMultipleChoice;
     }
 
@@ -70,7 +70,7 @@ export default class AAMultipleChoice extends BaseElement {
 
     constructor() {
         super();
-        if(this.horizontal===''){
+        if (this.horizontal === '') {
             this.horizontal = true;
         }
         this.root = this.attachShadow({ mode: 'open' });
@@ -83,7 +83,7 @@ export default class AAMultipleChoice extends BaseElement {
         });
 
         console.log(this.getAttribute("horizontal"))
-        
+
 
     }
 
@@ -91,19 +91,19 @@ export default class AAMultipleChoice extends BaseElement {
 
         super.connectedCallback();
 
-        
+
         this.choiceItems = [];
         for (let i = 0; i < this.childNodes.length; i++) {
             this.attachToShadowDomAccordingToKind(this.childNodes[i]);
         }
 
-        if ((this.getAttribute('value'))&&(this.getAttribute('value')!=='undefined')) {
+        if ((this.getAttribute('value')) && (this.getAttribute('value') !== 'undefined')) {
             this.radioGroup.setAttribute('selected', this.getAttribute('value'));
         }
 
         this.style.display = 'block';
 
-        
+
         // this.addEventListener("click", ()=>{
         //     if(!this.currentvalue){
         //         this.dispatchEvent(new CustomEvent("change"))
@@ -119,8 +119,8 @@ export default class AAMultipleChoice extends BaseElement {
 
     attachToShadowDomAccordingToKind(node) {
 
-        if (!BaseElement.isAAElement(node)) {
-            this.root.appendChild(BaseElement.copy(node));
+        if (!AABaseElement.isAAElement(node)) {
+            this.root.appendChild(AABaseElement.copy(node));
         } else {
             if (node.tagName === 'AA-CHOICE-ITEM') {
 
@@ -135,17 +135,17 @@ export default class AAMultipleChoice extends BaseElement {
                 }
 
                 child.innerHTML = node.innerHTML;
-                 
+
                 this.radioGroup.appendChild(child);
                 this.choiceItems.push(child);
 
-                
+
                 // if(vertical){return}
                 if (((this.horizontal === '') || (this.horizontal))) {
-                    
 
-                    this.radioGroup.style.display='flex';
-                    this.radioGroup.style.justifyContent='space-evenly';
+
+                    this.radioGroup.style.display = 'flex';
+                    this.radioGroup.style.justifyContent = 'space-evenly';
                     this.radioGroup.classList.add("horizontal");
 
                     let d1 = child.shadowRoot.querySelector('#radioContainer');
@@ -158,15 +158,15 @@ export default class AAMultipleChoice extends BaseElement {
                     // d2.style.maxWidth = "90px";
                     let newDiv = document.createElement('div');
                     // newDiv.style.marginLeft = 'var(--paper-radio-button-label-spacing,10px)';
-                    newDiv.style.display='flex';
-                    newDiv.style.flexDirection='column';
+                    newDiv.style.display = 'flex';
+                    newDiv.style.flexDirection = 'column';
                     newDiv.style.alignItems = 'center';
                     newDiv.style.textAlign = 'center';
                     child.shadowRoot.appendChild(newDiv);
                     newDiv.appendChild(d1);
                     newDiv.appendChild(d2);
- 
-                } 
+
+                }
                 // else {
 
                 // }
@@ -194,14 +194,14 @@ export default class AAMultipleChoice extends BaseElement {
     }
 
 
-    toJSON(){
+    toJSON() {
         let result = super.toJSON();
-        if((result.horizontal)){
+        if ((result.horizontal)) {
             result.horizontal = true;
         }
-        return result; 
+        return result;
     }
 }
 
 
-BaseElement.registerAAElement('aa-multiple-choice', AAMultipleChoice);
+AABaseElement.registerAAElement('aa-multiple-choice', AAMultipleChoice);

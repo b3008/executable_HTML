@@ -1,4 +1,4 @@
-export default class AAGeolocation extends BaseElement {
+export default class AAGeolocation extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {
@@ -26,4 +26,4 @@ export default class AAGeolocation extends BaseElement {
     _getLocation(): Promise<any>;
     _ready: boolean | undefined;
 }
-import BaseElement from './../aa-baseElement/baseElement.js';
+import { AABaseElement } from './../aa-AABaseElement/AABaseElement.js';

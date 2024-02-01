@@ -1,7 +1,7 @@
-import BaseElement from '../aa-baseElement/baseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
 import '../aa-choice-item/aa-choice-item.js';
 
-export default class AAMultipleChoice extends BaseElement {
+export default class AAMultipleChoice extends AABaseElement {
 
 
     static get category() {
@@ -196,4 +196,4 @@ export default class AAMultipleChoice extends BaseElement {
 }
 
 
-BaseElement.registerAAElement('aa-multiple-choice', AAMultipleChoice);
+AABaseElement.registerAAElement('aa-multiple-choice', AAMultipleChoice);

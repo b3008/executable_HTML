@@ -1,5 +1,5 @@
-import BaseElement from '../aa-baseElement/baseElement.js';
-export default class AAChoiceItem extends BaseElement {
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
+export default class AAChoiceItem extends AABaseElement {
 
 
 
@@ -194,4 +194,4 @@ export default class AAChoiceItem extends BaseElement {
     }
 }
 
-BaseElement.registerAAElement('aa-choice-item', AAChoiceItem);
+AABaseElement.registerAAElement('aa-choice-item', AAChoiceItem);

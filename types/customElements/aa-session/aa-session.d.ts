@@ -1,4 +1,4 @@
-export default class AASession extends BaseElement {
+export default class AASession extends AABaseElement {
     static get tag(): string;
     static get properties(): {
         'should-run': {
@@ -41,4 +41,4 @@ export default class AASession extends BaseElement {
     toJSL(): string;
     get originalChildNodes(): any;
 }
-import BaseElement from './../aa-baseElement/baseElement.js';
+import { AABaseElement } from './../aa-AABaseElement/AABaseElement.js';

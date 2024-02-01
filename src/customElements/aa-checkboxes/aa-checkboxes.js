@@ -1,13 +1,13 @@
-import BaseElement from '../aa-baseElement/baseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
 import '../aa-choice-item/aa-choice-item.js';
 
-export default class AACheckboxes extends BaseElement {
+export default class AACheckboxes extends AABaseElement {
 
-    static get category(){
+    static get category() {
         return "response item";
     }
 
-   
+
 
 
     static get tag() {
@@ -58,8 +58,7 @@ export default class AACheckboxes extends BaseElement {
             if (node.tagName === 'AA-CHOICE-ITEM') {
                 if (node.checked) {
                     result.push(node.value);
-                }else
-                {
+                } else {
                     result.push(null);
                 }
             }
@@ -68,19 +67,19 @@ export default class AACheckboxes extends BaseElement {
     }
 
     set value(val) {
-        if(!Array.isArray(val)){
-            val= [va];
+        if (!Array.isArray(val)) {
+            val = [va];
         }
 
 
         for (let i = 0; i < this.children.length; i++) {
             const node = this.children[i];
             if (node.tagName === 'AA-CHOICE-ITEM') {
-                if(val.includes(node.value)){
-                    node.checked=true;
+                if (val.includes(node.value)) {
+                    node.checked = true;
                 }
-                else{
-                    node.checked=false;
+                else {
+                    node.checked = false;
                 }
             }
         }
@@ -90,13 +89,13 @@ export default class AACheckboxes extends BaseElement {
         super();
         this.horizontal_wasChangedInternally__ = false;
         this.vertical_wasChangedInternally__ = false;
-    
+
     }
 
 
     connectedCallback() {
         super.connectedCallback();
-       
+
 
 
         this.addEventListener("change", (e) => {
@@ -150,4 +149,4 @@ export default class AACheckboxes extends BaseElement {
 }
 
 
-BaseElement.registerAAElement('aa-checkboxes', AACheckboxes);
+AABaseElement.registerAAElement('aa-checkboxes', AACheckboxes);

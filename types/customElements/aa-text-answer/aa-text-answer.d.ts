@@ -1,4 +1,4 @@
-export default class AATextAnswer extends BaseElement {
+export default class AATextAnswer extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {
@@ -42,4 +42,4 @@ export default class AATextAnswer extends BaseElement {
     get html(): any;
     get longHtml(): any;
 }
-import BaseElement from '../aa-baseElement/baseElement.js';
+import { AABaseElement } from '../aa-AABaseElement/AABaseElement.js';

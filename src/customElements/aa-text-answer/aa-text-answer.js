@@ -1,11 +1,11 @@
-import BaseElement from '../aa-baseElement/baseElement.js';
-export default class AATextAnswer extends BaseElement {
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
+export default class AATextAnswer extends AABaseElement {
 
-    static get category(){
-        return"response item";
+    static get category() {
+        return "response item";
     }
 
-    static get tag() { 
+    static get tag() {
         return 'aa-text-answer';
     }
 
@@ -27,11 +27,11 @@ export default class AATextAnswer extends BaseElement {
                 type: String,
                 userDefined: false
             },
-            'type':{
+            'type': {
                 type: String,
                 userDefined: true,
-                value:"text",
-                valuesAllowed: ["date", "datetime", "datetime-local", "email", "number", "password", "tel", "text", "time" ]
+                value: "text",
+                valuesAllowed: ["date", "datetime", "datetime-local", "email", "number", "password", "tel", "text", "time"]
             }
 
         }
@@ -89,7 +89,7 @@ export default class AATextAnswer extends BaseElement {
         }
 
         let memory = this.getMemory();
-        if(memory) memory.setData(BaseElement.getVariableName(this), val);
+        if (memory) memory.setData(AABaseElement.getVariableName(this), val);
 
     }
 
@@ -141,13 +141,13 @@ export default class AATextAnswer extends BaseElement {
         this.inputItem.addEventListener('keyup', (e) => {
 
             this.value = e.target.value;
-            if(this.keyUpTimeout){
+            if (this.keyUpTimeout) {
                 clearTimeout(this.keyUpTimeout);
             }
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.dispatchEvent(new CustomEvent("change"))
-            },1500)
-            
+            }, 1500)
+
         });
     }
 
@@ -212,5 +212,5 @@ export default class AATextAnswer extends BaseElement {
 
 }
 
-BaseElement.registerAAElement('aa-text-answer', AATextAnswer);
+AABaseElement.registerAAElement('aa-text-answer', AATextAnswer);
 

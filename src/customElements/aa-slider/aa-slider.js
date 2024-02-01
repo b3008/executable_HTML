@@ -1,5 +1,5 @@
-import BaseElement from '../aa-baseElement/baseElement.js';
-export default class AASlider extends BaseElement {
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
+export default class AASlider extends AABaseElement {
 
     static get category() {
         return "response item";
@@ -180,4 +180,4 @@ export default class AASlider extends BaseElement {
 
 }
 
-BaseElement.registerAAElement('aa-slider', AASlider);
+AABaseElement.registerAAElement('aa-slider', AASlider);

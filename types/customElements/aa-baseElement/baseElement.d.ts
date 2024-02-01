@@ -1,5 +1,5 @@
 export const AAClasses: any[];
-export default class BaseElement extends HTMLElement {
+export default class AABaseElement extends HTMLElement {
     static get properties(): {
         name: {
             type: StringConstructor;
@@ -39,7 +39,7 @@ export default class BaseElement extends HTMLElement {
      * of the element, to generate corresponding camelCase properties
      *
      * Attribute names are provided by observedAttributes of the HTMLElement object,
-     * however objects that inherit from baseElement can also provide a more
+     * however objects that inherit from AABaseElement can also provide a more
      * meaningful declaration, including datatype and default value, in
      * a static get properties function, like so:
      *

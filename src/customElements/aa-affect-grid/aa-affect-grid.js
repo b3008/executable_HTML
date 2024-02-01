@@ -1,5 +1,5 @@
-import BaseElement from '../aa-baseElement/baseElement.js';
-export class AAAffectGrid extends BaseElement {
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
+export class AAAffectGrid extends AABaseElement {
 
     static get category() {
         return "response item";
@@ -424,4 +424,4 @@ export class AAAffectGrid extends BaseElement {
 
 }
 
-BaseElement.registerAAElement('aa-affect-grid', AAAffectGrid);
+AABaseElement.registerAAElement('aa-affect-grid', AAAffectGrid);

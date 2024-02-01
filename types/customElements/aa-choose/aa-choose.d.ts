@@ -1,4 +1,4 @@
-export default class AAChoose extends BaseElement {
+export default class AAChoose extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {
@@ -38,4 +38,4 @@ export default class AAChoose extends BaseElement {
     evaluateTestExpression(test: any): any;
     replaceExpressionIdentifiersWithValues(expression: any, memoryElement: any): any;
 }
-import BaseElement from './../aa-baseElement/baseElement.js';
+import { AABaseElement } from './../aa-AABaseElement/AABaseElement.js';

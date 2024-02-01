@@ -1,9 +1,9 @@
-import BaseElement from '../aa-baseElement/baseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
 import '../aa-choice-item/aa-choice-item.js';
 
-export default class AACheckboxes extends BaseElement {
+export default class AACheckboxes extends AABaseElement {
 
-    static get tag() { 
+    static get tag() {
         return 'aa-checkboxes';
     }
 
@@ -30,7 +30,7 @@ export default class AACheckboxes extends BaseElement {
                 type: String,
                 userDefined: false
             },
-            
+
 
 
 
@@ -101,8 +101,8 @@ export default class AACheckboxes extends BaseElement {
     attachToShadowDomAccordingToKind(node) {
 
 
-        if (!BaseElement.isAAElement(node)) {
-            this.root.appendChild(BaseElement.copy(node));
+        if (!AABaseElement.isAAElement(node)) {
+            this.root.appendChild(AABaseElement.copy(node));
         } else {
             if (node.tagName === 'AA-CHOICE-ITEM') {
                 let child = document.createElement('paper-checkbox');
@@ -139,18 +139,18 @@ export default class AACheckboxes extends BaseElement {
         `;
     }
 
-    toJSON(){
+    toJSON() {
         let result = super.toJSON();
         let children = [];
-        for(let i=0; i<this.children.length; i++){
+        for (let i = 0; i < this.children.length; i++) {
             children.push(this.children[i].toJSON());
         }
-        
+
         result[this.tagName.toLowerCase()].items = children;
-        return result; 
+        return result;
     }
 
 }
 
 
-BaseElement.registerAAElement('aa-checkboxes', AACheckboxes);
+AABaseElement.registerAAElement('aa-checkboxes', AACheckboxes);

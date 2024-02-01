@@ -1,9 +1,9 @@
-import BaseElement from './../aa-baseElement/baseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
 import './aa-when/aa-when.js';
 import './aa-otherwise/aa-otherwise.js';
 //import jsep from '../../lib/jsep/jsep.js';
 import jsep from 'jsep';
-export default class AAChoose extends BaseElement {
+export default class AAChoose extends AABaseElement {
 
     static get category() {
         return "control";
@@ -16,7 +16,7 @@ export default class AAChoose extends BaseElement {
     static get properties() {
         return {
 
-            ...BaseElement.properties,
+            ...AABaseElement.properties,
 
             name: {
                 type: String,
@@ -68,7 +68,7 @@ export default class AAChoose extends BaseElement {
 
         if (this._shouldRun) {
             if (typeof this.innerFragment !== 'undefined') {
-                BaseElement.scanAndReplace(this.innerFragment);
+                AABaseElement.scanAndReplace(this.innerFragment);
                 let nodes = this._getNodeToInstantiate();
                 if (nodes.length === 0) {
                     this._dispatchEndEvent();
@@ -137,10 +137,10 @@ export default class AAChoose extends BaseElement {
             if (child.nodeName === 'AA-WHEN') {
                 isChildTrue = this.evaluate(child);
                 if (isChildTrue) {
-                    nodesToReturn.push(BaseElement.copy(child).innerFragment);
+                    nodesToReturn.push(AABaseElement.copy(child).innerFragment);
                 }
             } else if (child.nodeName === 'AA-OTHERWISE') {
-                nodeOtherwise.push(BaseElement.copy(child).innerFragment);
+                nodeOtherwise.push(AABaseElement.copy(child).innerFragment);
             }
         }
         if (nodesToReturn.length === 0) {
@@ -207,5 +207,5 @@ export default class AAChoose extends BaseElement {
     }
 }
 
-BaseElement.registerAAElement('aa-choose', AAChoose);
+AABaseElement.registerAAElement('aa-choose', AAChoose);
 

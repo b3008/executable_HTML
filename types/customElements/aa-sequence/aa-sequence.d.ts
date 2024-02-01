@@ -1,4 +1,4 @@
-export default class AASequence extends BaseElement {
+export default class AASequence extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {
@@ -53,4 +53,4 @@ export default class AASequence extends BaseElement {
     currentNode: any;
     endEventListener(e: any): void;
 }
-import BaseElement from './../aa-baseElement/baseElement.js';
+import { AABaseElement } from './../aa-AABaseElement/AABaseElement.js';

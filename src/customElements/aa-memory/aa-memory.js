@@ -1,39 +1,39 @@
-import BaseElement from './../aa-baseElement/baseElement.js'
+import { AABaseElement } from '../aa-base-element/aa-base-element.js'
 
 
 
-export default class AAMemory extends BaseElement {
+export default class AAMemory extends AABaseElement {
 
-    static get tag() { 
+    static get tag() {
         return 'aa-memory';
     }
 
-    get observedAttributes(){
+    get observedAttributes() {
         return ["name"];
     }
 
-    constructor(){
+    constructor() {
         super();
     }
 
-    connectedCallback(){
-        
+    connectedCallback() {
+
     }
 
-    
-    
-    setData(name,value){
+
+
+    setData(name, value) {
         // this.dataset[name] = value;
         localStorage[name] = value;
     }
 
-    getData(name){
+    getData(name) {
         return localStorage[name];
     }
 
-    getDataDump(){
+    getDataDump() {
         return localStorage;
     }
 }
 
-BaseElement.registerAAElement('aa-memory', AAMemory);
+AABaseElement.registerAAElement('aa-memory', AAMemory);

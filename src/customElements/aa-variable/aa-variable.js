@@ -1,12 +1,12 @@
-import BaseElement from './../aa-baseElement/baseElement.js'
+import { AABaseElement } from '../aa-base-element/aa-base-element.js'
 import jsep from '../../lib/jsep/jsep.js';
 
-export default class AAVariable extends BaseElement {
+export default class AAVariable extends AABaseElement {
 
-    static get tag() { 
+    static get tag() {
         return 'aa-variable';
     }
-    
+
     static get properties() {
         return {
             name: {
@@ -58,9 +58,9 @@ export default class AAVariable extends BaseElement {
         let value = this.value;
 
         // let _value = valueExpression;
-        if(memory) memory.setData(this.name, value);
-        this._dispatchEndEvent({autoDispatch:true});
-        if(!this.debug) {this.remove();}
+        if (memory) memory.setData(this.name, value);
+        this._dispatchEndEvent({ autoDispatch: true });
+        if (!this.debug) { this.remove(); }
     }
 
 
@@ -73,24 +73,24 @@ export default class AAVariable extends BaseElement {
 
         try {
             var parseTree = jsep(expr);
-            if(parseTree.type==="Identifier"){
+            if (parseTree.type === "Identifier") {
                 //Best be strict about it from the beginning an Identifier is always expected to be 
                 //a reference to another variable
 
             } else
-            if(parseTree.type==="Literal"){
-                //there's only a string present, figure out if it's a reference to a variable or a string
-            } else 
-            if ((parseTree.left.type === 'Literal') && (parseTree.right.type === 'Literal')) {
-                return eval(expr);
-            }
-            else {
-                // there are still strings in the expression, which are unknown
-                // evaluate with values that the parseTreeProvides
-                return  eval(`${parseTree.left.value}${parseTree.operator}${parseTree.right.value}`);
-                //an exception should be raised
-                // throw 'unknown identifiers in expression : ' + expr;
-            }
+                if (parseTree.type === "Literal") {
+                    //there's only a string present, figure out if it's a reference to a variable or a string
+                } else
+                    if ((parseTree.left.type === 'Literal') && (parseTree.right.type === 'Literal')) {
+                        return eval(expr);
+                    }
+                    else {
+                        // there are still strings in the expression, which are unknown
+                        // evaluate with values that the parseTreeProvides
+                        return eval(`${parseTree.left.value}${parseTree.operator}${parseTree.right.value}`);
+                        //an exception should be raised
+                        // throw 'unknown identifiers in expression : ' + expr;
+                    }
         } catch (e) {
             console.error('parse error:', e);
         }
@@ -121,5 +121,5 @@ export default class AAVariable extends BaseElement {
 
 }
 
-BaseElement.registerAAElement('aa-variable', AAVariable);
+AABaseElement.registerAAElement('aa-variable', AAVariable);
 

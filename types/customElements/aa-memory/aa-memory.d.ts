@@ -1,8 +1,8 @@
-export default class AAMemory extends BaseElement {
+export default class AAMemory extends AABaseElement {
     static get tag(): string;
     get observedAttributes(): string[];
     setData(name: any, value: any): void;
     getData(name: any): any;
     getDataDump(): Storage;
 }
-import BaseElement from './../aa-baseElement/baseElement.js';
+import { AABaseElement } from './../aa-AABaseElement/AABaseElement.js';

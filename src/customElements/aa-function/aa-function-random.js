@@ -1,44 +1,44 @@
-import BaseElement from '../aa-baseElement/baseElement.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
 
-export default class AAFunctionRandom extends BaseElement {
+export default class AAFunctionRandom extends AABaseElement {
 
-    static get tag() { 
+    static get tag() {
         return 'aa-function-random'
     }
 
-    static get properties(){
+    static get properties() {
         return {
-            name:{
-                type:String,
-                userDefined:true
-            },
-           
-            "debug":{
-                type:Boolean,
-                value:false,
-                userDefined:false
+            name: {
+                type: String,
+                userDefined: true
             },
 
-            "value":{
-                type:Number,
-                userDefined:false,
+            "debug": {
+                type: Boolean,
+                value: false,
+                userDefined: false
             },
 
-            "min":{
-                type:Number,
-                userDefined:true,
+            "value": {
+                type: Number,
+                userDefined: false,
             },
-            
-            "max":{
-                type:Number,
-                userDefined:true,
+
+            "min": {
+                type: Number,
+                userDefined: true,
             },
-            
+
+            "max": {
+                type: Number,
+                userDefined: true,
+            },
+
 
         }
     }
 
-    static get acceptsElements(){
+    static get acceptsElements() {
         return null
     }
 
@@ -48,7 +48,7 @@ export default class AAFunctionRandom extends BaseElement {
 
 
 
-    constructor(){
+    constructor() {
 
         super();
     }
@@ -56,19 +56,19 @@ export default class AAFunctionRandom extends BaseElement {
     connectedCallback() {
 
         let memory = this.getMemory();
-        if(memory) memory.setData(this.name, this.value);
+        if (memory) memory.setData(this.name, this.value);
         this._dispatchEndEvent({ autoDispatch: true });
         if (!this.debug) { this.remove(); }
     }
 
-  
+
     get value() {
         var parsedMin = parseFloat(this.min);
         var parsedMax = parseFloat(this.max);
         let val = this.getRandomInt(parsedMin, parsedMax);
         let memory = this.getMemory();
-        if(memory) memory.setData(BaseElement.getVariableName(this), val);
-        return  val;
+        if (memory) memory.setData(AABaseElement.getVariableName(this), val);
+        return val;
     }
 
     getRandomInt(min, max) {
@@ -80,5 +80,5 @@ export default class AAFunctionRandom extends BaseElement {
 
 }
 
-BaseElement.registerAAElement('aa-function-random', AAFunctionRandom);
+AABaseElement.registerAAElement('aa-function-random', AAFunctionRandom);
 

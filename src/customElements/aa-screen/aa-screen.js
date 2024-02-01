@@ -1,5 +1,5 @@
-import BaseElement from './../aa-baseElement/baseElement.js';
-export class AAScreen extends BaseElement {
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
+export class AAScreen extends AABaseElement {
 
 
     static get category() {
@@ -13,7 +13,7 @@ export class AAScreen extends BaseElement {
     static get properties() {
         return {
 
-            ...BaseElement.properties,
+            ...AABaseElement.properties,
 
 
             "submit-button-text": {
@@ -248,7 +248,7 @@ export class AAScreen extends BaseElement {
         result = result || [];
         node = node || this;
         for (let i = 0; i < node.children.length; i++) {
-            if (BaseElement.isAAElement(node.children[i])) {
+            if (AABaseElement.isAAElement(node.children[i])) {
                 if (nodeName) {
                     if (node.children[i].nodeName === nodeName) {
                         result.push(node.children[i]);
@@ -282,7 +282,7 @@ export class AAScreen extends BaseElement {
             debugger;
             if (c.nodeName != 'AA-LABEL') {
 
-                let name = BaseElement.getVariableName(c);
+                let name = AABaseElement.getVariableName(c);
                 console.log(c.tagName, "has name", name);
                 console.log(c, name);
                 if (c.getValue) {
@@ -318,7 +318,7 @@ export class AAScreen extends BaseElement {
 
     //         if (c.nodeName != 'AA-LABEL') {
 
-    //             let name = BaseElement.getVariableName(c);
+    //             let name = AABaseElement.getVariableName(c);
     //             console.log(c, name);
     //             if (c.getValue) {
     //                 result[name] = c.getValue();
@@ -368,7 +368,7 @@ export class AAScreen extends BaseElement {
 
     automate() {
         for (let i = 0; i < this.children.length; i++) {
-            if (BaseElement.isAAElement(this.children[i])) {
+            if (AABaseElement.isAAElement(this.children[i])) {
                 if (typeof this.children[i].automate != 'undefined') {
                     this.children[i].automate();
                 }
@@ -398,5 +398,5 @@ export class AAScreen extends BaseElement {
 
 }
 
-BaseElement.registerAAElement('aa-screen', AAScreen);
+AABaseElement.registerAAElement('aa-screen', AAScreen);
 

@@ -1,4 +1,4 @@
-export default class AAWhen extends BaseElement {
+export default class AAWhen extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {
@@ -25,4 +25,4 @@ export default class AAWhen extends BaseElement {
     static get observedAttributes(): string[];
     root: ShadowRoot;
 }
-import BaseElement from './../../aa-baseElement/baseElement.js';
+import { AABaseElement } from './../../aa-AABaseElement/AABaseElement.js';

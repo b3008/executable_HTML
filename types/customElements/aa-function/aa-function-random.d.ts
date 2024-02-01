@@ -1,4 +1,4 @@
-export default class AAFunctionRandom extends BaseElement {
+export default class AAFunctionRandom extends AABaseElement {
     static get tag(): string;
     static get properties(): {
         name: {
@@ -28,4 +28,4 @@ export default class AAFunctionRandom extends BaseElement {
     get value(): any;
     getRandomInt(min: any, max: any): any;
 }
-import BaseElement from '../aa-baseElement/baseElement.js';
+import { AABaseElement } from '../aa-AABaseElement/AABaseElement.js';
