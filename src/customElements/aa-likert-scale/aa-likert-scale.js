@@ -1,7 +1,7 @@
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';
 import '../aa-multiple-choice/aa-multiple-choice.js';
 
-export default class AALikertScale extends AABaseElement {
+export class AALikertScale extends AABaseElement {
 
     static get category() {
         return "response item";

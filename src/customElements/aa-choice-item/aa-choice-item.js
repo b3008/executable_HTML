@@ -103,7 +103,8 @@ export class AAChoiceItem extends AABaseElement {
         //     return document.createElement('paper-radio-button');
         // }
         if (customElements.get('md-radio')) {
-            return document.createElement('md-radio');
+            const mdradio = document.createElement('md-radio');
+            return mdradio;
         }
 
         const defaultRadio = document.createElement('input');
