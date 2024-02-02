@@ -1,9 +1,7 @@
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';
 import './aa-jump/aa-jump.js';
 
-
-
-export default class AASequence extends AABaseElement {
+export class AASequence extends AABaseElement {
 
 
     static get category() {

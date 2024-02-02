@@ -250,6 +250,8 @@ export class AALikertScale extends AABaseElement {
 
         const endWidth = endLabel.getBoundingClientRect().width;
         endLabel.style.right = -endWidth + 16 + "px";
+
+        labelContainer.style.height = Math.max(startLabel.getBoundingClientRect().height, middleLabel.getBoundingClientRect().height, endLabel.getBoundingClientRect().height) + "px";
     }
 
 

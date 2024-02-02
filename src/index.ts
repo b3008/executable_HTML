@@ -4,7 +4,7 @@ import '@fontsource/roboto';
 import '@material/web/button/filled-button.js';
 import '@material/web/checkbox/checkbox.js';
 import '@material/web/radio/radio.js';
-
+import '@material/web/slider/slider.js';
 
 
 export { MyElement } from './my-element';
@@ -22,7 +22,7 @@ export { AAGeolocation } from './customElements/aa-geolocation/aa-geolocation';
 export { AALabel } from './customElements/aa-label/aa-label';
 export { AALikertScale } from './customElements/aa-likert-scale/aa-likert-scale';
 export { AAMemory } from './customElements/aa-memory/aa-memory';
-
-
-
-
+export { AASequence } from './customElements/aa-sequence/aa-sequence';
+export { AAJump } from './customElements/aa-sequence/aa-jump/aa-jump';
+export { AASession } from './customElements/aa-session/aa-session';
+export { AASlider } from './customElements/aa-slider/aa-slider';

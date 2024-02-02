@@ -1,5 +1,5 @@
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';
-export default class AASlider extends AABaseElement {
+export class AASlider extends AABaseElement {
 
     static get category() {
         return "response item";
@@ -162,8 +162,8 @@ export default class AASlider extends AABaseElement {
     }
 
     get html() {
-        let inputElement = customElements.get('paper-slider')
-            ? `<paper-slider style="width:100%" class='inputItem min=${this.min} max=${this.max}'></paper-slider>`
+        let inputElement = customElements.get('md-slider')
+            ? `<md-slider style="width:100%" class='inputItem min=${this.min} max=${this.max}'></paper-slider>`
             : `<input style="width:100%" type="range" class="inputItem" min="${this.min}" max="${this.max}" value="${(this.max + this.min) / 2}">`;
 
 

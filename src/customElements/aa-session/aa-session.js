@@ -4,7 +4,7 @@ import * as html2jsl from './../../lib/html2jsl/html2jsl.js';
 import * as AASequence from '../aa-sequence/aa-sequence.js';
 
 
-export default class AASession extends AABaseElement {
+export class AASession extends AABaseElement {
 
     static get tag() {
         return 'aa-session'

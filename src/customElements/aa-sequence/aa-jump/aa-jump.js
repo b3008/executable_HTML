@@ -1,6 +1,6 @@
 import { AABaseElement } from '../../aa-base-element/aa-base-element.js';
 
-export default class AAJump extends AABaseElement {
+export class AAJump extends AABaseElement {
 
     static get category() {
         return "control";
