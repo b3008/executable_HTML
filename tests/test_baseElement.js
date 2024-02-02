@@ -1,6 +1,6 @@
-import BaseElement from '../src/customElements/aa-baseElement/baseElement.js';
-import AAScreen from '../src/customElements/aa-screen/aa-screen.js';
-import AACheckboxes from '../src/customElements/aa-checkboxes/aa-checkboxes.js';
+import { AABaseElement } from '../src/customElements/aa-baseElement/aa-baseElement.js';
+import { AAScreen } from '../src/customElements/aa-screen/aa-screen.js';
+import { AACheckboxes } from '../src/customElements/aa-checkboxes/aa-checkboxes.js';
 import * as html2jsl from '../src/lib/html2jsl/html2jsl.js';
 
 // var expect = chai.expect;
@@ -34,7 +34,7 @@ describe('baseElement', () => {
             done();
         });
 
-        it('converts camelCase string to hyphenated string ',  (done) => {
+        it('converts camelCase string to hyphenated string ', (done) => {
             container.innerHTML = '<aa-base-element id="e1">';
             let baseElement = document.querySelector('#e1');
             let hyphenated = 'this-is-a-hyphenated-sentence';
@@ -43,11 +43,11 @@ describe('baseElement', () => {
             done();
         });
 
-       
+
     })
 
-    describe('derived elements', function(){
-        it('derived element inherits from baseElement, has getters and setters for properties that reflect attributes',  (done) => {
+    describe('derived elements', function () {
+        it('derived element inherits from baseElement, has getters and setters for properties that reflect attributes', (done) => {
             class TestElement extends BaseElement {
                 static get observedAttributes() {
                     return ['name', 'my-session']
@@ -73,44 +73,44 @@ describe('baseElement', () => {
             done();
         })
 
-        it('derived element can dispatch bubbling endEvent', (done)=>{
+        it('derived element can dispatch bubbling endEvent', (done) => {
 
             class TestEndEventElement extends BaseElement {
-                
-                connectedCallback(){
+
+                connectedCallback() {
                     this._dispatchEndEvent('testData');
                 }
             }
 
             customElements.define('test-end-event-element', TestEndEventElement);
             let div = document.createElement('div');
-            div.addEventListener('endEvent', (e)=>{
-                assert(e.detail==='testData', 'e.detail should equal "testData"');
+            div.addEventListener('endEvent', (e) => {
+                assert(e.detail === 'testData', 'e.detail should equal "testData"');
                 done();
             })
             div.innerHTML = '<test-end-event-element id="e3"></test-end-event-element>';
             container.appendChild(div)
         })
 
-        it('derived element can dispatch bubbling debugEvent when debug attribute is true', (done)=>{
+        it('derived element can dispatch bubbling debugEvent when debug attribute is true', (done) => {
 
             class TestDebugEventElement extends BaseElement {
-                
-                static get observedAttributes(){
+
+                static get observedAttributes() {
                     return ['debug'];
                 }
-                constructor(){
+                constructor() {
                     super();
                 }
-                connectedCallback(){
+                connectedCallback() {
                     this._dispatchDebugEvent('debugData');
                 }
             }
 
             customElements.define('test-debug-event-element', TestDebugEventElement);
             let div = document.createElement('div');
-            div.addEventListener('debugEvent', (e)=>{
-                assert(e.detail==='debugData', 'e.detail should equal "debugData"');
+            div.addEventListener('debugEvent', (e) => {
+                assert(e.detail === 'debugData', 'e.detail should equal "debugData"');
 
                 done();
             })
@@ -132,15 +132,15 @@ describe('baseElement', () => {
         // })
 
 
-        it('converts HTML to JSL', (done)=>{
+        it('converts HTML to JSL', (done) => {
 
-            let div = document.createElement('div');                        
+            let div = document.createElement('div');
             let j;
             // div.innerHTML = "<p>My cat is <strong>very grumpy.</p></strong>";
             // j = BaseElement.nodeToJSL(div);
             // console.log(j);
-             
-            div.innerHTML=`
+
+            div.innerHTML = `
             
             <h4>This is the HTML5 logo </h4>
 <img src=""/>
@@ -162,9 +162,9 @@ describe('baseElement', () => {
                             <aa-choice-item value="undefined">onbekenden</aa-choice-item>
                         </aa-checkboxes>`
 
-                        j = html2jsl.nodeToJSL(div);
+            j = html2jsl.nodeToJSL(div);
             // console.log(j);
-            
+
             done();
         })
 

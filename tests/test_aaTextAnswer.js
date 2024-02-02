@@ -1,4 +1,4 @@
-import AATextAnswer from '../src/customElements/aa-text-answer/aa-text-answer.js';
+import { AATextAnswer } from '../src/customElements/aa-text-answer/aa-text-answer.js';
 
 // var expect = chai.expect;
 var assert = chai.assert;
@@ -34,7 +34,7 @@ describe('aa-text-answer', () => {
             textAnswer.value = 'v2';
             assert(textAnswer.value === 'v2', `value of element is passed into its inputItem`);
             assert(textAnswer.inputItem.value === 'v2', `value of element is passed into its inputItem`);
-            
+
             textAnswer.inputItem.value = 'v3';
             assert(textAnswer.value === 'v3', `setting value of inputItem sets value of element`);
             done();
@@ -51,27 +51,27 @@ describe('aa-text-answer', () => {
         it('sets label', (done) => {
             container.innerHTML = '<aa-text-answer value="v1"></aa-text-answer>';
             let textAnswer = document.querySelector('aa-text-answer');
-            textAnswer.label= 'label1';
+            textAnswer.label = 'label1';
             assert(textAnswer.label === 'label1', `label of elementgis set`);
             assert(textAnswer.inputItem.label === 'label1', `label of element is passed into its inputItem`);
             done();
         });
 
         it('sets long and removes long attribute', (done) => {
-          
+
             container.innerHTML = '<aa-text-answer label="tata" value="val"></aa-text-answer>';
             let textAnswer = document.querySelector('aa-text-answer');
 
             textAnswer.long = true;
-            assert(textAnswer.inputItem.tagName==='PAPER-TEXTAREA', 'input should be a textfield');
+            assert(textAnswer.inputItem.tagName === 'PAPER-TEXTAREA', 'input should be a textfield');
 
             textAnswer.long = false;
-            assert(textAnswer.inputItem.tagName==='PAPER-INPUT', 'input should be simple input');
+            assert(textAnswer.inputItem.tagName === 'PAPER-INPUT', 'input should be simple input');
 
-            assert(textAnswer.inputItem.value==='val', 'inputItem retains value');
-            assert(textAnswer.inputItem.label==='tata', 'inputItem retains label');
-            assert(textAnswer.value==='val', 'element retains value');
-            assert(textAnswer.label==='tata', 'element retains label');
+            assert(textAnswer.inputItem.value === 'val', 'inputItem retains value');
+            assert(textAnswer.inputItem.label === 'tata', 'inputItem retains label');
+            assert(textAnswer.value === 'val', 'element retains value');
+            assert(textAnswer.label === 'tata', 'element retains label');
             done();
         });
     })

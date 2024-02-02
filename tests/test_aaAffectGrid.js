@@ -1,4 +1,4 @@
-import AAAffectGrid from '../src/customElements/aa-affect-grid/aa-affect-grid.js';
+import { AAAffectGrid } from '../src/customElements/aa-affect-grid/aa-affect-grid.js';
 
 
 // var expect = chai.expect;
@@ -35,11 +35,11 @@ describe('aa-affect-grid', () => {
         //         left-top-label="left-top" 
         //         left-label="left" 
         //         left-bottom-label="left-bottom"
-    
+
         //         right-top-label="right-top" 
         //         right-label="right" 
         //         right-bottom-label="right-bottom"
-    
+
 
         //         bottom-left-label="bottom-left" 
         //         bottom-label="bottom" 
@@ -97,6 +97,6 @@ describe('aa-affect-grid', () => {
         //     // assert(slider.inputItem.label === 'label1', `label of element is passed into its inputItem`);
         //     done();
         // });
-        
+
     })
 })

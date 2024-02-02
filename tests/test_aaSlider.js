@@ -1,4 +1,4 @@
-import AASlider from '../src/customElements/aa-slider/aa-slider.js';
+import { AASlider } from '../src/customElements/aa-slider/aa-slider.js';
 
 // var expect = chai.expect;
 var assert = chai.assert;
@@ -73,6 +73,6 @@ describe('aa-slider', () => {
             // assert(slider.inputItem.label === 'label1', `label of element is passed into its inputItem`);
             done();
         });
-        
+
     })
 })
