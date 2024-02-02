@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mocha Tests</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+
+    <style>
+        paper-button.indigo {
+    background-color: var(--paper-indigo-500);
+    color: white;
+    --paper-button-raised-keyboard-focus: {
+      background-color: var(--paper-pink-a200) !important;
+      color: white !important;
+    };
+  }
+    </style>
+  </head>
+  <body>
+
+   
+
+    <div id="mocha"></div>
+
+    
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+   
+   
+ 
+
+    
+    <script class="mocha-init">
+      mocha.setup( {ui:'bdd', globals:["AANodeNames", '__REACT_DEVTOOLS_COMPONENT_FILTERS__']});
+      mocha.checkLeaks();
+    </script>
+
+    
+    <script type="module" src="./test_baseElement.js"></script>
+    <script type="module" src="./test_aaScreen.js"></script>
+    <script type="module" src="./test_aaSession.js"></script>
+    <script type="module" src="./test_aaSequence.js"></script>
+    <script type="module" src="./test_aaChoose.js"></script>
+    <script type="module" src="./test_aaVariable.js"></script>
+    <script type="module" src="./test_aaTextAnswer.js"></script>
+    <script type="module" src="./test_aaMultipleChoice.js"></script>
+    <script type="module" src="./test_aaCheckboxes.js"></script>
+    <script type="module" src="./test_aaLikertScale.js"></script>
+    <script type="module" class="mocha-exec">
+       
+      mocha.run();
+    </script>
+
+
+  </body>
+</html>
