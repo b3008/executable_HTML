@@ -1,6 +1,6 @@
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';
 import '../aa-multiple-choice/aa-multiple-choice.js';
-
+import { v4 } from 'uuid';
 export class AALikertScale extends AABaseElement {
 
     static get category() {
@@ -78,18 +78,26 @@ export class AALikertScale extends AABaseElement {
         super();
 
         this.root = this.attachShadow({ mode: 'open' });
-
+        this.value = this.getAttribute('value');
 
     }
 
     connectedCallback() {
         super.connectedCallback();
 
-        this.root.innerHTML = this.html;
+        if (!this.items) {
+            this.items = 5;
+        }
+        this.root.innerHTML = this.css + this.html;
 
-        this.mChoice = this.root.querySelector("aa-multiple-choice")
-        this.choiceItems = this.mChoice.choiceItems
+        const radios = this.root.querySelectorAll('md-radio').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                console.log(radio);
+                this.value = radio.value;
+            });
+        });
 
+        this.arrangeLabels();
         this.addEventListener("click", () => {
             if (!this.currentvalue) {
                 this.dispatchEvent(new CustomEvent("change"))
@@ -106,14 +114,16 @@ export class AALikertScale extends AABaseElement {
     getTags() {
 
         let c = '';
-        let start = `<div style="width:100px; white-space:nowrap">${this.getAttribute("start-label") || ''}</div>`
-        let middle = `<div style="width:100px; white-space:nowrap">${this.getAttribute("middle-label") || ''}</div>`
-        let end = `<div style="width:100px; white-space:nowrap">${this.getAttribute("end-label") || ''}</div>`
-        let placeholder = `<div style="width:50px"></div>`;
+        let start = `<div class='start-label'>${this.getAttribute("start-label") || ''}</div>`
+        let middle = `<div class='middle-label'>${this.getAttribute("middle-label") || ''}</div>`
+        let end = `<div class='end-label'>${this.getAttribute("end-label") || ''}</div>`
+        // let placeholder = `<div style="width:50px"></div>`;
 
 
-
+        console.log("start", this.getAttribute("start-label"));
+        console.log(start);
         let items = parseInt(this.items)
+
         for (let i = 1; i <= items; i++) {
 
 
@@ -128,48 +138,124 @@ export class AALikertScale extends AABaseElement {
             else if (i == items) {
                 c += end;
             } else {
-                c += placeholder;
+                // c += placeholder;
             }
 
 
         }
 
-        let result = `<div style="font-family: Roboto, Noto, sans-serif; width:100%; display:flex; justify-content:space-evenly; text-align:center">${c}</div>`
+        let result = `<div class="label-container">${c}</div>`
+        console.log(result);
         return result;
 
     }
+
+    get css() {
+        return html`<style>
+           
+            md-radio {
+                display:block;
+                {{/*  width:48px;  */}}
+
+            }   
+            label {
+               
+                display:block;
+            }
+
+            .container {
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+            }
+
+            .label-container {
+                width:0px;
+                position:relative;
+            }
+            .start-label {
+                position:absolute;
+                left:0px;
+            }
+
+            .middle-label {
+                position:absolute;
+
+            }
+
+            .end-label {
+                position:absolute;
+                right:0px;
+            }
+
+            .tag-container{
+                
+            }
+            .group-container{
+                display:flex;
+                flex-direction:row;
+                align-items:center;
+                
+                gap:32px;
+            }
+            .radio-container {
+                display:flex;
+                flex-direction:row;
+                align-items:center;
+                gap: 8px;
+            }
+            </style>`
+    }
+
     get html() {
-        let items = ``;
 
-        let startItem = parseFloat(this.startItem)
+        const groupName = this.name ?? v4();
 
-        if ((!this.items) || (this.items === "undefined")) this.items = 5;
+        let buttons = ``;
         for (let i = 0; i < this.items; i++) {
-            items += `<aa-choice-item name="${i + startItem}">${i + startItem}</aa-choice-item>`;
+            buttons += `<div class="radio-container"><md-radio id="${groupName}-${i}" class="radio" name="${groupName}" value=${i}></md-radio>`;
+            buttons += `<label for="${groupName}-${i}">${i}</label></div>`
         }
-        let result = html`<div>
-                                <aa-multiple-choice horizontal="true" name="${this.name}">${items}</aa-multiple-choice>
-                                ${this.getTags()}    
-                            </div>
-                                `
-
-        return result;
+        return `
+        
+        <div class="container">
+            <div class="group-container">
+            ${buttons}
+            </div>
+            ${this.getTags()}
+        </div>
+        `;
     }
 
 
-    get value() {
+    arrangeLabels() {
+        const labelContainer = this.root.querySelector(".label-container");
+        const groupContainer = this.root.querySelector(".group-container");
 
-        if (this.mChoice) {
-            return parseInt(this.mChoice.value);
-        } else {
-            return parseInt(this.getAttribute('value'));
-        }
+        labelContainer.style.width = groupContainer.getBoundingClientRect().width + "px";
+        const length = groupContainer.getBoundingClientRect().width;
+
+
+
+        const startLabel = this.root.querySelector(".start-label");
+        const middleLabel = this.root.querySelector(".middle-label");
+        const endLabel = this.root.querySelector(".end-label");
+
+        const startWidth = startLabel.getBoundingClientRect().width;
+        startLabel.style.left = -startWidth + 16 + "px";
+
+        const middleWidth = middleLabel.getBoundingClientRect().width;
+        middleLabel.style.left = length / 2 - middleWidth / 2 + "px";
+
+
+        const endWidth = endLabel.getBoundingClientRect().width;
+        endLabel.style.right = -endWidth + 16 + "px";
     }
 
 
-    getValue() {
-        return this.mChoice.value;
-    }
+
+
+
 
 
 

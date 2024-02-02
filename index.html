@@ -9,8 +9,9 @@
     <script type="module" src="/src/index.ts"></script>
   </head>
   <body>
-    <my-element>
-      <h1>Vite + Lit</h1>
+
+    <div class="container">
+      <!-- <h1>Vite + Lit</h1>
       
       <aa-screen></aa-screen>
       <aa-affect-grid> </aa-affect-grid>
@@ -43,13 +44,30 @@
 
     <aa-geolocation></aa-geolocation>
 
-    <aa-label>label</aa-label>
+    <aa-label>this is inside an aa-label</aa-label>  */}}
 
-    <aa-likert-scale></aa-likert-scale>
+!-->
+    rendering an aa-likert-scale
+    <aa-likert-scale class="skato"
+      start-label = "start label"
+      middle-label = "middle label"
+      end-label = "end label"
+    ></aa-likert-scale>
 
 
+    <!--
+    <div>
+      <aa-multiple-choice horizontal="true" name="null">
+      <aa-choice-item name="1">1</aa-choice-item>
+      <aa-choice-item name="2">2</aa-choice-item>
+      <aa-choice-item name="3">3</aa-choice-item>
+      <aa-choice-item name="4">4</aa-choice-item>
+      <aa-choice-item name="5">5</aa-choice-item>
+      </aa-multiple-choice>
+      </div>`
+!-->
 
-
+<!--
     <div>
       <aa-multiple-choice horizontal="true" name="null">
         <aa-choice-item name="1">1</aa-choice-item>
@@ -59,7 +77,19 @@
         <aa-choice-item name="5">5</aa-choice-item>
         </aa-multiple-choice>
       <div style="font-family: 'Roboto Flex', Roboto, Noto, sans-serif; width:100%; display:flex; justify-content:space-evenly; text-align:center"><div style="width:100px; white-space:nowrap"></div><div style="width:50px"></div><div style="width:100px; white-space:nowrap"></div><div style="width:50px"></div><div style="width:100px; white-space:nowrap"></div></div>    
-  </div>
-    
+  </div>  
+  !-->
+
+</div>
   </body>
+
+  <script>
+    const a = document.querySelector('.skato');
+    console.log(a);
+    a.addEventListener('change', (e) => {
+      console.log(e.target);
+      console.log(e.target.value);
+
+    });
+  </script>
 </html>

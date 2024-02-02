@@ -65,7 +65,7 @@ export class AAChoiceItem extends AABaseElement {
     }
 
     set checked(val) {
-        debugger;
+        console.log("setting checked", val, this.item)
         if (this.item) this.item.checked = eval(val);
     }
 
@@ -99,9 +99,7 @@ export class AAChoiceItem extends AABaseElement {
 
 
     getRadioButton() {
-        // if (customElements.get('paper-radio-button')) {
-        //     return document.createElement('paper-radio-button');
-        // }
+
         if (customElements.get('md-radio')) {
             const mdradio = document.createElement('md-radio');
             return mdradio;
@@ -114,9 +112,6 @@ export class AAChoiceItem extends AABaseElement {
     }
 
     getCheckbox() {
-        // if (customElements.get('paper-checkbox')) {
-        //     return document.createElement('paper-radio-button');
-        // }
 
         if (customElements.get('md-checkbox')) {
             return document.createElement('md-checkbox');
@@ -155,8 +150,9 @@ export class AAChoiceItem extends AABaseElement {
             this.item.checked = this.checked;
 
 
-            this.item.addEventListener("click", () => {
-                this.item.checked = true;
+            this.item.addEventListener("click", (e) => {
+                // console.log(this.item.checked)
+                this.item.checked = !this.item.checked;
                 this.dispatchEvent(new CustomEvent("change", { bubbles: true }))
             })
 
@@ -215,7 +211,7 @@ export class AAChoiceItem extends AABaseElement {
         return html`<style>
             :host{
                 cursor:pointer;
-                font-family:Roboto;
+                font-family:"Roboto Flex", Roboto, Noto, sans-serif;
             }
             :host(:focus) {
                  outline: none;
@@ -233,10 +229,11 @@ export class AAChoiceItem extends AABaseElement {
             
 
             
-        {{/*  paper-radio-button {
+        md-radio {
             user-select:none;
             display: block;
-        }  */}}
+            {{/*  border:solid;  */}}
+        } 
         </style>`;
     }
 
