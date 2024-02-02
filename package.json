@@ -40,6 +40,8 @@
 
     "@fontsource/roboto-flex": "^5.0.8",
 
+    "@material/theme": "^14.0.0",
+
     "@material/web": "^1.2.0",
 
     "@svgdotjs/svg.js": "^3.2.0",
