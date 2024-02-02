@@ -120,7 +120,7 @@ export class AAAffectGrid extends AABaseElement {
     bottomLeftLabel: string | undefined;
     bottomLabel: string | undefined;
     grid: Element | null | undefined;
-    selectedCell: any;
+    selectedCell: EventTarget | null | undefined;
     totalContainer: Element | null | undefined;
     get css(): any;
     get html(): any;

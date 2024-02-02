@@ -30,7 +30,7 @@ export class AATextAnswer extends AABaseElement {
     root: ShadowRoot;
     inputItem: Element | null | undefined;
     keyUpTimeout: any;
-    get css(): string;
+    get css(): any;
     get html(): any;
 }
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';

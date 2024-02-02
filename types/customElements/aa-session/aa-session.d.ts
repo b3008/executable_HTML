@@ -30,8 +30,8 @@ export class AASession extends AABaseElement {
     static get observedAttributes(): string[];
     myTemplate: HTMLTemplateElement;
     _mem: HTMLElement;
-    myIdGenerator(): number;
-    sessionID: number | undefined;
+    myIdGenerator(): string;
+    sessionID: string | undefined;
     sessionTime: number | undefined;
     attachTemplateChildNodesToMyself(templateClone: any): void;
     run(): void;
