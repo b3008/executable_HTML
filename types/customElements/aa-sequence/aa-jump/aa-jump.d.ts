@@ -1,4 +1,4 @@
-export default class AAJump extends AABaseElement {
+export class AAJump extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {

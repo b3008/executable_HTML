@@ -65,8 +65,7 @@ export class AAChoiceItem extends AABaseElement {
     }
 
     set checked(val) {
-        console.log("setting checked", val, this.item)
-        if (this.item) this.item.checked = eval(val);
+        if (this.item) this.item.checked = val === 'false' ? false : val === 'true' ? true : val;
     }
 
     get value() {
@@ -76,11 +75,9 @@ export class AAChoiceItem extends AABaseElement {
     }
 
 
-
     set value(val) {
         this.setAttribute('value', val);
     }
-
 
 
     constructor() {
@@ -151,7 +148,6 @@ export class AAChoiceItem extends AABaseElement {
 
 
             this.item.addEventListener("click", (e) => {
-                // console.log(this.item.checked)
                 this.item.checked = !this.item.checked;
                 this.dispatchEvent(new CustomEvent("change", { bubbles: true }))
             })
@@ -165,8 +161,8 @@ export class AAChoiceItem extends AABaseElement {
             this.itemBlock.appendChild(this.label);
             this.root.appendChild(this.itemBlock);
 
-            // TODO: what is this for? probably something internal to polymer?
-            // this.item.shadowRoot.querySelector("#radioLabel").remove();
+
+
 
 
 

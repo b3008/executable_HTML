@@ -1,4 +1,4 @@
-export default class AAChoose extends AABaseElement {
+export class AAChoose extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {

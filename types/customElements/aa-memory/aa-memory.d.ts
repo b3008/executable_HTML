@@ -1,4 +1,4 @@
-export default class AAMemory extends AABaseElement {
+export class AAMemory extends AABaseElement {
     static get tag(): string;
     get observedAttributes(): string[];
     setData(name: any, value: any): void;

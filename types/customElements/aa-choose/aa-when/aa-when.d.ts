@@ -1,4 +1,4 @@
-export default class AAWhen extends AABaseElement {
+export class AAWhen extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {

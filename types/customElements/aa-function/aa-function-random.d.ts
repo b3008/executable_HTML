@@ -1,4 +1,4 @@
-export default class AAFunctionRandom extends AABaseElement {
+export class AAFunctionRandom extends AABaseElement {
     static get tag(): string;
     static get properties(): {
         name: {

@@ -1,4 +1,4 @@
-export default class AASequence extends AABaseElement {
+export class AASequence extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {

@@ -5,9 +5,8 @@ import '@material/web/button/filled-button.js';
 import '@material/web/checkbox/checkbox.js';
 import '@material/web/radio/radio.js';
 import '@material/web/slider/slider.js';
+import '@material/web/textfield/filled-text-field.js';
 
-
-export { MyElement } from './my-element';
 export { AAScreen } from './customElements/aa-screen/aa-screen';
 export { AAAffectGrid } from './customElements/aa-affect-grid/aa-affect-grid';
 export { AABaseElement } from './customElements/aa-base-element/aa-base-element';
@@ -26,3 +25,5 @@ export { AASequence } from './customElements/aa-sequence/aa-sequence';
 export { AAJump } from './customElements/aa-sequence/aa-jump/aa-jump';
 export { AASession } from './customElements/aa-session/aa-session';
 export { AASlider } from './customElements/aa-slider/aa-slider';
+export { AATextAnswer } from './customElements/aa-text-answer/aa-text-answer';
+export { AAVariable } from './customElements/aa-variable/aa-variable';

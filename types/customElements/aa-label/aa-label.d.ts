@@ -1,4 +1,4 @@
-export default class AALabel extends AABaseElement {
+export class AALabel extends AABaseElement {
     static get tag(): string;
     root: ShadowRoot;
     get css(): any;

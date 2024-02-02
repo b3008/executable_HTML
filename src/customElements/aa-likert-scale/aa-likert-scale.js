@@ -92,7 +92,7 @@ export class AALikertScale extends AABaseElement {
 
         const radios = this.root.querySelectorAll('md-radio').forEach(radio => {
             radio.addEventListener('change', (e) => {
-                console.log(radio);
+
                 this.value = radio.value;
             });
         });
@@ -117,11 +117,11 @@ export class AALikertScale extends AABaseElement {
         let start = `<div class='start-label'>${this.getAttribute("start-label") || ''}</div>`
         let middle = `<div class='middle-label'>${this.getAttribute("middle-label") || ''}</div>`
         let end = `<div class='end-label'>${this.getAttribute("end-label") || ''}</div>`
-        // let placeholder = `<div style="width:50px"></div>`;
 
 
-        console.log("start", this.getAttribute("start-label"));
-        console.log(start);
+
+
+
         let items = parseInt(this.items)
 
         for (let i = 1; i <= items; i++) {
@@ -145,7 +145,7 @@ export class AALikertScale extends AABaseElement {
         }
 
         let result = `<div class="label-container">${c}</div>`
-        console.log(result);
+
         return result;
 
     }

@@ -1,4 +1,4 @@
-export default class AALikertScale extends AABaseElement {
+export class AALikertScale extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {
@@ -43,13 +43,12 @@ export default class AALikertScale extends AABaseElement {
     static get acceptsElements(): never[];
     static get observedAttributes(): string[];
     root: ShadowRoot;
-    mChoice: Element | null | undefined;
-    choiceItems: any;
+    value: string | null;
+    items: number | undefined;
     currentvalue: any;
     getTags(): string;
-    get html(): any;
-    items: number | undefined;
-    get value(): number;
-    getValue(): any;
+    get css(): any;
+    get html(): string;
+    arrangeLabels(): void;
 }
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';

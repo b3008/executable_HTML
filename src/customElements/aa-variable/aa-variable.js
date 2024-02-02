@@ -1,7 +1,7 @@
 import { AABaseElement } from '../aa-base-element/aa-base-element.js'
 import jsep from 'jsep';
 
-export default class AAVariable extends AABaseElement {
+export class AAVariable extends AABaseElement {
 
     static get tag() {
         return 'aa-variable';

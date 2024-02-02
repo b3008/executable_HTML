@@ -1,5 +1,5 @@
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';
-export default class AATextAnswer extends AABaseElement {
+export class AATextAnswer extends AABaseElement {
 
     static get category() {
         return "response item";
@@ -15,10 +15,7 @@ export default class AATextAnswer extends AABaseElement {
                 type: String,
                 userDefined: true
             },
-            'long': {
-                type: Boolean,
-                userDefined: true
-            },
+
             label: {
                 type: String,
                 userDefined: true
@@ -31,7 +28,7 @@ export default class AATextAnswer extends AABaseElement {
                 type: String,
                 userDefined: true,
                 value: "text",
-                valuesAllowed: ["date", "datetime", "datetime-local", "email", "number", "password", "tel", "text", "time"]
+                valuesAllowed: ["date", "datetime", "datetime-local", "email", "number", "password", "tel", "text", "time", "textarea"]
             }
 
         }
@@ -43,36 +40,6 @@ export default class AATextAnswer extends AABaseElement {
 
     static get observedAttributes() {
         return Object.keys(AATextAnswer.properties);
-    }
-
-
-    changeInputItem(type) {
-        if (type === 'long') {
-            let value = this.value;
-            let label = this.label;
-            this.inputItem = customElements.get('paper-textarea') ?
-                document.createElement('paper-textarea') : document.createElement('textarea');
-            this.inputItem.value = value;
-            this.inputItem.label = label;
-            this.inputItem.classList.add('inputItem');
-            this.fixBugInPaperTextarea(this.inputItem);
-            this.inputItem.addEventListener('change', (e) => {
-                this.value = e.target.value;
-            })
-            this.root.querySelector('.inputItem').replaceWith(this.inputItem);
-        } else {
-            let value = this.value;
-            let label = this.label;
-            this.inputItem = customElements.get('paper-input') ?
-                document.createElement('paper-input') : document.createElement('input');
-            this.inputItem.value = value;
-            this.inputItem.label = label;
-            this.inputItem.classList.add('inputItem');
-            this.inputItem.addEventListener('change', (e) => {
-                this.value = e.target.value;
-            })
-            this.root.querySelector('.inputItem').replaceWith(this.inputItem);
-        }
     }
 
 
@@ -104,32 +71,26 @@ export default class AATextAnswer extends AABaseElement {
         }
     }
 
-    set long(val) {
-        this.setAttribute('long', val);
-        if (val) {
-            this.changeInputItem('long');
-        } else {
-            this.changeInputItem('short');
-        }
-    }
-
-    get long() {
-        return this.getAttribute('long');
-    }
-
     constructor() {
         super();
         this.root = this.attachShadow({ mode: 'open' });
-        let html = (this.long || (this.long === '')) ? this.longHtml : this.html;
 
-        this.root.innerHTML = this.css + `<div class='inputContainer'>${html}</div>`;
+
+
+    }
+
+
+
+    connectedCallback() {
+        super.connectedCallback();
+
+        this.root.innerHTML = this.css + this.html;
 
         let label = this.label;
         let value = this.value;
         this.inputItem = this.root.querySelector('.inputItem');
         if (label) { this.inputItem.label = label; }
         if (value) { this.inputItem.value = value; }
-        this.fixBugInPaperTextarea(this.inputItem);
 
         this.inputItem.addEventListener('change', (e) => {
 
@@ -149,39 +110,6 @@ export default class AATextAnswer extends AABaseElement {
             }, 1500)
 
         });
-    }
-
-
-    fixBugInPaperTextarea(inputItem) {
-        // solves issue documented here: https://github.com/PolymerElements/paper-input/issues/125
-
-        setTimeout(() => {
-            if (inputItem.tagName === 'PAPER-TEXTAREA') {
-                inputItem.root.childNodes[2].children[1].textarea.style.overflow = 'hidden';
-                let width = window.getComputedStyle(this.root.querySelector('.inputContainer')).width;
-
-                inputItem.root.childNodes[2].style.width = width;
-                inputItem.addEventListener('focus', (e) => {
-                    let width = window.getComputedStyle(this.root.querySelector('.inputContainer')).width;
-                    inputItem.root.childNodes[2].style.width = width;
-                })
-
-                window.addEventListener('resize', () => {
-                    inputItem.root.childNodes[2].style.width = '';
-                    setTimeout(() => {
-                        let width = window.getComputedStyle(this.root.querySelector('.inputContainer')).width;
-                        inputItem.root.childNodes[2].style.width = width;
-                    }, 100);
-
-                })
-            }
-        }, 0);
-
-    }
-
-    connectedCallback() {
-        super.connectedCallback();
-
 
     }
 
@@ -191,22 +119,14 @@ export default class AATextAnswer extends AABaseElement {
             display:block;
             overflow:hidden;        
         }
-        paper-textarea textarea {
-           overflow:hidden;
-        }
+        
         </style>`;
     }
 
     get html() {
-        let inputElement = customElements.get('paper-input')
-            ? `<paper-input type='${this.type}' class='inputItem'></paper-input>`
+        let inputElement = customElements.get('md-filled-text-field')
+            ? `<md-filled-text-field type='${this.type}' class='inputItem'></md-filled-textfield>`
             : `<input type='${this.type}' class='inputItem'>`;
-        return html`${inputElement}`
-    }
-    get longHtml() {
-        let inputElement = customElements.get('paper-input')
-            ? `<paper-textarea class='inputItem' style= "background: linear-gradient(180deg, rgba(0,0,0, 0.04) 25%, rgba(0,0,0,0) 75%);"></paper-input>`
-            : `<textarea class='inputItem'></textarea`;
         return html`${inputElement}`
     }
 

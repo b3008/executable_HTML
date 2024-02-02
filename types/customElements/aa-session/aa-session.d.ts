@@ -1,4 +1,4 @@
-export default class AASession extends AABaseElement {
+export class AASession extends AABaseElement {
     static get tag(): string;
     static get properties(): {
         'should-run': {

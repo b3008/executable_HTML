@@ -1,4 +1,4 @@
-export default class AAGeolocation extends AABaseElement {
+export class AAGeolocation extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {

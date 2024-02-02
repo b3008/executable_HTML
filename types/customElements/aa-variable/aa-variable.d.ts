@@ -1,4 +1,4 @@
-export default class AAVariable extends AABaseElement {
+export class AAVariable extends AABaseElement {
     static get tag(): string;
     static get properties(): {
         name: {
