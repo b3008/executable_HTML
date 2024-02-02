@@ -1,14 +1,19 @@
 {
-  "name": "executable_html_vite",
-  "private": true,
-  "version": "0.0.0",
+
+  "name": "executable_html",   
+  "version": "1.0.25",
   "type": "module",
+  "files": ["dist", "types"],
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
+
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test": "web-test-runner test/**/*.test.js --node-resolve"
   },
   "dependencies": {
     "@fontsource/roboto": "^5.0.8",
@@ -24,6 +29,7 @@
     "@storybook/blocks": "^7.6.12",
     "@storybook/web-components": "^7.6.12",
     "@storybook/web-components-vite": "^7.6.12",
+    "@web/test-runner": "^0.18.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "storybook": "^7.6.12",

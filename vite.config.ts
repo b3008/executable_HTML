@@ -7,6 +7,7 @@ export default defineConfig({
             entry: 'src/index.ts',
             formats: ['es'],
             name: 'executable HTML',
+            fileName: 'index',
         },
         rollupOptions: {
             // If we want to publish standalone components we don't externalize lit,
