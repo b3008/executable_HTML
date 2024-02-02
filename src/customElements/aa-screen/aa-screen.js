@@ -1,4 +1,8 @@
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';
+import * as  style from '@material/web/tokens/_index.scss'
+
+console.log("style", style)
+
 export class AAScreen extends AABaseElement {
 
 
@@ -94,7 +98,7 @@ export class AAScreen extends AABaseElement {
         }
 
 
-        this.root.querySelector('.submitButton').addEventListener('tap', this.submitButtonClick.bind(this));
+        this.root.querySelector('.submitButton').addEventListener('click', this.submitButtonClick.bind(this));
 
 
     }
@@ -107,25 +111,22 @@ export class AAScreen extends AABaseElement {
                     display: block;
                     height: fit-content;
                     padding:20px;
-                    font-family: monospace;
+                    font-family: "Roboto Flex",  sans-serif;
                 }
 
                 .submitButtonContainer{
-                    text-align:right;
+                    text-align:center;
                     justify-content: space-between; 
                     align-items:center;
                     padding:20px;
-                    font-family: monospace;
+                    font-family: "Roboto Flex",  sans-serif;
                 }
 
 
-                {{/*  paper-button.darkBlue {
-                    background-color: #0d47a1;
-                    color: white;
-                    font-family: monospace;
-                 }  */}}
+              
 
                 .submitButton{
+                    
                     font-family: "Roboto Flex",  sans-serif;
                 }
   
@@ -158,6 +159,7 @@ export class AAScreen extends AABaseElement {
 
     submitButtonClick(e) {
 
+        console.log("yo!!!");
         let userMessage = this.querySelector('#userMessage');
         if (this.hasChildrenThatDemandResponse()) {
 

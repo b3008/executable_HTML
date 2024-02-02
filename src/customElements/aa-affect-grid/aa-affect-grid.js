@@ -213,7 +213,7 @@ export class AAAffectGrid extends AABaseElement {
         this.grid.addEventListener("mousedown", (e) => {
             let currentValue = this.value;
 
-            let cell = e.path[0];
+            let cell = e.target;
             this.value = [cell.dataset.x, cell.dataset.y];
 
 
@@ -348,8 +348,7 @@ export class AAAffectGrid extends AABaseElement {
             border-right: solid 2px;
         }
         .cell.selected{
-            background-color: #3367D6;
-            
+            background-color: #6750a4; //default primary color for material design
         }
         .label{
             flex-grow:1

@@ -2,7 +2,7 @@ import { AABaseElement } from '../aa-base-element/aa-base-element.js';
 import './../aa-memory/aa-memory.js';
 import * as html2jsl from './../../lib/html2jsl/html2jsl.js';
 import * as AASequence from '../aa-sequence/aa-sequence.js';
-
+import { v4 } from 'uuid';
 
 export class AASession extends AABaseElement {
 
@@ -99,7 +99,7 @@ export class AASession extends AABaseElement {
 
     myIdGenerator() {
 
-        return 0;
+        return v4();
     }
 
     connectedCallback() {

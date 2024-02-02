@@ -143,7 +143,7 @@ export class AAMultipleChoice extends AABaseElement {
     }
 
     updateState(checkedNode) {
-        debugger;
+
         for (let i = 0; i < this.children.length; i++) {
             const node = this.children[i];
 

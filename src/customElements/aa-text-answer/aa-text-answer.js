@@ -114,10 +114,15 @@ export class AATextAnswer extends AABaseElement {
     }
 
     get css() {
-        return `<style>
+        return html`<style>
         :host{
             display:block;
             overflow:hidden;        
+            text-align: center;
+        }
+
+        md-filled-text-field {
+            width: 100%;
         }
         
         </style>`;

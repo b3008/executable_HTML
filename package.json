@@ -64,9 +64,17 @@
 
     "@web/test-runner": "^0.18.0",
 
+    "eslint": "^8.56.0",
+
+    "eslint-plugin-wc": "^2.0.4",
+
+    "prettier": "3.2.4",
+
     "react": "^18.2.0",
 
     "react-dom": "^18.2.0",
+
+    "sass": "^1.70.0",
 
     "storybook": "^7.6.12",
 

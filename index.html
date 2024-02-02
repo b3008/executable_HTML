@@ -12,10 +12,66 @@
 
     <div class="container">
     <h1>Vite + Lit</h1>
-      
-      <aa-screen></aa-screen>
+
+    <aa-session>
+      <template>
+        <aa-screen style="padding:16px; border:solid; color: var(--md-sys-color-secondary);">
+          <aa-text-answer name="text1" style="width:100%;"></aa-text-answer>
+
+
+        <aa-checkboxes name="boxes1" label='tata' value='1'>
+          <aa-choice-item value='1'> box one </aa-choice-item>
+          <aa-choice-item value='2'> box two </aa-choice-item>
+        </aa-checkboxes>
+
+        <aa-checkboxes name="boxes2" label='tata' >
+          <aa-choice-item > box one </aa-choice-item>
+          <aa-choice-item > box two </aa-choice-item>
+        </aa-checkboxes>
+
+        <aa-multiple-choice name="radios1" label='tata' >
+          <aa-choice-item value='r1' > radio one </aa-choice-item>
+          <aa-choice-item value='r2' > radio two </aa-choice-item>
+        </aa-multiple-choice>
+
+        <aa-multiple-choice name="radios2" label='tata' value='h'>
+          <aa-choice-item> radio one </aa-choice-item>
+          <aa-choice-item > choice two </aa-choice-item>
+        </aa-multiple-choice>
+
+        <aa-affect-grid
+              top-label="top label"
+              bottom-label="bottom label"
+              left-label="left label"
+              right-label="right label"
+              name="affect1"
+              top-left-label="top left label"
+              top-right-label="top right label"
+              bottom-left-label="bottom left label"
+              bottom-right-label="bottom right label"
+            
+            > </aa-affect-grid>
+        
+        </aa-screen>
+
+      </template>
+    </aa-session>
+
+
+
       <div style="width:300px; height:300px; border:solid;">
-          <aa-affect-grid> </aa-affect-grid>
+          <aa-affect-grid
+            top-label="top label"
+            bottom-label="bottom label"
+            left-label="left label"
+            right-label="right label"
+            name="affect2"
+            top-left-label="top left label"
+            top-right-label="top right label"
+            bottom-left-label="bottom left label"
+            bottom-right-label="bottom right label"
+          
+          > </aa-affect-grid>
       </div>
 
       <aa-base-element></aa-base-element>
