@@ -1,4 +1,5 @@
-export class AAScreen extends AABaseElement {
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
+export declare class AAScreen extends AABaseElement {
     static get category(): string;
     static get tag(): string;
     static get properties(): {
@@ -39,22 +40,28 @@ export class AAScreen extends AABaseElement {
     };
     static get acceptsElements(): never[];
     static get observedAttributes(): string[];
-    attributeChangedCallback(name: any, oldValue: any, newValue: any): void;
+    attributeChangedCallback(name: string, _oldValue: any, newValue: any): void;
+    constructor();
+    submitButton: HTMLElement | null;
+    submitButtonContainer: HTMLElement | null;
+    submitButtonText: string;
+    submitButtonHidden: boolean;
     root: ShadowRoot;
-    submitButtonContainer: Element | null | undefined;
-    _started: boolean | undefined;
+    diagram: boolean;
+    _started: boolean;
+    _attachedTimestamp: number;
+    connectedCallback(): void;
     get css(): any;
     get html(): any;
     getSubmitButton(): any;
-    submitButtonClick(e: any): void;
-    collectValues(): Promise<any>;
+    submitButtonClick(e?: CustomEvent | MouseEvent): void;
+    collectValues(): Promise<unknown>;
     hasChildrenThatDemandResponse(): boolean;
-    getAAChildren(node: any, result: any, nodeName: any): any;
-    getChildrenValues(node: any, result: any): Promise<any>;
-    get value(): Promise<any>;
-    valueWithKey(): Promise<any>;
+    getAAChildren(node: any, result?: any, nodeName?: any): any;
+    getChildrenValues(node: any, result?: any): Promise<any>;
+    get value(): Promise<unknown>;
+    valueWithKey(): Promise<unknown>;
     automate(): void;
     hide(): void;
     show(): void;
 }
-import { AABaseElement } from '../aa-base-element/aa-base-element.js';

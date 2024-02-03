@@ -1,4 +1,4 @@
-import { AABaseElement } from '../aa-base-element/aa-base-element.js';
+import { AABaseElement, html } from '../aa-base-element/aa-base-element.js';
 import '../aa-multiple-choice/aa-multiple-choice.js';
 import { v4 } from 'uuid';
 export class AALikertScale extends AABaseElement {

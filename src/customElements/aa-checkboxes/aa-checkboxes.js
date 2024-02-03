@@ -1,4 +1,4 @@
-import { AABaseElement } from '../aa-base-element/aa-base-element.js';
+import { AABaseElement, html } from '../aa-base-element/aa-base-element.js';
 import '../aa-choice-item/aa-choice-item.js';
 
 export class AACheckboxes extends AABaseElement {

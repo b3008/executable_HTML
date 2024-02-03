@@ -1,4 +1,4 @@
-import { AABaseElement } from '../aa-base-element/aa-base-element.js';
+import { AABaseElement, html } from '../aa-base-element/aa-base-element.js';
 export class AALabel extends AABaseElement {
 
     static get tag() {

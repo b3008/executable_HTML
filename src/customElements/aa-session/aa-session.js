@@ -1,4 +1,4 @@
-import { AABaseElement } from '../aa-base-element/aa-base-element.js';
+import { AABaseElement, html } from '../aa-base-element/aa-base-element.js';
 import './../aa-memory/aa-memory.js';
 import * as html2jsl from './../../lib/html2jsl/html2jsl.js';
 import * as AASequence from '../aa-sequence/aa-sequence.js';
@@ -28,11 +28,6 @@ export class AASession extends AABaseElement {
                 value: false,
                 userDefined: false
             },
-
-
-
-
-
         }
     }
 

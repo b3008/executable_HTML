@@ -1,3 +1,4 @@
+export function html(txt: any, ...val: any[]): any;
 export const AAClasses: any[];
 export class AABaseElement extends HTMLElement {
     static get properties(): {

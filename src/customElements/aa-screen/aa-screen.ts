@@ -1,7 +1,20 @@
-import { AABaseElement } from '../aa-base-element/aa-base-element.js';
+import { AABaseElement, html } from '../aa-base-element/aa-base-element.js';
 import * as  style from '@material/web/tokens/_index.scss'
 
 console.log("style", style)
+
+export type AAScreenValue = {
+    [key: string]: any
+    __meta: {
+        attachedTimestamp: number,
+        submitTimestamp: number
+    }
+}
+
+export type AAScreenValueSubmitEventDetail = {
+    value: AAScreenValue
+}
+
 
 export class AAScreen extends AABaseElement {
 
@@ -57,7 +70,7 @@ export class AAScreen extends AABaseElement {
     }
 
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name: string, _oldValue: any, newValue: any) {
         switch (name) {
             case 'submit-button-text':
                 if (this.submitButton) { this.submitButton.innerHTML = newValue; }
@@ -77,7 +90,19 @@ export class AAScreen extends AABaseElement {
     constructor() {
         super();
         this.root = this.attachShadow({ mode: 'open' });
+
+
     }
+
+    submitButton: HTMLElement | null = null;
+    submitButtonContainer: HTMLElement | null = null;
+    submitButtonText: string = "submit";
+    submitButtonHidden: boolean = false;
+
+    root: ShadowRoot;
+    diagram = false;
+    _started = false;
+    _attachedTimestamp = new Date().getTime();
 
     connectedCallback() {
         super.connectedCallback();
@@ -98,7 +123,10 @@ export class AAScreen extends AABaseElement {
         }
 
 
-        this.root.querySelector('.submitButton').addEventListener('click', this.submitButtonClick.bind(this));
+        this.submitButton = this.root.querySelector('.submitButton');
+        this.submitButton?.addEventListener('click', (e) => {
+            this.submitButtonClick(e)
+        });
 
 
     }
@@ -157,11 +185,11 @@ export class AAScreen extends AABaseElement {
 
     }
 
-    submitButtonClick(e) {
+    submitButtonClick(e?: CustomEvent | MouseEvent) {
 
         console.log("yo!!!");
         let userMessage = this.querySelector('#userMessage');
-        if (this.hasChildrenThatDemandResponse()) {
+        if (this.hasChildrenThatDemandResponse() && userMessage) {
 
             userMessage.innerHTML = html`
                     <div style='display:flex; align-items:center'>
@@ -176,20 +204,22 @@ export class AAScreen extends AABaseElement {
             return;
         }
 
-        this.collectValues().then(val => {
+        this.collectValues().then((val: AAScreenValue) => {
             console.log("valueSubmit!, value", val);
             try {
-                let valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail: { value: val } });
+                const detail: AAScreenValueSubmitEventDetail = { value: val };
+                let valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail });
+                console.log("valueSubmitEvent", valueSubmitEvent);
                 this.dispatchEvent(valueSubmitEvent);
                 this._dispatchEndEvent(val);
-                if (typeof e.detail.callback != 'undefined') {
-                    e.detail.callback(e);
+                if (typeof e?.detail.callback != 'undefined') {
+                    e?.detail.callback(e);
                 }
-                if (this.autohide) {
+                if (this.getAttribute('autohide') === 'true') {
                     this.hide();
                 }
-            } catch (e) {
-                console.error(e);
+            } catch (error) {
+                console.error(error);
 
             }
         })
@@ -198,9 +228,9 @@ export class AAScreen extends AABaseElement {
 
 
 
-    collectValues() {
+    collectValues(): Promise<AAScreenValue> {
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, _reject) => {
             let __meta = {
                 attachedTimestamp: this._attachedTimestamp,
                 submitTimestamp: new Date().getTime()
@@ -216,22 +246,13 @@ export class AAScreen extends AABaseElement {
     }
 
 
-    // get value() {
-    //     let __meta = {
-    //         attachedTimestamp: this._attachedTimestamp,
-    //         submitTimestamp: new Date().getTime()
-    //     };
-    //     let result = this.getChildrenValues(this);
-    //     result['__meta'] = __meta;
-    //     return result;
-    // }
-
     hasChildrenThatDemandResponse() {
 
         let aaChildren = this.getAAChildren(this);
         let isMissingValues = false;
         for (let i = 0; i < aaChildren.length; i++) {
-            if (aaChildren[i].mandatory) {
+            const child = aaChildren[i];
+            if (child.mandatory) {
                 if (child.value === null) {
                     // console.log(child, 'demands response');
                     // TODO : add a class to the child
@@ -245,7 +266,7 @@ export class AAScreen extends AABaseElement {
 
 
 
-    getAAChildren(node, result, nodeName) {
+    getAAChildren(node, result?, nodeName?) {
 
         result = result || [];
         node = node || this;
@@ -270,9 +291,7 @@ export class AAScreen extends AABaseElement {
 
 
 
-    async getChildrenValues(node, result) {
-        // return new Promise((resolve, reject)=>{
-
+    async getChildrenValues(node, result?) {
 
         node = node || this;
         result = result || {};
@@ -290,7 +309,7 @@ export class AAScreen extends AABaseElement {
                 if (c.getValue) {
                     result[name] = c.getValue();
                     console.log(result);
-                    debuggerl
+
                 } else if (c.value) {
                     if (c.value.then) {
                         result[name] = await c.value;
@@ -309,58 +328,18 @@ export class AAScreen extends AABaseElement {
         }
 
         return result;
-        // })
+
     }
 
-    // getChildrenValues(node, result) {
-    //     node = node || this;
-    //     result = result || {};
-    //     for (let i = 0; i < node.children.length; i++) {
-    //         let c = node.children[i];
-
-    //         if (c.nodeName != 'AA-LABEL') {
-
-    //             let name = AABaseElement.getVariableName(c);
-    //             console.log(c, name);
-    //             if (c.getValue) {
-    //                 result[name] = c.getValue();
-    //             } else if (c.value) {
-    //                 if(c.value.then){
-    //                     c.value.then((val)=>{
-    //                         result[name] = c.value;    
-    //                     })
-    //                 }else{
-    //                     result[name] = c.value;
-    //                 }
-
-    //             } else {
-    //                 result[name] = null;
-    //             }
-    //         }
-    //         else {
-    //             this.getChildrenValues(c, result);
-    //         }
-    //     }
-    //     return result;
-    // }
-
-
-
-
-
     get value() {
-
         return this.collectValues();
-        // new Promise(resolve,reject)=>{
-
-        // }
     }
 
     valueWithKey() {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, _reject) => {
             this.value.then((val) => {
                 let result = {};
-                result[this.name] = val;
+                result[this.getAttribute("name") as string] = val;
                 resolve(result);
             })
         })
@@ -371,8 +350,8 @@ export class AAScreen extends AABaseElement {
     automate() {
         for (let i = 0; i < this.children.length; i++) {
             if (AABaseElement.isAAElement(this.children[i])) {
-                if (typeof this.children[i].automate != 'undefined') {
-                    this.children[i].automate();
+                if (typeof (this.children[i] as any).automate != 'undefined') {
+                    (this.children[i] as any).automate();
                 }
             }
         }

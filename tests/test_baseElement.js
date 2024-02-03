@@ -1,4 +1,4 @@
-import { AABaseElement } from '../src/customElements/aa-baseElement/aa-baseElement.js';
+import { AABaseElement, html } from '../src/customElements/aa-baseElement/aa-baseElement.js';
 import { AAScreen } from '../src/customElements/aa-screen/aa-screen.js';
 import { AACheckboxes } from '../src/customElements/aa-checkboxes/aa-checkboxes.js';
 import * as html2jsl from '../src/lib/html2jsl/html2jsl.js';

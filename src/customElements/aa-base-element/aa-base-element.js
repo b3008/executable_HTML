@@ -4,7 +4,7 @@ import '../../lib/js-yaml-browserify.js';
 import * as html2jsl from '../../lib/html2jsl/html2jsl.js';
 import { mySVG } from '../../lib/mySVG/mySVG.js';
 
-var html = function (txt, ...val) {
+export const html = function (txt, ...val) {
 
     let result = txt[0];
     for (let i = 0; i < val.length; i++) {
