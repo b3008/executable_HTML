@@ -24,7 +24,7 @@ export class AAMemory extends AABaseElement {
 
     setData(name, value) {
         // this.dataset[name] = value;
-        localStorage[name] = value;
+        localStorage.setItem(name, value);
     }
 
     getData(name) {
