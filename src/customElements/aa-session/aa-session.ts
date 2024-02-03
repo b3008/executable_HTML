@@ -1,8 +1,22 @@
-import { AABaseElement, html } from '../aa-base-element/aa-base-element.js';
-import './../aa-memory/aa-memory.js';
-import * as html2jsl from './../../lib/html2jsl/html2jsl.js';
-import * as AASequence from '../aa-sequence/aa-sequence.js';
+import { AABaseElement } from '../aa-base-element/aa-base-element.js';
+import '../aa-memory/aa-memory.js';
+import * as html2jsl from '../../lib/html2jsl/html2jsl.js';
+
 import { v4 } from 'uuid';
+import { AAScreenValueSubmitEventDetail } from '../aa-screen/aa-screen.js';
+import { AAMemory } from '../aa-memory/aa-memory.js';
+
+export type AASessionInput = {
+    data: any,
+    sessionID: string,
+    sessionTimestamp: number,
+    sessionName: string,
+    variables: string[]
+}
+
+export type AASessionInputSubmitEventDetail = {
+    input: AASessionInput
+}
 
 export class AASession extends AABaseElement {
 
@@ -41,6 +55,17 @@ export class AASession extends AABaseElement {
     }
 
 
+    myTemplate: HTMLTemplateElement;
+    _mem: AAMemory;
+    sessionID: string = v4();
+    sessionTime: number = 0;
+    name: string = '';
+    debug: boolean = false;
+    diagram: boolean = false;
+    shouldRun: boolean = true;
+    diagramTransparent: boolean = false;
+
+
 
     constructor() {
         super();
@@ -49,22 +74,19 @@ export class AASession extends AABaseElement {
         this.myTemplate = document.createElement('template');
         this.myTemplate.innerHTML = this.innerHTML;
 
-
         this.innerHTML = '';
 
-        // this.root = this.attachShadow({ mode: 'closed' });
-        // this.root.innerHTML = '<template><slot></slot></template>'
-        this._mem = document.createElement('aa-memory');
-        this.addEventListener('valueSubmit', (e) => {
+        this._mem = document.createElement('aa-memory') as AAMemory;
+        this.addEventListener('valueSubmit', (e: any) => {
+            const detail: AAScreenValueSubmitEventDetail = e.detail;
             console.log("valueSubmit!", e.detail)
-            // e.stopPropagation();
-            let input = {
-                data: e.detail.value,
+
+            let input: AASessionInput = {
+                data: detail.value,
                 sessionID: this.sessionID,
                 sessionTimestamp: this.sessionTime,
                 sessionName: this.name,
-                variables: Object.keys(e.detail.value),
-
+                variables: Object.keys(detail.value),
             };
             // TODO:  this._mem.saveReplyValue(e.detail.value, false);
             Object.keys(e.detail.value).forEach((key) => {
@@ -72,7 +94,8 @@ export class AASession extends AABaseElement {
             });
 
 
-            let inputSubmitEvent = new CustomEvent('sessionInputSubmit', { bubbles: true, detail: { input }, composed: true });
+            const newDetail: AASessionInputSubmitEventDetail = { input };
+            let inputSubmitEvent = new CustomEvent('sessionInputSubmit', { bubbles: true, detail: newDetail, composed: true });
             console.log("dispatching sessionInputSubmit", inputSubmitEvent);
             this.dispatchEvent(inputSubmitEvent);
             //  ema-participant-client needs to catch this and either send it to the server,
@@ -164,12 +187,11 @@ export class AASession extends AABaseElement {
 
 
     toJSON() {
-        // return super.toJSON();
 
         let result = {};
         result[this.tagName] = this.getAttributes();
 
-        let childNodes = [];
+        let childNodes: any = [];
         for (let i = 0; i < this.originalChildNodes.length; i++) {
             let child = this.originalChildNodes[i];
             let el = AABaseElement.nodeToJSON(child);
@@ -191,8 +213,8 @@ export class AASession extends AABaseElement {
             }
         }
 
-        let argsStrings = [];
-        let childNodes = this.myTemplate.content.childNodes[0].content.childNodes;
+        let argsStrings: any = [];
+        let childNodes = (this.myTemplate.content.childNodes[0] as any).content.childNodes;
         for (let i = 0; i < childNodes.length; i++) {
             let addition = html2jsl.nodeToJSL(childNodes[i]);
             if (addition) {
@@ -214,8 +236,8 @@ export class AASession extends AABaseElement {
 
     get originalChildNodes() {
         if (this.myTemplate.content.childNodes.length == 0) return [];
-        if (!this.myTemplate.content.childNodes[0].content) return this.childNodes;
-        return this.myTemplate.content.childNodes[0].content.childNodes;
+        if (!(this.myTemplate.content.childNodes[0] as any).content) return this.childNodes;
+        return (this.myTemplate.content.childNodes[0] as any).content.childNodes;
     }
 
 

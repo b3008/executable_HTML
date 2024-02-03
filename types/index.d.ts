@@ -5,7 +5,7 @@ import '@material/web/checkbox/checkbox.js';
 import '@material/web/radio/radio.js';
 import '@material/web/slider/slider.js';
 import '@material/web/textfield/filled-text-field.js';
-export { AAScreen } from './customElements/aa-screen/aa-screen';
+export { AAScreen, type AAScreenValue, type AAScreenValueSubmitEventDetail } from './customElements/aa-screen/aa-screen';
 export { AAAffectGrid } from './customElements/aa-affect-grid/aa-affect-grid';
 export { AABaseElement } from './customElements/aa-base-element/aa-base-element';
 export { AACheckboxes } from './customElements/aa-checkboxes/aa-checkboxes';
@@ -21,7 +21,7 @@ export { AALikertScale } from './customElements/aa-likert-scale/aa-likert-scale'
 export { AAMemory } from './customElements/aa-memory/aa-memory';
 export { AASequence } from './customElements/aa-sequence/aa-sequence';
 export { AAJump } from './customElements/aa-sequence/aa-jump/aa-jump';
-export { AASession } from './customElements/aa-session/aa-session';
+export { AASession, type AASessionInput, type AASessionInputSubmitEventDetail } from './customElements/aa-session/aa-session';
 export { AASlider } from './customElements/aa-slider/aa-slider';
 export { AATextAnswer } from './customElements/aa-text-answer/aa-text-answer';
 export { AAVariable } from './customElements/aa-variable/aa-variable';

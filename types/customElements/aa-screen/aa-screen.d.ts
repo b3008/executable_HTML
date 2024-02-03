@@ -1,4 +1,14 @@
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';
+export type AAScreenValue = {
+    [key: string]: any;
+    __meta: {
+        attachedTimestamp: number;
+        submitTimestamp: number;
+    };
+};
+export type AAScreenValueSubmitEventDetail = {
+    value: AAScreenValue;
+};
 export declare class AAScreen extends AABaseElement {
     static get category(): string;
     static get tag(): string;
@@ -55,11 +65,11 @@ export declare class AAScreen extends AABaseElement {
     get html(): any;
     getSubmitButton(): any;
     submitButtonClick(e?: CustomEvent | MouseEvent): void;
-    collectValues(): Promise<unknown>;
+    collectValues(): Promise<AAScreenValue>;
     hasChildrenThatDemandResponse(): boolean;
     getAAChildren(node: any, result?: any, nodeName?: any): any;
     getChildrenValues(node: any, result?: any): Promise<any>;
-    get value(): Promise<unknown>;
+    get value(): Promise<AAScreenValue>;
     valueWithKey(): Promise<unknown>;
     automate(): void;
     hide(): void;

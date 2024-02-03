@@ -17,7 +17,7 @@
 
 
 
-    <aa-session>
+    <aa-session id="session1">
       <template>
           <aa-sequence name="ECR">
               <aa-screen name="id">
@@ -539,5 +539,12 @@
       console.log(e.target.value);
 
     });
+
+    window.onload = () => {
+     debugger;
+    const session1 = document.getElementById('session1');
+    console.log(session1.toJSON())
+    console.log(session1.originalChildNodes)
+    }
   </script>
 </html>
