@@ -1,0 +1,21 @@
+
+
+[required] {
+    position: relative;
+    
+  }
+  
+  [required].missing-value::before {
+    content:"Please fill in this field";
+    display:block;
+    padding:8px 0px;
+    left:0px;
+    position:relative;
+    width:100%;
+    text-align: left;
+  
+    font-size:0.9em;
+    color:red;
+    font-weight: bolder;
+  
+  }

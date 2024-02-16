@@ -1,3 +1,4 @@
+import { isArray } from 'lodash';
 import { AABaseElement, html } from '../aa-base-element/aa-base-element.js';
 import * as  style from '@material/web/tokens/_index.scss'
 
@@ -157,6 +158,10 @@ export class AAScreen extends AABaseElement {
                     
                     font-family: "Roboto Flex",  sans-serif;
                 }
+
+                 .missing-value{
+                    border:red;
+                }
   
          </style>`;
     }
@@ -185,22 +190,14 @@ export class AAScreen extends AABaseElement {
 
     }
 
-    submitButtonClick(e?: CustomEvent | MouseEvent) {
+
+    async submitButtonClick(e?: CustomEvent | MouseEvent) {
 
         console.log("yo!!!");
-        let userMessage = this.querySelector('#userMessage');
-        if (this.hasChildrenThatDemandResponse() && userMessage) {
 
-            userMessage.innerHTML = html`
-                    <div style='display:flex; align-items:center'>
-                        <div>please fill out the required fields</div>
-                        <div id='attention'
-                            style='color: red; font-size: 20px;  border: solid thin; border-radius: 50%; width: 20px;
-                                                                                                                                                    margin-left:20px; height: 20px; 
-                                                                                                                                                    text-align: center;
-                                                                                                                                                    padding: 5px;'>
-                            !</div>
-                    </div>`;
+
+        const childrenThatRequireResponse = await this.hasChildrenThatRequireResponse();
+        if (childrenThatRequireResponse.length > 0) {
             return;
         }
 
@@ -241,27 +238,50 @@ export class AAScreen extends AABaseElement {
             })
 
         })
-
-
     }
 
+    doesArrayConsistOfNullsOrUndefined(arr) {
+        return arr.every((v) => {
+            return v === null || v === undefined;
+        });
+    }
 
-    hasChildrenThatDemandResponse() {
-
-        let aaChildren = this.getAAChildren(this);
-        let isMissingValues = false;
-        for (let i = 0; i < aaChildren.length; i++) {
-            const child = aaChildren[i];
-            if (child.mandatory) {
-                if (child.value === null) {
-                    // console.log(child, 'demands response');
-                    // TODO : add a class to the child
-                    isMissingValues = true;
+    async getNodeValue(n) {
+        debugger;
+        if (n.getValue) {
+            return n.getValue();
+        } else if (n.value) {
+            if (n.value.then) {
+                return await n.value;
+            } else {
+                if (isArray(n.value)) {
+                    if (this.doesArrayConsistOfNullsOrUndefined(n.value)) {
+                        return null;
+                    } else {
+                        return n.value;
+                    }
                 }
+                return n.value;
             }
+        } else {
+            return null;
         }
+    }
 
-        return isMissingValues;
+    async hasChildrenThatRequireResponse() {
+        const requiredChildren = this.querySelectorAll('[required]');
+        const result: Element[] = [];
+        for (const child of Array.from(requiredChildren)) {
+            debugger;
+            const value = await this.getNodeValue(child);
+            if (['', null, undefined].includes(value)) {
+                child.classList.add("missing-value");
+                result.push(child);
+            } else {
+                child.classList.remove("missing-value");
+            }
+        };
+        return result;
     }
 
 

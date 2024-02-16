@@ -64,9 +64,10 @@ export declare class AAScreen extends AABaseElement {
     get css(): any;
     get html(): any;
     getSubmitButton(): any;
-    submitButtonClick(e?: CustomEvent | MouseEvent): void;
+    submitButtonClick(e?: CustomEvent | MouseEvent): Promise<void>;
     collectValues(): Promise<AAScreenValue>;
-    hasChildrenThatDemandResponse(): boolean;
+    getNodeValue(n: any): Promise<any>;
+    hasChildrenThatRequireResponse(): Promise<Element[]>;
     getAAChildren(node: any, result?: any, nodeName?: any): any;
     getChildrenValues(node: any, result?: any): Promise<any>;
     get value(): Promise<AAScreenValue>;

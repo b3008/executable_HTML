@@ -80,6 +80,11 @@ export class AAAffectGrid extends AABaseElement {
         value: {
             type: ArrayConstructor;
         };
+        required: {
+            type: BooleanConstructor;
+            userDefined: boolean;
+            value: boolean;
+        };
         name: {
             type: StringConstructor;
             userDefined: boolean;

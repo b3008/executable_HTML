@@ -107,6 +107,12 @@ export class AAAffectGrid extends AABaseElement {
             value: {
                 type: Array,
 
+            },
+
+            required: {
+                type: Boolean,
+                userDefined: true,
+                value: false
             }
 
         }

@@ -5,6 +5,7 @@ import '@material/web/checkbox/checkbox.js';
 import '@material/web/radio/radio.js';
 import '@material/web/slider/slider.js';
 import '@material/web/textfield/filled-text-field.js';
+import './customElements/aa-styling.scss';
 export { AAScreen, type AAScreenValue, type AAScreenValueSubmitEventDetail } from './customElements/aa-screen/aa-screen';
 export { AAAffectGrid } from './customElements/aa-affect-grid/aa-affect-grid';
 export { AABaseElement } from './customElements/aa-base-element/aa-base-element';

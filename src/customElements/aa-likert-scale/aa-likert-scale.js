@@ -167,12 +167,21 @@ export class AALikertScale extends AABaseElement {
                 display:flex;
                 flex-direction:column;
                 align-items:center;
+                position: relative;
+               
+                width: fit-content;
+                margin:0px auto;
             }
 
+
+
             .label-container {
-                width:0px;
+                width:100%; 
                 position:relative;
+               
+                height: 200px;
             }
+
             .start-label {
                 position:absolute;
                 left:0px;
@@ -180,12 +189,14 @@ export class AALikertScale extends AABaseElement {
 
             .middle-label {
                 position:absolute;
-
+                left:50%;
+               
             }
 
             .end-label {
                 position:absolute;
                 right:0px;
+               
             }
 
             .tag-container{
@@ -232,7 +243,7 @@ export class AALikertScale extends AABaseElement {
         const labelContainer = this.root.querySelector(".label-container");
         const groupContainer = this.root.querySelector(".group-container");
 
-        labelContainer.style.width = groupContainer.getBoundingClientRect().width + "px";
+
         const length = groupContainer.getBoundingClientRect().width;
 
 
@@ -241,17 +252,30 @@ export class AALikertScale extends AABaseElement {
         const middleLabel = this.root.querySelector(".middle-label");
         const endLabel = this.root.querySelector(".end-label");
 
-        const startWidth = startLabel.getBoundingClientRect().width;
-        startLabel.style.left = -startWidth + 16 + "px";
 
-        const middleWidth = middleLabel.getBoundingClientRect().width;
-        middleLabel.style.left = length / 2 - middleWidth / 2 + "px";
+        // startLabel.style.left = -startWidth + 16 + "px";
+
+        // so that calculation can be done after the element is rendered
+        setTimeout(() => {
+
+            labelContainer.style.width = groupContainer.getBoundingClientRect().width + "px";
+
+            const startWidth = startLabel.getBoundingClientRect().width;
+            // startLabel.style.left = -startWidth + 16 + "px";
+
+            const middleWidth = middleLabel.getBoundingClientRect().width;
+            const length = groupContainer.getBoundingClientRect().width;
+            middleLabel.style.left = length / 2 - middleWidth / 2 + "px";
+
+            const endWidth = endLabel.getBoundingClientRect().width;
+            // endLabel.style.right = -endWidth + 16 + "px";
+
+            labelContainer.style.height = Math.max(startLabel.getBoundingClientRect().height, middleLabel.getBoundingClientRect().height, endLabel.getBoundingClientRect().height) + "px";
+
+        }, 0);
 
 
-        const endWidth = endLabel.getBoundingClientRect().width;
-        endLabel.style.right = -endWidth + 16 + "px";
 
-        labelContainer.style.height = Math.max(startLabel.getBoundingClientRect().height, middleLabel.getBoundingClientRect().height, endLabel.getBoundingClientRect().height) + "px";
     }
 
 

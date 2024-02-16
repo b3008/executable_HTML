@@ -174,6 +174,7 @@ export class AABaseElement extends HTMLElement {
                         let result = this.getAttribute(attr[i]);
                         if (result === 'true') { return true; }
                         else if (result === 'false') { return false; }
+                        else if (result === 'null') { return null; }
                         else { return result; }
                     },
                     set: (value) => {
