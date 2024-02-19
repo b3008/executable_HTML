@@ -131,7 +131,9 @@ export class AASequence extends AABaseElement {
             if (this.stopped) { return; }
             if (this.sIndex >= this.innerFragment.childNodes.length) {
                 debugger;
-                this.dispatchEvent(new CustomEvent('endEvent', { detail: { autoDispatch: true }, bubbles: true, composed: true }));
+                if (this.parentElement) {
+                    this.parentElement.dispatchEvent(new CustomEvent('endEvent', { detail: { autoDispatch: true }, bubbles: true, composed: true }));
+                }
                 return null;
             }
 
@@ -157,7 +159,9 @@ export class AASequence extends AABaseElement {
                 this.currentNode = fragmentChildCopy;
                 this.sIndex++;
                 if (this.sIndex >= this.innerFragment.childNodes.length) {
-                    this.dispatchEvent(new CustomEvent('endEvent', { detail: { autoDispatch: true }, bubbles: true, composed: true }));
+                    if (this.parentElement) {
+                        this.parentElement.dispatchEvent(new CustomEvent('endEvent', { detail: { autoDispatch: true }, bubbles: true, composed: true }));
+                    }
                     return;
                 }
                 fragmentChild = this.innerFragment.childNodes[this.sIndex];
