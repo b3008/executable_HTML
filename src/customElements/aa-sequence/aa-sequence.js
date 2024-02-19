@@ -127,8 +127,12 @@ export class AASequence extends AABaseElement {
 
         return new Promise((resolve, reject) => {
             console.log(this);
+            debugger;
             if (this.stopped) { return; }
-            if (this.sIndex >= this.innerFragment.childNodes.length) return null;
+            if (this.sIndex >= this.innerFragment.childNodes.length) {
+                debugger;
+                return null;
+            }
 
             if (typeof name === 'string') {
                 for (let i = 0; i < this.innerFragment.childNodes.length; i++) {
@@ -151,7 +155,10 @@ export class AASequence extends AABaseElement {
                 this.target.appendChild(fragmentChildCopy);
                 this.currentNode = fragmentChildCopy;
                 this.sIndex++;
-                if (this.sIndex >= this.innerFragment.childNodes.length) { return; }
+                if (this.sIndex >= this.innerFragment.childNodes.length) {
+                    this.dispatchEvent(new CustomEvent('endEvent', { detail: { autoDispatch: true }, bubbles: true, composed: true }));
+                    return;
+                }
                 fragmentChild = this.innerFragment.childNodes[this.sIndex];
             }
             let fragmentChildCopy = AABaseElement.copy(fragmentChild);

@@ -97,7 +97,7 @@ export class AAScreen extends AABaseElement {
 
     submitButton: HTMLElement | null = null;
     submitButtonContainer: HTMLElement | null = null;
-    submitButtonText: string = "submit";
+    submitButtonText: string = this.getAttribute('submit-button-text') || "submit";
     submitButtonHidden: boolean = false;
 
     root: ShadowRoot;
@@ -106,13 +106,14 @@ export class AAScreen extends AABaseElement {
     _attachedTimestamp = new Date().getTime();
 
     connectedCallback() {
+
         super.connectedCallback();
         if (this.diagram) {
             this.produceDiagram();
             return;
         }
         this.root.innerHTML = this.css + this.html;
-        // this.submitButton = this.root.querySelector('.submitButton');
+
         this.submitButtonContainer = this.root.querySelector('.submitButtonContainer');
         if (this._started) { return; }
         this._started = true;
@@ -125,6 +126,7 @@ export class AAScreen extends AABaseElement {
 
 
         this.submitButton = this.root.querySelector('.submitButton');
+
         this.submitButton?.addEventListener('click', (e) => {
             this.submitButtonClick(e)
         });
@@ -179,7 +181,9 @@ export class AAScreen extends AABaseElement {
     }
 
     getSubmitButton() {
-        let buttonText = this.submitButtonText || 'submit';
+        console.log(this.getAttribute('submit-button-text'));
+
+        let buttonText = this.submitButtonText || this.getAttribute('submit-button-text') || 'submit';
         // if (customElements.get('paper-button')) {
         //     return html`<paper-button class='submitButton darkBlue' raised class='indigo'>${buttonText}</paper-button>`;
         // }
@@ -247,7 +251,7 @@ export class AAScreen extends AABaseElement {
     }
 
     async getNodeValue(n) {
-        debugger;
+
         if (n.getValue) {
             return n.getValue();
         } else if (n.value) {
@@ -272,7 +276,7 @@ export class AAScreen extends AABaseElement {
         const requiredChildren = this.querySelectorAll('[required]');
         const result: Element[] = [];
         for (const child of Array.from(requiredChildren)) {
-            debugger;
+
             const value = await this.getNodeValue(child);
             if (['', null, undefined].includes(value)) {
                 child.classList.add("missing-value");
