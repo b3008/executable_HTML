@@ -131,6 +131,7 @@ export class AASequence extends AABaseElement {
             if (this.stopped) { return; }
             if (this.sIndex >= this.innerFragment.childNodes.length) {
                 debugger;
+                this.dispatchEvent(new CustomEvent('endEvent', { detail: { autoDispatch: true }, bubbles: true, composed: true }));
                 return null;
             }
 
