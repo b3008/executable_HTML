@@ -56,7 +56,20 @@ export class AALikertScale extends AABaseElement {
                 type: Number,
                 userDefined: true,
                 value: 1
+            },
+
+            "show-radio-numbers": {
+                type: Boolean,
+                userDefined: true,
+                value: true
+            },
+
+            "number-position": {
+                type: String,
+                userDefined: true,
+                value: "right"
             }
+
 
 
 
@@ -211,9 +224,13 @@ export class AALikertScale extends AABaseElement {
             }
             .radio-container {
                 display:flex;
-                flex-direction:row;
+                flex-direction: ${this.numberPosition === "right" ? "row" : this.numberPosition === "bottom" ? "column" : this.numberPosition === "left" ? "row-reverse" : "column-reverse"};
                 align-items:center;
                 gap: 8px;
+            }
+
+            label{
+                display: ${this.showRadioNumbers ? "block" : "none"};
             }
             </style>`
     }
@@ -224,6 +241,7 @@ export class AALikertScale extends AABaseElement {
 
         let buttons = ``;
         for (let i = 0; i < this.items; i++) {
+
             buttons += `<div class="radio-container"><md-radio id="${groupName}-${i}" class="radio" name="${groupName}" value=${i}></md-radio>`;
             buttons += `<label for="${groupName}-${i}">${i}</label></div>`
         }

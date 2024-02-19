@@ -33,6 +33,148 @@
         <template>
             <aa-sequence name="ECR">
 
+
+
+                <aa-screen name="feelings">
+                    <div>
+                        <h4>How did you feel?</h4>
+                        (0 = not at all, 6 = extremely)
+                    </div>
+                    <div style=" display: flex; flex-direction: column; align-items: left ">
+                        <div id="1" className="mchoice-label" style=" width: '150px' ">
+                            surprised:
+                        </div>
+                        <div id="2" style=" flex-grow: 2 ">
+                            <aa-likert-scale items="7" demands-response name="surprised" required number-position="bottom"></aa-likert-scale>
+                        </div>
+                    </div>
+
+                    <div style=" display: flex; flex-direction: column; align-items: left ">
+                        <div id="3" className="mchoice-label" style=" width: '150px' ">
+                            worried/anxious:
+                        </div>
+                        <div id="4" style=" flex-grow: 2 ">
+                            <aa-likert-scale items="7" demands-response name="worried" show-radio-numbers="false" required></aa-likert-scale>
+                        </div>
+                    </div>
+
+                    <div style=" display: flex; flex-direction: column; align-items: left ">
+                        <div className="mchoice-label" style=" width: '150px' ">
+                            happy:
+                        </div>
+                        <div style=" flex-grow: 2 ">
+                            <aa-likert-scale items="7" demands-response name="happy" required></aa-likert-scale>
+                        </div>
+                    </div>
+
+                    <div style=" display: flex; flex-direction: column; align-items: left ">
+                        <div className="mchoice-label" style=" width: '150px' ">
+                            frustrated:
+                        </div>
+                        <div style=" flex-grow: 2 ">
+                            <aa-likert-scale items="7" demands-response name="frustrated" required></aa-likert-scale>
+                        </div>
+                    </div>
+
+                    <div style=" display: flex; flex-direction: column; align-items: left ">
+                        <div className="mchoice-label" style=" width: '150px' ">
+                            angry/hostlie:
+                        </div>
+                        <div style=" flex-grow: 2 ">
+                            <aa-likert-scale items="7" demands-response name="angry" required></aa-likert-scale>
+                        </div>
+                    </div>
+
+                    <div style=" display: flex; flex-direction: column; align-items: left ">
+                        <div className="mchoice-label" style=" width: '150px' ">
+                            homesick:
+                        </div>
+                        <div style=" flex-grow: 2 ">
+                            <aa-likert-scale items="7" demands-response name="homesick" required></aa-likert-scale>
+                        </div>
+                    </div>
+
+                    <div style=" display: flex; flex-direction: column; align-items: left ">
+                        <div className="mchoice-label" style=" width: '150px' ">
+                            enjoyment/fun:
+                        </div>
+                        <div style=" flex-grow: 2 ">
+                            <aa-likert-scale items="7" demands-response name="enjoyment" required></aa-likert-scale>
+                        </div>
+                    </div>
+
+                    <div style=" display: flex; flex-direction: column; align-items: left ">
+                        <div className="mchoice-label" style=" width: '150px' ">
+                            unhappy:
+                        </div>
+                        <div style=" flex-grow: 2 ">
+                            <aa-likert-scale items="7" demands-response name="unhappy" required></aa-likert-scale>
+                        </div>
+                    </div>
+
+                    <div style=" display: flex; flex-direction: column; align-items: left ">
+                        <div className="mchoice-label" style=" width: '150px' ">
+                            joyful:
+                        </div>
+                        <div style=" flex-grow: 2 ">
+                            <aa-likert-scale items="7" demands-response name="joyful" required></aa-likert-scale>
+                        </div>
+                    </div>
+
+                    <div style=" display: flex; flex-direction: column; align-items: left ">
+                        <div style=" width: '150px' ">depressed/blue:</div>
+                        <div style=" flex-grow: 2 ">
+                            <aa-likert-scale items="7" demands-response name="depressed" required></aa-likert-scale>
+                        </div>
+                    </div>
+
+                    <div style=" display: flex; flex-direction: column; align-items: left ">
+                        <div className="mchoice-label" style=" width: '150px' ">
+                            energized:
+                        </div>
+                        <div style=" flex-grow: 2 ">
+                            <aa-likert-scale items="7" demands-response name="energized" required></aa-likert-scale>
+                        </div>
+                    </div>
+
+                    <div style=" display: flex; flex-direction: column; align-items: left ">
+                        <div className="mchoice-label" style=" width: '150px' ">
+                            ashamed:
+                        </div>
+                        <div style=" flex-grow: 2 ">
+                            <aa-likert-scale items="7" demands-response name="ashamed" required></aa-likert-scale>
+                        </div>
+                    </div>
+
+                    <div style=" display: flex; flex-direction: column; align-items: left ">
+                        <div className="mchoice-label" style=" width: '150px' ">
+                            safe:
+                        </div>
+                        <div style=" flex-grow: 2 ">
+                            <aa-likert-scale items="7" demands-response name="safe" required></aa-likert-scale>
+                        </div>
+                    </div>
+
+                    <div style=" display: flex; flex-direction: column; align-items: left ">
+                        <div className="mchoice-label" style=" width: '150px' ">
+                            lonely:
+                        </div>
+                        <div style=" flex-grow: 2 ">
+                            <aa-likert-scale items="7" demands-response name="lonely" required></aa-likert-scale>
+                        </div>
+                    </div>
+
+                    <div style=" display: flex; flex-direction: column; align-items: left ">
+                        <div className="mchoice-label" style=" width: '150px' ">
+                            disgusted by the other(s):
+                        </div>
+                        <div style=" flex-grow: 2 ">
+                            <aa-likert-scale items="7" demands-response name="disgusted" required></aa-likert-scale>
+                        </div>
+                    </div>
+                </aa-screen>
+
+
                 <aa-screen name="thanks" submit-buttom submit-button-text="end" style="text-align:center">
                     
                     <h1>Thanks!</h1>
