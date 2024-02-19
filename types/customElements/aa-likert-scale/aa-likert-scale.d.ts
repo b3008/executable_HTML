@@ -39,6 +39,16 @@ export class AALikertScale extends AABaseElement {
             userDefined: boolean;
             value: number;
         };
+        "show-radio-numbers": {
+            type: BooleanConstructor;
+            userDefined: boolean;
+            value: boolean;
+        };
+        "number-position": {
+            type: StringConstructor;
+            userDefined: boolean;
+            value: string;
+        };
     };
     static get acceptsElements(): never[];
     static get observedAttributes(): string[];
