@@ -126,11 +126,11 @@ export class AASequence extends AABaseElement {
     next(name) {
 
         return new Promise((resolve, reject) => {
-            console.log(this);
-            debugger;
+
+
             if (this.stopped) { return; }
             if (this.sIndex >= this.innerFragment.childNodes.length) {
-                debugger;
+
                 if (this.parentElement) {
                     this.parentElement.dispatchEvent(new CustomEvent('endEvent', { detail: { autoDispatch: true }, bubbles: true, composed: true }));
                 }
