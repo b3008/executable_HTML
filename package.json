@@ -2,7 +2,7 @@
 
   "name": "executable_html",
 
-  "version": "2.0.18",
+  "version": "2.0.19",
 
   "type": "module",
 
@@ -31,6 +31,7 @@
     "build-storybook": "storybook build",
 
     "test": "web-test-runner test/**/*.test.js --node-resolve",
+
     "publish": "git add . && git commit -m 'publish' && npm version patch && npm publish"
 
   },
