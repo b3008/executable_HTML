@@ -30,7 +30,8 @@
 
     "build-storybook": "storybook build",
 
-    "test": "web-test-runner test/**/*.test.js --node-resolve"
+    "test": "web-test-runner test/**/*.test.js --node-resolve",
+    "publish": "git add . && git commit -m 'publish' && npm version patch && npm publish"
 
   },
 
