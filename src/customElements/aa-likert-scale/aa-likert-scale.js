@@ -241,7 +241,6 @@ export class AALikertScale extends AABaseElement {
         const groupName = this.name ?? v4();
 
 
-        debugger;
         let buttons = ``;
         for (let i = 0; i < this.items; i++) {
             const index = i + transposeValue;
