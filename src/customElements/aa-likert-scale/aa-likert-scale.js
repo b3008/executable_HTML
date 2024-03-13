@@ -237,13 +237,14 @@ export class AALikertScale extends AABaseElement {
 
     get html() {
 
+        const transposeValue = this.startItem ? parseInt(this.startItem) : 0;
         const groupName = this.name ?? v4();
 
         let buttons = ``;
         for (let i = 0; i < this.items; i++) {
 
-            buttons += `<div class="radio-container"><md-radio id="${groupName}-${i}" class="radio" name="${groupName}" value=${i}></md-radio>`;
-            buttons += `<label for="${groupName}-${i}">${i}</label></div>`
+            buttons += `<div class="radio-container"><md-radio id="${groupName}-${i}" class="radio" name="${groupName}" value=${i + transposeValue}></md-radio>`;
+            buttons += `<label for="${groupName}-${i}">${i + transponseValue}</label></div>`
         }
         return `
         
