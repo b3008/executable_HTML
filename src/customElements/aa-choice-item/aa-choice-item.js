@@ -172,6 +172,7 @@ export class AAChoiceItem extends AABaseElement {
             }
             this.item = this.getCheckbox();
             this.item.style.display = "block"
+            this.item.style.width = "28px";
             this.item.checked = this.checked;
 
             this.item.addEventListener("click", () => {
