@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,564 +9,73 @@
 
     <link rel="stylesheet" href="./src/index.scss" />
     <script type="module" src="/src/index.ts"></script>
-  </head>
-  <body>
+</head>
+
+<body>
 
     <div class="container">
-    <h1>Vite + Lit</h1>
+        <h1>Vite + Lit</h1>
 
 
 
-    <aa-session>
-        <template>
-            <aa-sequence name="ECR">
+        <aa-screen name="thanks" submit-buttom submit-button-text="end" style="text-align:center">
 
-                <aa-screen name="thanks" submit-buttom submit-button-text="end" style="text-align:center">
-                    
-                    <h1>Thanks!</h1>
-                    <p>You can now close the app.</p>
-                </aa-screen>
+            <h1>Thanks!</h1>
+            <p>You can now close the app.</p>
+
+
+            critical engaging
+            withdrawn compliant
+            <div style="width:350px;">
+                <aa-affect-grid top-label="assured/dominant" top-left-label="critical" top-right-label="engaging"
+                    bottom-left-label="withdrawn" bottom-right-label="compliant" left-label="cold/quarrelsome"
+                    bottom-label="unassured/submissive" right-label="warm/agreeable" bottom-right-label="">
+
+                </aa-affect-grid>
+
+            </div>
+        </aa-screen>
+
+
+        <aa-session>
+            <template>
+                <aa-sequence name="ECR">
+
+                    <aa-screen name="thanks" submit-buttom submit-button-text="end" style="text-align:center">
+
+                        <h1>Thanks!</h1>
+                        <p>You can now close the app.</p>
+                    </aa-screen>
                 </aa-sequence>
-                </template>
-                </aa-session>
-
-    <aa-session>
-        <template>
-            <aa-sequence name="ECR">
+            </template>
+        </aa-session>
 
 
 
-                <aa-screen name="feelings">
-                    <div>
-                        <h4>How did you feel?</h4>
-                        (0 = not at all, 6 = extremely)
-                    </div>
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div id="1" className="mchoice-label" style=" width: '150px' ">
-                            surprised:
-                        </div>
-                        <div id="2" style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="surprised" required number-position="bottom" start-label="Not at all"
-                            middle-label="Moderately"
-                            end-label="Extremely"></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div id="3" className="mchoice-label" style=" width: '150px' ">
-                            worried/anxious:
-                        </div>
-                        <div id="4" style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="worried" show-radio-numbers="false" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            happy:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="happy" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            frustrated:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="frustrated" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            angry/hostlie:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="angry" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            homesick:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="homesick" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            enjoyment/fun:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="enjoyment" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            unhappy:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="unhappy" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            joyful:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="joyful" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div style=" width: '150px' ">depressed/blue:</div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="depressed" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            energized:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="energized" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            ashamed:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="ashamed" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            safe:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="safe" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            lonely:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="lonely" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            disgusted by the other(s):
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="disgusted" required></aa-likert-scale>
-                        </div>
-                    </div>
-                </aa-screen>
 
 
-                <aa-screen name="thanks" submit-buttom submit-button-text="end" style="text-align:center">
-                    
-                    <h1>Thanks!</h1>
-                    <p>You can now close the app.</p>
-                </aa-screen>
-                <aa-screen name="context" submit-button-text="next">
-                    <div>
-                        <h4>Brief description of your last social interaction:</h4>
-                        <aa-text-answer required name="BriefDescription">
-                            {' '}
-                        </aa-text-answer>
-                    </div>
+    </div>
+</body>
 
-                    <div>
-                        <h4>What time did the interaction start?</h4>
-                        <aa-text-answer required name="realtime" type="time"></aa-text-answer>
-                    </div>
-
-                    <div>
-                        <h4>How long did the interaction last (in minutes)?</h4>
-                        <aa-text-answer required name="length" type="number"></aa-text-answer>
-                    </div>
-
-                    <div>
-                        <h4>Where did the interaction occur?</h4>
-
-                        <aa-multiple-choice required name="location" single-value layout="vertical">
-                            <aa-choice-item value="1">Home</aa-choice-item>
-                            <aa-choice-item value="2">School</aa-choice-item>
-                            <aa-choice-item value="3">Recreation(cafe, cinema, etc)</aa-choice-item>
-                            <aa-choice-item value="4">Work</aa-choice-item>
-                            <aa-choice-item value="5">Other</aa-choice-item>
-                        </aa-multiple-choice>
-                    </div>
-
-                    <div>
-                        <h4>How?</h4>
-                        <aa-multiple-choice required name="how" single-value layout="vertical">
-                            <aa-choice-item value="1">In person (face-to-face)</aa-choice-item>
-                            <aa-choice-item value="2">Via telephone</aa-choice-item>
-                            <aa-choice-item value="3">Via video (e.g. Skype)</aa-choice-item>
-                        </aa-multiple-choice>
-                    </div>
-
-                    <div>
-                        <h4>Who was present?</h4>
-                        <aa-multiple-choice required name="present" single-value layout="vertical">
-                            <aa-choice-item value="1">One other</aa-choice-item>
-                            <aa-choice-item value="2">Multiple people, primary other</aa-choice-item>
-                            <aa-choice-item value="3">Multiple people, no primary other</aa-choice-item>
-                        </aa-multiple-choice>
-                    </div>
-                </aa-screen>
-
-                <aa-choose>
-                    <aa-when test="present!=1">
-                        <aa-screen name="partner">
-                            <div>
-                                <h4>Who was the (primary) other in the interaction?</h4>
-
-                                <div>
-                                    <aa-multiple-choice required name="partsex" single-value layout="horizontal">
-                                        <aa-choice-item value="1">male</aa-choice-item>
-                                        <aa-choice-item value="2">female</aa-choice-item>
-                                        <aa-choice-item value="3">other</aa-choice-item>
-                                    </aa-multiple-choice>
-                                </div>
-
-                                <div>
-                                    <aa-multiple-choice required name="relation1" layout="vertical">
-                                        <aa-choice-item value="1">
-                                            (Romantic) partner (incl. boy/girlfriend)
-                                        </aa-choice-item>
-                                        <aa-choice-item value="2">Friend</aa-choice-item>
-                                        <aa-choice-item value="3">Acquaintance</aa-choice-item>
-                                        <aa-choice-item value="4">Father/mother</aa-choice-item>
-                                        <aa-choice-item value="5">Sister/brother</aa-choice-item>
-                                        <aa-choice-item value="6">Son/daughter</aa-choice-item>
-                                        <aa-choice-item value="7">Colleague</aa-choice-item>
-                                        <aa-choice-item value="8">Other</aa-choice-item>
-                                    </aa-multiple-choice>
-                                </div>
-                            </div>
-                        </aa-screen>
-                    </aa-when>
-                </aa-choose>
-
-                <aa-function-random min="1" max="4" name="rndBehaviour">
-                    {' '}
-                </aa-function-random>
-
-                <aa-choose>
-                    <aa-when test="rndBehaviour==1">
-                        <aa-screen>
-                            <h4>What did you do?</h4>
-                            <aa-multiple-choice name="behaviours1" layout="vertical" required>
-                                <aa-choice-item value="1">I listened attentively to the other(s)</aa-choice-item>
-                                <aa-choice-item value="2">
-                                    I tried to get the other(s) to do something else
-                                </aa-choice-item>
-                                <aa-choice-item value="3">I let other(s) make plans or decisions</aa-choice-item>
-                                <aa-choice-item value="4">
-                                    I expressed the &quot;real me&quot; instead of my public persona or
-                                    &quot;image&quot;
-                                </aa-choice-item>
-                                <aa-choice-item value="5">
-                                    I confronted the other(s) about something I did not like
-                                </aa-choice-item>
-                                <aa-choice-item value="6">I expressed affection with words or gestures</aa-choice-item>
-                                <aa-choice-item value="7">I spoke in a clear firm voice</aa-choice-item>
-                                <aa-choice-item value="8">I withheld useful information</aa-choice-item>
-                                <aa-choice-item value="9">I did not say how I felt</aa-choice-item>
-                                <aa-choice-item value="10">I compromised about a decision</aa-choice-item>
-                                <aa-choice-item value="11">
-                                    I took the lead in planning/organizing a project or activity
-                                </aa-choice-item>
-                                <aa-choice-item value="12">
-                                    I avoided taking the lead or being responsible
-                                </aa-choice-item>
-                                <aa-choice-item value="13">I ignored the other(s) comments</aa-choice-item>
-                            </aa-multiple-choice>
-                        </aa-screen>
-                    </aa-when>
-
-                    <aa-when test="rndBehaviour==2">
-                        <aa-screen>
-                            <h4>What did you do?</h4>
-                            <aa-multiple-choice required>
-                                <aa-choice-item value="1">I criticized the other(s)</aa-choice-item>
-                                <aa-choice-item value="2">I smiled and laughed with the other(s)</aa-choice-item>
-                                <aa-choice-item value="3">I spoke softly</aa-choice-item>
-                                <aa-choice-item value="4">I made a sarcastic comment</aa-choice-item>
-                                <aa-choice-item value="5">I expressed an opinion</aa-choice-item>
-                                <aa-choice-item value="6">I complimented or praised the other person(s)</aa-choice-item>
-                                <aa-choice-item value="7">
-                                    I did not express disagreement when I thought it
-                                </aa-choice-item>
-                                <aa-choice-item value="8">I gave incorrect information</aa-choice-item>
-                                <aa-choice-item value="9">I got immediately to the point</aa-choice-item>
-                                <aa-choice-item value="10">I made a concession to avoid unpleaseantness</aa-choice-item>
-                                <aa-choice-item value="11">I did not state my own views</aa-choice-item>
-                                <aa-choice-item value="12">
-                                    I expressed the &quot;real me&quot; instead of my public persona or
-                                    &quot;image&quot;
-                                </aa-choice-item>
-                            </aa-multiple-choice>
-                        </aa-screen>
-                    </aa-when>
-
-                    <aa-when test="rndBehaviour==3">
-                        <aa-screen>
-                            <h4>What did you do?</h4>
-                            <aa-multiple-choice required>
-                                <aa-choice-item value="1">
-                                    I waited for the other person(s) to talk or act first
-                                </aa-choice-item>
-                                <aa-choice-item value="2">
-                                    I stated strongly that I did not like or that I would not do something
-                                </aa-choice-item>
-                                <aa-choice-item value="3">I assigned someone to a task</aa-choice-item>
-                                <aa-choice-item value="4">I exchanged pleasantries</aa-choice-item>
-                                <aa-choice-item value="5">I did not say what was on my mind</aa-choice-item>
-                                <aa-choice-item value="6">
-                                    I did not respond to the other(s) questions or comments
-                                </aa-choice-item>
-                                <aa-choice-item value="7">I made a suggestion</aa-choice-item>
-                                <aa-choice-item value="8">
-                                    I expressed the &quot;real me&quot; instead of my public persona or
-                                    &quot;image&quot;
-                                </aa-choice-item>
-                                <aa-choice-item value="9">I showed sympathy</aa-choice-item>
-                                <aa-choice-item value="10">I did not say what I wanted directly</aa-choice-item>
-                                <aa-choice-item value="11">I discredited what someone said</aa-choice-item>
-                                <aa-choice-item value="12">I asked the other(s) to do something</aa-choice-item>
-                                <aa-choice-item value="13">
-                                    I spoke favorably of someone who was not present
-                                </aa-choice-item>
-                            </aa-multiple-choice>
-                        </aa-screen>
-                    </aa-when>
-
-                    <aa-when test="rndBehaviour==4">
-                        <aa-screen>
-                            <h4>What did you do?</h4>
-                            <aa-multiple-choice required>
-                                <aa-choice-item value="1">
-                                    I expressed the &quot;real me&quot; instead of my public persona or
-                                    &quot;image&quot;
-                                </aa-choice-item>
-                                <aa-choice-item value="2">I showed impatience</aa-choice-item>
-                                <aa-choice-item value="3">I asked for a volunteer</aa-choice-item>
-                                <aa-choice-item value="4">I went along with the other(s)</aa-choice-item>
-                                <aa-choice-item value="5">I raised my voice</aa-choice-item>
-                                <aa-choice-item value="6">I gave information</aa-choice-item>
-                                <aa-choice-item value="7">I expressed reassurance</aa-choice-item>
-                                <aa-choice-item value="8">I gave in</aa-choice-item>
-                                <aa-choice-item value="9">I demanded that the other(s) do what I wanted</aa-choice-item>
-                                <aa-choice-item value="10">I set goals for the other(s) or for us</aa-choice-item>
-                                <aa-choice-item value="11">
-                                    I pointed out to the other(s) where there was agreement
-                                </aa-choice-item>
-                                <aa-choice-item value="12">I spoke only when I was spoken to</aa-choice-item>
-                            </aa-multiple-choice>
-                        </aa-screen>
-                    </aa-when>
-                </aa-choose>
-
-                <aa-screen name="feelings">
-                    <div>
-                        <h4>How did you feel?</h4>
-                        (0 = not at all, 6 = extremely)
-                    </div>
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div id="1" className="mchoice-label" style=" width: '150px' ">
-                            surprised:
-                        </div>
-                        <div id="2" style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="surprised" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div id="3" className="mchoice-label" style=" width: '150px' ">
-                            worried/anxious:
-                        </div>
-                        <div id="4" style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="worried" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            happy:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="happy" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            frustrated:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="frustrated" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            angry/hostlie:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="angry" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            homesick:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="homesick" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            enjoyment/fun:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="enjoyment" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            unhappy:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="unhappy" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            joyful:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="joyful" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div style=" width: '150px' ">depressed/blue:</div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="depressed" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            energized:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="energized" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            ashamed:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="ashamed" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            safe:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="safe" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            lonely:
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="lonely" required></aa-likert-scale>
-                        </div>
-                    </div>
-
-                    <div style=" display: flex; flex-direction: column; align-items: left ">
-                        <div className="mchoice-label" style=" width: '150px' ">
-                            disgusted by the other(s):
-                        </div>
-                        <div style=" flex-grow: 2 ">
-                            <aa-likert-scale items="7" demands-response name="disgusted" required></aa-likert-scale>
-                        </div>
-                    </div>
-                </aa-screen>
-
-                <aa-choose>
-                    <aa-when test="present!=3">
-                        <aa-screen>
-                            <div>
-                                <h4>Indicate how the (primary) other behaved towards you in this interaction</h4>
-                            </div>
-                            <div>
-                                <aa-affect-grid
-                                    required
-                                    name="grid"
-                                    top-label="assured/dominant"
-                                    left-label="cold/quarrelsome"
-                                    bottom-label="unassured/submissive"
-                                    right-label="warm/agreeable"
-                                    bottom-right-label=""
-                                ></aa-affect-grid>
-                            </div>
-                        </aa-screen>
-                    </aa-when>
-                </aa-choose>
-            </aa-sequence>
-        </template>
-    </aa-session>
-
-  
-
-</div>
-  </body>
-
-  <script>
-    const a = document.querySelector('.skato');
+<script>
+    {
+        {/*  const a = document.querySelector('.skato');
     console.log(a);
     a.addEventListener('change', (e) => {
-      console.log(e.target);
-      console.log(e.target.value);
+        console.log(e.target);
+        console.log(e.target.value);
 
-    });
+    });  */}
+    }
 
     window.onload = () => {
-
-    const session1 = document.getElementById('session1');
-    console.log(session1.toJSON())
-    console.log(session1.originalChildNodes)
+        {
+            {/*  
+        const session1 = document.getElementById('session1');
+        console.log(session1.toJSON())
+        console.log(session1.originalChildNodes)  */}
+        }
     }
-  </script>
+</script>
+
 </html>

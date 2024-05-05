@@ -179,7 +179,7 @@ export class AAAffectGrid extends AABaseElement {
 
     constructor() {
         super();
-
+        debugger;
 
         this.root = this.attachShadow({ mode: 'open' });
 
@@ -273,25 +273,32 @@ export class AAAffectGrid extends AABaseElement {
         :host{
             display:block;
             font-family: "Roboto Flex", Roboto, Noto, sans-serif;   
+            font-size: 0.8em;
         }
         .top-section{
             height:40px;
             width:100%;
+            
         }
         .top-left{
             text-align:left;
         }
         .top-label{
             text-align:center;
+            width:100% !important;
         }
         .top-right{
             text-align:right;
         }
+
+
         .bottom-left{
             text-align:left;
         }
-        .bottom{
+        .bottom-label{
             text-align:center;
+            border:solid 0px;
+            width: 100% !important;
         }
         .bottom-right{
             text-align:right;
@@ -356,9 +363,7 @@ export class AAAffectGrid extends AABaseElement {
         .cell.selected{
             background-color: #6750a4; //default primary color for material design
         }
-        .label{
-            flex-grow:1
-        }
+      
         </style>
         `;
     }
@@ -399,7 +404,7 @@ export class AAAffectGrid extends AABaseElement {
                 <div class="bottom-left-corner" ></div>    
                 <div style="width:100%; display:flex; flex-direction:row; justify-content:space-between">
                     <div class="bottom-left label" style="width:33.3%">${this.bottomLeftLabel}</div>
-                    <div class="bottom label" style="width:33.3%">${this.bottomLabel}</div>
+                    <div class="bottom-label" style="width:33.3%">${this.bottomLabel}</div>
                     <div class="bottom-right label" style="width:33.3%">${this.bottomRightLabel}</div>
                 
                 </div>

@@ -13,14 +13,14 @@ A brief description of your project.
 
 Instructions on how to install and set up your project.
 
-## Usage
+## Development
 
-Instructions on how to use your project and any relevant examples.
+The Custom Web Components can be instantiated inside the body of [index.html](index.html).
+
+```npm run dev```
+will make it availabe to your browser
+
+
 
 ## Contributing
-
-Guidelines on how others can contribute to your project.
-
 ## License
-
-Information about the license under which your project is distributed.
