@@ -8,7 +8,7 @@ import { AAMemory } from '../aa-memory/aa-memory.js';
 
 export type AASessionInput = {
     data: any,
-    sessionID: string,
+    sessionId: string,
     sessionTimestamp: number,
     sessionName: string,
     variables: string[]
@@ -57,7 +57,7 @@ export class AASession extends AABaseElement {
 
     myTemplate: HTMLTemplateElement;
     _mem: AAMemory;
-    sessionID: string = v4();
+    sessionId: string = v4();
     sessionTime: number = 0;
     name: string = '';
     debug: boolean = false;
@@ -79,11 +79,11 @@ export class AASession extends AABaseElement {
         this._mem = document.createElement('aa-memory') as AAMemory;
         this.addEventListener('valueSubmit', (e: any) => {
             const detail: AAScreenValueSubmitEventDetail = e.detail;
-            console.log("valueSubmit!", e.detail)
+
 
             let input: AASessionInput = {
                 data: detail.value,
-                sessionID: this.sessionID,
+                sessionId: this.sessionId,
                 sessionTimestamp: this.sessionTime,
                 sessionName: this.name,
                 variables: Object.keys(detail.value),
@@ -96,7 +96,7 @@ export class AASession extends AABaseElement {
 
             const newDetail: AASessionInputSubmitEventDetail = { input };
             let inputSubmitEvent = new CustomEvent('sessionInputSubmit', { bubbles: true, detail: newDetail, composed: true });
-            console.log("dispatching sessionInputSubmit", inputSubmitEvent);
+
             this.dispatchEvent(inputSubmitEvent);
             //  ema-participant-client needs to catch this and either send it to the server,
             //  or store it locally if we are offline
@@ -127,12 +127,12 @@ export class AASession extends AABaseElement {
         this.setAttributeDefaultValues()
 
 
-        // console.log(this.tagName+"#"+this.id,"connected");
+
         if (this.diagram === true) {
             this.produceDiagram()
             return;
         }
-        this.sessionID = this.myIdGenerator();
+        this.sessionId = this.myIdGenerator();
         this.sessionTime = new Date().getTime();
         let sessionDatum = Object.keys(this.dataset);
         for (let i in sessionDatum) {

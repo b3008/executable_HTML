@@ -1,4 +1,5 @@
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';
+import '@material/web/tokens/_index.scss';
 export type AAScreenValue = {
     [key: string]: any;
     __meta: {

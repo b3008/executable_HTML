@@ -7,9 +7,9 @@ var container;
 
 describe('aa-variable', () => {
 
-    before(function(){
+    before(function () {
         container = document.querySelector('#container');
-        if(!container){
+        if (!container) {
             container = document.createElement('div');
             container.id = "container";
             document.body.appendChild(container);
@@ -17,7 +17,7 @@ describe('aa-variable', () => {
     });
 
 
-    beforeEach(function() {
+    beforeEach(function () {
         container.innerHTML = "";
     });
 
@@ -33,15 +33,15 @@ describe('aa-variable', () => {
             </aa-session>`;
 
             let session = document.querySelector('#session');
-            
+
             // assert(session.getDataDump()['var1']==='val1', 'var1 should exist and have value val1');
             // assert(session.getData('var1')==='val1', 'var1 should exist and have value val1');
-            
-            
-            done();            
+
+
+            done();
 
         });
-        
+
     })
 
     describe('in a sequence', function () {
@@ -62,18 +62,18 @@ describe('aa-variable', () => {
             </aa-session>`;
 
             let session = document.querySelector('#session');
-            
-            session.addEventListener("valueSubmit", (e)=>{
+
+            session.addEventListener("valueSubmit", (e) => {
                 console.log(e.detail);
             })
             // assert(session.getDataDump()['var1']==='val1', 'var1 should exist and have value val1');
             // assert(session.getData('var1')==='val1', 'var1 should exist and have value val1');
-            
-            
-            done();            
+
+
+            done();
 
         });
-        
+
     })
 })
 

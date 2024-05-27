@@ -230,7 +230,7 @@ export class AAAffectGrid extends AABaseElement {
             this.selectedCell.classList.add('selected');
 
             let newValue = this.value;
-            console.log(currentValue, newValue);
+
 
             if (!currentValue) this.dispatchEvent(new CustomEvent("change", { bubbles: true }))
             else {

@@ -321,7 +321,7 @@ class mySVG {
 
 
         let item = this.model(node);
-        console.log(this.elementsFound);
+
 
         item.addTo(draw);
 
@@ -531,7 +531,7 @@ class mySVG {
                 let hasOtherwiseNode = false;
                 let lastChild;
                 for (let i = 0; i < node.childNodes.length; i++) {
-                    console.log(node.childNodes[i].nodeName);
+
                     if (node.childNodes[i].nodeName === "AA-OTHERWISE") {
                         hasOtherwiseNode = true;
                     }
@@ -544,7 +544,7 @@ class mySVG {
                     }
                 }
 
-                console.log(maxContentWidth);
+
                 if (!hasOtherwiseNode) {
 
                     let defaultPath = new Container('serial');
@@ -575,7 +575,7 @@ class mySVG {
 
                 chooseRow.applyItemsAfterwards = () => {
                     for (let i = 0; i < contentsRow.c.length; i++) {
-                        console.log(contentsRow.c[i]);
+
                         if (contentsRow.c[i].applyItemsAfterwards) {
 
                             contentsRow.c[i].applyItemsAfterwards();

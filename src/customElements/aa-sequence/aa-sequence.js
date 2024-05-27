@@ -148,7 +148,7 @@ export class AASequence extends AABaseElement {
 
             let fragmentChild = this.innerFragment.childNodes[this.sIndex];
 
-            // console.log(fragmentChild.textContent);
+
 
             //  if the child is not an element just add it immediately 
             //  and move on to the next, there won't be a connectecCallback Function to execute anyway

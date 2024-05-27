@@ -76,7 +76,7 @@ export class AAGeolocation extends AABaseElement {
     async _getValue() {
         let location = await this._getLocation();
 
-        console.log(location);
+
         return location;
     }
 

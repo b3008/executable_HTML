@@ -66,7 +66,7 @@ export class AAVariable extends AABaseElement {
 
 
     evaluateValueExpression(test) {
-        console.log(test);
+
         let expr = this.replaceExpressionIdentifiersWithValues(test);
         // after replacing known variable names with their values in the string, test to see if the expression can be parsed
 

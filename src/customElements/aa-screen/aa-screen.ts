@@ -1,8 +1,8 @@
 import { isArray } from 'lodash';
 import { AABaseElement, html } from '../aa-base-element/aa-base-element.js';
-import * as  style from '@material/web/tokens/_index.scss'
+import '@material/web/tokens/_index.scss'
 
-console.log("style", style)
+
 
 export type AAScreenValue = {
     [key: string]: any
@@ -181,12 +181,10 @@ export class AAScreen extends AABaseElement {
     }
 
     getSubmitButton() {
-        console.log(this.getAttribute('submit-button-text'));
+
 
         let buttonText = this.submitButtonText || this.getAttribute('submit-button-text') || 'submit';
-        // if (customElements.get('paper-button')) {
-        //     return html`<paper-button class='submitButton darkBlue' raised class='indigo'>${buttonText}</paper-button>`;
-        // }
+
         if (customElements.get('md-filled-button')) {
             return html`<md-filled-button class='submitButton'>${buttonText}</md-filled-button>`;
         }
@@ -197,7 +195,7 @@ export class AAScreen extends AABaseElement {
 
     async submitButtonClick(e?: CustomEvent | MouseEvent) {
 
-        console.log("yo!!!");
+
 
 
         const childrenThatRequireResponse = await this.hasChildrenThatRequireResponse();
@@ -206,11 +204,11 @@ export class AAScreen extends AABaseElement {
         }
 
         this.collectValues().then((val: AAScreenValue) => {
-            console.log("valueSubmit!, value", val);
+
             try {
                 const detail: AAScreenValueSubmitEventDetail = { value: val };
                 let valueSubmitEvent = new CustomEvent('valueSubmit', { bubbles: true, detail });
-                console.log("valueSubmitEvent", valueSubmitEvent);
+
                 this.dispatchEvent(valueSubmitEvent);
                 this._dispatchEndEvent(val);
                 if (typeof e?.detail.callback != 'undefined') {
@@ -323,16 +321,16 @@ export class AAScreen extends AABaseElement {
         for (let i = 0; i < node.children.length; i++) {
 
             let c = node.children[i];
-            console.log(c)
+
 
             if (c.nodeName != 'AA-LABEL') {
 
                 let name = AABaseElement.getVariableName(c);
-                console.log(c.tagName, "has name", name);
-                console.log(c, name);
+
+
                 if (c.getValue) {
                     result[name] = c.getValue();
-                    console.log(result);
+
 
                 } else if (c.value) {
                     if (c.value.then) {

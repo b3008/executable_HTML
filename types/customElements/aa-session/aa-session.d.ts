@@ -3,7 +3,7 @@ import '../aa-memory/aa-memory.js';
 import { AAMemory } from '../aa-memory/aa-memory.js';
 export type AASessionInput = {
     data: any;
-    sessionID: string;
+    sessionId: string;
     sessionTimestamp: number;
     sessionName: string;
     variables: string[];
@@ -43,7 +43,7 @@ export declare class AASession extends AABaseElement {
     static get observedAttributes(): string[];
     myTemplate: HTMLTemplateElement;
     _mem: AAMemory;
-    sessionID: string;
+    sessionId: string;
     sessionTime: number;
     name: string;
     debug: boolean;

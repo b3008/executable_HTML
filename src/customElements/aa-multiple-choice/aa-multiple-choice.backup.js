@@ -79,10 +79,10 @@ export default class AAMultipleChoice extends AABaseElement {
         this.radioGroup = this.root.querySelector('#radioGroup');
         this.radioGroup.addEventListener('change', (e) => {
             this.value = e.target.name;
-            // console.log(this.value);
+
         });
 
-        console.log(this.getAttribute("horizontal"))
+
 
 
     }

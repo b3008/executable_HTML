@@ -62,7 +62,7 @@ export default class AACheckboxes extends AABaseElement {
             }
 
         }
-        // console.log(result);
+
         return result
     }
 

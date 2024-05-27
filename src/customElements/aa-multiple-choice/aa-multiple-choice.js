@@ -150,10 +150,10 @@ export class AAMultipleChoice extends AABaseElement {
             if (node.tagName === 'AA-CHOICE-ITEM') {
                 if (node !== checkedNode) {
                     node.checked = false;
-                    console.log("at child", i, "it is not the checked one, setting to false")
+
                 } else {
                     node.checked = true;
-                    console.log("at child", i, "it is the checked one, setting to true")
+
                 }
             }
         }
@@ -180,7 +180,7 @@ export class AAMultipleChoice extends AABaseElement {
         this.value = this.getAttribute("value");
 
         this.addEventListener("change", (e) => {
-            console.log("change!");
+
             e.stopPropagation();
             this.updateState(e.target)
             this.parentElement.dispatchEvent(new CustomEvent("change", { bubbles: true, detail: { value: this.value } }))
