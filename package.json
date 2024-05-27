@@ -32,7 +32,7 @@
 
     "test": "web-test-runner test/**/*.test.js --node-resolve",
 
-    "publish": "npm run build && git add . && git commit -m 'publish' && npm version patch && npm publish"
+    "buidlAndpublish": "npm run build && git add . && git commit -m 'publish' && npm version patch && npm publish"
 
   },
 
