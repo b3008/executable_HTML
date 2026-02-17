@@ -1,36 +1,19 @@
-export class AATextAnswer extends AABaseElement {
+import { AABaseElement, type AAPropertiesMap } from '../aa-base-element/aa-base-element';
+export declare class AATextAnswer extends AABaseElement {
     static get category(): string;
     static get tag(): string;
-    static get properties(): {
-        name: {
-            type: StringConstructor;
-            userDefined: boolean;
-        };
-        label: {
-            type: StringConstructor;
-            userDefined: boolean;
-        };
-        value: {
-            type: StringConstructor;
-            userDefined: boolean;
-        };
-        type: {
-            type: StringConstructor;
-            userDefined: boolean;
-            value: string;
-            valuesAllowed: string[];
-        };
-    };
+    static get properties(): AAPropertiesMap;
     static get acceptsElements(): null;
     static get observedAttributes(): string[];
-    set value(val: any);
-    get value(): any;
-    set label(val: string | null);
-    get label(): string | null;
+    inputItem: any;
     root: ShadowRoot;
-    inputItem: Element | null | undefined;
-    keyUpTimeout: any;
-    get css(): any;
-    get html(): any;
+    keyUpTimeout: ReturnType<typeof setTimeout> | null;
+    get value(): any;
+    set value(val: any);
+    get label(): string | null;
+    set label(val: any);
+    constructor();
+    connectedCallback(): void;
+    get css(): string;
+    get html(): string;
 }
-import { AABaseElement } from '../aa-base-element/aa-base-element.js';

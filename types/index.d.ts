@@ -1,10 +1,11 @@
 import '@fontsource/roboto-flex';
 import '@fontsource/roboto';
-import '@material/web/button/filled-button.js';
-import '@material/web/checkbox/checkbox.js';
-import '@material/web/radio/radio.js';
-import '@material/web/slider/slider.js';
-import '@material/web/textfield/filled-text-field.js';
+import '@shoelace-style/shoelace/dist/themes/light.css';
+import '@shoelace-style/shoelace/dist/components/button/button.js';
+import '@shoelace-style/shoelace/dist/components/checkbox/checkbox.js';
+import '@shoelace-style/shoelace/dist/components/radio/radio.js';
+import '@shoelace-style/shoelace/dist/components/range/range.js';
+import '@shoelace-style/shoelace/dist/components/input/input.js';
 import './customElements/aa-styling.scss';
 export { AAScreen, type AAScreenValue, type AAScreenValueSubmitEventDetail } from './customElements/aa-screen/aa-screen';
 export { AAAffectGrid } from './customElements/aa-affect-grid/aa-affect-grid';

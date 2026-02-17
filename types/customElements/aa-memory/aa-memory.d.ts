@@ -1,8 +1,10 @@
-export class AAMemory extends AABaseElement {
+import { AABaseElement } from '../aa-base-element/aa-base-element';
+export declare class AAMemory extends AABaseElement {
     static get tag(): string;
     get observedAttributes(): string[];
-    setData(name: any, value: any): void;
-    getData(name: any): any;
+    constructor();
+    connectedCallback(): void;
+    setData(name: string, value: any): void;
+    getData(name: string): string | null;
     getDataDump(): Storage;
 }
-import { AABaseElement } from '../aa-base-element/aa-base-element.js';

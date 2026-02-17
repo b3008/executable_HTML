@@ -1,6 +1,5 @@
 import { isArray } from 'lodash';
-import { AABaseElement, html } from '../aa-base-element/aa-base-element.js';
-import '@material/web/tokens/_index.scss'
+import { AABaseElement, html } from '../aa-base-element/aa-base-element';
 
 
 
@@ -97,11 +96,11 @@ export class AAScreen extends AABaseElement {
 
     submitButton: HTMLElement | null = null;
     submitButtonContainer: HTMLElement | null = null;
-    submitButtonText: string = this.getAttribute('submit-button-text') || "submit";
-    submitButtonHidden: boolean = false;
+    declare submitButtonText: string;
+    declare submitButtonHidden: boolean;
 
     root: ShadowRoot;
-    diagram = false;
+    declare diagram: boolean;
     _started = false;
     _attachedTimestamp = new Date().getTime();
 
@@ -185,8 +184,8 @@ export class AAScreen extends AABaseElement {
 
         let buttonText = this.submitButtonText || this.getAttribute('submit-button-text') || 'submit';
 
-        if (customElements.get('md-filled-button')) {
-            return html`<md-filled-button class='submitButton'>${buttonText}</md-filled-button>`;
+        if (customElements.get('sl-button')) {
+            return html`<sl-button variant="primary" class='submitButton'>${buttonText}</sl-button>`;
         }
         return html`<button class='submitButton'>${buttonText}</button>`;
 

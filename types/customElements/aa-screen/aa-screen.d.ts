@@ -1,5 +1,4 @@
-import { AABaseElement } from '../aa-base-element/aa-base-element.js';
-import '@material/web/tokens/_index.scss';
+import { AABaseElement } from '../aa-base-element/aa-base-element';
 export type AAScreenValue = {
     [key: string]: any;
     __meta: {
@@ -34,20 +33,6 @@ export declare class AAScreen extends AABaseElement {
             userDefined: boolean;
             value: boolean;
         };
-        name: {
-            type: StringConstructor;
-            userDefined: boolean;
-        };
-        diagram: {
-            type: BooleanConstructor;
-            value: boolean;
-            userDefined: boolean;
-        };
-        'diagram-transparent': {
-            type: BooleanConstructor;
-            value: boolean;
-            userDefined: boolean;
-        };
     };
     static get acceptsElements(): never[];
     static get observedAttributes(): string[];
@@ -62,9 +47,9 @@ export declare class AAScreen extends AABaseElement {
     _started: boolean;
     _attachedTimestamp: number;
     connectedCallback(): void;
-    get css(): any;
-    get html(): any;
-    getSubmitButton(): any;
+    get css(): string;
+    get html(): string;
+    getSubmitButton(): string;
     submitButtonClick(e?: CustomEvent | MouseEvent): Promise<void>;
     collectValues(): Promise<AAScreenValue>;
     doesArrayConsistOfNullsOrUndefined(arr: any): any;

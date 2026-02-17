@@ -1,29 +1,28 @@
-export class AAGeolocation extends AABaseElement {
+import { AABaseElement, type AAPropertiesMap } from '../aa-base-element/aa-base-element';
+export declare class AAGeolocation extends AABaseElement {
     static get category(): string;
     static get tag(): string;
-    static get properties(): {
-        name: {
-            type: StringConstructor;
-            userDefined: boolean;
-        };
-        'get-on-request': {
-            type: BooleanConstructor;
-            userDefined: boolean;
-            value: boolean;
-        };
-        ready: {
-            type: BooleanConstructor;
-            userDefined: boolean;
-            value: boolean;
-        };
-    };
-    static get acceptsElements(): never[];
+    static get properties(): AAPropertiesMap;
+    static get acceptsElements(): string[];
     static get observedAttributes(): string[];
     root: ShadowRoot;
-    set value(val: Promise<any>);
-    get value(): Promise<any>;
-    _getValue(): Promise<any>;
-    _getLocation(): Promise<any>;
-    _ready: boolean | undefined;
+    _ready: boolean;
+    constructor();
+    get value(): Promise<{
+        lat: number;
+        lon: number;
+        timestamp: Date;
+    }>;
+    set value(val: any);
+    _getValue(): Promise<{
+        lat: number;
+        lon: number;
+        timestamp: Date;
+    }>;
+    _getLocation(): Promise<{
+        lat: number;
+        lon: number;
+        timestamp: Date;
+    }>;
+    connectedCallback(): void;
 }
-import { AABaseElement } from '../aa-base-element/aa-base-element.js';

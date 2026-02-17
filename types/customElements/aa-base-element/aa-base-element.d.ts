@@ -1,35 +1,39 @@
-export function html(txt: any, ...val: any[]): any;
-export const AAClasses: any[];
-export class AABaseElement extends HTMLElement {
-    static get properties(): {
-        name: {
-            type: StringConstructor;
-            userDefined: boolean;
-        };
-        diagram: {
-            type: BooleanConstructor;
-            value: boolean;
-            userDefined: boolean;
-        };
-        'diagram-transparent': {
-            type: BooleanConstructor;
-            value: boolean;
-            userDefined: boolean;
-        };
-    };
-    static registerAAElement(name: any, elem: any): void;
-    static isAAElement(node: any): boolean;
-    static createFragmentForNode(node: any): DocumentFragment;
+import '../../lib/js-yaml-browserify.js';
+export interface AAPropertyDefinition {
+    type: StringConstructor | BooleanConstructor | NumberConstructor | ArrayConstructor | DateConstructor;
+    value?: any;
+    userDefined?: boolean;
+    valuesAllowed?: string[];
+}
+export interface AAPropertiesMap {
+    [key: string]: AAPropertyDefinition;
+}
+declare global {
+    interface Window {
+        AANodeNames: string[];
+        AAClasses: Record<string, typeof AABaseElement>;
+        html: typeof html;
+        nodeToJSON: typeof AABaseElement.nodeToJSON;
+    }
+}
+export declare const html: (txt: TemplateStringsArray | string[], ...val: any[]) => string;
+export declare const AAClasses: Record<string, typeof AABaseElement>;
+export declare class AABaseElement extends HTMLElement {
+    static get properties(): AAPropertiesMap;
+    static registerAAElement(name: string, elem: CustomElementConstructor): void;
+    static isAAElement(node: Node): boolean;
+    static createFragmentForNode(node: Node): DocumentFragment;
     static createHolderForNode(o: any): any;
     static scanAndReplace(node: any): void;
-    static copy(node: any): any;
-    static nodeToJSON(node: any): any;
-    static getDomPathAsName(el: any): string;
-    static getVariableName(el: any): any;
-    _props: {} | null;
+    _props: Record<string, string> | null;
+    _attachedTimestamp: number;
+    _debug: boolean;
+    _mem: any;
+    innerFragment: any;
+    root: ShadowRoot | undefined;
+    [key: string]: any;
+    constructor();
     connectedCallback(): void;
-    _attachedTimestamp: number | undefined;
-    _debug: boolean | undefined;
     getMemory(): any;
     /**
      * Properties are the member variables of the HTMLElement object.
@@ -56,22 +60,25 @@ export class AABaseElement extends HTMLElement {
                 userDefined:true
             },
 
-    
+
      * This function also generates corresponding getter and setter functions
      * for each property, so that properties and attributes always remain in sync
      * with each other
      */
-    makePropertiesFromAttributes(): {} | null;
-    toCamelCase(str: any): any;
-    toHyphenated(str: any): string;
+    makePropertiesFromAttributes(): Record<string, string> | null;
+    toCamelCase(str: string): string;
+    toHyphenated(str: string): string;
     setAttributeDefaultValues(): void;
-    getAttributes(): {};
-    toJSON(): {};
-    toYAML(): any;
+    static copy(node: any): any;
+    getAttributes(): Record<string, string>;
+    toJSON(): any;
+    static nodeToJSON(node: any): any;
+    toYAML(): string;
     toJSL(): any;
     produceDiagram(): void;
-    root: ShadowRoot | undefined;
+    static getDomPathAsName(el: any): string;
+    static getVariableName(el: Element): string;
     _dispatchDebugEvent(detail: any): void;
-    _dispatchEndEvent(detail: any): void;
-    _getParentSession(): this;
+    _dispatchEndEvent(detail?: any): void;
+    _getParentSession(): any;
 }

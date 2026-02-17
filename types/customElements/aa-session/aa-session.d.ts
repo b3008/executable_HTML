@@ -24,20 +24,6 @@ export declare class AASession extends AABaseElement {
             value: boolean;
             userDefined: boolean;
         };
-        name: {
-            type: StringConstructor;
-            userDefined: boolean;
-        };
-        diagram: {
-            type: BooleanConstructor;
-            value: boolean;
-            userDefined: boolean;
-        };
-        'diagram-transparent': {
-            type: BooleanConstructor;
-            value: boolean;
-            userDefined: boolean;
-        };
     };
     static get acceptsElements(): null;
     static get observedAttributes(): string[];
@@ -55,7 +41,7 @@ export declare class AASession extends AABaseElement {
     connectedCallback(): void;
     attachTemplateChildNodesToMyself(templateClone: any): void;
     run(): void;
-    getData(name: any): any;
+    getData(name: any): string | null;
     setData(name: any, value: any): void;
     getDataDump(): Storage;
     toJSON(): {};

@@ -1,41 +1,20 @@
-export class AAChoose extends AABaseElement {
+import { AABaseElement, type AAPropertiesMap } from '../aa-base-element/aa-base-element';
+import './aa-when/aa-when';
+import './aa-otherwise/aa-otherwise';
+export declare class AAChoose extends AABaseElement {
     static get category(): string;
     static get tag(): string;
-    static get properties(): {
-        name: {
-            type: StringConstructor;
-            userDefined: boolean;
-        };
-        "should-run": {
-            type: BooleanConstructor;
-            value: boolean;
-            userDefined: boolean;
-        };
-        debug: {
-            type: BooleanConstructor;
-            value: boolean;
-            userDefined: boolean;
-        };
-        diagram: {
-            type: BooleanConstructor;
-            value: boolean;
-            userDefined: boolean;
-        };
-        'diagram-transparent': {
-            type: BooleanConstructor;
-            value: boolean;
-            userDefined: boolean;
-        };
-    };
+    static get properties(): AAPropertiesMap;
     static get acceptsElements(): string[];
     static get observedAttributes(): string[];
     root: ShadowRoot;
     originalContent: string;
-    _shouldRun: boolean | undefined;
-    sessionElement: this | undefined;
+    _shouldRun: boolean;
+    sessionElement: any;
+    constructor();
+    connectedCallback(): void;
     _getNodeToInstantiate(): any[];
-    evaluate(element: any): any;
-    evaluateTestExpression(test: any): any;
-    replaceExpressionIdentifiersWithValues(expression: any, memoryElement: any): any;
+    evaluate(element: Element): any;
+    evaluateTestExpression(test: string): any;
+    replaceExpressionIdentifiersWithValues(expression: string, memoryElement?: any): string;
 }
-import { AABaseElement } from '../aa-base-element/aa-base-element.js';

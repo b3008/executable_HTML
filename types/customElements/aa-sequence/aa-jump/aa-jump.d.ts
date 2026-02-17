@@ -1,17 +1,9 @@
-export class AAJump extends AABaseElement {
+import { AABaseElement, type AAPropertiesMap } from '../../aa-base-element/aa-base-element';
+export declare class AAJump extends AABaseElement {
     static get category(): string;
     static get tag(): string;
-    static get properties(): {
-        name: {
-            type: StringConstructor;
-            userDefined: boolean;
-        };
-        goto: {
-            type: StringConstructor;
-            userDefined: boolean;
-        };
-    };
-    static get acceptsElements(): never[];
+    static get properties(): AAPropertiesMap;
+    static get acceptsElements(): string[];
     static get observedAttributes(): string[];
+    connectedCallback(): void;
 }
-import { AABaseElement } from '../../aa-base-element/aa-base-element.js';

@@ -27,7 +27,7 @@ export default class AACheckboxes extends AABaseElement {
     root: ShadowRoot;
     boxes: any[] | NodeListOf<Element> | undefined;
     attachToShadowDomAccordingToKind(node: any): void;
-    get html(): any;
-    get css(): any;
+    get html(): string;
+    get css(): string;
 }
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';

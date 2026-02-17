@@ -1,37 +1,20 @@
-export class AAMultipleChoice extends AABaseElement {
+import { AABaseElement, type AAPropertiesMap } from '../aa-base-element/aa-base-element';
+import '../aa-choice-item/aa-choice-item';
+export declare class AAMultipleChoice extends AABaseElement {
     static get category(): string;
     static get tag(): string;
-    static get properties(): {
-        horizontal: {
-            type: BooleanConstructor;
-            value: boolean;
-            userDefined: boolean;
-        };
-        vertical: {
-            type: BooleanConstructor;
-            value: boolean;
-            userDefined: boolean;
-        };
-        name: {
-            type: StringConstructor;
-            userDefined: boolean;
-        };
-        value: {
-            type: StringConstructor;
-            userDefined: boolean;
-        };
-    };
+    static get properties(): AAPropertiesMap;
     static get acceptsElements(): string[];
     static get observedAttributes(): string[];
-    attributeChangedCallback(name: any, oldValue: any, newValue: any): void;
-    vertical_wasChangedInternally__: boolean;
-    vertical: boolean | undefined;
-    horizontal_wasChangedInternally__: boolean;
-    horizontal: boolean | undefined;
+    attributeChangedCallback(name: string, _oldValue: string | null, newValue: string | null): void;
     get staticObject(): typeof AAMultipleChoice;
+    get value(): string | undefined;
     set value(val: any);
-    get value(): any;
-    updateState(checkedNode: any): void;
-    getValueOfSelectedItem(): any;
+    horizontal_wasChangedInternally__: boolean;
+    vertical_wasChangedInternally__: boolean;
+    constructor();
+    updateState(checkedNode: EventTarget | null): void;
+    getValueOfSelectedItem(): string | undefined;
+    connectedCallback(): void;
+    toJSON(): any;
 }
-import { AABaseElement } from '../aa-base-element/aa-base-element.js';

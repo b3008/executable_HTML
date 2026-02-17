@@ -1,7 +1,9 @@
-export class AALabel extends AABaseElement {
+import { AABaseElement } from '../aa-base-element/aa-base-element';
+export declare class AALabel extends AABaseElement {
     static get tag(): string;
     root: ShadowRoot;
-    get css(): any;
+    constructor();
+    connectedCallback(): void;
+    get css(): string;
     get html(): string;
 }
-import { AABaseElement } from '../aa-base-element/aa-base-element.js';

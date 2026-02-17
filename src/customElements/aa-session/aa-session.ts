@@ -59,11 +59,11 @@ export class AASession extends AABaseElement {
     _mem: AAMemory;
     sessionId: string = v4();
     sessionTime: number = 0;
-    name: string = '';
-    debug: boolean = false;
-    diagram: boolean = false;
-    shouldRun: boolean = true;
-    diagramTransparent: boolean = false;
+    declare name: string;
+    declare debug: boolean;
+    declare diagram: boolean;
+    declare shouldRun: boolean;
+    declare diagramTransparent: boolean;
 
 
 

@@ -30,7 +30,7 @@ export default class AAMultipleChoice extends AABaseElement {
     radioGroup: Element | null;
     choiceItems: any[] | undefined;
     attachToShadowDomAccordingToKind(node: any): void;
-    get html(): any;
-    get css(): any;
+    get html(): string;
+    get css(): string;
 }
 import { AABaseElement } from '../aa-base-element/aa-base-element.js';
