@@ -179,8 +179,6 @@ export class AAAffectGrid extends AABaseElement {
 
     constructor() {
         super();
-        debugger;
-
         this.root = this.attachShadow({ mode: 'open' });
 
 

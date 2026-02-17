@@ -17,38 +17,31 @@
         <h1>Vite + Lit</h1>
 
 
-
-        <aa-screen name="thanks" submit-buttom submit-button-text="end" style="text-align:center">
-
-            <h1>Thanks!</h1>
-            <p>You can now close the app.</p>
-
-
-            critical engaging
-            withdrawn compliant
-            <div style="width:350px;">
-                <aa-affect-grid top-label="assured/dominant" top-left-label="critical" top-right-label="engaging"
-                    bottom-left-label="withdrawn" bottom-right-label="compliant" left-label="cold/quarrelsome"
-                    bottom-label="unassured/submissive" right-label="warm/agreeable">
-
-                </aa-affect-grid>
-
-            </div>
-        </aa-screen>
-
-
         <aa-session>
             <template>
-                <aa-sequence name="ECR">
 
-                    <aa-screen name="thanks" submit-buttom submit-button-text="end" style="text-align:center">
+                <aa-sequence>
+                    <aa-function-random min="1" max="4" name="rndBehaviour"></aa-function-random>
+                    <aa-screen>
+                        hi
+                    </aa-screen>
 
-                        <h1>Thanks!</h1>
-                        <p>You can now close the app.</p>
+                    <aa-screen>
+                        <div id="container">yo </div>
+                        <script>
+                            debugger;
+                            const rnd = localStrorage.getItem('rndBehaviour');
+                            console.log('hi', rnd);
+                            const container = document.getElementById('container');
+                            container.innerHTML = rnd;
+
+                        </script>
                     </aa-screen>
                 </aa-sequence>
             </template>
+
         </aa-session>
+
 
 
 
