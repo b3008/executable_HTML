@@ -48,4 +48,22 @@ describe('aa-memory', () => {
             done();
         });
     });
+
+    describe('static getters', function () {
+        it('has a static tag getter', (done) => {
+            assert(AAMemory.tag === 'aa-memory', 'static tag should be aa-memory');
+            done();
+        });
+    });
+
+    describe('instance observedAttributes', function () {
+        it('has observedAttributes on instance', (done) => {
+            container.innerHTML = '<aa-memory id="mem"></aa-memory>';
+            let mem = document.querySelector('#mem');
+            let attrs = mem.observedAttributes;
+            assert(Array.isArray(attrs), 'observedAttributes should be an array');
+            assert(attrs.includes('name'), 'should include name');
+            done();
+        });
+    });
 })

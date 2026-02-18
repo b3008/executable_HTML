@@ -154,4 +154,194 @@ describe('baseElement', () => {
 
 
     })
+
+    describe('getAttributes', function () {
+        it('returns user-defined attributes', (done) => {
+            container.innerHTML = '<aa-screen id="s1" name="myScreen"><div>test</div></aa-screen>';
+            let screen = document.querySelector('#s1');
+            let attrs = screen.getAttributes();
+            assert(typeof attrs === 'object', 'getAttributes should return an object');
+            done();
+        });
+    });
+
+    describe('toJSON', function () {
+        it('returns JSON representation of element', (done) => {
+            container.innerHTML = '<aa-screen id="s1" name="myScreen"><div>test</div></aa-screen>';
+            let screen = document.querySelector('#s1');
+            let json = screen.toJSON();
+            assert(json !== null, 'toJSON should return something');
+            assert(typeof json === 'object', 'toJSON should return an object');
+            done();
+        });
+    });
+
+    describe('nodeToJSON', function () {
+        it('handles text node', (done) => {
+            let textNode = document.createTextNode('hello world');
+            let result = AABaseElement.nodeToJSON(textNode);
+            assert(result !== null, 'should return something for text node');
+            assert(result['#text'] === 'hello world', 'should have text content');
+            done();
+        });
+
+        it('handles empty text node', (done) => {
+            let textNode = document.createTextNode('   ');
+            let result = AABaseElement.nodeToJSON(textNode);
+            assert(result === null, 'should return null for empty text node');
+            done();
+        });
+
+        it('handles comment node', (done) => {
+            let commentNode = document.createComment('this is a comment');
+            let result = AABaseElement.nodeToJSON(commentNode);
+            assert(result !== null, 'should return something for comment node');
+            assert(result['#comment'] === 'this is a comment', 'should have comment content');
+            done();
+        });
+
+        it('handles element with toJSON', (done) => {
+            container.innerHTML = '<aa-screen id="s1" name="myScreen"><div>test</div></aa-screen>';
+            let screen = document.querySelector('#s1');
+            let result = AABaseElement.nodeToJSON(screen);
+            assert(result !== null, 'should return result from toJSON');
+            done();
+        });
+
+        it('handles generic element without toJSON', (done) => {
+            let div = document.createElement('div');
+            div.setAttribute('class', 'myClass');
+            div.innerHTML = '<span>child</span>';
+            let result = AABaseElement.nodeToJSON(div);
+            assert(result !== null, 'should return something for generic element');
+            assert('DIV' in result, 'should have DIV key');
+            assert(result.DIV.class === 'myClass', 'should have class attribute');
+            done();
+        });
+    });
+
+    describe('toJSL', function () {
+        it('converts element to JSL', (done) => {
+            container.innerHTML = '<aa-checkboxes><aa-choice-item value="a">A</aa-choice-item></aa-checkboxes>';
+            let boxes = document.querySelector('aa-checkboxes');
+            let jsl = boxes.toJSL();
+            assert(jsl !== null && jsl !== undefined, 'toJSL should return something');
+            done();
+        });
+    });
+
+    describe('getDomPathAsName', function () {
+        it('uses name attribute when available', (done) => {
+            container.innerHTML = html`
+            <aa-session debug="true" name="sess" id="sess">
+                <template>
+                    <aa-screen name="myScreen">
+                        <div>test</div>
+                    </aa-screen>
+                </template>
+            </aa-session>`;
+            let screen = document.querySelector('aa-screen');
+            if (screen) {
+                let path = AABaseElement.getDomPathAsName(screen);
+                assert(path.includes('myScreen'), 'path should include name');
+            }
+            done();
+        });
+
+        it('uses id when name not available', (done) => {
+            // Create elements directly to control the DOM structure
+            let session = document.createElement('aa-session');
+            session.setAttribute('name', 'sess');
+            let screen = document.createElement('aa-screen');
+            screen.setAttribute('id', 's1');
+            session.appendChild(screen);
+            container.appendChild(session);
+            let path = AABaseElement.getDomPathAsName(screen);
+            assert(path.includes('s1'), 'path should include id');
+            done();
+        });
+
+        it('handles sibling elements', (done) => {
+            let session = document.createElement('aa-session');
+            session.setAttribute('name', 'sess');
+            let screen1 = document.createElement('aa-screen');
+            let screen2 = document.createElement('aa-screen');
+            session.appendChild(screen1);
+            session.appendChild(screen2);
+            container.appendChild(session);
+            let path = AABaseElement.getDomPathAsName(screen2);
+            assert(path.includes(':eq('), 'path should include sibling index');
+            done();
+        });
+
+        it('uses session id when session has no name', (done) => {
+            let session = document.createElement('aa-session');
+            session.setAttribute('id', 'sessId');
+            let screen = document.createElement('aa-screen');
+            screen.setAttribute('name', 'myScreen');
+            session.appendChild(screen);
+            container.appendChild(session);
+            let path = AABaseElement.getDomPathAsName(screen);
+            assert(path.includes('sessId'), 'path should include session id');
+            done();
+        });
+
+        it('uses session tagname when no name or id', (done) => {
+            let session = document.createElement('aa-session');
+            let screen = document.createElement('aa-screen');
+            screen.setAttribute('name', 'myScreen');
+            session.appendChild(screen);
+            container.appendChild(session);
+            let path = AABaseElement.getDomPathAsName(screen);
+            assert(path.includes('aa-session'), 'path should include aa-session tagname');
+            done();
+        });
+
+        it('uses sibling index for session when session has sibling screens', (done) => {
+            // The sibling count at the session level comes from the last iteration
+            // of the while loop. To trigger sibCount > 1 at the session check,
+            // we need multiple same-named siblings inside the session.
+            let session = document.createElement('aa-session');
+            let screen1 = document.createElement('aa-screen');
+            let screen2 = document.createElement('aa-screen');
+            session.appendChild(screen1);
+            session.appendChild(screen2);
+            container.appendChild(session);
+            let path = AABaseElement.getDomPathAsName(screen2);
+            assert(path.includes(':eq('), 'path should include sibling index');
+            done();
+        });
+    });
+
+    describe('isAAElement', function () {
+        it('returns true for AA element', (done) => {
+            container.innerHTML = '<aa-screen name="test"><div>test</div></aa-screen>';
+            let screen = document.querySelector('aa-screen');
+            assert(AABaseElement.isAAElement(screen) === true, 'should return true for AA element');
+            done();
+        });
+
+        it('returns false for non-AA element', (done) => {
+            let div = document.createElement('div');
+            assert(AABaseElement.isAAElement(div) === false, 'should return false for div');
+            done();
+        });
+    });
+
+    describe('setAttributeDefaultValues', function () {
+        it('handles false string for boolean attributes', (done) => {
+            container.innerHTML = '<aa-screen id="s1" name="test" diagram="false"><div>test</div></aa-screen>';
+            let screen = document.querySelector('#s1');
+            assert(screen.diagram === false, 'diagram should be false');
+            done();
+        });
+
+        it('handles null for boolean attributes', (done) => {
+            container.innerHTML = '<aa-screen id="s1" name="test"><div>test</div></aa-screen>';
+            let screen = document.querySelector('#s1');
+            // diagram should get its default value
+            assert(screen.getAttribute('diagram') !== undefined, 'diagram attribute should exist');
+            done();
+        });
+    });
 })

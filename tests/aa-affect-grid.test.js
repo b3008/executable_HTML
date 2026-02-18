@@ -86,4 +86,112 @@ describe('aa-affect-grid', () => {
             cells[0].dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
         });
     });
+
+    describe('static getters', function () {
+        it('has a static tag getter', (done) => {
+            assert(AAAffectGrid.tag === 'aa-affect-grid', 'static tag should be aa-affect-grid');
+            done();
+        });
+
+        it('has a static category getter', (done) => {
+            assert(AAAffectGrid.category === 'response item', 'category should be response item');
+            done();
+        });
+
+        it('has a static acceptsElements getter', (done) => {
+            assert(AAAffectGrid.acceptsElements === null, 'acceptsElements should be null');
+            done();
+        });
+
+        it('has static observedAttributes', (done) => {
+            let attrs = AAAffectGrid.observedAttributes;
+            assert(Array.isArray(attrs), 'observedAttributes should be an array');
+            assert(attrs.includes('rows'), 'should include rows');
+            assert(attrs.includes('columns'), 'should include columns');
+            done();
+        });
+    });
+
+    describe('x and y getters', function () {
+        it('x and y return null before selection', (done) => {
+            container.innerHTML = `<aa-affect-grid style="width:300px" columns="5" rows="5"></aa-affect-grid>`;
+            let grid = document.querySelector('aa-affect-grid');
+            assert(grid.x === null, 'x should be null');
+            assert(grid.y === null, 'y should be null');
+            done();
+        });
+
+        it('x and y return numbers after selection', (done) => {
+            container.innerHTML = `<aa-affect-grid style="width:300px" columns="5" rows="5"></aa-affect-grid>`;
+            let grid = document.querySelector('aa-affect-grid');
+            let cells = grid.root.querySelectorAll('.cell');
+            cells[0].dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+            assert(typeof grid.x === 'number', 'x should be a number');
+            assert(typeof grid.y === 'number', 'y should be a number');
+            done();
+        });
+    });
+
+    describe('minLabel and maxLabel', function () {
+        it('gets and sets minLabel', (done) => {
+            container.innerHTML = `<aa-affect-grid style="width:300px" min-label="low"></aa-affect-grid>`;
+            let grid = document.querySelector('aa-affect-grid');
+            assert(grid.minLabel === 'low', 'minLabel should be low');
+            grid.minLabel = 'very low';
+            assert(grid.minLabel === 'very low', 'minLabel should be updated');
+            done();
+        });
+
+        it('gets and sets maxLabel', (done) => {
+            container.innerHTML = `<aa-affect-grid style="width:300px" max-label="high"></aa-affect-grid>`;
+            let grid = document.querySelector('aa-affect-grid');
+            assert(grid.maxLabel === 'high', 'maxLabel should be high');
+            grid.maxLabel = 'very high';
+            assert(grid.maxLabel === 'very high', 'maxLabel should be updated');
+            done();
+        });
+    });
+
+    describe('min and max setters', function () {
+        it('sets min and max', (done) => {
+            container.innerHTML = `<aa-affect-grid style="width:300px"></aa-affect-grid>`;
+            let grid = document.querySelector('aa-affect-grid');
+            grid.min = 0;
+            grid.max = 100;
+            assert(grid.getAttribute('min') === '0', 'min attribute should be set');
+            assert(grid.getAttribute('max') === '100', 'max attribute should be set');
+            done();
+        });
+    });
+
+    describe('same-cell click', function () {
+        it('does not dispatch change event when clicking the same cell', (done) => {
+            container.innerHTML = `<aa-affect-grid style="width:300px" columns="5" rows="5"></aa-affect-grid>`;
+            let grid = document.querySelector('aa-affect-grid');
+            let cells = grid.root.querySelectorAll('.cell');
+            // first click
+            cells[0].dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+            let changeCount = 0;
+            grid.addEventListener('change', () => { changeCount++; });
+            // click same cell again
+            cells[0].dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+            assert(changeCount === 0, 'should not dispatch change on same cell click');
+            done();
+        });
+    });
+
+    describe('different-cell click', function () {
+        it('dispatches change event when clicking a different cell', (done) => {
+            container.innerHTML = `<aa-affect-grid style="width:300px" columns="5" rows="5"></aa-affect-grid>`;
+            let grid = document.querySelector('aa-affect-grid');
+            let cells = grid.root.querySelectorAll('.cell');
+            // first click sets a value
+            cells[0].dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+            // listen for change on second click to a different cell
+            grid.addEventListener('change', () => {
+                done();
+            });
+            cells[4].dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+        });
+    });
 })

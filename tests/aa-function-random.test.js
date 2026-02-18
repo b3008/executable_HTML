@@ -58,4 +58,16 @@ describe('aa-function-random', () => {
             done();
         });
     });
+
+    describe('static getters', function () {
+        it('has a static tag getter', (done) => {
+            assert(AAFunctionRandom.tag === 'aa-function-random', 'static tag should be aa-function-random');
+            done();
+        });
+
+        it('has a static acceptsElements getter', (done) => {
+            assert(AAFunctionRandom.acceptsElements === null, 'acceptsElements should be null');
+            done();
+        });
+    });
 })

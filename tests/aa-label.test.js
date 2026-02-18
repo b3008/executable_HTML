@@ -43,4 +43,11 @@ describe('aa-label', () => {
             done();
         });
     });
+
+    describe('static getters', function () {
+        it('has a static tag getter', (done) => {
+            assert(AALabel.tag === 'aa-label', 'static tag should be aa-label');
+            done();
+        });
+    });
 })

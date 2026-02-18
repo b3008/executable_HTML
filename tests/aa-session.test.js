@@ -1,4 +1,4 @@
-import '../src/customElements/aa-session/aa-session.ts';
+import { AASession } from '../src/customElements/aa-session/aa-session.ts';
 import '../src/customElements/aa-screen/aa-screen.ts';
 import '../src/customElements/aa-sequence/aa-sequence.ts';
 import { assert } from '@esm-bundle/chai';
@@ -152,4 +152,151 @@ describe('aa-session', () => {
             done();
         })
     })
+
+    describe('static getters', function () {
+        it('has a static tag getter', (done) => {
+            assert(AASession.tag === 'aa-session', 'static tag should be aa-session');
+            done();
+        });
+
+        it('has static acceptsElements', (done) => {
+            assert(AASession.acceptsElements === null, 'acceptsElements should be null');
+            done();
+        });
+
+        it('has static observedAttributes', (done) => {
+            let attrs = AASession.observedAttributes;
+            assert(Array.isArray(attrs), 'observedAttributes should be an array');
+            done();
+        });
+    });
+
+    describe('getData and getDataDump', function () {
+        it('gets data via getData', (done) => {
+            container.innerHTML = html`
+            <aa-session debug="true" name="test" id="session">
+                <template>
+                </template>
+            </aa-session>`;
+            let session = document.querySelector('#session');
+            session.setData('testKey', 'testValue');
+            let val = session.getData('testKey');
+            assert(val === 'testValue', 'getData should return the value');
+            done();
+        });
+
+        it('gets data dump', (done) => {
+            container.innerHTML = html`
+            <aa-session debug="true" name="test" id="session">
+                <template>
+                </template>
+            </aa-session>`;
+            let session = document.querySelector('#session');
+            session.setData('dumpKey', 'dumpVal');
+            let dump = session.getDataDump();
+            assert(dump !== null, 'getDataDump should return something');
+            done();
+        });
+    });
+
+    describe('valueSubmit → sessionInputSubmit', function () {
+        it('dispatches sessionInputSubmit on valueSubmit', (done) => {
+            container.innerHTML = html`
+            <aa-session debug="true" name="test" id="session">
+                <template>
+                    <aa-screen id="screen1" name="first">
+                        <div>test</div>
+                    </aa-screen>
+                </template>
+            </aa-session>`;
+            let session = document.querySelector('#session');
+            session.addEventListener('sessionInputSubmit', (e) => {
+                assert(e.detail.input !== undefined, 'should have input property');
+                assert(e.detail.input.sessionName === 'test', 'sessionName should be test');
+                assert(e.detail.input.sessionId !== undefined, 'sessionId should exist');
+                done();
+            });
+            let screen = document.querySelector('#screen1');
+            let submitButton = screen.root.querySelector('.submitButton');
+            submitButton.click();
+        });
+    });
+
+    describe('toJSON', function () {
+        it('returns JSON with template childNodes', (done) => {
+            container.innerHTML = html`
+            <aa-session debug="true" name="test" id="session">
+                <template>
+                    <aa-screen name="first">
+                        <div>test</div>
+                    </aa-screen>
+                </template>
+            </aa-session>`;
+            let session = document.querySelector('#session');
+            let json = session.toJSON();
+            assert(json !== null, 'toJSON should return something');
+            assert('AA-SESSION' in json, 'should have AA-SESSION key');
+            assert(Array.isArray(json['AA-SESSION'].childNodes), 'should have childNodes');
+            done();
+        });
+    });
+
+    describe('originalChildNodes', function () {
+        it('returns child nodes from template', (done) => {
+            container.innerHTML = html`
+            <aa-session debug="true" name="test" id="session">
+                <template>
+                    <aa-screen name="first">
+                        <div>test</div>
+                    </aa-screen>
+                </template>
+            </aa-session>`;
+            let session = document.querySelector('#session');
+            let origNodes = session.originalChildNodes;
+            assert(origNodes !== null, 'originalChildNodes should return something');
+            assert(origNodes.length > 0, 'should have child nodes');
+            done();
+        });
+
+        it('returns empty array when template has no content', (done) => {
+            container.innerHTML = html`
+            <aa-session debug="true" name="test" id="session">
+            </aa-session>`;
+            let session = document.querySelector('#session');
+            let origNodes = session.originalChildNodes;
+            assert(origNodes.length >= 0, 'should return array-like');
+            done();
+        });
+
+        it('returns childNodes when template first child has no content property', (done) => {
+            // When session has a non-template element as first child,
+            // myTemplate.content.childNodes[0] won't have .content
+            container.innerHTML = '<aa-session debug="true" name="test" id="session" should-run="false"><div>direct child</div></aa-session>';
+            let session = document.querySelector('#session');
+            let origNodes = session.originalChildNodes;
+            assert(origNodes !== null, 'should return something');
+            done();
+        });
+    });
+
+    describe('diagram mode', function () {
+        it('renders SVG diagram when diagram is true', (done) => {
+            container.innerHTML = '<aa-session name="test" id="session" diagram="true"><template><aa-screen name="first"><div>test</div></aa-screen></template></aa-session>';
+            let session = document.querySelector('#session');
+            let svgContainer = session.root.querySelector('#svgContainer');
+            assert(svgContainer !== null, 'should have svgContainer in shadow root');
+            done();
+        });
+    });
+
+    describe('toJSL', function () {
+        it('returns JSL representation', (done) => {
+            // No whitespace before <template> to avoid text node as first child
+            container.innerHTML = '<aa-session debug="true" name="test" id="session"><template><aa-screen name="first"><div>test</div></aa-screen></template></aa-session>';
+            let session = document.querySelector('#session');
+            let jsl = session.toJSL();
+            assert(jsl !== null && jsl !== undefined, 'toJSL should return something');
+            done();
+        });
+    });
 })

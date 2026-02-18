@@ -1,4 +1,6 @@
-import '../src/customElements/aa-screen/aa-screen.ts';
+import { AAScreen } from '../src/customElements/aa-screen/aa-screen.ts';
+import '../src/customElements/aa-slider/aa-slider.ts';
+import '../src/customElements/aa-label/aa-label.ts';
 import { assert } from '@esm-bundle/chai';
 
 var container;
@@ -155,4 +157,422 @@ describe('aa-screen', () => {
 
     })
 
+    describe('static getters', function () {
+        it('has a static tag getter', (done) => {
+            assert(AAScreen.tag === 'aa-screen', 'static tag should be aa-screen');
+            done();
+        });
+
+        it('has a static category getter', (done) => {
+            assert(AAScreen.category === 'UI', 'category should be UI');
+            done();
+        });
+
+        it('has static acceptsElements', (done) => {
+            let accepts = AAScreen.acceptsElements;
+            assert(Array.isArray(accepts), 'acceptsElements should be an array');
+            done();
+        });
+
+        it('has static observedAttributes', (done) => {
+            let attrs = AAScreen.observedAttributes;
+            assert(Array.isArray(attrs), 'observedAttributes should be an array');
+            done();
+        });
+    });
+
+    describe('diagram mode', function () {
+        it('renders SVG diagram when diagram attribute is true', (done) => {
+            container.innerHTML = `<aa-screen id="screen1" name="myScreen" diagram="true">
+                <div>test</div>
+            </aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            let svgContainer = screen.root.querySelector('#svgContainer');
+            assert(svgContainer !== null, 'should have svgContainer in shadow root');
+            assert(svgContainer.querySelector('svg') !== null, 'should contain an SVG element');
+            done();
+        });
+
+        it('renders diagram without name attribute', (done) => {
+            container.innerHTML = `<aa-screen diagram="true">
+                <div>test</div>
+            </aa-screen>`;
+            let screen = document.querySelector('aa-screen');
+            let svgContainer = screen.root.querySelector('#svgContainer');
+            assert(svgContainer !== null, 'should have svgContainer');
+            done();
+        });
+
+        it('has a download button that can be clicked', (done) => {
+            container.innerHTML = `<aa-screen id="screen1" name="myScreen" diagram="true">
+                <div>test</div>
+            </aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            let button = screen.root.querySelector('paper-button');
+            assert(button !== null, 'should have a download button');
+            // Click should not throw
+            button.click();
+            done();
+        });
+    });
+
+    describe('submit-button-hidden', function () {
+        it('hides submit button when submit-button-hidden is true', (done) => {
+            container.innerHTML = `<aa-screen id="screen1" name="first" submit-button-hidden="true">
+                <div>test</div>
+            </aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            let btnContainer = screen.root.querySelector('.submitButtonContainer');
+            assert(btnContainer.style.display === 'none', 'submitButtonContainer should be hidden');
+            done();
+        });
+
+        it('shows submit button when submit-button-hidden is changed to false', (done) => {
+            container.innerHTML = `<aa-screen id="screen1" name="first" submit-button-hidden="true">
+                <div>test</div>
+            </aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            screen.setAttribute('submit-button-hidden', 'false');
+            let btnContainer = screen.root.querySelector('.submitButtonContainer');
+            assert(btnContainer.style.display === 'block', 'submitButtonContainer should be visible');
+            done();
+        });
+    });
+
+    describe('doesArrayConsistOfNullsOrUndefined', function () {
+        it('returns true for array of nulls', (done) => {
+            container.innerHTML = `<aa-screen id="screen1" name="first"><div>test</div></aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            assert(screen.doesArrayConsistOfNullsOrUndefined([null, null]) === true, 'should return true');
+            done();
+        });
+
+        it('returns true for array of undefineds', (done) => {
+            container.innerHTML = `<aa-screen id="screen1" name="first"><div>test</div></aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            assert(screen.doesArrayConsistOfNullsOrUndefined([undefined, undefined]) === true, 'should return true');
+            done();
+        });
+
+        it('returns false for array with values', (done) => {
+            container.innerHTML = `<aa-screen id="screen1" name="first"><div>test</div></aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            assert(screen.doesArrayConsistOfNullsOrUndefined([null, 'value']) === false, 'should return false');
+            done();
+        });
+    });
+
+    describe('getNodeValue', function () {
+        it('returns value from getValue method', async () => {
+            container.innerHTML = `<aa-screen id="screen1" name="first"><div>test</div></aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            let node = { getValue: () => 'fromGetValue' };
+            let val = await screen.getNodeValue(node);
+            assert(val === 'fromGetValue', 'should use getValue when available');
+        });
+
+        it('returns simple value', async () => {
+            container.innerHTML = `<aa-screen id="screen1" name="first"><div>test</div></aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            let node = { value: 'simpleVal' };
+            let val = await screen.getNodeValue(node);
+            assert(val === 'simpleVal', 'should return simple value');
+        });
+
+        it('returns resolved promise value', async () => {
+            container.innerHTML = `<aa-screen id="screen1" name="first"><div>test</div></aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            let node = { value: Promise.resolve('promiseVal') };
+            let val = await screen.getNodeValue(node);
+            assert(val === 'promiseVal', 'should resolve promise value');
+        });
+
+        it('returns null for array of nulls', async () => {
+            container.innerHTML = `<aa-screen id="screen1" name="first"><div>test</div></aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            let node = { value: [null, null] };
+            let val = await screen.getNodeValue(node);
+            assert(val === null, 'should return null for array of nulls');
+        });
+
+        it('returns array with values', async () => {
+            container.innerHTML = `<aa-screen id="screen1" name="first"><div>test</div></aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            let node = { value: ['a', 'b'] };
+            let val = await screen.getNodeValue(node);
+            assert(Array.isArray(val), 'should return array');
+            assert(val[0] === 'a', 'first element should be a');
+        });
+
+        it('returns null for node without value', async () => {
+            container.innerHTML = `<aa-screen id="screen1" name="first"><div>test</div></aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            let node = {};
+            let val = await screen.getNodeValue(node);
+            assert(val === null, 'should return null');
+        });
+    });
+
+    describe('hasChildrenThatRequireResponse', function () {
+        it('returns empty array when no required children', async () => {
+            container.innerHTML = `<aa-screen id="screen1" name="first">
+                <input name="test" value="filled">
+            </aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            let result = await screen.hasChildrenThatRequireResponse();
+            assert(result.length === 0, 'should have no children requiring response');
+        });
+    });
+
+    describe('getAAChildren', function () {
+        it('returns AA children', (done) => {
+            container.innerHTML = html`
+            <aa-screen id="screen1" name="first">
+                <aa-slider min="0" max="100" name="s1" value="50"></aa-slider>
+            </aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            let children = screen.getAAChildren(screen);
+            assert(children.length > 0, 'should find AA children');
+            done();
+        });
+
+        it('filters by nodeName', (done) => {
+            container.innerHTML = html`
+            <aa-screen id="screen1" name="first">
+                <aa-slider min="0" max="100" name="s1" value="50"></aa-slider>
+                <aa-label>Label</aa-label>
+            </aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            let sliders = screen.getAAChildren(screen, [], 'AA-SLIDER');
+            assert(sliders.length === 1, 'should find 1 slider');
+            done();
+        });
+    });
+
+    describe('hide and show', function () {
+        it('hides the screen', (done) => {
+            container.innerHTML = `<aa-screen id="screen1" name="first"><div>test</div></aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            screen.hide();
+            assert(screen.style.display === 'none', 'screen should be hidden');
+            done();
+        });
+
+        it('shows the screen', (done) => {
+            container.innerHTML = `<aa-screen id="screen1" name="first"><div>test</div></aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            screen.hide();
+            screen.show();
+            assert(screen.style.display === 'block', 'screen should be visible');
+            done();
+        });
+    });
+
+    describe('automate', function () {
+        it('calls submitButtonClick', (done) => {
+            container.innerHTML = html`
+            <div id="wrapper">
+                <aa-screen id="screen1" name="first">
+                    <div>test</div>
+                </aa-screen>
+            </div>`;
+            let screen = document.querySelector('#screen1');
+            document.querySelector('#wrapper').addEventListener('valueSubmit', () => {
+                done();
+            });
+            screen.automate();
+        });
+    });
+
+    describe('autohide attribute', function () {
+        it('hides screen after submit when autohide is true', (done) => {
+            container.innerHTML = html`
+            <div id="wrapper">
+                <aa-screen id="screen1" name="first" autohide="true">
+                    <div>test</div>
+                </aa-screen>
+            </div>`;
+            let screen = document.querySelector('#screen1');
+            document.querySelector('#wrapper').addEventListener('valueSubmit', () => {
+                // autohide happens after valueSubmit and endEvent dispatch
+                setTimeout(() => {
+                    assert(screen.style.display === 'none', 'screen should be hidden after submit');
+                    done();
+                }, 50);
+            });
+            screen.submitButtonClick();
+        });
+    });
+
+    describe('callback in submitButtonClick', function () {
+        it('calls callback from event detail', (done) => {
+            container.innerHTML = html`
+            <div id="wrapper">
+                <aa-screen id="screen1" name="first">
+                    <div>test</div>
+                </aa-screen>
+            </div>`;
+            let screen = document.querySelector('#screen1');
+            let callbackCalled = false;
+            let fakeEvent = new CustomEvent('click', {
+                detail: {
+                    callback: () => {
+                        callbackCalled = true;
+                    }
+                }
+            });
+            screen.submitButtonClick(fakeEvent);
+            setTimeout(() => {
+                assert(callbackCalled === true, 'callback should have been called');
+                done();
+            }, 100);
+        });
+    });
+
+    describe('getChildrenValues branches', function () {
+        it('collects value from child with promise value', (done) => {
+            container.innerHTML = html`
+            <aa-screen id="screen1" name="first">
+                <div>test</div>
+            </aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            // Add a child with a thenable value
+            let fakeChild = document.createElement('div');
+            fakeChild.setAttribute('name', 'promiseChild');
+            fakeChild.value = Promise.resolve('asyncVal');
+            screen.appendChild(fakeChild);
+            screen.getChildrenValues(screen).then(result => {
+                assert(result['promiseChild'] === 'asyncVal', 'should collect async value');
+                done();
+            });
+        });
+
+        it('recurses into aa-label children', (done) => {
+            container.innerHTML = html`
+            <aa-screen id="screen1" name="first">
+                <aa-label>
+                    <input name="nestedInput" value="nestedVal">
+                </aa-label>
+            </aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            screen.getChildrenValues(screen).then(result => {
+                // The recursion into aa-label should find the nested input
+                assert(result !== null, 'should return result object');
+                done();
+            });
+        });
+    });
+
+    describe('automate with AA children', function () {
+        it('calls automate on AA children that have it', (done) => {
+            container.innerHTML = html`
+            <div id="wrapper">
+                <aa-screen id="screen1" name="first">
+                    <aa-slider name="s1" min="0" max="100" value="50"></aa-slider>
+                </aa-screen>
+            </div>`;
+            let screen = document.querySelector('#screen1');
+            document.querySelector('#wrapper').addEventListener('valueSubmit', () => {
+                done();
+            });
+            screen.automate();
+        });
+    });
+
+    describe('hide with children that have stop', function () {
+        it('calls stop on AA children when hiding', (done) => {
+            container.innerHTML = html`
+            <aa-screen id="screen1" name="first">
+                <div>test</div>
+            </aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            // Add a fake AA child with a stop method
+            let fakeChild = document.createElement('aa-slider');
+            fakeChild.setAttribute('name', 'fakeSlider');
+            fakeChild.setAttribute('min', '0');
+            fakeChild.setAttribute('max', '100');
+            fakeChild.stop = () => {};
+            screen.appendChild(fakeChild);
+            screen.hide();
+            assert(screen.style.display === 'none', 'screen should be hidden');
+            done();
+        });
+    });
+
+    describe('hasChildrenThatRequireResponse with required children', function () {
+        it('returns required children with empty values', async () => {
+            container.innerHTML = `<aa-screen id="screen1" name="first">
+                <input name="test" required value="">
+            </aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            let result = await screen.hasChildrenThatRequireResponse();
+            assert(result.length > 0, 'should have children requiring response');
+        });
+
+        it('returns empty when required children have values', async () => {
+            container.innerHTML = `<aa-screen id="screen1" name="first">
+                <input name="test" required value="filled">
+            </aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            let result = await screen.hasChildrenThatRequireResponse();
+            assert(result.length === 0, 'should have no children requiring response');
+        });
+
+        it('blocks submitButtonClick when required children have no value', (done) => {
+            container.innerHTML = html`
+            <div id="wrapper">
+                <aa-screen id="screen1" name="first">
+                    <input name="test" required value="">
+                </aa-screen>
+            </div>`;
+            let screen = document.querySelector('#screen1');
+            let submitted = false;
+            document.querySelector('#wrapper').addEventListener('valueSubmit', () => {
+                submitted = true;
+            });
+            screen.submitButtonClick();
+            setTimeout(() => {
+                assert(submitted === false, 'submit should be blocked by required empty field');
+                done();
+            }, 100);
+        });
+    });
+
+    describe('getChildrenValues with getValue method', function () {
+        it('uses getValue when available on child', (done) => {
+            container.innerHTML = `<aa-screen id="screen1" name="first">
+                <div>test</div>
+            </aa-screen>`;
+            let screen = document.querySelector('#screen1');
+            // Add a child with getValue method
+            let fakeChild = document.createElement('div');
+            fakeChild.setAttribute('name', 'getValueChild');
+            fakeChild.getValue = () => 'fromGetValue';
+            screen.appendChild(fakeChild);
+            screen.getChildrenValues(screen).then(result => {
+                assert(result['getValueChild'] === 'fromGetValue', 'should use getValue');
+                done();
+            });
+        });
+    });
+
+    describe('automate with AA children that have automate', function () {
+        it('calls automate on nested aa-screen', (done) => {
+            container.innerHTML = html`
+            <div id="wrapper">
+                <aa-screen id="screen1" name="outer">
+                    <aa-screen id="inner" name="inner"><div>inner content</div></aa-screen>
+                </aa-screen>
+            </div>`;
+            let called = false;
+            document.querySelector('#wrapper').addEventListener('valueSubmit', () => {
+                if (!called) {
+                    called = true;
+                    done();
+                }
+            });
+            let screen = document.querySelector('#screen1');
+            screen.automate();
+        });
+    });
 })

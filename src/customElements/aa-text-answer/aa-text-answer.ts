@@ -110,7 +110,7 @@ export class AATextAnswer extends AABaseElement {
             if (this.keyUpTimeout) {
                 clearTimeout(this.keyUpTimeout);
             }
-            setTimeout(() => {
+            this.keyUpTimeout = setTimeout(() => {
                 this.dispatchEvent(new CustomEvent("change"))
             }, 1500)
         });
@@ -119,7 +119,7 @@ export class AATextAnswer extends AABaseElement {
             if (this.keyUpTimeout) {
                 clearTimeout(this.keyUpTimeout);
             }
-            setTimeout(() => {
+            this.keyUpTimeout = setTimeout(() => {
                 this.dispatchEvent(new CustomEvent("change"))
             }, 1500)
         });

@@ -1,4 +1,4 @@
-import '../src/customElements/aa-checkboxes/aa-checkboxes.ts';
+import { AACheckboxes } from '../src/customElements/aa-checkboxes/aa-checkboxes.ts';
 import { assert } from '@esm-bundle/chai';
 
 var container;
@@ -44,5 +44,87 @@ describe('aa-checkboxes', () => {
 
     })
 
+    describe('static getters', function () {
+        it('has a static tag getter', (done) => {
+            assert(AACheckboxes.tag === 'aa-checkboxes', 'static tag should be aa-checkboxes');
+            done();
+        });
 
+        it('has a static category getter', (done) => {
+            assert(AACheckboxes.category === 'response item', 'category should be response item');
+            done();
+        });
+
+        it('has static acceptsElements', (done) => {
+            let accepts = AACheckboxes.acceptsElements;
+            assert(Array.isArray(accepts), 'acceptsElements should be an array');
+            assert(accepts.includes('aa-choice-item'), 'should include aa-choice-item');
+            done();
+        });
+
+        it('has static observedAttributes', (done) => {
+            let attrs = AACheckboxes.observedAttributes;
+            assert(Array.isArray(attrs), 'observedAttributes should be an array');
+            done();
+        });
+    });
+
+    describe('value setter', function () {
+        it('sets value with array', (done) => {
+            container.innerHTML = `<aa-checkboxes>
+                <aa-choice-item value='a'> A </aa-choice-item>
+                <aa-choice-item value='b'> B </aa-choice-item>
+            </aa-checkboxes>`;
+            let boxes = document.querySelector('aa-checkboxes');
+            boxes.value = ['a'];
+            let items = boxes.querySelectorAll('aa-choice-item');
+            assert(items[0].checked === true, 'first item should be checked');
+            assert(items[1].checked === false, 'second item should not be checked');
+            done();
+        });
+
+        it('sets value with single string (converts to array)', (done) => {
+            container.innerHTML = `<aa-checkboxes>
+                <aa-choice-item value='a'> A </aa-choice-item>
+                <aa-choice-item value='b'> B </aa-choice-item>
+            </aa-checkboxes>`;
+            let boxes = document.querySelector('aa-checkboxes');
+            boxes.value = 'b';
+            let items = boxes.querySelectorAll('aa-choice-item');
+            assert(items[0].checked === false, 'first item should not be checked');
+            assert(items[1].checked === true, 'second item should be checked');
+            done();
+        });
+    });
+
+    describe('change event propagation', function () {
+        it('propagates change event to parent', (done) => {
+            container.innerHTML = `<div id="wrapper"><aa-checkboxes>
+                <aa-choice-item value='a'> A </aa-choice-item>
+                <aa-choice-item value='b'> B </aa-choice-item>
+            </aa-checkboxes></div>`;
+            let wrapper = document.querySelector('#wrapper');
+            wrapper.addEventListener('change', (e) => {
+                assert(e.detail !== undefined, 'change event should have detail');
+                done();
+            });
+            let items = document.querySelectorAll('aa-choice-item');
+            items[0].item.click();
+        });
+    });
+
+    describe('toJSON', function () {
+        it('returns JSON with items', (done) => {
+            container.innerHTML = `<aa-checkboxes>
+                <aa-choice-item value='a'> A </aa-choice-item>
+                <aa-choice-item value='b'> B </aa-choice-item>
+            </aa-checkboxes>`;
+            let boxes = document.querySelector('aa-checkboxes');
+            let json = boxes.toJSON();
+            assert(json !== null, 'toJSON should return something');
+            assert('aa-checkboxes' in json, 'should have aa-checkboxes key');
+            assert(Array.isArray(json['aa-checkboxes'].items), 'should have items array');
+            done();
+        });
+    });
 })
