@@ -1,5 +1,5 @@
 import { AABaseElement, type AAPropertiesMap } from '../aa-base-element/aa-base-element'
-import * as jsep from 'jsep';
+import jsep from 'jsep';
 
 export class AAVariable extends AABaseElement {
 

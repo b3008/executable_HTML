@@ -1,7 +1,7 @@
 import { AABaseElement, type AAPropertiesMap } from '../aa-base-element/aa-base-element';
 import './aa-when/aa-when';
 import './aa-otherwise/aa-otherwise';
-import * as jsep from 'jsep';
+import jsep from 'jsep';
 export class AAChoose extends AABaseElement {
 
     static get category(): string {
