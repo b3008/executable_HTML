@@ -1,0 +1,154 @@
+import { Meta } from "@storybook/blocks";
+import { useEffect, useRef } from "react";
+
+export const LiveDemo = ({ html }) => {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!ref.current) return;
+    ref.current.innerHTML = html;
+    const container = ref.current;
+    container.addEventListener("sessionEndEvent", () => {
+      const seq = container.querySelector("aa-sequence");
+      if (seq) {
+        while (seq.firstChild) seq.firstChild.remove();
+        seq.sIndex = 0;
+        seq.start();
+      }
+    });
+  }, [html]);
+  return <div ref={ref} />;
+};
+
+<Meta title="Introduction" />
+
+# Executable HTML
+
+**Build interactive surveys, questionnaires, and experiments using just HTML.**
+
+Executable HTML is a library of custom web components that turn static HTML into interactive, sequential experiences. Instead of writing JavaScript to manage state, control flow, and data collection, you describe your entire application declaratively with HTML tags.
+
+## How it works
+
+Wrap your content in an `aa-session`, define a sequence of screens, and the framework handles the rest — progression, data collection, branching logic, and storage.
+
+<div style={{ display: "flex", gap: "2rem", alignItems: "flex-start" }}>
+  <div style={{ flex: 1 }}>
+
+```html
+<aa-session name="my-survey">
+  <aa-sequence>
+    <aa-screen submit-button-text="Next">
+      <aa-label>How are you feeling?</aa-label>
+      <aa-slider name="mood" min="0" max="100"
+        min-label="Bad" max-label="Great">
+      </aa-slider>
+    </aa-screen>
+    <aa-screen submit-button-text="Next">
+      <aa-label>How much do you agree?</aa-label>
+      <aa-likert-scale name="agreement" items="5"
+        start-label="Strongly Disagree"
+        middle-label="Neutral"
+        end-label="Strongly Agree"
+        show-radio-numbers 
+        number-position="right"></aa-likert-scale>
+    </aa-screen>
+    <aa-screen submit-button-text="Done">
+      <aa-label>Thank you!</aa-label>
+    </aa-screen>
+  </aa-sequence>
+</aa-session>
+```
+
+  </div>
+  <div style={{ marginTop:"1.51rem", flex: 1, border: "1px solid #e0e0e0", borderRadius: "8px", padding: "1rem" }}>
+    <LiveDemo html={`<aa-session name="intro-demo">
+      <aa-sequence>
+        <aa-screen submit-button-text="Next">
+          <aa-label>How are you feeling?</aa-label>
+          <aa-slider name="mood" min="0" max="100" min-label="Bad" max-label="Great"></aa-slider>
+        </aa-screen>
+        <aa-screen submit-button-text="Next">
+          <aa-label>How much do you agree?</aa-label>
+          <aa-likert-scale name="agreement" items="5" start-label="Strongly Disagree" middle-label="Neutral" end-label="Strongly Agree" show-radio-numbers number-position="right"></aa-likert-scale>
+        </aa-screen>
+        <aa-screen submit-button-text="Done">
+          <aa-label>Thank you!</aa-label>
+        </aa-screen>
+      </aa-sequence>
+    </aa-session>`} />
+  </div>
+</div>
+
+## Components
+
+### Session & Data
+
+<table>
+  <thead>
+    <tr><th>Component</th><th>Purpose</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>aa-session</code></td><td>Top-level container that manages memory and data collection</td></tr>
+    <tr><td><code>aa-variable</code></td><td>Declares a named variable with a value</td></tr>
+    <tr><td><code>aa-memory</code></td><td>Underlying storage layer (localStorage)</td></tr>
+  </tbody>
+</table>
+
+### Control Flow
+
+<table>
+  <thead>
+    <tr><th>Component</th><th>Purpose</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>aa-sequence</code></td><td>Executes child elements one after another</td></tr>
+    <tr><td><code>aa-choose</code> / <code>aa-when</code> / <code>aa-otherwise</code></td><td>Conditional branching based on expressions</td></tr>
+    <tr><td><code>aa-jump</code></td><td>Jump to a named step within a sequence</td></tr>
+  </tbody>
+</table>
+
+### User Interface
+
+<table>
+  <thead>
+    <tr><th>Component</th><th>Purpose</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>aa-screen</code></td><td>A page/step with a submit button that collects values</td></tr>
+    <tr><td><code>aa-label</code></td><td>Display text</td></tr>
+    <tr><td><code>aa-slider</code></td><td>Numeric slider input</td></tr>
+    <tr><td><code>aa-multiple-choice</code> / <code>aa-choice-item</code></td><td>Single-select choice</td></tr>
+    <tr><td><code>aa-checkboxes</code></td><td>Multi-select checkboxes</td></tr>
+    <tr><td><code>aa-text-answer</code></td><td>Free text input</td></tr>
+    <tr><td><code>aa-likert-scale</code></td><td>Likert scale rating</td></tr>
+    <tr><td><code>aa-affect-grid</code></td><td>2D affect/emotion grid</td></tr>
+  </tbody>
+</table>
+
+### Utilities
+
+<table>
+  <thead>
+    <tr><th>Component</th><th>Purpose</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>aa-function-random</code></td><td>Generate random values</td></tr>
+    <tr><td><code>aa-geolocation</code></td><td>Capture device location</td></tr>
+  </tbody>
+</table>
+
+## Installation
+
+```bash
+npm install executable_html
+```
+
+```js
+import "executable_html";
+```
+
+All custom elements are automatically registered. Just write HTML.
+
+## Explore
+
+Browse the components in the sidebar to see live examples and source code.

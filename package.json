@@ -33,6 +33,7 @@
     "@storybook/blocks": "^7.6.12",
     "@storybook/web-components": "^7.6.12",
     "@storybook/web-components-vite": "^7.6.12",
+    "@types/mocha": "^10.0.10",
     "@web/dev-server-esbuild": "^1.0.5",
     "@web/test-runner": "^0.18.0",
     "eslint": "^8.56.0",
