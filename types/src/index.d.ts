@@ -24,6 +24,7 @@ export { AAMemory } from './customElements/aa-memory/aa-memory';
 export { AASequence } from './customElements/aa-sequence/aa-sequence';
 export { AAJump } from './customElements/aa-sequence/aa-jump/aa-jump';
 export { AASession, type AASessionInput, type AASessionInputSubmitEventDetail } from './customElements/aa-session/aa-session';
+export { AASignalProtocol, type SignalProtocolConfig } from './customElements/aa-signal-protocol/aa-signal-protocol';
 export { AASlider } from './customElements/aa-slider/aa-slider';
 export { AATextAnswer } from './customElements/aa-text-answer/aa-text-answer';
 export { AAVariable } from './customElements/aa-variable/aa-variable';
