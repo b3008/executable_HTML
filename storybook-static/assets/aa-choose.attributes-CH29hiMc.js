@@ -1,4 +1,4 @@
-import{j as e}from"./jsx-runtime-xrKziPlz.js";import{M as t}from"./index-DuX6iVfj.js";import{u as i}from"./index-7wJ7cBts.js";import"./iframe-DEer1LHX.js";import"../sb-preview/runtime.js";import"./_commonjsHelpers-Cpj98o6Y.js";import"./index-Bw8VTzHM.js";import"./index-BNKdAXne.js";import"./index-DrFu-skq.js";function r(s){const n=Object.assign({h1:"h1",code:"code",p:"p",pre:"pre",hr:"hr",h2:"h2",h3:"h3",ul:"ul",li:"li",strong:"strong",a:"a"},i(),s.components);return e.jsxs(e.Fragment,{children:[e.jsx(t,{title:"Control Flow/Choose/Attribute Reference"}),`
+import{j as e}from"./jsx-runtime-DjjJRqnr.js";import{M as i}from"./index-BZwxqCSI.js";import{u as d}from"./index-BHT9JHh8.js";import"./iframe-vNrS5K6G.js";import"../sb-preview/runtime.js";import"./_commonjsHelpers-Cpj98o6Y.js";import"./index-Bw8VTzHM.js";import"./index-BNKdAXne.js";import"./index-DrFu-skq.js";function r(s){const n=Object.assign({h1:"h1",code:"code",p:"p",pre:"pre",hr:"hr",h2:"h2",h3:"h3",ul:"ul",li:"li",strong:"strong",a:"a",table:"table",thead:"thead",tr:"tr",th:"th",tbody:"tbody",td:"td"},d(),s.components);return e.jsxs(e.Fragment,{children:[e.jsx(i,{title:"Control Flow/Choose/Attribute Reference"}),`
 `,e.jsxs(n.h1,{id:"aa-choose-attribute-reference",children:[e.jsx(n.code,{children:"<aa-choose>"})," Attribute Reference"]}),`
 `,e.jsxs(n.p,{children:["A conditional control-flow element that evaluates test expressions on its child branches and renders the first matching one. It implements an if/else-if/else pattern using ",e.jsx(n.code,{children:"<aa-when>"})," and ",e.jsx(n.code,{children:"<aa-otherwise>"})," child elements."]}),`
 `,e.jsx(n.pre,{children:e.jsx(n.code,{className:"language-html",children:`<aa-choose name="branch-by-mood">
@@ -100,28 +100,14 @@ import{j as e}from"./jsx-runtime-xrKziPlz.js";import{M as t}from"./index-DuX6iVf
 `,e.jsx(n.hr,{}),`
 `,e.jsx(n.h2,{id:"attribute-summary-table",children:"Attribute Summary Table"}),`
 `,e.jsx(n.h3,{id:"aa-choose",children:e.jsx(n.code,{children:"<aa-choose>"})}),`
-`,e.jsxs(n.p,{children:[`| Attribute | Type | Default | Description |
-|---|---|---|---|
-| `,e.jsx(n.code,{children:"name"}),` | String | — | Block identifier |
-| `,e.jsx(n.code,{children:"should-run"})," | Boolean | ",e.jsx(n.code,{children:"true"}),` | Enable/disable evaluation |
-| `,e.jsx(n.code,{children:"debug"})," | Boolean | ",e.jsx(n.code,{children:"false"})," | Debug mode |"]}),`
+`,e.jsxs(n.table,{children:[e.jsx(n.thead,{children:e.jsxs(n.tr,{children:[e.jsx(n.th,{children:"Attribute"}),e.jsx(n.th,{children:"Type"}),e.jsx(n.th,{children:"Default"}),e.jsx(n.th,{children:"Description"})]})}),e.jsxs(n.tbody,{children:[e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"name"})}),e.jsx(n.td,{children:"String"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Block identifier"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"should-run"})}),e.jsx(n.td,{children:"Boolean"}),e.jsx(n.td,{children:e.jsx(n.code,{children:"true"})}),e.jsx(n.td,{children:"Enable/disable evaluation"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"debug"})}),e.jsx(n.td,{children:"Boolean"}),e.jsx(n.td,{children:e.jsx(n.code,{children:"false"})}),e.jsx(n.td,{children:"Debug mode"})]})]})]}),`
 `,e.jsx(n.h3,{id:"aa-when",children:e.jsx(n.code,{children:"<aa-when>"})}),`
-`,e.jsxs(n.p,{children:[`| Attribute | Type | Default | Description |
-|---|---|---|---|
-| `,e.jsx(n.code,{children:"test"})," | String | — | Condition expression to evaluate |"]}),`
+`,e.jsxs(n.table,{children:[e.jsx(n.thead,{children:e.jsxs(n.tr,{children:[e.jsx(n.th,{children:"Attribute"}),e.jsx(n.th,{children:"Type"}),e.jsx(n.th,{children:"Default"}),e.jsx(n.th,{children:"Description"})]})}),e.jsx(n.tbody,{children:e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"test"})}),e.jsx(n.td,{children:"String"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Condition expression to evaluate"})]})})]}),`
 `,e.jsx(n.h3,{id:"aa-jump",children:e.jsx(n.code,{children:"<aa-jump>"})}),`
-`,e.jsxs(n.p,{children:[`| Attribute | Type | Default | Description |
-|---|---|---|---|
-| `,e.jsx(n.code,{children:"name"}),` | String | — | Jump element identifier |
-| `,e.jsx(n.code,{children:"goto"})," | String | — | Target element name |"]}),`
+`,e.jsxs(n.table,{children:[e.jsx(n.thead,{children:e.jsxs(n.tr,{children:[e.jsx(n.th,{children:"Attribute"}),e.jsx(n.th,{children:"Type"}),e.jsx(n.th,{children:"Default"}),e.jsx(n.th,{children:"Description"})]})}),e.jsxs(n.tbody,{children:[e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"name"})}),e.jsx(n.td,{children:"String"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Jump element identifier"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"goto"})}),e.jsx(n.td,{children:"String"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Target element name"})]})]})]}),`
 `,e.jsx(n.hr,{}),`
 `,e.jsx(n.h2,{id:"dom-api",children:"DOM API"}),`
 `,e.jsx(n.h3,{id:"aa-choose-1",children:e.jsx(n.code,{children:"<aa-choose>"})}),`
-`,e.jsxs(n.p,{children:[`| Method | Returns | Description |
-|---|---|---|
-| `,e.jsx(n.code,{children:"evaluate()"})," | ",e.jsx(n.code,{children:"void"})," | Evaluate conditions and render matching branch |"]}),`
+`,e.jsxs(n.table,{children:[e.jsx(n.thead,{children:e.jsxs(n.tr,{children:[e.jsx(n.th,{children:"Method"}),e.jsx(n.th,{children:"Returns"}),e.jsx(n.th,{children:"Description"})]})}),e.jsx(n.tbody,{children:e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"evaluate()"})}),e.jsx(n.td,{children:e.jsx(n.code,{children:"void"})}),e.jsx(n.td,{children:"Evaluate conditions and render matching branch"})]})})]}),`
 `,e.jsx(n.h3,{id:"events",children:"Events"}),`
-`,e.jsxs(n.p,{children:[`| Event | Element | When |
-|---|---|---|
-| `,e.jsx(n.code,{children:"endEvent"})," | ",e.jsx(n.code,{children:"<aa-choose>"}),` | Fired after the chosen branch completes |
-| `,e.jsx(n.code,{children:"endEvent"})," | ",e.jsx(n.code,{children:"<aa-jump>"})," | Fired immediately with ",e.jsx(n.code,{children:"goto"})," detail |"]})]})}function u(s={}){const{wrapper:n}=Object.assign({},i(),s.components);return n?e.jsx(n,Object.assign({},s,{children:e.jsx(r,s)})):r(s)}export{u as default};
+`,e.jsxs(n.table,{children:[e.jsx(n.thead,{children:e.jsxs(n.tr,{children:[e.jsx(n.th,{children:"Event"}),e.jsx(n.th,{children:"Element"}),e.jsx(n.th,{children:"When"})]})}),e.jsxs(n.tbody,{children:[e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"endEvent"})}),e.jsx(n.td,{children:e.jsx(n.code,{children:"<aa-choose>"})}),e.jsx(n.td,{children:"Fired after the chosen branch completes"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"endEvent"})}),e.jsx(n.td,{children:e.jsx(n.code,{children:"<aa-jump>"})}),e.jsxs(n.td,{children:["Fired immediately with ",e.jsx(n.code,{children:"goto"})," detail"]})]})]})]})]})}function u(s={}){const{wrapper:n}=Object.assign({},d(),s.components);return n?e.jsx(n,Object.assign({},s,{children:e.jsx(r,s)})):r(s)}export{u as default};

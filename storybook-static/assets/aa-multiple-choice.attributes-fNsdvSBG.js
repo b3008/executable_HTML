@@ -1,4 +1,4 @@
-import{j as e}from"./jsx-runtime-xrKziPlz.js";import{M as l}from"./index-DuX6iVfj.js";import{u as s}from"./index-7wJ7cBts.js";import"./iframe-DEer1LHX.js";import"../sb-preview/runtime.js";import"./_commonjsHelpers-Cpj98o6Y.js";import"./index-Bw8VTzHM.js";import"./index-BNKdAXne.js";import"./index-DrFu-skq.js";function c(n){const i=Object.assign({h1:"h1",code:"code",p:"p",pre:"pre",hr:"hr",h2:"h2",h3:"h3",ul:"ul",li:"li",strong:"strong"},s(),n.components);return e.jsxs(e.Fragment,{children:[e.jsx(l,{title:"Response Items/Multiple Choice/Attribute Reference"}),`
+import{j as e}from"./jsx-runtime-DjjJRqnr.js";import{M as t}from"./index-BZwxqCSI.js";import{u as c}from"./index-BHT9JHh8.js";import"./iframe-vNrS5K6G.js";import"../sb-preview/runtime.js";import"./_commonjsHelpers-Cpj98o6Y.js";import"./index-Bw8VTzHM.js";import"./index-BNKdAXne.js";import"./index-DrFu-skq.js";function s(n){const i=Object.assign({h1:"h1",code:"code",p:"p",pre:"pre",hr:"hr",h2:"h2",h3:"h3",ul:"ul",li:"li",strong:"strong",table:"table",thead:"thead",tr:"tr",th:"th",tbody:"tbody",td:"td"},c(),n.components);return e.jsxs(e.Fragment,{children:[e.jsx(t,{title:"Response Items/Multiple Choice/Attribute Reference"}),`
 `,e.jsxs(i.h1,{id:"aa-multiple-choice-attribute-reference",children:[e.jsx(i.code,{children:"<aa-multiple-choice>"})," Attribute Reference"]}),`
 `,e.jsxs(i.p,{children:["A single-select response item that renders a group of radio buttons. The participant selects exactly one option from the available choices. Each option is defined by an ",e.jsx(i.code,{children:"<aa-choice-item>"})," child element."]}),`
 `,e.jsx(i.pre,{children:e.jsx(i.code,{className:"language-html",children:`<aa-multiple-choice name="transport" vertical>
@@ -58,21 +58,13 @@ import{j as e}from"./jsx-runtime-xrKziPlz.js";import{M as l}from"./index-DuX6iVf
 `,e.jsx(i.hr,{}),`
 `,e.jsx(i.h2,{id:"attribute-summary-table",children:"Attribute Summary Table"}),`
 `,e.jsx(i.h3,{id:"aa-multiple-choice",children:e.jsx(i.code,{children:"<aa-multiple-choice>"})}),`
-`,e.jsxs(i.p,{children:[`| Attribute | Type | Default | Description |
-|---|---|---|---|
-| `,e.jsx(i.code,{children:"name"}),` | String | — | Variable name for data storage |
-| `,e.jsx(i.code,{children:"horizontal"})," | Boolean | ",e.jsx(i.code,{children:"false"}),` | Horizontal layout |
-| `,e.jsx(i.code,{children:"vertical"})," | Boolean | ",e.jsx(i.code,{children:"true"}),` | Vertical layout (default) |
-| `,e.jsx(i.code,{children:"value"})," | String | — | Currently selected value |"]}),`
+`,e.jsxs(i.table,{children:[e.jsx(i.thead,{children:e.jsxs(i.tr,{children:[e.jsx(i.th,{children:"Attribute"}),e.jsx(i.th,{children:"Type"}),e.jsx(i.th,{children:"Default"}),e.jsx(i.th,{children:"Description"})]})}),e.jsxs(i.tbody,{children:[e.jsxs(i.tr,{children:[e.jsx(i.td,{children:e.jsx(i.code,{children:"name"})}),e.jsx(i.td,{children:"String"}),e.jsx(i.td,{children:"—"}),e.jsx(i.td,{children:"Variable name for data storage"})]}),e.jsxs(i.tr,{children:[e.jsx(i.td,{children:e.jsx(i.code,{children:"horizontal"})}),e.jsx(i.td,{children:"Boolean"}),e.jsx(i.td,{children:e.jsx(i.code,{children:"false"})}),e.jsx(i.td,{children:"Horizontal layout"})]}),e.jsxs(i.tr,{children:[e.jsx(i.td,{children:e.jsx(i.code,{children:"vertical"})}),e.jsx(i.td,{children:"Boolean"}),e.jsx(i.td,{children:e.jsx(i.code,{children:"true"})}),e.jsx(i.td,{children:"Vertical layout (default)"})]}),e.jsxs(i.tr,{children:[e.jsx(i.td,{children:e.jsx(i.code,{children:"value"})}),e.jsx(i.td,{children:"String"}),e.jsx(i.td,{children:"—"}),e.jsx(i.td,{children:"Currently selected value"})]})]})]}),`
 `,e.jsx(i.h3,{id:"aa-choice-item",children:e.jsx(i.code,{children:"<aa-choice-item>"})}),`
-`,e.jsxs(i.p,{children:[`| Attribute | Type | Default | Description |
-|---|---|---|---|
-| `,e.jsx(i.code,{children:"value"}),` | String | — | Data value for this option |
-| `,e.jsx(i.code,{children:"checked"})," | Boolean | ",e.jsx(i.code,{children:"false"})," | Whether this option is selected |"]}),`
+`,e.jsxs(i.table,{children:[e.jsx(i.thead,{children:e.jsxs(i.tr,{children:[e.jsx(i.th,{children:"Attribute"}),e.jsx(i.th,{children:"Type"}),e.jsx(i.th,{children:"Default"}),e.jsx(i.th,{children:"Description"})]})}),e.jsxs(i.tbody,{children:[e.jsxs(i.tr,{children:[e.jsx(i.td,{children:e.jsx(i.code,{children:"value"})}),e.jsx(i.td,{children:"String"}),e.jsx(i.td,{children:"—"}),e.jsx(i.td,{children:"Data value for this option"})]}),e.jsxs(i.tr,{children:[e.jsx(i.td,{children:e.jsx(i.code,{children:"checked"})}),e.jsx(i.td,{children:"Boolean"}),e.jsx(i.td,{children:e.jsx(i.code,{children:"false"})}),e.jsx(i.td,{children:"Whether this option is selected"})]})]})]}),`
 `,e.jsx(i.hr,{}),`
 `,e.jsx(i.h2,{id:"dom-api",children:"DOM API"}),`
 `,e.jsx(i.pre,{children:e.jsx(i.code,{className:"language-js",children:`const mc = document.querySelector('aa-multiple-choice');
 console.log(mc.value); // value of the selected item
 `})}),`
 `,e.jsx(i.h3,{id:"events",children:"Events"}),`
-`,e.jsxs(i.p,{children:["Choice items dispatch ",e.jsx(i.code,{children:"change"})," events when clicked. The parent ",e.jsx(i.code,{children:"<aa-screen>"})," collects the final value on submission."]})]})}function m(n={}){const{wrapper:i}=Object.assign({},s(),n.components);return i?e.jsx(i,Object.assign({},n,{children:e.jsx(c,n)})):c(n)}export{m as default};
+`,e.jsxs(i.p,{children:["Choice items dispatch ",e.jsx(i.code,{children:"change"})," events when clicked. The parent ",e.jsx(i.code,{children:"<aa-screen>"})," collects the final value on submission."]})]})}function m(n={}){const{wrapper:i}=Object.assign({},c(),n.components);return i?e.jsx(i,Object.assign({},n,{children:e.jsx(s,n)})):s(n)}export{m as default};

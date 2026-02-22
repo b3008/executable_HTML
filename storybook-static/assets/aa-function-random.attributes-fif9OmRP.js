@@ -1,4 +1,4 @@
-import{j as e}from"./jsx-runtime-xrKziPlz.js";import{M as d}from"./index-DuX6iVfj.js";import{u as s}from"./index-7wJ7cBts.js";import"./iframe-DEer1LHX.js";import"../sb-preview/runtime.js";import"./_commonjsHelpers-Cpj98o6Y.js";import"./index-Bw8VTzHM.js";import"./index-BNKdAXne.js";import"./index-DrFu-skq.js";function r(i){const n=Object.assign({h1:"h1",code:"code",p:"p",pre:"pre",hr:"hr",h2:"h2",h3:"h3",ul:"ul",li:"li",strong:"strong",ol:"ol"},s(),i.components);return e.jsxs(e.Fragment,{children:[e.jsx(d,{title:"Data & Utility/Function Random/Attribute Reference"}),`
+import{j as e}from"./jsx-runtime-DjjJRqnr.js";import{M as d}from"./index-BZwxqCSI.js";import{u as s}from"./index-BHT9JHh8.js";import"./iframe-vNrS5K6G.js";import"../sb-preview/runtime.js";import"./_commonjsHelpers-Cpj98o6Y.js";import"./index-Bw8VTzHM.js";import"./index-BNKdAXne.js";import"./index-DrFu-skq.js";function r(i){const n=Object.assign({h1:"h1",code:"code",p:"p",pre:"pre",hr:"hr",h2:"h2",h3:"h3",ul:"ul",li:"li",strong:"strong",ol:"ol",table:"table",thead:"thead",tr:"tr",th:"th",tbody:"tbody",td:"td"},s(),i.components);return e.jsxs(e.Fragment,{children:[e.jsx(d,{title:"Data & Utility/Function Random/Attribute Reference"}),`
 `,e.jsxs(n.h1,{id:"aa-function-random-attribute-reference",children:[e.jsx(n.code,{children:"<aa-function-random>"})," Attribute Reference"]}),`
 `,e.jsx(n.p,{children:"A declarative, non-rendering utility element that generates a random integer within a specified range and stores it in session memory. The element executes on connection and then removes itself from the DOM. Useful for randomised study designs, counterbalancing, or adding variability to questionnaires."}),`
 `,e.jsx(n.pre,{children:e.jsx(n.code,{className:"language-html",children:`<aa-function-random name="condition" min="1" max="3"></aa-function-random>
@@ -56,16 +56,8 @@ import{j as e}from"./jsx-runtime-xrKziPlz.js";import{M as d}from"./index-DuX6iVf
 `,e.jsxs(n.p,{children:[e.jsx(n.strong,{children:"Algorithm:"})," Uses ",e.jsx(n.code,{children:"Math.floor(Math.random() * (max - min + 1)) + min"}),"."]}),`
 `,e.jsx(n.hr,{}),`
 `,e.jsx(n.h2,{id:"attribute-summary-table",children:"Attribute Summary Table"}),`
-`,e.jsxs(n.p,{children:[`| Attribute | Type | Default | Description |
-|---|---|---|---|
-| `,e.jsx(n.code,{children:"name"}),` | String | — | Variable key in session memory |
-| `,e.jsx(n.code,{children:"min"}),` | Number | — | Minimum value (inclusive) |
-| `,e.jsx(n.code,{children:"max"}),` | Number | — | Maximum value (inclusive) |
-| `,e.jsx(n.code,{children:"value"}),` | Number | — | Generated value (read-only) |
-| `,e.jsx(n.code,{children:"debug"})," | Boolean | ",e.jsx(n.code,{children:"false"})," | Keep element visible after execution |"]}),`
+`,e.jsxs(n.table,{children:[e.jsx(n.thead,{children:e.jsxs(n.tr,{children:[e.jsx(n.th,{children:"Attribute"}),e.jsx(n.th,{children:"Type"}),e.jsx(n.th,{children:"Default"}),e.jsx(n.th,{children:"Description"})]})}),e.jsxs(n.tbody,{children:[e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"name"})}),e.jsx(n.td,{children:"String"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Variable key in session memory"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"min"})}),e.jsx(n.td,{children:"Number"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Minimum value (inclusive)"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"max"})}),e.jsx(n.td,{children:"Number"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Maximum value (inclusive)"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"value"})}),e.jsx(n.td,{children:"Number"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Generated value (read-only)"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"debug"})}),e.jsx(n.td,{children:"Boolean"}),e.jsx(n.td,{children:e.jsx(n.code,{children:"false"})}),e.jsx(n.td,{children:"Keep element visible after execution"})]})]})]}),`
 `,e.jsx(n.hr,{}),`
 `,e.jsx(n.h2,{id:"dom-api",children:"DOM API"}),`
 `,e.jsx(n.h3,{id:"events",children:"Events"}),`
-`,e.jsxs(n.p,{children:[`| Event | When |
-|---|---|
-| `,e.jsx(n.code,{children:"endEvent"})," | Fired after the random value has been generated and stored |"]})]})}function u(i={}){const{wrapper:n}=Object.assign({},s(),i.components);return n?e.jsx(n,Object.assign({},i,{children:e.jsx(r,i)})):r(i)}export{u as default};
+`,e.jsxs(n.table,{children:[e.jsx(n.thead,{children:e.jsxs(n.tr,{children:[e.jsx(n.th,{children:"Event"}),e.jsx(n.th,{children:"When"})]})}),e.jsx(n.tbody,{children:e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"endEvent"})}),e.jsx(n.td,{children:"Fired after the random value has been generated and stored"})]})})]})]})}function u(i={}){const{wrapper:n}=Object.assign({},s(),i.components);return n?e.jsx(n,Object.assign({},i,{children:e.jsx(r,i)})):r(i)}export{u as default};

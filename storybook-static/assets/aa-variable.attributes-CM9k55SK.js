@@ -1,4 +1,4 @@
-import{j as e}from"./jsx-runtime-xrKziPlz.js";import{M as a}from"./index-DuX6iVfj.js";import{u as i}from"./index-7wJ7cBts.js";import"./iframe-DEer1LHX.js";import"../sb-preview/runtime.js";import"./_commonjsHelpers-Cpj98o6Y.js";import"./index-Bw8VTzHM.js";import"./index-BNKdAXne.js";import"./index-DrFu-skq.js";function r(s){const n=Object.assign({h1:"h1",code:"code",p:"p",pre:"pre",hr:"hr",h2:"h2",h3:"h3",ul:"ul",li:"li",strong:"strong",ol:"ol"},i(),s.components);return e.jsxs(e.Fragment,{children:[e.jsx(a,{title:"Data & Utility/Variable/Attribute Reference"}),`
+import{j as e}from"./jsx-runtime-DjjJRqnr.js";import{M as t}from"./index-BZwxqCSI.js";import{u as i}from"./index-BHT9JHh8.js";import"./iframe-vNrS5K6G.js";import"../sb-preview/runtime.js";import"./_commonjsHelpers-Cpj98o6Y.js";import"./index-Bw8VTzHM.js";import"./index-BNKdAXne.js";import"./index-DrFu-skq.js";function r(s){const n=Object.assign({h1:"h1",code:"code",p:"p",pre:"pre",hr:"hr",h2:"h2",h3:"h3",ul:"ul",li:"li",strong:"strong",ol:"ol",table:"table",thead:"thead",tr:"tr",th:"th",tbody:"tbody",td:"td"},i(),s.components);return e.jsxs(e.Fragment,{children:[e.jsx(t,{title:"Data & Utility/Variable/Attribute Reference"}),`
 `,e.jsxs(n.h1,{id:"aa-variable-attribute-reference",children:[e.jsx(n.code,{children:"<aa-variable>"})," Attribute Reference"]}),`
 `,e.jsx(n.p,{children:"A declarative, non-rendering element that initialises a named variable in session memory. Place it at the start of a session or sequence to set up initial values. The element processes its value on connection and then removes itself from the DOM."}),`
 `,e.jsx(n.pre,{children:e.jsx(n.code,{className:"language-html",children:`<aa-session name="study">
@@ -50,13 +50,8 @@ import{j as e}from"./jsx-runtime-xrKziPlz.js";import{M as a}from"./index-DuX6iVf
 `]}),`
 `,e.jsx(n.hr,{}),`
 `,e.jsx(n.h2,{id:"attribute-summary-table",children:"Attribute Summary Table"}),`
-`,e.jsxs(n.p,{children:[`| Attribute | Type | Default | Description |
-|---|---|---|---|
-| `,e.jsx(n.code,{children:"name"}),` | String | — | Variable key in session memory |
-| `,e.jsx(n.code,{children:"value"})," | String | — | Value or expression to assign |"]}),`
+`,e.jsxs(n.table,{children:[e.jsx(n.thead,{children:e.jsxs(n.tr,{children:[e.jsx(n.th,{children:"Attribute"}),e.jsx(n.th,{children:"Type"}),e.jsx(n.th,{children:"Default"}),e.jsx(n.th,{children:"Description"})]})}),e.jsxs(n.tbody,{children:[e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"name"})}),e.jsx(n.td,{children:"String"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Variable key in session memory"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"value"})}),e.jsx(n.td,{children:"String"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Value or expression to assign"})]})]})]}),`
 `,e.jsx(n.hr,{}),`
 `,e.jsx(n.h2,{id:"dom-api",children:"DOM API"}),`
 `,e.jsx(n.h3,{id:"events",children:"Events"}),`
-`,e.jsxs(n.p,{children:[`| Event | When |
-|---|---|
-| `,e.jsx(n.code,{children:"endEvent"})," | Fired after the variable has been set in session memory |"]})]})}function u(s={}){const{wrapper:n}=Object.assign({},i(),s.components);return n?e.jsx(n,Object.assign({},s,{children:e.jsx(r,s)})):r(s)}export{u as default};
+`,e.jsxs(n.table,{children:[e.jsx(n.thead,{children:e.jsxs(n.tr,{children:[e.jsx(n.th,{children:"Event"}),e.jsx(n.th,{children:"When"})]})}),e.jsx(n.tbody,{children:e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"endEvent"})}),e.jsx(n.td,{children:"Fired after the variable has been set in session memory"})]})})]})]})}function u(s={}){const{wrapper:n}=Object.assign({},i(),s.components);return n?e.jsx(n,Object.assign({},s,{children:e.jsx(r,s)})):r(s)}export{u as default};

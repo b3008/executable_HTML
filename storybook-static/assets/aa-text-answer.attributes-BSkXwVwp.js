@@ -1,4 +1,4 @@
-import{j as e}from"./jsx-runtime-xrKziPlz.js";import{M as s}from"./index-DuX6iVfj.js";import{u as i}from"./index-7wJ7cBts.js";import"./iframe-DEer1LHX.js";import"../sb-preview/runtime.js";import"./_commonjsHelpers-Cpj98o6Y.js";import"./index-Bw8VTzHM.js";import"./index-BNKdAXne.js";import"./index-DrFu-skq.js";function r(t){const n=Object.assign({h1:"h1",code:"code",p:"p",pre:"pre",hr:"hr",h2:"h2",h3:"h3",ul:"ul",li:"li",strong:"strong"},i(),t.components);return e.jsxs(e.Fragment,{children:[e.jsx(s,{title:"Response Items/Text Answer/Attribute Reference"}),`
+import{j as e}from"./jsx-runtime-DjjJRqnr.js";import{M as i}from"./index-BZwxqCSI.js";import{u as s}from"./index-BHT9JHh8.js";import"./iframe-vNrS5K6G.js";import"../sb-preview/runtime.js";import"./_commonjsHelpers-Cpj98o6Y.js";import"./index-Bw8VTzHM.js";import"./index-BNKdAXne.js";import"./index-DrFu-skq.js";function r(t){const n=Object.assign({h1:"h1",code:"code",p:"p",pre:"pre",hr:"hr",h2:"h2",h3:"h3",ul:"ul",li:"li",strong:"strong",table:"table",thead:"thead",tr:"tr",th:"th",tbody:"tbody",td:"td"},s(),t.components);return e.jsxs(e.Fragment,{children:[e.jsx(i,{title:"Response Items/Text Answer/Attribute Reference"}),`
 `,e.jsxs(n.h1,{id:"aa-text-answer-attribute-reference",children:[e.jsx(n.code,{children:"<aa-text-answer>"})," Attribute Reference"]}),`
 `,e.jsx(n.p,{children:"A free-text response item that renders as a text input field. Supports multiple input types including plain text, email, number, telephone, and multi-line textarea."}),`
 `,e.jsx(n.pre,{children:e.jsx(n.code,{className:"language-html",children:`<aa-text-answer name="comment" label="Any additional comments?" type="textarea">
@@ -45,20 +45,12 @@ import{j as e}from"./jsx-runtime-xrKziPlz.js";import{M as s}from"./index-DuX6iVf
 `,e.jsx(n.p,{children:"The current text entered by the participant. Updated on each input event (with a 1500ms debounce for session memory writes)."}),`
 `,e.jsx(n.hr,{}),`
 `,e.jsx(n.h2,{id:"attribute-summary-table",children:"Attribute Summary Table"}),`
-`,e.jsxs(n.p,{children:[`| Attribute | Type | Default | Description |
-|---|---|---|---|
-| `,e.jsx(n.code,{children:"name"}),` | String | — | Variable name for data storage |
-| `,e.jsx(n.code,{children:"label"}),` | String | — | Input label text |
-| `,e.jsx(n.code,{children:"type"})," | String | ",e.jsx(n.code,{children:'"text"'}),` | Input type (text, textarea, number, email, etc.) |
-| `,e.jsx(n.code,{children:"value"})," | String | — | Current entered text (read-only) |"]}),`
+`,e.jsxs(n.table,{children:[e.jsx(n.thead,{children:e.jsxs(n.tr,{children:[e.jsx(n.th,{children:"Attribute"}),e.jsx(n.th,{children:"Type"}),e.jsx(n.th,{children:"Default"}),e.jsx(n.th,{children:"Description"})]})}),e.jsxs(n.tbody,{children:[e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"name"})}),e.jsx(n.td,{children:"String"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Variable name for data storage"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"label"})}),e.jsx(n.td,{children:"String"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Input label text"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"type"})}),e.jsx(n.td,{children:"String"}),e.jsx(n.td,{children:e.jsx(n.code,{children:'"text"'})}),e.jsx(n.td,{children:"Input type (text, textarea, number, email, etc.)"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"value"})}),e.jsx(n.td,{children:"String"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Current entered text (read-only)"})]})]})]}),`
 `,e.jsx(n.hr,{}),`
 `,e.jsx(n.h2,{id:"dom-api",children:"DOM API"}),`
 `,e.jsx(n.pre,{children:e.jsx(n.code,{className:"language-js",children:`const ta = document.querySelector('aa-text-answer');
 console.log(ta.value); // current text
 `})}),`
-`,e.jsxs(n.p,{children:[`| Property | Type | Description |
-|---|---|---|
-| `,e.jsx(n.code,{children:"value"})," | ",e.jsx(n.code,{children:"string"}),` | The current input value |
-| `,e.jsx(n.code,{children:"label"})," | ",e.jsx(n.code,{children:"string"})," | The label text |"]}),`
+`,e.jsxs(n.table,{children:[e.jsx(n.thead,{children:e.jsxs(n.tr,{children:[e.jsx(n.th,{children:"Property"}),e.jsx(n.th,{children:"Type"}),e.jsx(n.th,{children:"Description"})]})}),e.jsxs(n.tbody,{children:[e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"value"})}),e.jsx(n.td,{children:e.jsx(n.code,{children:"string"})}),e.jsx(n.td,{children:"The current input value"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"label"})}),e.jsx(n.td,{children:e.jsx(n.code,{children:"string"})}),e.jsx(n.td,{children:"The label text"})]})]})]}),`
 `,e.jsx(n.h3,{id:"events",children:"Events"}),`
-`,e.jsxs(n.p,{children:["The input dispatches ",e.jsx(n.code,{children:"input"})," and ",e.jsx(n.code,{children:"change"})," events as the participant types. Session memory is updated with a 1500ms debounce. The parent ",e.jsx(n.code,{children:"<aa-screen>"})," collects the final value on submission."]})]})}function u(t={}){const{wrapper:n}=Object.assign({},i(),t.components);return n?e.jsx(n,Object.assign({},t,{children:e.jsx(r,t)})):r(t)}export{u as default};
+`,e.jsxs(n.p,{children:["The input dispatches ",e.jsx(n.code,{children:"input"})," and ",e.jsx(n.code,{children:"change"})," events as the participant types. Session memory is updated with a 1500ms debounce. The parent ",e.jsx(n.code,{children:"<aa-screen>"})," collects the final value on submission."]})]})}function u(t={}){const{wrapper:n}=Object.assign({},s(),t.components);return n?e.jsx(n,Object.assign({},t,{children:e.jsx(r,t)})):r(t)}export{u as default};

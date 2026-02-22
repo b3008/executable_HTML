@@ -1,4 +1,4 @@
-import{j as e}from"./jsx-runtime-xrKziPlz.js";import{M as l}from"./index-DuX6iVfj.js";import{u as r}from"./index-7wJ7cBts.js";import"./iframe-DEer1LHX.js";import"../sb-preview/runtime.js";import"./_commonjsHelpers-Cpj98o6Y.js";import"./index-Bw8VTzHM.js";import"./index-BNKdAXne.js";import"./index-DrFu-skq.js";function i(s){const n=Object.assign({h1:"h1",code:"code",p:"p",pre:"pre",hr:"hr",h2:"h2",h3:"h3",ul:"ul",li:"li",strong:"strong"},r(),s.components);return e.jsxs(e.Fragment,{children:[e.jsx(l,{title:"Response Items/Slider/Attribute Reference"}),`
+import{j as e}from"./jsx-runtime-DjjJRqnr.js";import{M as d}from"./index-BZwxqCSI.js";import{u as i}from"./index-BHT9JHh8.js";import"./iframe-vNrS5K6G.js";import"../sb-preview/runtime.js";import"./_commonjsHelpers-Cpj98o6Y.js";import"./index-Bw8VTzHM.js";import"./index-BNKdAXne.js";import"./index-DrFu-skq.js";function r(s){const n=Object.assign({h1:"h1",code:"code",p:"p",pre:"pre",hr:"hr",h2:"h2",h3:"h3",ul:"ul",li:"li",strong:"strong",table:"table",thead:"thead",tr:"tr",th:"th",tbody:"tbody",td:"td"},i(),s.components);return e.jsxs(e.Fragment,{children:[e.jsx(d,{title:"Response Items/Slider/Attribute Reference"}),`
 `,e.jsxs(n.h1,{id:"aa-slider-attribute-reference",children:[e.jsx(n.code,{children:"<aa-slider>"})," Attribute Reference"]}),`
 `,e.jsxs(n.p,{children:["A numeric input element that renders as a horizontal slider (range input). The participant drags the thumb to select a value between ",e.jsx(n.code,{children:"min"})," and ",e.jsx(n.code,{children:"max"}),". Optional labels can be displayed at each end of the slider."]}),`
 `,e.jsx(n.pre,{children:e.jsx(n.code,{className:"language-html",children:`<aa-slider
@@ -50,25 +50,12 @@ import{j as e}from"./jsx-runtime-xrKziPlz.js";import{M as l}from"./index-DuX6iVf
 `,e.jsx(n.p,{children:"The currently selected value. Updated as the participant moves the slider thumb. Read this property to get the current selection."}),`
 `,e.jsx(n.hr,{}),`
 `,e.jsx(n.h2,{id:"attribute-summary-table",children:"Attribute Summary Table"}),`
-`,e.jsxs(n.p,{children:[`| Attribute | Type | Default | Description |
-|---|---|---|---|
-| `,e.jsx(n.code,{children:"name"}),` | String | — | Variable name for data storage |
-| `,e.jsx(n.code,{children:"min"}),` | Number | — | Minimum slider value |
-| `,e.jsx(n.code,{children:"max"}),` | Number | — | Maximum slider value |
-| `,e.jsx(n.code,{children:"min-label"}),` | String | — | Label at low end |
-| `,e.jsx(n.code,{children:"max-label"}),` | String | — | Label at high end |
-| `,e.jsx(n.code,{children:"value"})," | Number | — | Current selected value (read-only) |"]}),`
+`,e.jsxs(n.table,{children:[e.jsx(n.thead,{children:e.jsxs(n.tr,{children:[e.jsx(n.th,{children:"Attribute"}),e.jsx(n.th,{children:"Type"}),e.jsx(n.th,{children:"Default"}),e.jsx(n.th,{children:"Description"})]})}),e.jsxs(n.tbody,{children:[e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"name"})}),e.jsx(n.td,{children:"String"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Variable name for data storage"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"min"})}),e.jsx(n.td,{children:"Number"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Minimum slider value"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"max"})}),e.jsx(n.td,{children:"Number"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Maximum slider value"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"min-label"})}),e.jsx(n.td,{children:"String"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Label at low end"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"max-label"})}),e.jsx(n.td,{children:"String"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Label at high end"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"value"})}),e.jsx(n.td,{children:"Number"}),e.jsx(n.td,{children:"—"}),e.jsx(n.td,{children:"Current selected value (read-only)"})]})]})]}),`
 `,e.jsx(n.hr,{}),`
 `,e.jsx(n.h2,{id:"dom-api",children:"DOM API"}),`
 `,e.jsx(n.pre,{children:e.jsx(n.code,{className:"language-js",children:`const slider = document.querySelector('aa-slider');
 console.log(slider.value); // current numeric value
 `})}),`
-`,e.jsxs(n.p,{children:[`| Property | Type | Description |
-|---|---|---|
-| `,e.jsx(n.code,{children:"value"})," | ",e.jsx(n.code,{children:"number"}),` | The current slider value |
-| `,e.jsx(n.code,{children:"min"})," | ",e.jsx(n.code,{children:"number"}),` | Minimum value |
-| `,e.jsx(n.code,{children:"max"})," | ",e.jsx(n.code,{children:"number"}),` | Maximum value |
-| `,e.jsx(n.code,{children:"minLabel"})," | ",e.jsx(n.code,{children:"string"}),` | Left-side label text |
-| `,e.jsx(n.code,{children:"maxLabel"})," | ",e.jsx(n.code,{children:"string"})," | Right-side label text |"]}),`
+`,e.jsxs(n.table,{children:[e.jsx(n.thead,{children:e.jsxs(n.tr,{children:[e.jsx(n.th,{children:"Property"}),e.jsx(n.th,{children:"Type"}),e.jsx(n.th,{children:"Description"})]})}),e.jsxs(n.tbody,{children:[e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"value"})}),e.jsx(n.td,{children:e.jsx(n.code,{children:"number"})}),e.jsx(n.td,{children:"The current slider value"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"min"})}),e.jsx(n.td,{children:e.jsx(n.code,{children:"number"})}),e.jsx(n.td,{children:"Minimum value"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"max"})}),e.jsx(n.td,{children:e.jsx(n.code,{children:"number"})}),e.jsx(n.td,{children:"Maximum value"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"minLabel"})}),e.jsx(n.td,{children:e.jsx(n.code,{children:"string"})}),e.jsx(n.td,{children:"Left-side label text"})]}),e.jsxs(n.tr,{children:[e.jsx(n.td,{children:e.jsx(n.code,{children:"maxLabel"})}),e.jsx(n.td,{children:e.jsx(n.code,{children:"string"})}),e.jsx(n.td,{children:"Right-side label text"})]})]})]}),`
 `,e.jsx(n.h3,{id:"events",children:"Events"}),`
-`,e.jsxs(n.p,{children:["The slider dispatches ",e.jsx(n.code,{children:"change"})," events as the participant adjusts the value. The parent ",e.jsx(n.code,{children:"<aa-screen>"})," collects the final value on submission."]})]})}function u(s={}){const{wrapper:n}=Object.assign({},r(),s.components);return n?e.jsx(n,Object.assign({},s,{children:e.jsx(i,s)})):i(s)}export{u as default};
+`,e.jsxs(n.p,{children:["The slider dispatches ",e.jsx(n.code,{children:"change"})," events as the participant adjusts the value. The parent ",e.jsx(n.code,{children:"<aa-screen>"})," collects the final value on submission."]})]})}function u(s={}){const{wrapper:n}=Object.assign({},i(),s.components);return n?e.jsx(n,Object.assign({},s,{children:e.jsx(r,s)})):r(s)}export{u as default};
