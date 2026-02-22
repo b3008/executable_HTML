@@ -1,0 +1,85 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Response Items/Text Answer/Attribute Reference" />
+
+# `<aa-text-answer>` Attribute Reference
+
+A free-text response item that renders as a text input field. Supports multiple input types including plain text, email, number, telephone, and multi-line textarea.
+
+```html
+<aa-text-answer name="comment" label="Any additional comments?" type="textarea">
+</aa-text-answer>
+```
+
+---
+
+## Attributes
+
+### `name`
+
+- **Type:** String
+- **Default:** —
+
+The variable name under which the entered text is stored in session memory.
+
+### `label`
+
+- **Type:** String
+- **Default:** —
+
+A label displayed above or alongside the input field. Provides context for what the participant should enter.
+
+### `type`
+
+- **Type:** String
+- **Default:** `"text"`
+- **Allowed values:** `"date"` · `"datetime"` · `"datetime-local"` · `"email"` · `"number"` · `"password"` · `"tel"` · `"text"` · `"time"` · `"textarea"`
+
+The kind of input to render. This maps to the HTML `<input type="...">` attribute, with the addition of `"textarea"` which renders a multi-line text area instead.
+
+- **`text`** — Single-line plain text (default)
+- **`textarea`** — Multi-line text area for longer responses
+- **`number`** — Numeric input with increment/decrement controls
+- **`email`** — Email address with basic format validation
+- **`tel`** — Telephone number input
+- **`date`** — Date picker
+- **`datetime-local`** — Date and time picker
+- **`time`** — Time picker
+- **`password`** — Masked text input
+
+### `value`
+
+- **Type:** String
+- **Default:** —
+- **User-defined:** No (read-only)
+
+The current text entered by the participant. Updated on each input event (with a 1500ms debounce for session memory writes).
+
+---
+
+## Attribute Summary Table
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `name` | String | — | Variable name for data storage |
+| `label` | String | — | Input label text |
+| `type` | String | `"text"` | Input type (text, textarea, number, email, etc.) |
+| `value` | String | — | Current entered text (read-only) |
+
+---
+
+## DOM API
+
+```js
+const ta = document.querySelector('aa-text-answer');
+console.log(ta.value); // current text
+```
+
+| Property | Type | Description |
+|---|---|---|
+| `value` | `string` | The current input value |
+| `label` | `string` | The label text |
+
+### Events
+
+The input dispatches `input` and `change` events as the participant types. Session memory is updated with a 1500ms debounce. The parent `<aa-screen>` collects the final value on submission.

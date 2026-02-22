@@ -1,0 +1,87 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Data & Utility/Geolocation/Attribute Reference" />
+
+# `<aa-geolocation>` Attribute Reference
+
+A non-rendering utility element that captures the participant's geographic location using the browser's Geolocation API. It stores the result (latitude, longitude, timestamp) in session memory. Requires user permission to access location.
+
+```html
+<aa-geolocation name="location"></aa-geolocation>
+
+<!-- Or wait until explicitly requested -->
+<aa-geolocation name="location" get-on-request></aa-geolocation>
+```
+
+---
+
+## Attributes
+
+### `name`
+
+- **Type:** String
+- **Default:** —
+- **Required:** Yes
+
+The key under which the location data is stored in session memory. The stored value is an object with the shape `{ lat: number, lon: number, timestamp: number }`.
+
+### `get-on-request`
+
+- **Type:** Boolean
+- **Default:** `false`
+
+Controls when the location is fetched:
+
+- **`false`** (default) — The location is requested immediately when the element connects to the DOM. The result is stored and a `valueSubmit` event is dispatched as soon as the browser returns the position.
+- **`true`** — The element does not fetch location on connection. Instead, it waits until the value is explicitly requested by reading the `value` property or calling `_getLocation()` programmatically.
+
+### `ready`
+
+- **Type:** Boolean
+- **Default:** `false`
+- **User-defined:** No (read-only)
+
+Indicates whether the location has been successfully retrieved. Becomes `true` after the Geolocation API returns a position.
+
+---
+
+## Behaviour
+
+1. On connection (if `get-on-request` is `false`), the element calls `navigator.geolocation.getCurrentPosition()`.
+2. The browser prompts the user for permission if not already granted.
+3. On success, the element stores `{ lat, lon, timestamp }` in session memory and dispatches a `valueSubmit` event.
+4. On failure (denied permission, timeout, etc.), the promise rejects and no value is stored.
+
+---
+
+## Attribute Summary Table
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `name` | String | — | Variable key in session memory |
+| `get-on-request` | Boolean | `false` | Defer location fetch until requested |
+| `ready` | Boolean | `false` | Whether location has been retrieved (read-only) |
+
+---
+
+## DOM API
+
+```js
+const geo = document.querySelector('aa-geolocation');
+const pos = await geo.value; // Promise<{lat, lon, timestamp}>
+```
+
+| Property / Method | Returns | Description |
+|---|---|---|
+| `value` | `Promise<{lat, lon, timestamp}>` | Resolves with the location data |
+| `ready` | `boolean` | Whether location has been fetched |
+
+### Events
+
+| Event | When |
+|---|---|
+| `valueSubmit` | Fired when the location has been successfully retrieved |
+
+### Privacy
+
+This element accesses the browser Geolocation API, which requires explicit user consent. The location data is stored only in the local session memory and is not transmitted unless the enclosing application explicitly sends it.

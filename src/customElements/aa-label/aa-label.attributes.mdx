@@ -1,0 +1,62 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="UI/Label/Attribute Reference" />
+
+# `<aa-label>` Attribute Reference
+
+A display-only element for showing text to the participant. It does not collect any data — it simply renders its content as styled text. Use it for instructions, questions, or informational text within a screen.
+
+```html
+<aa-screen>
+  <aa-label>On a scale from 1 to 7, how happy do you feel right now?</aa-label>
+  <aa-likert-scale name="happiness" items="7"></aa-likert-scale>
+</aa-screen>
+```
+
+---
+
+## Attributes
+
+### `name`
+
+- **Type:** String
+- **Default:** —
+- **Inherited:** Yes (from `AABaseElement`)
+
+Optional identifier for the label. Not commonly needed since labels don't produce data, but can be useful for targeting the element programmatically.
+
+### `diagram` / `diagram-transparent`
+
+- **Type:** Boolean
+- **Default:** `false`
+- **Inherited:** Yes (from `AABaseElement`)
+
+See `<aa-session>` documentation for details.
+
+---
+
+## Content
+
+The label's visible text is provided as **slot content** (i.e. the text between the opening and closing tags). HTML content is supported:
+
+```html
+<aa-label>
+  Please rate your <strong>current</strong> mood.
+</aa-label>
+```
+
+---
+
+## Styling
+
+`<aa-label>` uses Shadow DOM. The element renders as `display: block` with a sans-serif font. Custom styling can be applied via CSS custom properties or by targeting the element directly.
+
+---
+
+## Attribute Summary Table
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `name` | String | — | Optional identifier |
+| `diagram` | Boolean | `false` | Render visual diagram |
+| `diagram-transparent` | Boolean | `false` | Transparent diagram background |

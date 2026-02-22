@@ -1,0 +1,98 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Data & Utility/Session/Attribute Reference" />
+
+# `<aa-session>` Attribute Reference
+
+A top-level container element that manages the lifecycle of a data-collection session. It generates a unique session ID, provides a shared memory store for child elements, and orchestrates the flow of screens and sequences within it.
+
+```html
+<aa-session name="daily-mood">
+  <template>
+    <aa-sequence>
+      <aa-screen submit-button-text="Next">
+        <aa-label>How are you feeling?</aa-label>
+        <aa-likert-scale name="mood" items="7" start-label="Bad" end-label="Good"></aa-likert-scale>
+      </aa-screen>
+    </aa-sequence>
+  </template>
+</aa-session>
+```
+
+---
+
+## Attributes
+
+### `name`
+
+- **Type:** String
+- **Default:** —
+- **Inherited:** Yes (from `AABaseElement`)
+
+A descriptive name for the session. Used for identification in data output and debugging.
+
+### `should-run`
+
+- **Type:** Boolean
+- **Default:** `true`
+
+Controls whether the session activates on connection. When `true` (the default), the session renders its template children immediately upon being added to the DOM. Set to `false` to create a session that must be started programmatically.
+
+### `debug`
+
+- **Type:** Boolean
+- **Default:** `false`
+
+When `true`, enables debug mode. In debug mode, child elements may remain visible after execution instead of being auto-removed, making it easier to inspect state during development.
+
+### `diagram`
+
+- **Type:** Boolean
+- **Default:** `false`
+- **Inherited:** Yes (from `AABaseElement`)
+
+When `true`, renders a visual diagram of the session structure instead of executing the session. Useful for documentation and understanding the session flow.
+
+### `diagram-transparent`
+
+- **Type:** Boolean
+- **Default:** `false`
+- **Inherited:** Yes (from `AABaseElement`)
+
+When `true` (and `diagram` is also `true`), renders the diagram with a transparent background.
+
+---
+
+## Attribute Summary Table
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `name` | String | — | Session identifier |
+| `should-run` | Boolean | `true` | Auto-start on DOM connection |
+| `debug` | Boolean | `false` | Enable debug mode |
+| `diagram` | Boolean | `false` | Render visual diagram |
+| `diagram-transparent` | Boolean | `false` | Transparent diagram background |
+
+---
+
+## DOM API
+
+```js
+const session = document.querySelector('aa-session');
+```
+
+| Method / Property | Returns | Description |
+|---|---|---|
+| `getData()` | `any` | Retrieve a value from session memory by key |
+| `setData(key, value)` | `void` | Store a value in session memory |
+| `getDataDump()` | `object` | Get all session memory data as a plain object |
+| `run()` | `void` | Programmatically start the session |
+| `toJSON()` | `object` | JSON-serialisable representation of the session tree |
+
+### Events
+
+| Event | When |
+|---|---|
+| `sessionInputSubmit` | Fired when a child screen submits its collected values |
+| `sessionEndEvent` | Fired when the session completes (all sequences finished) |
+| `sessionReady` | Fired when the session has initialised and is ready |

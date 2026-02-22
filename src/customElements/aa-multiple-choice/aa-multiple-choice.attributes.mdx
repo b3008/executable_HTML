@@ -1,0 +1,112 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Response Items/Multiple Choice/Attribute Reference" />
+
+# `<aa-multiple-choice>` Attribute Reference
+
+A single-select response item that renders a group of radio buttons. The participant selects exactly one option from the available choices. Each option is defined by an `<aa-choice-item>` child element.
+
+```html
+<aa-multiple-choice name="transport" vertical>
+  <aa-choice-item value="car">Car</aa-choice-item>
+  <aa-choice-item value="bus">Bus</aa-choice-item>
+  <aa-choice-item value="bike">Bicycle</aa-choice-item>
+  <aa-choice-item value="walk">Walking</aa-choice-item>
+</aa-multiple-choice>
+```
+
+---
+
+## `<aa-multiple-choice>` Attributes
+
+### `name`
+
+- **Type:** String
+- **Default:** —
+
+The variable name under which the selected value is stored in session memory.
+
+### `horizontal`
+
+- **Type:** Boolean
+- **Default:** `false`
+
+When `true`, the choice items are laid out in a horizontal row. Mutually exclusive with `vertical`.
+
+### `vertical`
+
+- **Type:** Boolean
+- **Default:** `true`
+
+When `true`, the choice items are laid out in a vertical stack. This is the default layout.
+
+### `value`
+
+- **Type:** String
+- **Default:** —
+
+The value of the currently selected choice item. Can be set to pre-select an option, or read to get the current selection.
+
+---
+
+## `<aa-choice-item>` Attributes
+
+An individual option within a `<aa-multiple-choice>` or `<aa-checkboxes>` container. The visible label is provided as slot content (text between the tags).
+
+### `value`
+
+- **Type:** String
+- **Default:** —
+
+The data value associated with this choice. This is the value stored in session memory when this item is selected — it does not have to match the visible label.
+
+```html
+<!-- value="1" is stored; "Strongly disagree" is shown to the participant -->
+<aa-choice-item value="1">Strongly disagree</aa-choice-item>
+```
+
+### `checked`
+
+- **Type:** Boolean
+- **Default:** `false`
+
+Whether this item is currently selected. Can be set to pre-select an option.
+
+---
+
+## Rendering Behaviour
+
+Inside `<aa-multiple-choice>`, each `<aa-choice-item>` renders as a **radio button** — selecting one automatically deselects any previously selected item. Inside `<aa-checkboxes>`, the same element renders as a **checkbox** allowing multiple selections.
+
+---
+
+## Attribute Summary Table
+
+### `<aa-multiple-choice>`
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `name` | String | — | Variable name for data storage |
+| `horizontal` | Boolean | `false` | Horizontal layout |
+| `vertical` | Boolean | `true` | Vertical layout (default) |
+| `value` | String | — | Currently selected value |
+
+### `<aa-choice-item>`
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `value` | String | — | Data value for this option |
+| `checked` | Boolean | `false` | Whether this option is selected |
+
+---
+
+## DOM API
+
+```js
+const mc = document.querySelector('aa-multiple-choice');
+console.log(mc.value); // value of the selected item
+```
+
+### Events
+
+Choice items dispatch `change` events when clicked. The parent `<aa-screen>` collects the final value on submission.

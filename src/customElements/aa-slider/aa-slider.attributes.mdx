@@ -1,0 +1,98 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Response Items/Slider/Attribute Reference" />
+
+# `<aa-slider>` Attribute Reference
+
+A numeric input element that renders as a horizontal slider (range input). The participant drags the thumb to select a value between `min` and `max`. Optional labels can be displayed at each end of the slider.
+
+```html
+<aa-slider
+  name="stress"
+  min="0"
+  max="100"
+  min-label="No stress"
+  max-label="Extreme stress">
+</aa-slider>
+```
+
+---
+
+## Attributes
+
+### `name`
+
+- **Type:** String
+- **Default:** —
+
+The variable name under which the selected value is stored in session memory. This is the key used when the parent screen collects values.
+
+### `min`
+
+- **Type:** Number
+- **Default:** —
+
+The minimum value of the slider range.
+
+### `max`
+
+- **Type:** Number
+- **Default:** —
+
+The maximum value of the slider range.
+
+### `min-label`
+
+- **Type:** String
+- **Default:** —
+
+Text displayed at the left (minimum) end of the slider. Use this to give semantic meaning to the low end of the scale (e.g. "Not at all", "0", "Low").
+
+### `max-label`
+
+- **Type:** String
+- **Default:** —
+
+Text displayed at the right (maximum) end of the slider. Use this to give semantic meaning to the high end of the scale (e.g. "Extremely", "100", "High").
+
+### `value`
+
+- **Type:** Number
+- **Default:** —
+- **User-defined:** No (read-only)
+
+The currently selected value. Updated as the participant moves the slider thumb. Read this property to get the current selection.
+
+---
+
+## Attribute Summary Table
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `name` | String | — | Variable name for data storage |
+| `min` | Number | — | Minimum slider value |
+| `max` | Number | — | Maximum slider value |
+| `min-label` | String | — | Label at low end |
+| `max-label` | String | — | Label at high end |
+| `value` | Number | — | Current selected value (read-only) |
+
+---
+
+## DOM API
+
+```js
+const slider = document.querySelector('aa-slider');
+console.log(slider.value); // current numeric value
+```
+
+| Property | Type | Description |
+|---|---|---|
+| `value` | `number` | The current slider value |
+| `min` | `number` | Minimum value |
+| `max` | `number` | Maximum value |
+| `minLabel` | `string` | Left-side label text |
+| `maxLabel` | `string` | Right-side label text |
+
+### Events
+
+The slider dispatches `change` events as the participant adjusts the value. The parent `<aa-screen>` collects the final value on submission.

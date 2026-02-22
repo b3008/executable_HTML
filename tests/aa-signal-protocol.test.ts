@@ -471,6 +471,73 @@ describe('aa-signal-protocol', () => {
             assert.equal(times.length, 2); // day 7 excluded
         });
 
+        it('produces no signals on excluded dates (fixed)', () => {
+            container.innerHTML = `
+                <aa-signal-protocol
+                    id="p1"
+                    name="excl-fixed"
+                    schedule-type="fixed"
+                    fixed-times="08:00,14:00,21:00"
+                    exclude-dates="2025-01-07,2025-01-09">
+                </aa-signal-protocol>`;
+            const el = document.querySelector('#p1') as AASignalProtocol;
+            const start = new Date(2025, 0, 6);  // Mon
+            const end = new Date(2025, 0, 10);   // Fri — 5 days, 2 excluded
+            const times = el.getSignallingTimes(start, end);
+
+            assert.equal(times.length, 9); // 3 signals x 3 active days
+            for (const t of times) {
+                assert.notEqual(t.getDate(), 7, 'Jan 7 should be excluded');
+                assert.notEqual(t.getDate(), 9, 'Jan 9 should be excluded');
+            }
+        });
+
+        it('produces no signals on excluded dates (stratified-random)', () => {
+            container.innerHTML = `
+                <aa-signal-protocol
+                    id="p1"
+                    name="excl-sr"
+                    schedule-type="stratified-random"
+                    signals-per-day="4"
+                    window-start="08:00"
+                    window-end="20:00"
+                    min-interval="15min"
+                    exclude-dates="2025-01-08">
+                </aa-signal-protocol>`;
+            const el = document.querySelector('#p1') as AASignalProtocol;
+            const start = new Date(2025, 0, 6);  // Mon
+            const end = new Date(2025, 0, 10);   // Fri — 5 days, 1 excluded
+            const times = el.getSignallingTimes(start, end);
+
+            assert.equal(times.length, 16); // 4 signals x 4 active days
+            for (const t of times) {
+                assert.notEqual(t.getDate(), 8, 'Jan 8 should be excluded');
+            }
+        });
+
+        it('produces no signals on excluded dates (random)', () => {
+            container.innerHTML = `
+                <aa-signal-protocol
+                    id="p1"
+                    name="excl-rand"
+                    schedule-type="random"
+                    signals-per-day="3"
+                    window-start="09:00"
+                    window-end="18:00"
+                    min-interval="15min"
+                    exclude-dates="2025-01-07">
+                </aa-signal-protocol>`;
+            const el = document.querySelector('#p1') as AASignalProtocol;
+            const start = new Date(2025, 0, 6);  // Mon
+            const end = new Date(2025, 0, 8);    // Wed — 3 days, 1 excluded
+            const times = el.getSignallingTimes(start, end);
+
+            assert.equal(times.length, 6); // 3 signals x 2 active days
+            for (const t of times) {
+                assert.notEqual(t.getDate(), 7, 'Jan 7 should be excluded');
+            }
+        });
+
         it('respects active-days="weekdays"', () => {
             container.innerHTML = `
                 <aa-signal-protocol

@@ -1,0 +1,93 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Data & Utility/Function Random/Attribute Reference" />
+
+# `<aa-function-random>` Attribute Reference
+
+A declarative, non-rendering utility element that generates a random integer within a specified range and stores it in session memory. The element executes on connection and then removes itself from the DOM. Useful for randomised study designs, counterbalancing, or adding variability to questionnaires.
+
+```html
+<aa-function-random name="condition" min="1" max="3"></aa-function-random>
+
+<!-- Dice roll -->
+<aa-function-random name="dice" min="1" max="6"></aa-function-random>
+
+<!-- Coin flip -->
+<aa-function-random name="coin" min="0" max="1"></aa-function-random>
+```
+
+---
+
+## Attributes
+
+### `name`
+
+- **Type:** String
+- **Default:** —
+- **Required:** Yes
+
+The key under which the generated random value is stored in session memory.
+
+### `min`
+
+- **Type:** Number
+- **Default:** —
+- **Required:** Yes
+
+The minimum value (inclusive) of the random range.
+
+### `max`
+
+- **Type:** Number
+- **Default:** —
+- **Required:** Yes
+
+The maximum value (inclusive) of the random range.
+
+### `value`
+
+- **Type:** Number
+- **Default:** —
+- **User-defined:** No (read-only)
+
+The generated random value. Available after execution.
+
+### `debug`
+
+- **Type:** Boolean
+- **Default:** `false`
+
+When `true`, the element remains visible in the DOM after execution, displaying the generated value for inspection.
+
+---
+
+## Behaviour
+
+1. On connection, the element generates a random integer in the range `[min, max]` (both inclusive).
+2. The result is written to session memory under the key specified by `name`.
+3. An `endEvent` is dispatched.
+4. Unless `debug` is `true`, the element removes itself from the DOM.
+
+**Algorithm:** Uses `Math.floor(Math.random() * (max - min + 1)) + min`.
+
+---
+
+## Attribute Summary Table
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `name` | String | — | Variable key in session memory |
+| `min` | Number | — | Minimum value (inclusive) |
+| `max` | Number | — | Maximum value (inclusive) |
+| `value` | Number | — | Generated value (read-only) |
+| `debug` | Boolean | `false` | Keep element visible after execution |
+
+---
+
+## DOM API
+
+### Events
+
+| Event | When |
+|---|---|
+| `endEvent` | Fired after the random value has been generated and stored |

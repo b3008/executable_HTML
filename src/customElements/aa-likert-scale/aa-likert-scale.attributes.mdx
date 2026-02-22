@@ -1,0 +1,126 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Response Items/Likert Scale/Attribute Reference" />
+
+# `<aa-likert-scale>` Attribute Reference
+
+A rating-scale response item that renders as a horizontal row of radio buttons. Commonly used for agreement scales, frequency scales, or any ordinal measurement. Supports configurable endpoint and midpoint labels, and optional numeric indicators.
+
+```html
+<aa-likert-scale
+  name="agreement"
+  items="7"
+  start-label="Strongly disagree"
+  middle-label="Neutral"
+  end-label="Strongly agree">
+</aa-likert-scale>
+```
+
+---
+
+## Attributes
+
+### `name`
+
+- **Type:** String
+- **Default:** —
+
+The variable name under which the selected value is stored in session memory.
+
+### `items`
+
+- **Type:** String (parsed as integer)
+- **Default:** —
+
+The number of points on the scale. For example, `items="7"` creates a 7-point scale. The numeric values assigned to each point start from `start-item` and increment by 1.
+
+### `start-item`
+
+- **Type:** Number
+- **Default:** `1`
+
+The numeric value assigned to the first (leftmost) radio button. With the default of `1` and `items="5"`, the values are 1, 2, 3, 4, 5. Setting `start-item="0"` produces 0, 1, 2, 3, 4.
+
+### `start-label`
+
+- **Type:** String
+- **Default:** `""` (empty)
+
+Text displayed below or near the first (leftmost) radio button. Describes the low end of the scale.
+
+### `middle-label`
+
+- **Type:** String
+- **Default:** `""` (empty)
+
+Text displayed below or near the middle radio button. Only meaningful when `items` is an odd number; with even numbers the label is placed between the two centre items.
+
+### `end-label`
+
+- **Type:** String
+- **Default:** `""` (empty)
+
+Text displayed below or near the last (rightmost) radio button. Describes the high end of the scale.
+
+### `show-radio-numbers`
+
+- **Type:** Boolean
+- **Default:** `true`
+
+Whether to display the numeric value next to each radio button. When `true`, numbers appear at the position specified by `number-position`.
+
+### `number-position`
+
+- **Type:** String
+- **Default:** `"right"`
+- **Allowed values:** `"right"` · `"left"` · `"top"` · `"bottom"`
+
+Where the numeric label appears relative to each radio button.
+
+### `value`
+
+- **Type:** Number
+- **Default:** —
+- **User-defined:** No (read-only)
+
+The currently selected numeric value. `undefined` if no selection has been made.
+
+### `debug`
+
+- **Type:** Boolean
+- **Default:** `false`
+
+When `true`, enables debug output.
+
+---
+
+## Attribute Summary Table
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `name` | String | — | Variable name for data storage |
+| `items` | String | — | Number of scale points |
+| `start-item` | Number | `1` | First point's numeric value |
+| `start-label` | String | `""` | Label at the low end |
+| `middle-label` | String | `""` | Label at the midpoint |
+| `end-label` | String | `""` | Label at the high end |
+| `show-radio-numbers` | Boolean | `true` | Show numeric labels |
+| `number-position` | String | `"right"` | Position of numeric labels |
+| `value` | Number | — | Selected value (read-only) |
+
+---
+
+## DOM API
+
+```js
+const ls = document.querySelector('aa-likert-scale');
+console.log(ls.value); // selected numeric value
+```
+
+### Layout
+
+The label arrangement is responsive — a `ResizeObserver` dynamically repositions the start/middle/end labels when the element is resized, ensuring they remain properly aligned with their corresponding radio buttons.
+
+### Events
+
+Radio buttons dispatch `sl-change` events when clicked. The parent `<aa-screen>` collects the final value on submission.
