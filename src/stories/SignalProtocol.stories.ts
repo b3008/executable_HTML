@@ -465,10 +465,9 @@ export const ScheduleExplorer: Story = {
       description: "End of date range (YYYY-MM-DD)",
       table: { category: "Date Range" },
     },
-    _reshuffle: {
-      control: { type: "number", min: 1 },
-      description: "Change to regenerate random schedules",
-      table: { category: "Date Range" },
+    _seed: {
+      control: false,
+      table: { disable: true },
     },
   },
   args: {
@@ -490,7 +489,7 @@ export const ScheduleExplorer: Story = {
     weekendFixedTimes: "",
     rangeStart: "2025-01-06",
     rangeEnd: "2025-01-19",
-    _reshuffle: 1,
+    _seed: 1,
   },
   render: (args) => {
     const el = createProtocolElement(args);
@@ -501,8 +500,27 @@ export const ScheduleExplorer: Story = {
       return html`<p style="color:#c62828;font-family:sans-serif;">Invalid date range. Use YYYY-MM-DD format with start &le; end.</p>`;
     }
 
-    let times: Date[] = [];
+    function computeHourRange(times: Date[]) {
+      let minHour = 6, maxHour = 23;
+      if (times.length > 0) {
+        const hours = times.map((s: Date) => s.getHours());
+        minHour = Math.max(0, Math.min(...hours) - 1);
+        maxHour = Math.min(24, Math.max(...hours) + 2);
+      }
+      if (args.windowStart) {
+        const h = parseInt(args.windowStart, 10);
+        if (!isNaN(h)) minHour = Math.min(minHour, Math.max(0, h - 1));
+      }
+      if (args.windowEnd) {
+        const h = parseInt(args.windowEnd, 10);
+        if (!isNaN(h)) maxHour = Math.max(maxHour, Math.min(24, h + 1));
+      }
+      if (maxHour - minHour < 4) maxHour = Math.min(24, minHour + 4);
+      return { minHour, maxHour };
+    }
+
     let warnings: string[] = [];
+    let times: Date[] = [];
     try {
       warnings = el.validate();
       times = el.getSignallingTimes(start, end);
@@ -510,44 +528,104 @@ export const ScheduleExplorer: Story = {
       warnings.push("Error generating schedule: " + e.message);
     }
 
-    // Determine visible hour range from signals + configured windows
-    let minHour = 6, maxHour = 23;
-    if (times.length > 0) {
-      const hours = times.map((s: Date) => s.getHours());
-      minHour = Math.max(0, Math.min(...hours) - 1);
-      maxHour = Math.min(24, Math.max(...hours) + 2);
-    }
-    if (args.windowStart) {
-      const h = parseInt(args.windowStart, 10);
-      if (!isNaN(h)) minHour = Math.min(minHour, Math.max(0, h - 1));
-    }
-    if (args.windowEnd) {
-      const h = parseInt(args.windowEnd, 10);
-      if (!isNaN(h)) maxHour = Math.max(maxHour, Math.min(24, h + 1));
-    }
-    if (maxHour - minHour < 4) maxHour = Math.min(24, minHour + 4);
+    const { minHour, maxHour } = computeHourRange(times);
+    const isRandom = args.scheduleType !== "fixed";
+    const containerId = "schedule-explorer-" + Date.now();
+
+    // Expose build functions on window so the refresh button can reuse them
+    // without duplicating rendering logic in an inline script.
+    const w = window as any;
+    w.__scheduleExplorer = {
+      buildWarningsHtml,
+      buildStatsHtml,
+      buildWeekCalendarHtml,
+      buildTextListHtml,
+      computeHourRange,
+      createProtocolElement,
+      args,
+      start,
+      end,
+      containerId,
+    };
+
+    const refreshScript = isRandom
+      ? `<script type="module">
+          (function() {
+            let generation = 1;
+            document.getElementById('${containerId}-btn').addEventListener('click', function() {
+              const ctx = window.__scheduleExplorer;
+              const protocol = ctx.createProtocolElement(ctx.args);
+              const times = protocol.getSignallingTimes(ctx.start, ctx.end);
+              const { minHour, maxHour } = ctx.computeHourRange(times);
+              generation++;
+
+              // Update counter
+              document.getElementById('${containerId}-counter').textContent = generation;
+
+              // Flash button green briefly
+              const btn = this;
+              btn.style.background = '#0b8043';
+              setTimeout(() => { btn.style.background = '#1a73e8'; }, 200);
+
+              // Update stats
+              document.getElementById('${containerId}-stats').innerHTML =
+                ctx.buildStatsHtml(times, ctx.start, ctx.end);
+
+              // Update calendar
+              document.getElementById('${containerId}-calendar').innerHTML =
+                ctx.buildWeekCalendarHtml(times, ctx.start, ctx.end, minHour, maxHour);
+
+              // Update text list
+              const listHtml = ctx.buildTextListHtml(times);
+              document.getElementById('${containerId}-list').innerHTML =
+                '<details open style="margin-top:24px;">' +
+                '<summary style="font-size:16px;font-weight:700;cursor:pointer;margin-bottom:8px;">Signal List (' + times.length + ' total)</summary>' +
+                '<div style="max-height:500px;overflow-y:auto;border:1px solid #eee;border-radius:4px;">' + listHtml + '</div></details>';
+            });
+          })();
+        <\/script>`
+      : "";
 
     return html`
-      <div style="font-family:sans-serif;">
+      <div id="${containerId}" style="font-family:sans-serif;">
         ${unsafeHTML(buildWarningsHtml(warnings))}
-        ${unsafeHTML(buildStatsHtml(times, start, end))}
 
-        <p style="font-size:12px;color:#70757a;margin:0 0 10px;">
-          Weekday signals in <span style="background:#1a73e8;color:#fff;padding:1px 6px;border-radius:3px;font-size:11px;">blue</span>,
-          weekend in <span style="background:#0b8043;color:#fff;padding:1px 6px;border-radius:3px;font-size:11px;">green</span>.
-          Hover blocks for details. Thicker border marks Monday (week boundary).
-        </p>
+        <div id="${containerId}-stats">
+          ${unsafeHTML(buildStatsHtml(times, start, end))}
+        </div>
 
-        ${unsafeHTML(buildWeekCalendarHtml(times, start, end, minHour, maxHour))}
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+          <p style="font-size:12px;color:#70757a;margin:0;flex:1;">
+            Weekday signals in <span style="background:#1a73e8;color:#fff;padding:1px 6px;border-radius:3px;font-size:11px;">blue</span>,
+            weekend in <span style="background:#0b8043;color:#fff;padding:1px 6px;border-radius:3px;font-size:11px;">green</span>.
+            Hover blocks for details. Thicker border marks Monday (week boundary).
+          </p>
+          ${isRandom ? unsafeHTML(`<button id="${containerId}-btn" style="
+            display:inline-flex;align-items:center;gap:6px;padding:6px 14px;
+            background:#1a73e8;color:#fff;border:none;border-radius:6px;
+            font-size:13px;font-weight:500;font-family:sans-serif;
+            cursor:pointer;white-space:nowrap;
+          " onmouseenter="this.style.background='#1557b0'" onmouseleave="this.style.background='#1a73e8'">
+            &#x21bb; Regenerate<span style="font-size:11px;opacity:.7;">&thinsp;#<span id="${containerId}-counter">1</span></span>
+          </button>`) : ""}
+        </div>
 
-        <details open style="margin-top:24px;">
-          <summary style="font-size:16px;font-weight:700;cursor:pointer;margin-bottom:8px;">
-            Signal List (${times.length} total)
-          </summary>
-          <div style="max-height:500px;overflow-y:auto;border:1px solid #eee;border-radius:4px;">
-            ${unsafeHTML(buildTextListHtml(times))}
-          </div>
-        </details>
+        <div id="${containerId}-calendar">
+          ${unsafeHTML(buildWeekCalendarHtml(times, start, end, minHour, maxHour))}
+        </div>
+
+        <div id="${containerId}-list">
+          <details open style="margin-top:24px;">
+            <summary style="font-size:16px;font-weight:700;cursor:pointer;margin-bottom:8px;">
+              Signal List (${times.length} total)
+            </summary>
+            <div style="max-height:500px;overflow-y:auto;border:1px solid #eee;border-radius:4px;">
+              ${unsafeHTML(buildTextListHtml(times))}
+            </div>
+          </details>
+        </div>
+
+        ${unsafeHTML(refreshScript)}
       </div>
     `;
   },
