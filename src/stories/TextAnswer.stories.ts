@@ -4,6 +4,32 @@ import { html } from "lit";
 const meta = {
   title: "Response Items/Text Answer",
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: [
+          "A text input field supporting multiple input types (text, textarea, number, email, date, etc.).",
+          "",
+          "### DOM API",
+          "",
+          "```js",
+          "const input = document.querySelector('aa-text-answer');",
+          "```",
+          "",
+          "| Method / Property | Returns | Description |",
+          "|---|---|---|",
+          "| `input.value` | `string` | Get or set the current input value |",
+          "| `input.label` | `string` | Get or set the label text |",
+          "",
+          "### Events",
+          "",
+          "| Event | Description |",
+          "|---|---|",
+          "| `change` | Fired when the value changes (debounced ~1500ms on typing) |",
+        ].join("\n"),
+      },
+    },
+  },
   argTypes: {
     name: { control: "text" },
     label: { control: "text" },

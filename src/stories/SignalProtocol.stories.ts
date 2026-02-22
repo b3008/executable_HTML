@@ -88,6 +88,46 @@ function renderProtocolSummary(sourceCode: string) {
 const meta = {
   title: "Data & Utility/SignalProtocol",
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: [
+          "A declarative, non-rendering element that specifies when and how participants are signalled in ESM/EMA studies. Wraps `<aa-session>` as its parent to express the scheduling relationship.",
+          "",
+          "### DOM API",
+          "",
+          "```js",
+          "const protocol = document.querySelector('aa-signal-protocol');",
+          "```",
+          "",
+          "| Method / Property | Returns | Description |",
+          "|---|---|---|",
+          "| `protocol.getProtocol()` | `SignalProtocolConfig` | Returns a structured object of all protocol attributes |",
+          "| `protocol.getSignallingTimes(start, end)` | `Date[]` | Computes concrete signal times for a date range. Supports `fixed`, `random`, and `stratified-random` schedules with window/exclusion handling |",
+          "| `protocol.validate()` | `string[]` | Validates the configuration and returns an array of warning messages |",
+          "| `protocol.toJSON()` | `object` | JSON representation of the protocol and its children |",
+          "",
+          "### Events",
+          "",
+          "| Event | Description |",
+          "|---|---|",
+          "| `protocolReady` | Fired when the protocol element is connected and validated |",
+          "",
+          "### Schedule Types",
+          "",
+          "| Type | Description |",
+          "|---|---|",
+          "| `fixed` | Signals at exact times specified by `fixed-times` |",
+          "| `random` | Signals uniformly distributed within time windows |",
+          "| `stratified-random` | Day divided into N equal blocks, one random signal per block |",
+          "",
+          "### Duration Micro-Syntax",
+          "",
+          "Used by `min-interval`, `signal-expiry`, `reminder-after`: `30s`, `15min`, `2h`, `1d`",
+        ].join("\n"),
+      },
+    },
+  },
 } satisfies Meta;
 
 export default meta;

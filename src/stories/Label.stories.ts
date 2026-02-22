@@ -4,6 +4,24 @@ import { html } from "lit";
 const meta = {
   title: "UI/Label",
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: [
+          "A styled text label for displaying questions or instructions. Uses a `<slot>` to render its content.",
+          "",
+          "### DOM API",
+          "",
+          "This element is a pure display component with no custom methods or events. Set content via innerHTML:",
+          "",
+          "```js",
+          "const label = document.querySelector('aa-label');",
+          "label.innerHTML = 'New question text';",
+          "```",
+        ].join("\n"),
+      },
+    },
+  },
   argTypes: {
     text: { control: "text" },
   },

@@ -4,6 +4,33 @@ import { html } from "lit";
 const meta = {
   title: "Response Items/Multiple Choice",
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: [
+          "A single-select radio group. Contains `<aa-choice-item>` children.",
+          "",
+          "### DOM API",
+          "",
+          "```js",
+          "const mc = document.querySelector('aa-multiple-choice');",
+          "```",
+          "",
+          "| Method / Property | Returns | Description |",
+          "|---|---|---|",
+          "| `mc.value` | `string \\| undefined` | Get or set the selected value |",
+          "| `mc.updateState(checkedNode)` | `void` | Update internal state when an item changes |",
+          "| `mc.getValueOfSelectedItem()` | `string \\| undefined` | Returns the value of the currently selected item |",
+          "",
+          "### Events",
+          "",
+          "| Event | Detail | Description |",
+          "|---|---|---|",
+          "| `change` | `{ value }` | Fired when the selected item changes |",
+        ].join("\n"),
+      },
+    },
+  },
   argTypes: {
     horizontal: { control: "boolean" },
   },

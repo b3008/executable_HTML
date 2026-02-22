@@ -30,6 +30,22 @@ const meta = {
   },
   parameters: {
     docs: {
+      description: {
+        component: [
+          "Generates a random integer between `min` and `max` (inclusive) and stores it in session memory. Removes itself from the DOM after generating (unless `debug` is set).",
+          "",
+          "### DOM API",
+          "",
+          "```js",
+          "const fn = document.querySelector('aa-function-random');",
+          "```",
+          "",
+          "| Method / Property | Returns | Description |",
+          "|---|---|---|",
+          "| `fn.value` | `number` | The generated random integer (read after element is connected) |",
+          "| `fn.getRandomInt(min, max)` | `number` | Generate a random integer in `[min, max]` range |",
+        ].join("\n"),
+      },
       source: {
         code: `<aa-function-random name="randomValue" min="1" max="100"></aa-function-random>`,
         language: "html",

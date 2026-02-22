@@ -4,6 +4,33 @@ import { html } from "lit";
 const meta = {
   title: "Response Items/Affect Grid",
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: [
+          "A 2D grid for measuring affect along two dimensions (e.g., valence and arousal). Based on Russell, Weiss & Mendelsohn (1989).",
+          "",
+          "### DOM API",
+          "",
+          "```js",
+          "const grid = document.querySelector('aa-affect-grid');",
+          "```",
+          "",
+          "| Method / Property | Returns | Description |",
+          "|---|---|---|",
+          "| `grid.value` | `[number, number] \\| null` | Get or set the selected `[x, y]` coordinates |",
+          "| `grid.x` | `number \\| null` | Get the selected x coordinate (horizontal axis) |",
+          "| `grid.y` | `number \\| null` | Get the selected y coordinate (vertical axis) |",
+          "",
+          "### Events",
+          "",
+          "| Event | Description |",
+          "|---|---|",
+          "| `change` | Fired when a cell is selected |",
+        ].join("\n"),
+      },
+    },
+  },
   argTypes: {
     rows: { control: { type: "number", min: 1, max: 20 } },
     columns: { control: { type: "number", min: 1, max: 20 } },

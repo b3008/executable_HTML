@@ -1,4 +1,5 @@
-import{b as c}from"./lit-element-BrtkDOYA.js";const g={title:"Response Items/Likert Scale",tags:["autodocs"],argTypes:{items:{control:"number"},startItem:{control:"number"},startLabel:{control:"text"},middleLabel:{control:"text"},endLabel:{control:"text"},showRadioNumbers:{control:"boolean"},numberPosition:{control:{type:"select"},options:["left","right"]}},render:e=>c`
+import{b as u}from"./lit-element-BrtkDOYA.js";const g={title:"Response Items/Likert Scale",tags:["autodocs"],parameters:{docs:{description:{component:["A Likert rating scale with configurable number of items, labels, and numbering.","","### DOM API","","```js","const scale = document.querySelector('aa-likert-scale');","```","","| Method / Property | Returns | Description |","|---|---|---|","| `scale.value` | `string` | The currently selected radio value |","| `scale.arrangeLabels()` | `void` | Re-renders and positions the scale labels |","","### Events","","| Event | Description |","|---|---|","| `change` | Fired when a radio option is selected |"].join(`
+`)}}},argTypes:{items:{control:"number"},startItem:{control:"number"},startLabel:{control:"text"},middleLabel:{control:"text"},endLabel:{control:"text"},showRadioNumbers:{control:"boolean"},numberPosition:{control:{type:"select"},options:["left","right"]}},render:e=>u`
     <aa-likert-scale
       name="agreement"
       items="${e.items}"
@@ -29,7 +30,7 @@ import{b as c}from"./lit-element-BrtkDOYA.js";const g={title:"Response Items/Lik
     showRadioNumbers: true,
     numberPosition: "right"
   }
-}`,...(m=(i=r.parameters)==null?void 0:i.docs)==null?void 0:m.source}}};var d,b,u;a.parameters={...a.parameters,docs:{...(d=a.parameters)==null?void 0:d.docs,source:{originalSource:`{
+}`,...(m=(i=r.parameters)==null?void 0:i.docs)==null?void 0:m.source}}};var d,b,c;a.parameters={...a.parameters,docs:{...(d=a.parameters)==null?void 0:d.docs,source:{originalSource:`{
   args: {
     items: 11,
     startItem: 0,
@@ -39,4 +40,4 @@ import{b as c}from"./lit-element-BrtkDOYA.js";const g={title:"Response Items/Lik
     showRadioNumbers: true,
     numberPosition: "right"
   }
-}`,...(u=(b=a.parameters)==null?void 0:b.docs)==null?void 0:u.source}}};const p=["Default","FivePoint","ZeroBased"];export{t as Default,r as FivePoint,a as ZeroBased,p as __namedExportsOrder,g as default};
+}`,...(c=(b=a.parameters)==null?void 0:b.docs)==null?void 0:c.source}}};const L=["Default","FivePoint","ZeroBased"];export{t as Default,r as FivePoint,a as ZeroBased,L as __namedExportsOrder,g as default};

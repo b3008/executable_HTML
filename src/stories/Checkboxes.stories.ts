@@ -4,6 +4,32 @@ import { html } from "lit";
 const meta = {
   title: "Response Items/Checkboxes",
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: [
+          "A multi-select checkbox group. Contains `<aa-choice-item>` children.",
+          "",
+          "### DOM API",
+          "",
+          "```js",
+          "const checkboxes = document.querySelector('aa-checkboxes');",
+          "```",
+          "",
+          "| Method / Property | Returns | Description |",
+          "|---|---|---|",
+          "| `checkboxes.value` | `(string \\| null)[]` | Array of checked values (`null` for unchecked items) |",
+          "| `checkboxes.toJSON()` | `object` | JSON representation including child items |",
+          "",
+          "### Events",
+          "",
+          "| Event | Detail | Description |",
+          "|---|---|---|",
+          "| `change` | `{ value }` | Fired when any checkbox is toggled |",
+        ].join("\n"),
+      },
+    },
+  },
   argTypes: {
     horizontal: { control: "boolean" },
   },
