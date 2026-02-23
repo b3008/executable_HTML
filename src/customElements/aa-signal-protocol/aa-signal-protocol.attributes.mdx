@@ -1,0 +1,312 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Data & Utility/SignalProtocol/Attribute Reference" />
+
+# `<aa-signal-protocol>` Attribute Reference
+
+A declarative, non-rendering element that specifies when and how participants are signalled in ESM/EMA studies. Place it in the DOM wrapping an `<aa-session>` to express the scheduling relationship.
+
+```html
+<aa-signal-protocol
+  name="my-study"
+  schedule-type="stratified-random"
+  signals-per-day="8"
+  window-start="09:00"
+  window-end="22:00"
+  min-interval="20min"
+  signal-expiry="15min">
+  <aa-session name="questionnaire">
+    <template>...</template>
+  </aa-session>
+</aa-signal-protocol>
+```
+
+---
+
+## Schedule Type
+
+### `schedule-type`
+
+- **Type:** `"fixed"` · `"random"` · `"stratified-random"`
+- **Required:** Yes
+
+Determines the algorithm used to place signals within each day.
+
+- **`fixed`** — Signals fire at exact clock times specified by `fixed-times`. No randomisation. The `signals-per-day`, `window-start`/`window-end`, and `signal-windows` attributes are ignored.
+
+- **`random`** — Signals are placed uniformly at random within the day's time windows. Each candidate time is checked against `min-interval`; if it's too close to an already-placed signal the algorithm retries (up to 100 attempts per signal). This means the actual count *may* be less than `signals-per-day` in heavily constrained configurations.
+
+- **`stratified-random`** — The total available window time is divided into N equal-length blocks (where N = `signals-per-day`). One signal is placed at a random point within each block. This guarantees more even distribution across the day than pure random, while still being unpredictable to the participant. Each block placement also respects `min-interval` (with up to 50 retries per block).
+
+---
+
+## Signal Count
+
+### `signals-per-day`
+
+- **Type:** Integer
+- **Default:** — (required for `random` and `stratified-random`)
+
+The number of random/stratified signals to generate per active day. Ignored when `schedule-type="fixed"`.
+
+Validation checks that the configuration is feasible: the total window duration divided by `signals-per-day` must be at least `min-interval`. For example, 6 signals in a 2-hour window with a 30-minute minimum interval requires at least 180 minutes of window time — a 120-minute window would trigger a warning.
+
+### `weekend-signals-per-day`
+
+- **Type:** Integer
+- **Default:** Inherits `signals-per-day`
+
+Overrides `signals-per-day` on Saturdays and Sundays. Useful when studies need fewer prompts on weekends. If unset, the weekday value applies to all days.
+
+---
+
+## Time Windows
+
+Time windows define *when during the day* signals are allowed. There are two ways to specify them.
+
+### `window-start` / `window-end`
+
+- **Type:** `"HH:MM"` (24-hour)
+- **Default:** —
+
+Define a single continuous window. For example, `window-start="09:00" window-end="22:00"` allows signals between 9 AM and 10 PM.
+
+### `signal-windows`
+
+- **Type:** Semicolon-separated `"HH:MM-HH:MM"` ranges
+- **Default:** —
+- **Example:** `"08:00-12:00;13:00-20:00"`
+
+Defines **multiple non-contiguous time ranges** within a day. This is the attribute to use when the schedule has gaps — for example, excluding a lunch break:
+
+```
+signal-windows="08:00-12:00;13:00-20:00"
+```
+
+Signals can fire 8 AM–noon and 1 PM–8 PM, but *not* during the 12:00–13:00 gap.
+
+**Interaction with `window-start`/`window-end`:** If both `signal-windows` and `window-start`/`window-end` are set, `signal-windows` takes precedence and validation emits a warning about the redundancy. Use one or the other, not both.
+
+**How it works internally:** For `stratified-random`, the total available minutes across all ranges are flattened into a single pool and divided into N equal blocks. For `random`, signals are distributed uniformly across the combined pool. The gaps between ranges are never candidates for signal placement.
+
+### `weekend-window-start` / `weekend-window-end`
+
+- **Type:** `"HH:MM"` (24-hour)
+- **Default:** Inherits weekday values
+
+Override the single-window start/end on Saturdays and Sundays. For example, participants may sleep in on weekends:
+
+```html
+window-start="08:00" window-end="22:00"
+weekend-window-start="10:00" weekend-window-end="23:00"
+```
+
+### `weekend-signal-windows`
+
+- **Type:** Semicolon-separated `"HH:MM-HH:MM"` ranges
+- **Default:** Inherits `signal-windows`
+
+Override the multi-range windows on Saturdays and Sundays.
+
+---
+
+## Time Exclusions
+
+### `exclude-times`
+
+- **Type:** Semicolon-separated `"HH:MM-HH:MM"` ranges
+- **Default:** —
+- **Example:** `"12:00-13:00;17:00-18:00"`
+
+Daily blackout periods when signals must *not* fire. These are subtracted from the effective windows *after* window resolution. Unlike `signal-windows` gaps, exclusions are applied uniformly to every active day (both weekdays and weekends).
+
+If `exclude-times` completely covers the signal windows, validation warns and signal generation returns zero signals for that day.
+
+**Example — lunch and commute blackout:**
+```html
+<aa-signal-protocol
+  signal-windows="08:00-12:00;13:00-20:00"
+  exclude-times="12:00-13:00;17:00-18:00"
+  ...>
+```
+Effective windows become: 08:00–12:00 and 13:00–17:00 and 18:00–20:00.
+
+---
+
+## Fixed Times
+
+### `fixed-times`
+
+- **Type:** Comma-separated `"HH:MM"` times
+- **Default:** —
+- **Example:** `"07:30,22:00"`
+
+Exact clock times at which signals fire every active day. Required when `schedule-type="fixed"`.
+
+When `schedule-type` is `random` or `stratified-random`, fixed times are *appended* to the random signals — they are generated independently and do not count towards `signals-per-day`. A fixed signal at 10:00 can coexist with a random signal at 10:05, even if that would violate `min-interval` (the min-interval constraint only applies between random signals).
+
+### `fixed-times-label`
+
+- **Type:** String
+- **Default:** —
+- **Example:** `"diary"`
+
+An optional label that describes the purpose of the fixed signals. Shown in the calendar visualisation on fixed signal blocks (e.g. "10:00 · diary"). Purely cosmetic — has no effect on scheduling.
+
+### `weekend-fixed-times`
+
+- **Type:** Comma-separated `"HH:MM"` times
+- **Default:** Inherits `fixed-times`
+
+Override the fixed-time schedule on Saturdays and Sundays.
+
+---
+
+## Interval & Spacing
+
+### `min-interval`
+
+- **Type:** Duration string
+- **Default:** `"15min"`
+- **Example:** `"20min"`, `"1h"`, `"30s"`
+
+The minimum time that must elapse between any two *random* signals on the same day. During generation, a candidate signal is rejected if it falls within `min-interval` of an already-placed signal (the algorithm retries with a new random position).
+
+**Duration micro-syntax:** Accepts `30s`, `15min`, `2h`, `1d` — a number followed by a unit (`s`/`sec`, `min`, `h`/`hr`, `d`).
+
+**Feasibility:** Validation checks that `total_window_minutes / signals-per-day >= min-interval`. A warning is emitted if the schedule is infeasible.
+
+**Scope:** Only enforced between random/stratified signals. Fixed-time signals are exempt — they always fire at their specified times regardless of proximity to random signals.
+
+---
+
+## Signal Expiry
+
+### `signal-expiry`
+
+- **Type:** Duration string
+- **Default:** `"15min"`
+- **Example:** `"30min"`, `"1h"`
+
+How long a signal stays active (the "response window"). After this duration the signal expires and the participant can no longer respond to it. In the calendar visualisation, the block height is proportional to this value — a 30-minute expiry appears taller than a 15-minute one.
+
+---
+
+## Reminders
+
+### `reminder-after`
+
+- **Type:** Duration string
+- **Default:** — (no reminders)
+- **Example:** `"5min"`
+
+If set, a reminder is sent this many minutes after each signal. The reminder notifies the participant again in case they missed the original signal.
+
+### `reminder-count`
+
+- **Type:** Integer
+- **Default:** `1`
+- **Example:** `2`
+
+Number of reminders per signal. With `reminder-after="5min"` and `reminder-count="2"`, reminders fire at +5 min and +10 min after the signal. In the calendar visualisation, each reminder appears as a small orange triangle marker.
+
+---
+
+## Study Duration
+
+There are two ways to define when the study runs.
+
+### `study-days`
+
+- **Type:** Integer
+- **Default:** —
+- **Example:** `14`
+
+The number of days the study should run. Used for informational/planning purposes. When calling `getSignallingTimes(start, end)` you provide the actual date range explicitly — `study-days` does not constrain that range.
+
+### `start-date` / `end-date`
+
+- **Type:** `"YYYY-MM-DD"`
+- **Default:** —
+
+Explicit start and end dates for the study. Like `study-days`, these are informational — the actual date range used for signal generation is determined by the arguments to `getSignallingTimes()`.
+
+---
+
+## Active Days
+
+### `active-days`
+
+- **Type:** String
+- **Default:** `"all"`
+
+Controls which days of the week are active (i.e. receive signals). Days outside this specification are skipped entirely — no signals are generated.
+
+| Value | Meaning |
+|---|---|
+| `"all"` | Every day (default) |
+| `"weekdays"` | Monday through Friday |
+| `"weekends"` | Saturday and Sunday |
+| `"Mon,Wed,Fri"` | Comma-separated day names (3-letter or full) |
+
+**Interaction with weekend overrides:** If `active-days="weekdays"`, any `weekend-*` attributes are effectively dead code — they will never apply since weekends are inactive. Validation emits a warning in this case.
+
+### `exclude-dates`
+
+- **Type:** Comma-separated `"YYYY-MM-DD"` dates
+- **Default:** —
+- **Example:** `"2025-01-15,2025-01-20"`
+
+Specific dates to skip entirely, regardless of `active-days`. Useful for holidays or participant-specific unavailable dates. Validation checks that each value is a valid `YYYY-MM-DD` date.
+
+In the calendar visualisation, excluded dates appear with a dimmed column and the date number crossed out.
+
+---
+
+## Attribute Summary Table
+
+| Attribute | Format | Default | Used by |
+|---|---|---|---|
+| `schedule-type` | `fixed` · `random` · `stratified-random` | — | All |
+| `signals-per-day` | Integer | — | `random`, `stratified-random` |
+| `window-start` | `HH:MM` | — | `random`, `stratified-random` |
+| `window-end` | `HH:MM` | — | `random`, `stratified-random` |
+| `signal-windows` | `HH:MM-HH:MM;...` | — | `random`, `stratified-random` |
+| `min-interval` | Duration | `15min` | `random`, `stratified-random` |
+| `signal-expiry` | Duration | `15min` | All (response window) |
+| `reminder-after` | Duration | — | All |
+| `reminder-count` | Integer | `1` | All (requires `reminder-after`) |
+| `fixed-times` | `HH:MM,HH:MM,...` | — | All (required for `fixed`) |
+| `fixed-times-label` | String | — | All (cosmetic) |
+| `active-days` | `all` · `weekdays` · `weekends` · names | `all` | All |
+| `exclude-dates` | `YYYY-MM-DD,...` | — | All |
+| `exclude-times` | `HH:MM-HH:MM;...` | — | All |
+| `study-days` | Integer | — | Informational |
+| `start-date` | `YYYY-MM-DD` | — | Informational |
+| `end-date` | `YYYY-MM-DD` | — | Informational |
+| `weekend-signals-per-day` | Integer | inherits | Weekend override |
+| `weekend-window-start` | `HH:MM` | inherits | Weekend override |
+| `weekend-window-end` | `HH:MM` | inherits | Weekend override |
+| `weekend-signal-windows` | `HH:MM-HH:MM;...` | inherits | Weekend override |
+| `weekend-fixed-times` | `HH:MM,HH:MM,...` | inherits | Weekend override |
+
+---
+
+## DOM API
+
+```js
+const protocol = document.querySelector('aa-signal-protocol');
+```
+
+| Method / Property | Returns | Description |
+|---|---|---|
+| `getProtocol()` | `SignalProtocolConfig` | Structured object of all parsed attribute values |
+| `getSignallingTimes(start, end)` | `Date[]` | Concrete signal times for the given date range |
+| `validate()` | `string[]` | Array of warning messages (empty if valid) |
+| `toJSON()` | `object` | JSON-serialisable representation |
+
+### Events
+
+| Event | When |
+|---|---|
+| `protocolReady` | Fired asynchronously when the element connects and validates |

@@ -1,0 +1,117 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Control Flow/Sequence/Attribute Reference" />
+
+# `<aa-sequence>` Attribute Reference
+
+A control-flow element that renders its children one at a time in order. Each child is instantiated from a `<template>`, displayed, and then replaced by the next child when it dispatches an `endEvent`. This is the primary mechanism for stepping through screens in a survey or questionnaire.
+
+```html
+<aa-sequence name="survey-flow">
+  <aa-screen submit-button-text="Next">
+    <aa-label>Question 1</aa-label>
+    <aa-slider name="q1" min="0" max="10"></aa-slider>
+  </aa-screen>
+  <aa-screen submit-button-text="Done">
+    <aa-label>Question 2</aa-label>
+    <aa-text-answer name="q2"></aa-text-answer>
+  </aa-screen>
+</aa-sequence>
+```
+
+---
+
+## Attributes
+
+### `name`
+
+- **Type:** String
+- **Default:** —
+
+A descriptive name for the sequence. Used for identification in data output, debugging, and as a target for `<aa-jump>` elements.
+
+### `write-into`
+
+- **Type:** String (CSS selector)
+- **Default:** —
+
+A CSS selector pointing to another DOM element where the sequence should render its children. By default, children are rendered inside the `<aa-sequence>` element itself. Setting `write-into` allows the sequence to render its content elsewhere in the page — useful for separating the sequence logic from the display area.
+
+```html
+<aa-sequence write-into="#display-area">
+  <aa-screen>...</aa-screen>
+</aa-sequence>
+<div id="display-area"></div>
+```
+
+### `should-run`
+
+- **Type:** Boolean
+- **Default:** `true`
+
+Controls whether the sequence starts automatically. When `true`, the sequence begins rendering its first child immediately. Set to `false` to prevent execution — useful for conditionally enabled sequences.
+
+### `debug`
+
+- **Type:** Boolean
+- **Default:** `false`
+
+When `true`, enables debug output for the sequence.
+
+### `type`
+
+- **Type:** String
+- **Default:** —
+- **User-defined:** No (internal)
+
+Internal property used by the system to track the sequence type. Not typically set by authors.
+
+### `stopped`
+
+- **Type:** Boolean
+- **Default:** —
+- **User-defined:** No (internal)
+
+Internal property indicating whether the sequence has been stopped. Not typically set by authors.
+
+### `diagram` / `diagram-transparent`
+
+- **Type:** Boolean
+- **Default:** `false`
+- **Inherited:** Yes (from `AABaseElement`)
+
+See `<aa-session>` documentation for details.
+
+---
+
+## Attribute Summary Table
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `name` | String | — | Sequence identifier |
+| `write-into` | String | — | CSS selector for render target |
+| `should-run` | Boolean | `true` | Auto-start on connection |
+| `debug` | Boolean | `false` | Enable debug mode |
+| `type` | String | — | Internal: sequence type |
+| `stopped` | Boolean | — | Internal: stopped state |
+
+---
+
+## DOM API
+
+```js
+const seq = document.querySelector('aa-sequence');
+```
+
+| Method / Property | Returns | Description |
+|---|---|---|
+| `init()` | `void` | Initialise the sequence |
+| `start()` | `void` | Begin stepping through children |
+| `stop()` | `void` | Stop the sequence |
+| `next(name?)` | `void` | Advance to the next child (or jump to `name`) |
+
+### Events
+
+| Event | When |
+|---|---|
+| `endEvent` | Fired when all children have been processed |

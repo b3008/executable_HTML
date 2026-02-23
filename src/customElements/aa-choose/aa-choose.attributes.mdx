@@ -1,0 +1,171 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Control Flow/Choose/Attribute Reference" />
+
+# `<aa-choose>` Attribute Reference
+
+A conditional control-flow element that evaluates test expressions on its child branches and renders the first matching one. It implements an if/else-if/else pattern using `<aa-when>` and `<aa-otherwise>` child elements.
+
+```html
+<aa-choose name="branch-by-mood">
+  <aa-when test="mood > 5">
+    <template>
+      <aa-screen>
+        <aa-label>Glad you're feeling good!</aa-label>
+      </aa-screen>
+    </template>
+  </aa-when>
+  <aa-when test="mood > 2">
+    <template>
+      <aa-screen>
+        <aa-label>Hanging in there?</aa-label>
+      </aa-screen>
+    </template>
+  </aa-when>
+  <aa-otherwise>
+    <template>
+      <aa-screen>
+        <aa-label>Sorry to hear that.</aa-label>
+      </aa-screen>
+    </template>
+  </aa-otherwise>
+</aa-choose>
+```
+
+---
+
+## `<aa-choose>` Attributes
+
+### `name`
+
+- **Type:** String
+- **Default:** —
+
+A descriptive name for the choose block. Used for debugging and identification.
+
+### `should-run`
+
+- **Type:** Boolean
+- **Default:** `true`
+
+Controls whether the choose block evaluates its conditions. When `false`, the element is skipped entirely.
+
+### `debug`
+
+- **Type:** Boolean
+- **Default:** `false`
+
+When `true`, enables debug output for the evaluation process.
+
+---
+
+## `<aa-when>` Attributes
+
+A child element of `<aa-choose>` representing a conditional branch. Its content (wrapped in a `<template>`) is rendered if the `test` expression evaluates to `true`.
+
+### `test`
+
+- **Type:** String (expression)
+- **Default:** —
+- **Required:** Yes
+
+A JavaScript-like expression that is evaluated against session memory. The expression is parsed using [jsep](https://ericsmekens.github.io/jsep/) and supports:
+
+- **Comparison operators:** `>`, `<`, `>=`, `<=`, `==`, `!=`
+- **Logical operators:** `&&`, `||`, `!`
+- **Variable references:** Bare identifiers reference session memory variables (e.g. `mood` reads the value stored under the key `"mood"`)
+- **Literals:** Numbers (`5`), strings (`'hello'`)
+
+**Examples:**
+```html
+<aa-when test="mood > 5">...</aa-when>
+<aa-when test="age >= 18 && consent == 'yes'">...</aa-when>
+<aa-when test="score != 0">...</aa-when>
+```
+
+Branches are evaluated in document order. The **first** `<aa-when>` whose `test` evaluates to `true` is rendered; subsequent branches are skipped.
+
+---
+
+## `<aa-otherwise>` Attributes
+
+A fallback child element of `<aa-choose>`. If no `<aa-when>` branch matches, the content inside `<aa-otherwise>` is rendered. It takes no user-defined attributes.
+
+```html
+<aa-otherwise>
+  <template>
+    <aa-screen>
+      <aa-label>Default content shown when no conditions match.</aa-label>
+    </aa-screen>
+  </template>
+</aa-otherwise>
+```
+
+---
+
+## `<aa-jump>` Element
+
+A control-flow element that immediately jumps to a named element in the parent sequence. It dispatches an `endEvent` with a `goto` detail and removes itself from the DOM.
+
+### `name`
+
+- **Type:** String
+- **Default:** —
+
+Optional identifier for the jump element.
+
+### `goto`
+
+- **Type:** String
+- **Default:** —
+- **Required:** Yes
+
+The `name` of the target element to jump to. Typically references a named `<aa-screen>` or `<aa-sequence>` earlier or later in the parent sequence.
+
+```html
+<aa-jump goto="end-screen"></aa-jump>
+```
+
+**Behaviour:** On connection, `<aa-jump>` immediately fires an `endEvent` with `{ detail: { goto: "end-screen" } }` and removes itself. The parent `<aa-sequence>` intercepts this event and advances to the child matching the given name.
+
+---
+
+## Attribute Summary Table
+
+### `<aa-choose>`
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `name` | String | — | Block identifier |
+| `should-run` | Boolean | `true` | Enable/disable evaluation |
+| `debug` | Boolean | `false` | Debug mode |
+
+### `<aa-when>`
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `test` | String | — | Condition expression to evaluate |
+
+### `<aa-jump>`
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `name` | String | — | Jump element identifier |
+| `goto` | String | — | Target element name |
+
+---
+
+## DOM API
+
+### `<aa-choose>`
+
+| Method | Returns | Description |
+|---|---|---|
+| `evaluate()` | `void` | Evaluate conditions and render matching branch |
+
+### Events
+
+| Event | Element | When |
+|---|---|---|
+| `endEvent` | `<aa-choose>` | Fired after the chosen branch completes |
+| `endEvent` | `<aa-jump>` | Fired immediately with `goto` detail |

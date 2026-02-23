@@ -1,0 +1,223 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Response Items/Affect Grid/Attribute Reference" />
+
+# `<aa-affect-grid>` Attribute Reference
+
+A two-dimensional grid response item for measuring affect (emotional state) along two axes. Based on the Russell Affect Grid, it presents a square grid where the participant clicks a cell to indicate their current position in a 2D emotion space. Returns `[x, y]` coordinates.
+
+```html
+<aa-affect-grid
+  name="affect"
+  rows="9"
+  columns="9"
+  left-label="Unpleasant"
+  right-label="Pleasant"
+  top-label="High arousal"
+  bottom-label="Low arousal"
+  center-label="Neutral"
+  top-left-label="Distress"
+  top-right-label="Excitement"
+  bottom-left-label="Depression"
+  bottom-right-label="Relaxation">
+</aa-affect-grid>
+```
+
+---
+
+## Grid Dimensions
+
+### `rows`
+
+- **Type:** Number
+- **Default:** `11`
+
+The number of rows in the grid. Determines the vertical resolution.
+
+### `columns`
+
+- **Type:** Number
+- **Default:** `11`
+
+The number of columns in the grid. Determines the horizontal resolution.
+
+---
+
+## Axis Labels
+
+These labels describe the meaning of each axis and its endpoints.
+
+### `left-label`
+
+- **Type:** String
+- **Default:** `""`
+
+Label on the left side of the grid (negative x-axis). Typically describes the unpleasant end of the valence axis.
+
+### `right-label`
+
+- **Type:** String
+- **Default:** `""`
+
+Label on the right side of the grid (positive x-axis). Typically describes the pleasant end of the valence axis.
+
+### `top-label`
+
+- **Type:** String
+- **Default:** `""`
+
+Label at the top of the grid (positive y-axis). Typically describes high arousal.
+
+### `bottom-label`
+
+- **Type:** String
+- **Default:** `""`
+
+Label at the bottom of the grid (negative y-axis). Typically describes low arousal.
+
+### `center-label`
+
+- **Type:** String
+- **Default:** `""`
+
+Label at the centre of the grid. Typically "Neutral" or "Average".
+
+---
+
+## Quadrant Labels
+
+These labels describe the four corners of the grid, representing the combinations of the two axes.
+
+### `top-left-label`
+
+- **Type:** String
+- **Default:** `""`
+
+Label at the top-left corner (high arousal, unpleasant). Typically "Distress" or "Tense".
+
+### `top-right-label`
+
+- **Type:** String
+- **Default:** `""`
+
+Label at the top-right corner (high arousal, pleasant). Typically "Excitement" or "Alert".
+
+### `bottom-left-label`
+
+- **Type:** String
+- **Default:** `""`
+
+Label at the bottom-left corner (low arousal, unpleasant). Typically "Depression" or "Sad".
+
+### `bottom-right-label`
+
+- **Type:** String
+- **Default:** `""`
+
+Label at the bottom-right corner (low arousal, pleasant). Typically "Relaxation" or "Calm".
+
+---
+
+## Side Labels
+
+Additional labels positioned along the left and right edges, between the corner and centre.
+
+### `left-top-label`
+
+- **Type:** String
+- **Default:** `""`
+
+Label on the left side, upper half.
+
+### `left-bottom-label`
+
+- **Type:** String
+- **Default:** `""`
+
+Label on the left side, lower half.
+
+### `right-top-label`
+
+- **Type:** String
+- **Default:** `""`
+
+Label on the right side, upper half.
+
+### `right-bottom-label`
+
+- **Type:** String
+- **Default:** `""`
+
+Label on the right side, lower half.
+
+---
+
+## Other Attributes
+
+### `name`
+
+- **Type:** String
+- **Default:** —
+
+The variable name under which the selected coordinates are stored in session memory.
+
+### `value`
+
+- **Type:** Array `[x, y]`
+- **Default:** —
+- **User-defined:** No (read-only)
+
+The currently selected grid coordinates as a two-element array. `x` is the column (0-indexed from left), `y` is the row (0-indexed from top).
+
+### `required`
+
+- **Type:** Boolean
+- **Default:** `false`
+
+When `true`, the participant must select a cell before the parent screen can be submitted.
+
+---
+
+## Attribute Summary Table
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `name` | String | — | Variable name for data storage |
+| `rows` | Number | `11` | Grid row count |
+| `columns` | Number | `11` | Grid column count |
+| `top-label` | String | `""` | Top axis label |
+| `bottom-label` | String | `""` | Bottom axis label |
+| `left-label` | String | `""` | Left axis label |
+| `right-label` | String | `""` | Right axis label |
+| `center-label` | String | `""` | Centre label |
+| `top-left-label` | String | `""` | Top-left quadrant label |
+| `top-right-label` | String | `""` | Top-right quadrant label |
+| `bottom-left-label` | String | `""` | Bottom-left quadrant label |
+| `bottom-right-label` | String | `""` | Bottom-right quadrant label |
+| `left-top-label` | String | `""` | Left side upper label |
+| `left-bottom-label` | String | `""` | Left side lower label |
+| `right-top-label` | String | `""` | Right side upper label |
+| `right-bottom-label` | String | `""` | Right side lower label |
+| `value` | Array | — | Selected `[x, y]` coordinates (read-only) |
+| `required` | Boolean | `false` | Require selection before submit |
+
+---
+
+## DOM API
+
+```js
+const grid = document.querySelector('aa-affect-grid');
+console.log(grid.value); // e.g. [5, 3]
+console.log(grid.x);     // column index
+console.log(grid.y);     // row index
+```
+
+| Property | Type | Description |
+|---|---|---|
+| `value` | `[number, number]` | Selected `[x, y]` coordinates |
+| `x` | `number` | Selected column index |
+| `y` | `number` | Selected row index |
+
+### Layout
+
+The grid maintains a square aspect ratio using a `ResizeObserver`. It automatically adjusts to fit its container while keeping cells square.

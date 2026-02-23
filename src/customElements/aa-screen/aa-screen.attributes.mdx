@@ -1,0 +1,105 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="UI/Screen/Attribute Reference" />
+
+# `<aa-screen>` Attribute Reference
+
+A form container that represents a single page or step in a questionnaire. It renders its child response items (sliders, multiple-choice, text inputs, etc.) together with a submit button. On submission, it collects the values from all child elements and dispatches them as an event. The screen then auto-hides and signals completion to its parent sequence.
+
+```html
+<aa-screen submit-button-text="Next">
+  <aa-label>How stressed do you feel right now?</aa-label>
+  <aa-likert-scale name="stress" items="7"
+    start-label="Not at all" end-label="Extremely">
+  </aa-likert-scale>
+</aa-screen>
+```
+
+---
+
+## Attributes
+
+### `submit-button-text`
+
+- **Type:** String
+- **Default:** `"submit"`
+
+The text displayed on the submit button. Common values include `"Next"`, `"Done"`, `"Submit"`, or `"Continue"`.
+
+### `submit-button-hidden`
+
+- **Type:** Boolean
+- **Default:** `false`
+
+When `true`, hides the submit button entirely. Useful for screens that advance automatically (e.g. instruction-only screens or screens with an external trigger).
+
+### `expect-wait`
+
+- **Type:** Boolean
+- **Default:** `true`
+- **User-defined:** No (internal)
+
+Internal property indicating whether the screen should wait for user interaction before completing. When `true`, the screen waits for the submit button to be clicked. Not typically set by authors.
+
+### `autohide`
+
+- **Type:** Boolean
+- **Default:** `true`
+- **User-defined:** No (internal)
+
+Controls whether the screen automatically hides itself after submission. When `true` (the default), the screen's content is removed from view after the user submits. Not typically set by authors.
+
+### `name`
+
+- **Type:** String
+- **Default:** —
+- **Inherited:** Yes (from `AABaseElement`)
+
+Optional identifier for the screen.
+
+### `diagram` / `diagram-transparent`
+
+- **Type:** Boolean
+- **Default:** `false`
+- **Inherited:** Yes (from `AABaseElement`)
+
+See `<aa-session>` documentation for details.
+
+---
+
+## Attribute Summary Table
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `submit-button-text` | String | `"submit"` | Button label text |
+| `submit-button-hidden` | Boolean | `false` | Hide the submit button |
+| `expect-wait` | Boolean | `true` | Internal: wait for interaction |
+| `autohide` | Boolean | `true` | Internal: auto-hide after submit |
+| `name` | String | — | Screen identifier |
+
+---
+
+## DOM API
+
+```js
+const screen = document.querySelector('aa-screen');
+```
+
+| Method / Property | Returns | Description |
+|---|---|---|
+| `collectValues()` | `object` | Gather values from all child response items |
+| `submitButtonClick()` | `void` | Programmatically trigger a submit |
+| `automate()` | `void` | Auto-fill and submit for testing |
+| `hide()` | `void` | Hide the screen |
+| `show()` | `void` | Show the screen |
+
+### Events
+
+| Event | When |
+|---|---|
+| `valueSubmit` | Fired with collected child values when the submit button is clicked |
+| `endEvent` | Fired after submission to signal completion to the parent sequence |
+
+### Validation
+
+The screen validates required fields before submission. If a child element has the `required` attribute set and no value has been provided, submission is blocked and the user is prompted to complete the field.

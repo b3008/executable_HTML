@@ -1,0 +1,81 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Data & Utility/Variable/Attribute Reference" />
+
+# `<aa-variable>` Attribute Reference
+
+A declarative, non-rendering element that initialises a named variable in session memory. Place it at the start of a session or sequence to set up initial values. The element processes its value on connection and then removes itself from the DOM.
+
+```html
+<aa-session name="study">
+  <template>
+    <aa-variable name="participant_group" value="'control'"></aa-variable>
+    <aa-variable name="max_score" value="100"></aa-variable>
+    <aa-sequence>...</aa-sequence>
+  </template>
+</aa-session>
+```
+
+---
+
+## Attributes
+
+### `name`
+
+- **Type:** String
+- **Default:** —
+- **Required:** Yes
+
+The key under which the value is stored in session memory. Other elements can reference this variable by name.
+
+### `value`
+
+- **Type:** String
+- **Default:** —
+- **Required:** Yes
+
+The value to assign. Supports two forms:
+
+- **String literal** — Wrap in quotes: `value="'hello'"`. The quotes are stripped and the string `hello` is stored.
+- **Numeric literal** — A plain number: `value="42"`. Stored as the number `42`.
+- **Variable reference** — A bare identifier: `value="other_variable"`. Reads the current value of `other_variable` from session memory and copies it.
+
+**Examples:**
+```html
+<!-- Store the string "control" -->
+<aa-variable name="group" value="'control'"></aa-variable>
+
+<!-- Store the number 7 -->
+<aa-variable name="max_items" value="7"></aa-variable>
+
+<!-- Copy the value of "mood" into "baseline_mood" -->
+<aa-variable name="baseline_mood" value="mood"></aa-variable>
+```
+
+---
+
+## Behaviour
+
+1. On connection (`connectedCallback`), the element evaluates the `value` expression.
+2. The result is written to session memory under the key specified by `name`.
+3. The element dispatches an `endEvent` to signal completion.
+4. Unless `debug` is `true`, the element removes itself from the DOM.
+
+---
+
+## Attribute Summary Table
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `name` | String | — | Variable key in session memory |
+| `value` | String | — | Value or expression to assign |
+
+---
+
+## DOM API
+
+### Events
+
+| Event | When |
+|---|---|
+| `endEvent` | Fired after the variable has been set in session memory |

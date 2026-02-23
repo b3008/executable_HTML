@@ -1,0 +1,79 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Response Items/Checkboxes/Attribute Reference" />
+
+# `<aa-checkboxes>` Attribute Reference
+
+A multi-select response item that renders a group of checkboxes. The participant can select zero or more options. Each option is defined by an `<aa-choice-item>` child element (the same element used in `<aa-multiple-choice>`, but rendered here as checkboxes instead of radio buttons).
+
+```html
+<aa-checkboxes name="symptoms" vertical>
+  <aa-choice-item value="headache">Headache</aa-choice-item>
+  <aa-choice-item value="fatigue">Fatigue</aa-choice-item>
+  <aa-choice-item value="nausea">Nausea</aa-choice-item>
+  <aa-choice-item value="none">None of the above</aa-choice-item>
+</aa-checkboxes>
+```
+
+---
+
+## Attributes
+
+### `name`
+
+- **Type:** String
+- **Default:** —
+
+The variable name under which the selected values are stored in session memory. The stored value is an **array** of the `value` attributes of all checked items.
+
+### `horizontal`
+
+- **Type:** Boolean
+- **Default:** `false`
+
+When `true`, the checkbox items are laid out in a horizontal row.
+
+### `vertical`
+
+- **Type:** Boolean
+- **Default:** `true`
+
+When `true`, the checkbox items are laid out in a vertical stack. This is the default layout.
+
+### `value`
+
+- **Type:** String (array)
+- **Default:** —
+- **User-defined:** No (read-only)
+
+The currently selected values as an array. Each entry is the `value` attribute of a checked `<aa-choice-item>`.
+
+---
+
+## Child Element: `<aa-choice-item>`
+
+See the [`<aa-multiple-choice>` Attribute Reference](?path=/docs/response-items-multiple-choice-attribute-reference--docs) for full `<aa-choice-item>` documentation. Inside `<aa-checkboxes>`, the items render as checkboxes (allowing multiple selections) rather than radio buttons.
+
+---
+
+## Attribute Summary Table
+
+| Attribute | Type | Default | Description |
+|---|---|---|---|
+| `name` | String | — | Variable name for data storage |
+| `horizontal` | Boolean | `false` | Horizontal layout |
+| `vertical` | Boolean | `true` | Vertical layout (default) |
+| `value` | Array | — | Array of checked item values (read-only) |
+
+---
+
+## DOM API
+
+```js
+const cb = document.querySelector('aa-checkboxes');
+console.log(cb.value); // e.g. ["headache", "fatigue"]
+```
+
+### Events
+
+Choice items dispatch `change` events when toggled. The parent `<aa-screen>` collects the final array of values on submission.
