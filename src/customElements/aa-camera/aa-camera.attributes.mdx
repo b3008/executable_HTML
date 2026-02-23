@@ -1,0 +1,94 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Response Items/Camera/Attribute Reference" />
+
+# `<aa-camera>` Attribute Reference
+
+A camera capture response item that provides a live video preview with controls to capture a photo, retake, and flip between front and rear cameras. The captured image is stored as a base64 JPEG data URL.
+
+```html
+<aa-screen submit-button-text="Next">
+  <aa-label>Please take a photo of your meal</aa-label>
+  <aa-camera name="meal-photo" facing="environment"></aa-camera>
+</aa-screen>
+```
+
+---
+
+## Attributes
+
+### `name`
+
+- **Type:** String
+- **Default:** —
+
+The variable name under which the captured photo data URL is stored in session memory.
+
+### `facing`
+
+- **Type:** String
+- **Default:** `"environment"`
+- **Allowed values:** `"environment"` · `"user"`
+
+The initial camera direction to use.
+
+- **`environment`** — Rear-facing camera (default). Best for capturing objects, food, surroundings.
+- **`user`** — Front-facing camera. Best for selfies.
+
+The participant can also toggle between cameras using the Flip button.
+
+### `width`
+
+- **Type:** Number
+- **Default:** `640`
+
+The pixel width of the captured image. This sets the canvas resolution used when capturing a frame from the video stream.
+
+### `height`
+
+- **Type:** Number
+- **Default:** `480`
+
+The pixel height of the captured image. This sets the canvas resolution used when capturing a frame from the video stream.
+
+### `value`
+
+- **Type:** String
+- **Default:** —
+- **User-defined:** No (read-only)
+
+The captured photo as a base64 JPEG data URL (e.g. `data:image/jpeg;base64,...`). This is `null` until the participant captures a photo. Cleared on retake.
+
+---
+
+## Attribute Summary Table
+
+| Attribute | Type    | Default         | Description                              |
+|-----------|---------|-----------------|------------------------------------------|
+| `name`    | String  | —               | Variable name for data storage           |
+| `facing`  | String  | `"environment"` | Initial camera direction                 |
+| `width`   | Number  | `640`           | Capture resolution width in pixels       |
+| `height`  | Number  | `480`           | Capture resolution height in pixels      |
+| `value`   | String  | —               | Captured base64 data URL (read-only)     |
+
+---
+
+## DOM API
+
+```js
+const cam = document.querySelector('aa-camera');
+console.log(cam.value); // base64 data URL or null
+```
+
+| Property | Type              | Description                                      |
+|----------|-------------------|--------------------------------------------------|
+| `value`  | `string \| null`  | The captured base64 JPEG data URL                |
+| `facing` | `string`          | Current camera direction (`"environment"` or `"user"`) |
+
+### Events
+
+| Event    | Description                        |
+|----------|------------------------------------|
+| `change` | Fired after a photo is captured    |
+
+The parent `<aa-screen>` collects the final value on submission.

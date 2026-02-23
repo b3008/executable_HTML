@@ -12,6 +12,7 @@ import './customElements/aa-styling.scss';
 export { AAScreen, type AAScreenValue, type AAScreenValueSubmitEventDetail } from './customElements/aa-screen/aa-screen';
 export { AAAffectGrid } from './customElements/aa-affect-grid/aa-affect-grid';
 export { AABaseElement } from './customElements/aa-base-element/aa-base-element';
+export { AACamera } from './customElements/aa-camera/aa-camera';
 export { AACheckboxes } from './customElements/aa-checkboxes/aa-checkboxes';
 export { AAChoiceItem } from './customElements/aa-choice-item/aa-choice-item';
 export { AAMultipleChoice } from './customElements/aa-multiple-choice/aa-multiple-choice';

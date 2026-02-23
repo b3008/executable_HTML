@@ -99,25 +99,27 @@ const fixedTimeOnly = `<aa-signal-protocol
   </aa-session>
 </aa-signal-protocol>`;
 
+let _storyCounter = 0;
+
 function renderProtocolSummary(sourceCode: string) {
+  const uid = `protocol-summary-${++_storyCounter}-${Date.now()}`;
   return html`
-    <div style="font-family: monospace; padding: 16px;">
+    <div class="protocol-story-wrapper" style="font-family: monospace; padding: 16px;">
       <pre style="background: #f5f5f5; padding: 16px; border-radius: 4px; overflow-x: auto; white-space: pre-wrap;">${sourceCode}</pre>
       ${unsafeHTML(sourceCode)}
       <script type="module">
         setTimeout(() => {
-          const protocol = document.querySelector('aa-signal-protocol');
+          const wrapper = document.querySelector('[data-summary-id="${uid}"]');
+          if (!wrapper) return;
+          const protocol = wrapper.closest('.protocol-story-wrapper')?.querySelector('aa-signal-protocol');
           if (protocol && protocol.getProtocol) {
             const config = protocol.getProtocol();
-            const summary = document.getElementById('protocol-summary');
-            if (summary) {
-              summary.textContent = JSON.stringify(config, null, 2);
-            }
+            wrapper.textContent = JSON.stringify(config, null, 2);
           }
         }, 100);
       </script>
       <h3 style="font-family: sans-serif; margin-top: 16px;">Parsed Protocol</h3>
-      <pre id="protocol-summary" style="background: #e8f5e9; padding: 16px; border-radius: 4px; overflow-x: auto; white-space: pre-wrap;"></pre>
+      <pre data-summary-id="${uid}" style="background: #e8f5e9; padding: 16px; border-radius: 4px; overflow-x: auto; white-space: pre-wrap;"></pre>
     </div>
   `;
 }

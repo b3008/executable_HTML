@@ -78,6 +78,28 @@ describe('aa-signal-protocol', () => {
             }
             assert.isTrue(threw);
         });
+
+        it('throws on out-of-range hours', () => {
+            let threw = false;
+            try {
+                parseTime('25:00');
+            } catch (e: any) {
+                threw = true;
+                assert.include(e.message, 'Invalid time value');
+            }
+            assert.isTrue(threw, 'should throw on hours > 23');
+        });
+
+        it('throws on out-of-range minutes', () => {
+            let threw = false;
+            try {
+                parseTime('12:60');
+            } catch (e: any) {
+                threw = true;
+                assert.include(e.message, 'Invalid time value');
+            }
+            assert.isTrue(threw, 'should throw on minutes > 59');
+        });
     });
 
     describe('parseTimeRange', function () {
@@ -95,6 +117,28 @@ describe('aa-signal-protocol', () => {
                 threw = true;
             }
             assert.isTrue(threw);
+        });
+
+        it('throws when end time is before start time', () => {
+            let threw = false;
+            try {
+                parseTimeRange('22:00-08:00');
+            } catch (e: any) {
+                threw = true;
+                assert.include(e.message, 'End time must be after start time');
+            }
+            assert.isTrue(threw, 'should throw on cross-midnight range');
+        });
+
+        it('throws when start and end are equal', () => {
+            let threw = false;
+            try {
+                parseTimeRange('12:00-12:00');
+            } catch (e: any) {
+                threw = true;
+                assert.include(e.message, 'End time must be after start time');
+            }
+            assert.isTrue(threw, 'should throw on zero-length range');
         });
     });
 
@@ -380,6 +424,30 @@ describe('aa-signal-protocol', () => {
             const el = document.querySelector('#p1') as AASignalProtocol;
             const warnings = el.validate();
             assert.equal(warnings.length, 0);
+        });
+    });
+
+    describe('connectedCallback error handling', function () {
+        it('does not throw when element has invalid attributes on connect', () => {
+            // Element with invalid exclude-times (cross-midnight) should not throw during connectedCallback
+            let threw = false;
+            try {
+                container.innerHTML = `
+                    <aa-signal-protocol
+                        id="p1"
+                        name="bad-config"
+                        schedule-type="random"
+                        signals-per-day="5"
+                        window-start="09:00"
+                        window-end="17:00"
+                        exclude-times="22:00-23:00">
+                    </aa-signal-protocol>`;
+            } catch (e) {
+                threw = true;
+            }
+            assert.isFalse(threw, 'connectedCallback should not throw on invalid config');
+            const el = document.querySelector('#p1') as AASignalProtocol;
+            assert.isNotNull(el);
         });
     });
 

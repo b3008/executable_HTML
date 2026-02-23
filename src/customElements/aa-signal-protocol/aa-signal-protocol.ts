@@ -28,7 +28,14 @@ function parseTime(str: string): { hours: number; minutes: number } {
     if (!match) {
         throw new Error(`Invalid time format: "${str}". Expected HH:MM`);
     }
-    return { hours: parseInt(match[1], 10), minutes: parseInt(match[2], 10) };
+    const hours = parseInt(match[1], 10);
+    const minutes = parseInt(match[2], 10);
+    if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
+        throw new Error(
+            `Invalid time value: "${str}". Hours must be 0-23 and minutes must be 0-59`
+        );
+    }
+    return { hours, minutes };
 }
 
 /**
@@ -41,10 +48,14 @@ function parseTimeRange(str: string): { startMinutes: number; endMinutes: number
     }
     const start = parseTime(parts[0]);
     const end = parseTime(parts[1]);
-    return {
-        startMinutes: start.hours * 60 + start.minutes,
-        endMinutes: end.hours * 60 + end.minutes,
-    };
+    const startMinutes = start.hours * 60 + start.minutes;
+    const endMinutes = end.hours * 60 + end.minutes;
+    if (endMinutes <= startMinutes) {
+        throw new Error(
+            `Invalid time range: "${str}". End time must be after start time (cross-midnight ranges are not supported)`
+        );
+    }
+    return { startMinutes, endMinutes };
 }
 
 /**
@@ -245,7 +256,11 @@ export class AASignalProtocol extends AABaseElement {
 
     connectedCallback(): void {
         super.connectedCallback();
-        this.validate();
+        try {
+            this.validate();
+        } catch (error) {
+            console.error('[aa-signal-protocol] Failed to validate protocol configuration:', error);
+        }
         setTimeout(() => {
             this.dispatchEvent(new CustomEvent('protocolReady', { bubbles: true }));
         }, 0);
@@ -593,6 +608,13 @@ export class AASignalProtocol extends AABaseElement {
                 attempts++;
             }
 
+            const stillTooClose = signals.some(s => Math.abs(s - minuteOfDay) < minIntervalMinutes);
+            if (stillTooClose) {
+                console.warn(
+                    `[aa-signal-protocol] Could not satisfy min-interval constraint after ${attempts} retries; ` +
+                    `relaxing constraint for one signal (minInterval=${minIntervalMinutes}min, minuteOfDay=${Math.round(minuteOfDay)})`
+                );
+            }
             signals.push(minuteOfDay);
         }
 
