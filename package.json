@@ -28,11 +28,11 @@
   },
   "devDependencies": {
     "@esm-bundle/chai": "^4.3.4-fix.0",
-    "@storybook/addon-essentials": "^7.6.12",
-    "@storybook/addon-links": "^7.6.12",
-    "@storybook/blocks": "^7.6.12",
-    "@storybook/web-components": "^7.6.12",
-    "@storybook/web-components-vite": "^7.6.12",
+    "@storybook/addon-essentials": "^7.6.21",
+    "@storybook/addon-links": "^7.6.21",
+    "@storybook/blocks": "^7.6.21",
+    "@storybook/web-components": "^7.6.21",
+    "@storybook/web-components-vite": "^7.6.21",
     "@types/mocha": "^10.0.10",
     "@web/dev-server-esbuild": "^1.0.5",
     "@web/test-runner": "^0.18.0",
@@ -44,9 +44,9 @@
     "react-dom": "^18.2.0",
     "remark-gfm": "^3.0.1",
     "sass": "^1.70.0",
-    "storybook": "^7.6.12",
+    "storybook": "^7.6.21",
     "typescript": "^5.2.2",
-    "vite": "^5.0.8",
+    "vite": "^5.4.20",
     "vite-plugin-css-injected-by-js": "^3.5.2"
   },
   "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
